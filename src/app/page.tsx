@@ -1,6 +1,6 @@
 import { redirectIfGuest } from '@/lib/auth/guard/auth/actions/redirectIfGuest';
 import { DateRangeFilter } from '@/lib/composite/date/date-range-filter';
-import { AnalyticsDashboardCards } from '@/lib/entities/analytics/containers/dashboard-cards';
+// import { AnalyticsDashboardCards } from '@/lib/entities/analytics/containers/dashboard-cards';
 // import { DashboardOverview } from '@/lib/entities/analytics/containers/dashboard-overview';
 import { MainLayout } from '@/components/layouts/main.layout';
 
@@ -16,8 +16,8 @@ export default async function Dashboard() {
         </div>
         <div className="space-y-4">
           <div className="space-y-4">
-            <AnalyticsDashboardCards />
-            {/*<DashboardOverview />*/}
+            <p>TODO: AnalyticsDashboardCards</p>
+            {/*<AnalyticsDashboardCards />*/}
           </div>
         </div>
       </div>

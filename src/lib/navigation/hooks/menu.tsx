@@ -1,5 +1,16 @@
 import type { ReactNode } from 'react';
-import { Home, LineChart, Settings, Smartphone } from 'lucide-react';
+import {
+  AlertTriangle,
+  BarChart,
+  Building,
+  CheckSquare,
+  DollarSign,
+  Home,
+  MessageCircle,
+  Settings,
+  StickyNote,
+  UserX,
+} from 'lucide-react';
 
 import * as fromUrl from '@/lib/url/generator';
 
@@ -11,19 +22,49 @@ export interface MenuItem {
 
 const sideMenu: MenuItem[] = [
   {
-    title: 'Dashboard',
+    title: 'Home',
     href: fromUrl.toHome(),
     icon: <Home className="h-5 w-5" />,
   },
   {
-    title: 'Devices',
-    href: fromUrl.toDevices(),
-    icon: <Smartphone className="h-5 w-5" />,
+    title: 'Contractors',
+    href: fromUrl.toContractors(),
+    icon: <Building className="h-5 w-5" />,
   },
   {
-    title: 'Issues',
-    href: fromUrl.toIssues(),
-    icon: <LineChart className="h-5 w-5" />,
+    title: 'Debtors',
+    href: fromUrl.toDebtors(),
+    icon: <AlertTriangle className="h-5 w-5" />,
+  },
+  {
+    title: 'Blacklist',
+    href: fromUrl.toBlacklist(),
+    icon: <UserX className="h-5 w-5" />,
+  },
+  {
+    title: 'Cash Desk',
+    href: fromUrl.toCashDesk(),
+    icon: <DollarSign className="h-5 w-5" />,
+  },
+  {
+    title: 'Notes',
+    href: fromUrl.toNotes(),
+    icon: <StickyNote className="h-5 w-5" />,
+  },
+  {
+    title: 'Chat',
+    href: fromUrl.toChat(),
+    icon: <MessageCircle className="h-5 w-5" />,
+  },
+  {
+    title: 'Statistics',
+    href: fromUrl.toStatistics(),
+    icon: <BarChart className="h-5 w-5" />,
+  },
+  {
+    title: 'Subscription',
+    href: fromUrl.toSubscription(),
+    icon: <CheckSquare className="h-5 w-5" />,
   },
 ];
 

@@ -2,29 +2,38 @@ export function toHome(): string {
   return `/`;
 }
 
-export function toIssues(): string {
-  return `/issues`;
-}
-
-export function toDevices(): string {
-  return `/devices`;
-}
-
-export function toDevice(id: string): string {
-  return `/devices/${id}`;
-}
-
 export function toSettings(): string {
   return `/settings`;
 }
 
-export function toIssue(id: string): string {
-  return `/issues/${id}`;
+export function toContractors(): string {
+  return `/contractors`;
 }
 
-export function toDashboardDevice(
-  proxyUrl: string,
-  id: string | number
-): string {
-  return `${proxyUrl}device/show/${id}`;
+export function toDebtors(): string {
+  return `/debtors`;
+}
+
+export function toBlacklist(): string {
+  return `/blacklist`;
+}
+
+export function toCashDesk(): string {
+  return `/cash-desk`;
+}
+
+export function toNotes(): string {
+  return `/notes`;
+}
+
+export function toChat(): string {
+  return `/chat`;
+}
+
+export function toStatistics(): string {
+  return `/statistics`;
+}
+
+export function toSubscription(): string {
+  return `/subscription`;
 }

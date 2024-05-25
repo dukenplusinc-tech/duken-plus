@@ -23,16 +23,6 @@ interface Command {
 
 const suggestedCommands: Command[] = [
   {
-    type: 'issues',
-    label: 'Issues',
-    href: fromUrl.toIssues(),
-  },
-  {
-    type: 'devices',
-    label: 'Devices',
-    href: fromUrl.toDevices(),
-  },
-  {
     type: 'settings',
     label: 'Settings',
     href: fromUrl.toSettings(),

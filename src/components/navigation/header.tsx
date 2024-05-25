@@ -2,8 +2,9 @@
 
 import type { FC } from 'react';
 import Link from 'next/link';
-import { ShoppingBag as LogoIcon, PanelLeft } from 'lucide-react';
+import { ShoppingBag as LogoIcon, MapPin, PanelLeft } from 'lucide-react';
 
+import { brand } from '@/config/brand';
 import { UserDropDownNav } from '@/lib/entities/user/containers/user-drop-down-nav';
 import { useBreadcrumbsLinks } from '@/lib/navigation/breadcrumbs/context';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
@@ -33,10 +34,18 @@ export const HeaderNav: FC = () => {
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
               <LogoIcon className="h-5 w-5 transition-all group-hover:scale-110" />
-              <span className="sr-only">Crashlitics</span>
+              <span className="sr-only">{brand.name}</span>
             </Link>
+
+            <div>
+              <span className="block font-bold">ShopName</span>
+              <span className="flex items-center">
+                <MapPin className="h-5 w-5 mr-2" />
+                City
+              </span>
+            </div>
           </nav>
-          <ScrollArea style={{ height: 'calc(100vh - 120px)' }}>
+          <ScrollArea style={{ height: 'calc(100vh - 160px)' }}>
             <nav className="grid gap-6 text-lg font-medium">
               {menuItems.map((menu, idx) => (
                 <Link

@@ -45,7 +45,7 @@ export const HeaderNav: FC = () => {
               </span>
             </div>
           </nav>
-          <ScrollArea style={{ height: 'calc(100vh - 160px)' }}>
+          <ScrollArea style={{ height: 'calc(100vh - 200px)' }}>
             <nav className="grid gap-6 text-lg font-medium">
               {menuItems.map((menu, idx) => (
                 <Link

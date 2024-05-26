@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">bp-shop</string>
+    <string name="title_activity_main">bp-shop</string>
+    <string name="package_name">app.vercel.bekbo.shop</string>
+    <string name="custom_url_scheme">app.vercel.bekbo.shop</string>
+</resources>

@@ -6,6 +6,14 @@ export function toSettings(): string {
   return `/settings`;
 }
 
+export function toUsers(): string {
+  return `/settings/users`;
+}
+
+export function toUser(id: string): string {
+  return `/settings/users/${id}`;
+}
+
 export function toContractors(): string {
   return `/contractors`;
 }

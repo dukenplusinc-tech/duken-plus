@@ -9,4 +9,10 @@ export const createClient = () =>
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
+if (typeof window !== 'undefined') {
+  (window as any).debug = {
+    supabase: createClient(),
+  };
+}
+
 export type Builder = PostgrestFilterBuilder<any, any, any>;

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ShoppingBag as LogoIcon, MapPin, PanelLeft } from 'lucide-react';
 
 import { brand } from '@/config/brand';
-import { UserDropDownNav } from '@/lib/entities/user/containers/user-drop-down-nav';
+import { UserDropDownNav } from '@/lib/entities/users/containers/user-drop-down-nav';
 import { useBreadcrumbsLinks } from '@/lib/navigation/breadcrumbs/context';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
 import { Button } from '@/components/ui/button';

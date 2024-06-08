@@ -38,7 +38,7 @@ export const PageBreadcrumbs: FC<PageBreadcrumbsProps> = ({ links }) => {
                   <span className="capitalize">{link.label}</span>
                 </BreadcrumbLink>
               ) : (
-                <span>{link.label}</span>
+                <span className="capitalize">{link.label}</span>
               )}
             </BreadcrumbItem>
           </Fragment>

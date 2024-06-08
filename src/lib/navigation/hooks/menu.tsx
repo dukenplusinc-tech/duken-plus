@@ -9,6 +9,7 @@ import {
   MessageCircle,
   Settings,
   StickyNote,
+  Users,
   UserX,
 } from 'lucide-react';
 
@@ -69,6 +70,11 @@ const sideMenu: MenuItem[] = [
 ];
 
 const sideMenuBottom: MenuItem[] = [
+  {
+    title: 'Users',
+    href: fromUrl.toUsers(),
+    icon: <Users className="h-5 w-5" />,
+  },
   {
     title: 'Settings',
     href: fromUrl.toSettings(),

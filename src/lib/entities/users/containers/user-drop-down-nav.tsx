@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 
-import { useSignOut } from '@/lib/entities/user/hooks/useSignOut';
-import { useUser } from '@/lib/entities/user/hooks/useUser';
+import { useSignOut } from '@/lib/entities/users/hooks/useSignOut';
+import { useUser } from '@/lib/entities/users/hooks/useUser';
 import * as fromUrl from '@/lib/url/generator';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';

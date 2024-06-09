@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { CreateUserDialog } from '@/lib/entities/users/containers/create-user';
 import { UsersTable } from '@/lib/entities/users/containers/users-table';
 
 export const metadata: Metadata = {
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Manage your users and view their details',
 };
 
-export default async function IssuesPage() {
+export default async function UsersPage() {
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
       <div className="flex items-center justify-between space-y-2">
@@ -16,6 +17,9 @@ export default async function IssuesPage() {
           <p className="text-muted-foreground">
             Manage your users and view their details
           </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <CreateUserDialog />
         </div>
       </div>
       <UsersTable />

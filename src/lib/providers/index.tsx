@@ -1,20 +1,21 @@
-import type {FC, PropsWithChildren} from "react";
+import type { FC, PropsWithChildren } from 'react';
 
-import {TooltipProvider} from "@/components/ui/tooltip";
-import {FiltersProvider} from "@/lib/composite/filters/provider";
-import {DialogProvider} from "@/lib/primitives/dialog/provider";
-import {BreadcrumbsProvider} from "@/lib/navigation/breadcrumbs/provider";
+import { FiltersProvider } from '@/lib/composite/filters/provider';
+import { BreadcrumbsProvider } from '@/lib/navigation/breadcrumbs/provider';
+import { DialogProvider } from '@/lib/primitives/dialog/provider';
+import { DialogModalProvider } from '@/lib/primitives/modal/provider';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
-export const AppProviders: FC<PropsWithChildren> = ({children}) => {
+export const AppProviders: FC<PropsWithChildren> = ({ children }) => {
   return (
     <TooltipProvider>
       <FiltersProvider>
         <DialogProvider>
-          <BreadcrumbsProvider>
-            {children}
-          </BreadcrumbsProvider>
+          <DialogModalProvider>
+            <BreadcrumbsProvider>{children}</BreadcrumbsProvider>
+          </DialogModalProvider>
         </DialogProvider>
       </FiltersProvider>
     </TooltipProvider>
   );
-}
+};

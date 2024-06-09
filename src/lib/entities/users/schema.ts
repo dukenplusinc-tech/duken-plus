@@ -12,3 +12,11 @@ export const userSchema = z.object({
 });
 
 export type User = z.infer<typeof userSchema>;
+
+export const inviteUserSchema = z.object({
+  email: z.string().email(),
+  full_name: z.string().min(3).max(255),
+  role_id: z.string(),
+});
+
+export type InviteUser = z.infer<typeof inviteUserSchema>;

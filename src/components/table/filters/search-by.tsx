@@ -29,7 +29,7 @@ export function DataTableSearchBy<TData>({
   return (
     <div className="flex flex-1 items-center space-x-2">
       <Input
-        placeholder="Filter by title..."
+        placeholder="Type to filter..."
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
         className="h-8 w-[150px] lg:w-[250px]"

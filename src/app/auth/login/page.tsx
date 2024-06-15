@@ -1,11 +1,7 @@
 import Image from 'next/image';
 
 import { redirectIfUser } from '@/lib/auth/guard/auth/actions/redirectIfUser';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-
-import { login } from './actions';
+import { LoginForm } from '@/app/auth/login/form';
 
 export default async function LoginPage() {
   await redirectIfUser();
@@ -20,25 +16,7 @@ export default async function LoginPage() {
               Enter your email below to login to your account
             </p>
           </div>
-          <form className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" name="password" required />
-            </div>
-            <Button type="submit" className="w-full" formAction={login}>
-              Login
-            </Button>
-          </form>
+          <LoginForm />
         </div>
       </div>
       <div className="hidden bg-muted lg:block">

@@ -1,0 +1,83 @@
+'use client';
+
+import { FC, FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { TriangleAlertIcon } from 'lucide-react';
+
+import { createClient } from '@/lib/supabase/client';
+import * as fromUrl from '@/lib/url/generator';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+export const ResetPasswordForm: FC = () => {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setIsLoading(true);
+
+    const supabase = createClient();
+
+    const { error } = await supabase.auth.updateUser({ password });
+
+    setIsLoading(false);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      router.replace(fromUrl.toHome());
+    }
+  };
+
+  return (
+    <form className="space-y-4" onSubmit={handleSubmit}>
+      <div>
+        <Label htmlFor="password">New Password</Label>
+        <Input
+          id="password"
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          disabled={isLoading}
+        />
+      </div>
+      <div>
+        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Input
+          id="confirm-password"
+          type="password"
+          name="confirm-password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          disabled={isLoading}
+        />
+      </div>
+      {error && (
+        <Alert variant="destructive">
+          <TriangleAlertIcon className="h-4 w-4" />
+          <AlertTitle>{error}</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading ? '...' : 'Reset Password'}
+      </Button>
+    </form>
+  );
+};

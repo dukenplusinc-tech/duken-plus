@@ -45,3 +45,13 @@ export function toStatistics(): string {
 export function toSubscription(): string {
   return `/subscription`;
 }
+
+export function toResetPassword(): string {
+  return `/auth/reset-password`;
+}
+
+export function fullUrl(path: string): string {
+  const u = new URL(path, window.location.origin);
+
+  return u.href;
+}

@@ -10,7 +10,7 @@ export const createClient = () =>
   );
 
 if (typeof window !== 'undefined') {
-  (window as any).debug = {
+  (window as any).bpShop = {
     supabase: createClient(),
   };
 }

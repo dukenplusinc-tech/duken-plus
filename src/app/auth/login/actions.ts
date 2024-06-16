@@ -1,16 +1,9 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-
 import { createClient } from '@/lib/supabase/server';
 
-export async function login(formData: FormData) {
+export async function login(data: { email: string; password: string }) {
   const supabase = createClient();
-
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  };
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
@@ -18,7 +11,25 @@ export async function login(formData: FormData) {
     return { error: error.message };
   }
 
-  revalidatePath('/', 'layout');
+  return { success: true };
+}
+
+export async function recoverPassword({
+  email,
+  redirectTo,
+}: {
+  email: string;
+  redirectTo: string;
+}) {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo,
+  });
+
+  if (error) {
+    return { error: error.message };
+  }
 
   return { success: true };
 }

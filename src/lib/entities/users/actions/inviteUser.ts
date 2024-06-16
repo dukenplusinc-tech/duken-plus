@@ -3,19 +3,19 @@
 import { InviteUser } from '@/lib/entities/users/schema';
 import { createClient } from '@/lib/supabase/server';
 
-export async function inviteUser(values: InviteUser) {
-  console.log('Test from server', { values });
-
+export async function inviteUser(values: InviteUser, redirectTo: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(
-    values.email
+    values.email,
+    {
+      redirectTo,
+    }
   );
 
-  console.log({
-    data,
-    error,
-  });
+  if (error) {
+    throw error;
+  }
 
   return true;
 }

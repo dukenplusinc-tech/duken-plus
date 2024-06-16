@@ -50,6 +50,10 @@ export function toResetPassword(): string {
   return `/auth/reset-password`;
 }
 
+export function toInvited(): string {
+  return `/auth/invited`;
+}
+
 export function fullUrl(path: string): string {
   const u = new URL(path, window.location.origin);
 

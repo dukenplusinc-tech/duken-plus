@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/select';
 
 export const UserForm: FC<{ id?: string }> = ({ id }) => {
-  const { form, handleSubmit } = useUserForm(id);
+  const { form, isProcessing, handleSubmit } = useUserForm(id);
 
   const roles = useRoleOptions();
 
@@ -93,7 +93,7 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
           )}
         />
 
-        <Button className="mt-4 w-full" type="submit">
+        <Button loading={isProcessing} className="mt-4 w-full" type="submit">
           {id ? 'Save' : 'Send Invitation'}
         </Button>
       </form>

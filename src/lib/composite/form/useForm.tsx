@@ -31,6 +31,7 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
 
   const isInitializedRef = useRef(false);
 
+  const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState(undefined);
 
   const form = useFormHook<z.infer<S>>({
@@ -42,6 +43,8 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
 
   const onSubmit = useCallback(
     async (values: z.infer<S>) => {
+      setIsProcessing(true);
+
       try {
         const result = await request(values);
         setResult(result);
@@ -67,6 +70,8 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
           ),
         });
       }
+
+      setIsProcessing(false);
     },
     [dialog, fetcher, request]
   );
@@ -106,7 +111,8 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
     return {
       form,
       result,
+      isProcessing,
       handleSubmit: form.handleSubmit(onSubmit),
     };
-  }, [form, onSubmit, result]);
+  }, [form, isProcessing, onSubmit, result]);
 }

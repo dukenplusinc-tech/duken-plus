@@ -17,5 +17,15 @@ export async function inviteUser(values: InviteUser, redirectTo: string) {
     throw error;
   }
 
+  const profileResponse = await supabase.from('profiles').insert({
+    id: data.user.id,
+    full_name: values.full_name,
+    role_id: values.role_id,
+  });
+
+  if (profileResponse.error) {
+    throw profileResponse.error;
+  }
+
   return true;
 }

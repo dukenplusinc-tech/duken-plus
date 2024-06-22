@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { redirectIfNotAllowed } from '@/lib/auth/guard/auth/actions/redirectIfNotAllowed';
+import { RoleScope } from '@/lib/entities/roles/types';
 import { CreateUserDialog } from '@/lib/entities/users/containers/create-user';
 import { UsersTable } from '@/lib/entities/users/containers/users-table';
 
@@ -9,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default async function UsersPage() {
+  await redirectIfNotAllowed(RoleScope.users);
+
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
       <div className="flex items-center justify-between space-y-2">

@@ -20,3 +20,13 @@ export const inviteUserSchema = z.object({
 });
 
 export type InviteUser = z.infer<typeof inviteUserSchema>;
+
+export const userActionLogSchema = z.object({
+  id: z.number(),
+  timestamp: z.string(),
+  action: z.string(),
+  entity: z.string(),
+  entity_id: z.string(),
+});
+
+export type UserActionLog = z.infer<typeof userActionLogSchema>;

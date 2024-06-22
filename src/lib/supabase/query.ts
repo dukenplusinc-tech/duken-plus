@@ -4,7 +4,11 @@ import { useMemo } from 'react';
 import { useQuery as useQuerySwr } from '@supabase-cache-helpers/postgrest-swr';
 import * as z from 'zod';
 
-import { useFiltersCtx } from '@/lib/composite/filters/context';
+import {
+  ActiveFilter,
+  SortingState,
+  useFiltersCtx,
+} from '@/lib/composite/filters/context';
 import { createClient } from '@/lib/supabase/client';
 import { withFilters } from '@/lib/supabase/filters';
 import { withRange } from '@/lib/supabase/pagination';
@@ -14,12 +18,20 @@ interface Options {
   schema?: z.ZodObject<any>;
   allowedFilters?: string[];
   pagination?: boolean;
+  filters?: ActiveFilter[];
+  sort?: SortingState | undefined;
 }
 
 export function useQuery<T extends Array<unknown>>(
   table: string,
   columns: string,
-  { schema, allowedFilters, pagination: canPagination = true }: Options = {}
+  {
+    schema,
+    allowedFilters,
+    pagination: canPagination = true,
+    filters: customFilters = [],
+    sort: customSort = undefined,
+  }: Options = {}
 ) {
   const client = createClient();
 
@@ -39,7 +51,10 @@ export function useQuery<T extends Array<unknown>>(
 
   const { count, isLoading, data, error, mutate, isValidating } = useQuerySwr(
     withRange(
-      withSorting(withFilters(promise, filters), sorting),
+      withSorting(
+        withFilters(promise, [...filters, ...customFilters]),
+        customSort || sorting
+      ),
       canPagination && pagination
     )
   );

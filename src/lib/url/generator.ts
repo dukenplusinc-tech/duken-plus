@@ -7,11 +7,11 @@ export function toSettings(): string {
 }
 
 export function toUsers(): string {
-  return `/settings/users`;
+  return `/users`;
 }
 
 export function toUser(id: string): string {
-  return `/settings/users/${id}`;
+  return `/users/${id}`;
 }
 
 export function toContractors(): string {

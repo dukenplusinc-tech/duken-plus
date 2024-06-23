@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import { GeneralShopSettings } from '@/lib/entities/shop/containers/general-shop-settings';
+import { ChangePasswordCard } from '@/lib/entities/settings/containers/change-password';
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default async function GeneralSettingsPage() {
   return (
     <div className="grid gap-6">
-      <GeneralShopSettings />
+      <ChangePasswordCard />
     </div>
   );
 }

@@ -33,6 +33,24 @@ export type Database = {
         }
         Relationships: []
       }
+      cities: {
+        Row: {
+          external_id: string
+          id: string
+          title: string
+        }
+        Insert: {
+          external_id: string
+          id?: string
+          title: string
+        }
+        Update: {
+          external_id?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
       debtors: {
         Row: {
           amount: number
@@ -81,10 +99,10 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          content: string
+          content?: string
           created_at?: string | null
           id?: string
-          title: string
+          title?: string
           updated_at?: string | null
           user_id?: string
         }
@@ -166,6 +184,27 @@ export type Database = {
           id?: number
           role?: string | null
           scope?: string[] | null
+        }
+        Relationships: []
+      }
+      shops: {
+        Row: {
+          address: string
+          city: string
+          id: string
+          title: string
+        }
+        Insert: {
+          address?: string
+          city?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          id?: string
+          title?: string
         }
         Relationships: []
       }

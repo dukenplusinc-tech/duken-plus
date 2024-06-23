@@ -6,6 +6,14 @@ export function toSettings(): string {
   return `/settings`;
 }
 
+export function toSecuritySettings(): string {
+  return `/settings/security`;
+}
+
+export function toPersonalSettings(): string {
+  return `/settings/personal`;
+}
+
 export function toUsers(): string {
   return `/users`;
 }

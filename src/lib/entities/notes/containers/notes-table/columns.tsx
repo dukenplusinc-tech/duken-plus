@@ -6,6 +6,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Note } from '@/lib/entities/notes/schema';
 import * as fromUrl from '@/lib/url/generator';
 import { Checkbox } from '@/components/ui/checkbox';
+import { FormatDate } from '@/components/date/format-date';
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
 
 import { DataTableRowActions } from './row-actions';
@@ -88,9 +89,9 @@ export const columns: ColumnDef<Note>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <FormatDate className="font-medium">
             {row.getValue('created_at')}
-          </span>
+          </FormatDate>
         </div>
       );
     },
@@ -103,9 +104,9 @@ export const columns: ColumnDef<Note>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <FormatDate className="font-medium">
             {row.getValue('updated_at')}
-          </span>
+          </FormatDate>
         </div>
       );
     },

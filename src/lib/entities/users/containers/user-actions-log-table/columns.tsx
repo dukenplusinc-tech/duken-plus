@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import { UserActionLog } from '@/lib/entities/users/schema';
 import { Badge } from '@/components/ui/badge';
+import { FormatDate } from '@/components/date/format-date';
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
 
 export const columns: ColumnDef<UserActionLog>[] = [
@@ -59,9 +60,9 @@ export const columns: ColumnDef<UserActionLog>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <FormatDate className="font-medium">
             {row.getValue('timestamp')}
-          </span>
+          </FormatDate>
         </div>
       );
     },

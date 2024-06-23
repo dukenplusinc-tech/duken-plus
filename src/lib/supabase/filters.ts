@@ -15,6 +15,10 @@ export function withFilters<T extends Builder>(
         builder = builder.lte(key, apply.lte);
       } else if (apply?.in?.length) {
         builder = builder.in(key, apply.in);
+      } else if (apply?.eq) {
+        builder = builder.eq(key, apply.eq);
+      } else if (apply?.neq) {
+        builder = builder.neq(key, apply.neq);
       }
     });
   }

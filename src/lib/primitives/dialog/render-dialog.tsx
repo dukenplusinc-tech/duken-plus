@@ -36,13 +36,13 @@ export const RenderDialog: FC<RenderDialogProps> = (props) => {
 
   const handleCancel = useCallback(async () => {
     setIsLoading(true);
-    await safeInvoke(onCancel);
+    await safeInvoke(onCancel, { toast: true });
     setIsLoading(false);
   }, [onCancel]);
 
   const handleAction = useCallback(async () => {
     setIsLoading(true);
-    await safeInvoke(onAction);
+    await safeInvoke(onAction, { toast: true });
     setIsLoading(false);
   }, [onAction]);
 

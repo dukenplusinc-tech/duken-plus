@@ -4,6 +4,7 @@ export type ActiveFilter = {
   key: string;
   in?: (string | number)[];
   eq?: string;
+  neq?: string;
   gte?: string | Date;
   lte?: string | Date;
 };

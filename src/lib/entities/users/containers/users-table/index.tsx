@@ -2,7 +2,7 @@
 
 import type { FC } from 'react';
 
-// import { useDeleteIssueWithConfirm } from '@/lib/entities/users/hooks/useDeleteIssueWithConfirm';
+import { useDeleteUser } from '@/lib/entities/users/hooks/useDeleteUser';
 import { useUsers } from '@/lib/entities/users/hooks/useUsers';
 import { DataTable } from '@/components/table';
 import { DataTableToolbar } from '@/components/table/toolbar';
@@ -16,8 +16,7 @@ const initialVisibility = {
 export const UsersTable: FC = () => {
   const { data, count, isLoading, error } = useUsers();
 
-  // const deleteIssues = useDeleteIssueWithConfirm();
-  const deleteIssues = {} as any;
+  const deleteUsers = useDeleteUser();
 
   return (
     <DataTable
@@ -30,7 +29,7 @@ export const UsersTable: FC = () => {
     >
       <DataTableToolbar
         filterByColumn="full_name"
-        {...deleteIssues}
+        {...deleteUsers}
       ></DataTableToolbar>
     </DataTable>
   );

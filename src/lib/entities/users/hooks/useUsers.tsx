@@ -1,9 +1,12 @@
 'use client';
 
+import { useUser } from '@/lib/entities/users/hooks/useUser';
 import { User, userSchema } from '@/lib/entities/users/schema';
 import { useQuery } from '@/lib/supabase/query';
 
 export const useUsers = () => {
+  const user = useUser()!;
+
   return useQuery<User[]>(
     'profiles',
     `
@@ -20,6 +23,12 @@ export const useUsers = () => {
       `,
     {
       schema: userSchema,
+      filters: [
+        {
+          key: 'id',
+          neq: user?.id,
+        },
+      ],
     }
   );
 };

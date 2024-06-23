@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, PropsWithChildren, useCallback, useState } from 'react';
+import { FC, PropsWithChildren, useCallback, useEffect, useState } from 'react';
 
 import { safeInvoke } from '@/lib/primitives/async/safe-invoke';
 
@@ -13,12 +13,13 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
     onAction: null,
     onCancel: null,
     onClose: null,
+    onModalClosed: null,
   });
 
   const { onCancel, onAction, onClose } = state;
 
   const handleCancel = useCallback(async () => {
-    await safeInvoke(onCancel);
+    await safeInvoke(onCancel, { toast: true });
 
     setState((prevState) => ({ ...prevState, render: null }));
 
@@ -26,11 +27,11 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [onCancel, onClose]);
 
   const handleAction = useCallback(async () => {
-    await safeInvoke(onAction);
+    await safeInvoke(onAction, { toast: true });
 
     setState((prevState) => ({ ...prevState, render: null }));
 
-    await safeInvoke(onClose);
+    await safeInvoke(onClose, { toast: true });
   }, [onAction, onClose]);
 
   const launch = useCallback(
@@ -39,6 +40,7 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
         onAction: params?.onAction,
         onCancel: params?.onCancel,
         onClose: params?.onClose,
+        onModalClosed: params?.onModalClosed,
         render: (
           <RenderDialog
             title={params?.title}
@@ -56,6 +58,12 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
     ...state,
     launch,
   };
+
+  useEffect(() => {
+    if (!state.render && state.onModalClosed) {
+      safeInvoke(state.onModalClosed).then();
+    }
+  }, [state.onModalClosed, state.render]);
 
   return (
     <DialogContext.Provider value={value}>

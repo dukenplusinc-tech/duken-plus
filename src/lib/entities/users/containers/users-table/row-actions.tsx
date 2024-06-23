@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 
-// import { useDeleteIssueWithConfirm } from '@/lib/entities/issues/hooks/useDeleteIssueWithConfirm';
+import { useDeleteUser } from '@/lib/entities/users/hooks/useDeleteUser';
 import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,7 +22,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  // const handleRemove = useDeleteIssueWithConfirm(row.getValue('id'));
+  const handleRemove = useDeleteUser(row.getValue('id'));
 
   return (
     <DropdownMenu>
@@ -41,8 +41,8 @@ export function DataTableRowActions<TData>({
         </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-        // onClick={handleRemove.onDelete}
-        // disabled={handleRemove.processing}
+          onClick={handleRemove.onDelete}
+          disabled={handleRemove.processing}
         >
           Delete
         </DropdownMenuItem>

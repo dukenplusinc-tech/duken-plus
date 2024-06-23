@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useDialogCtx } from '@/lib/primitives/dialog/context';
 
-type Handler = () => Promise<void>;
+type Handler = (ids?: string[]) => Promise<void>;
 
 interface ConfirmDeleteParams {
   onConfirm: Handler;
@@ -19,7 +19,7 @@ export const useConfirmDelete = ({ onConfirm }: ConfirmDeleteParams) => {
 
       dialog.launch({
         onAction: onConfirm.bind(null, ...args),
-        onClose: () => {
+        onModalClosed: () => {
           setProcessing(false);
         },
       });

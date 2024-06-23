@@ -18,7 +18,9 @@ import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -61,16 +63,24 @@ export const UpdateShopForm: FC = () => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Choose the city" />
+                        <SelectValue
+                          placeholder={field.value || 'Choose the city'}
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        {cities.map((option) => (
-                          <SelectItem
-                            key={option.value}
-                            value={option.value.toString()}
-                          >
-                            {option.label}
-                          </SelectItem>
+                        {cities.map(({ group, list }, idx) => (
+                          <SelectGroup key={idx.toString()}>
+                            <SelectLabel>{group}</SelectLabel>
+
+                            {list.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                value={option.value.toString()}
+                              >
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
                         ))}
                       </SelectContent>
                     </Select>

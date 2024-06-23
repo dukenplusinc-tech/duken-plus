@@ -1,13 +1,14 @@
 'use client';
 
-import { useOptions } from '@/lib/composite/form/useOptions';
+import { useOptionsGroup } from '@/lib/composite/form/useOptions';
 
 export const useCitiesOptions = () => {
-  return useOptions({
+  return useOptionsGroup({
     table: 'cities',
     columns: `
-      value:id,
-      label:title
+      value:title,
+      label:title,
+      group:region
     `,
   });
 };

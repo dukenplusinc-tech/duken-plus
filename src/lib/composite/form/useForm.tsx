@@ -102,12 +102,14 @@ export function useForm<S extends z.ZodTypeAny, R>({
     }
   }, [fetcher, formState, setDefaultValuesFn, setValue]);
 
+  const isUpdating = Boolean(fetcher?.isLoading || fetcher?.isValidating);
+
   return useMemo(() => {
     return {
       form,
       result,
-      isProcessing,
+      isProcessing: isProcessing || isUpdating,
       handleSubmit: form.handleSubmit(onSubmit),
     };
-  }, [form, isProcessing, onSubmit, result]);
+  }, [form, isProcessing, isUpdating, onSubmit, result]);
 }

@@ -1,34 +1,45 @@
-"use client";
+'use client';
 
-import {FC, useState, PropsWithChildren, useEffect} from "react";
-import {usePathname} from 'next/navigation'
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
-import {BreadcrumbsContextState, BreadcrumbsContext} from "./context";
-import type {PageBreadcrumbLink} from "@/components/page/breadcrumbs";
+import type { PageBreadcrumbLink } from '@/components/page/breadcrumbs';
 
-export const BreadcrumbsProvider: FC<PropsWithChildren> = ({children}) => {
+import { BreadcrumbsContext, BreadcrumbsContextState } from './context';
+
+export const BreadcrumbsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useState<BreadcrumbsContextState>({
-    links: []
+    links: [],
   });
 
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   useEffect(() => {
     if (pathname) {
-      const pieces = pathname.split('/').filter(Boolean).slice(0, 2)
+      const pieces = pathname.split('/').filter(Boolean);
 
       const links: PageBreadcrumbLink[] = pieces.map((path, idx) => {
-        const href = idx === 1 ? '' : `/${path}`;
+        // Generate the full URL up to the current piece
+        const href = `/${pieces.slice(0, idx + 1).join('/')}`;
+
+        // Generate a user-friendly label if necessary
+        let label = path;
+        if (label === 'settings') label = 'Settings';
+        if (label === 'users') label = 'Users';
 
         return {
-          label: path,
+          label,
           href,
-        }
-      })
+        };
+      });
 
-      setState(prevState => ({...prevState, links}))
+      setState((prevState) => ({ ...prevState, links }));
     }
   }, [pathname]);
 
-  return <BreadcrumbsContext.Provider value={state}>{children}</BreadcrumbsContext.Provider>
-}
+  return (
+    <BreadcrumbsContext.Provider value={state}>
+      {children}
+    </BreadcrumbsContext.Provider>
+  );
+};

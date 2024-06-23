@@ -12,6 +12,7 @@ import {
 } from 'react';
 
 import { useMediaQuery } from '@/lib/hooks/use-media-query';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -47,13 +48,14 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
   children,
   desktopMedia = '(min-width: 768px)',
   cancelCaption = 'Cancel',
+  dialogClassName,
 }) => {
   const isDesktop = useMediaQuery(desktopMedia);
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className={cn('sm:max-w-[425px]', dialogClassName)}>
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
@@ -92,7 +94,7 @@ export const DialogModalProvider: FC<PropsWithChildren> = ({ children }) => {
   const [show, setShow] = useState(false);
 
   const [modalContent, setModalContent] = useState<ReactNode | undefined>(
-    undefined,
+    undefined
   );
 
   const [dialogProps, setDialogProps] = useState<DialogModalPayload>({});
@@ -127,7 +129,7 @@ export const DialogModalProvider: FC<PropsWithChildren> = ({ children }) => {
         }
       };
     },
-    [id],
+    [id]
   );
 
   const ctx = useMemo<DialogModalCtxType>(
@@ -141,7 +143,7 @@ export const DialogModalProvider: FC<PropsWithChildren> = ({ children }) => {
         setShow(true);
       },
     }),
-    [close, onClose],
+    [close, onClose]
   );
 
   return (

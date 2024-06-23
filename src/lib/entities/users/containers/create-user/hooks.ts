@@ -4,7 +4,7 @@ import { InviteUser, inviteUserSchema } from '@/lib/entities/users/schema';
 import * as fromUrl from '@/lib/url/generator';
 
 export function useUserForm(id?: string) {
-  return useForm<typeof inviteUserSchema, InviteUser, boolean>({
+  return useForm<typeof inviteUserSchema, InviteUser>({
     defaultValues: {
       email: '',
       full_name: '',

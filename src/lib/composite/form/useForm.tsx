@@ -4,30 +4,25 @@ import { useForm as useFormHook } from 'react-hook-form';
 import * as z from 'zod';
 
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
-// import { FetcherResult } from '@/lib/request/useFetcher';
+import { QueryByIdResult } from '@/lib/supabase/useQueryById';
 import { toast } from '@/components/ui/use-toast';
 
-// mock
-type FetcherResult = any;
-
-interface FormOptions<T, R, FResult = FetcherResult> {
+interface FormOptions<T, R> {
   schema: T;
   defaultValues: R;
   setDefaultValues?: (key: string, value: any) => void;
   request: (values: R) => Promise<any>;
-  fetcher?: FResult;
+  fetcher?: QueryByIdResult<R>;
 }
 
-export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
+export function useForm<S extends z.ZodTypeAny, R>({
   schema,
   defaultValues,
   request,
-  fetcher: fetcherResult,
+  fetcher,
   setDefaultValues,
-}: FormOptions<S, R, FResult>) {
+}: FormOptions<S, R>) {
   const dialog = useModalDialog();
-
-  const fetcher = fetcherResult as never as FetcherResult;
 
   const isInitializedRef = useRef(false);
 
@@ -39,7 +34,7 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
     defaultValues: defaultValues as never,
   });
 
-  const { setError, setValue, formState } = form;
+  const { setValue, formState } = form;
 
   const onSubmit = useCallback(
     async (values: z.infer<S>) => {
@@ -90,7 +85,7 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
   useEffect(() => {
     // fill initial data only at the very beginning
     if (!isInitializedRef.current && fetcher) {
-      const { isLoading, error, data } = fetcher as never as FetcherResult;
+      const { isLoading, error, data } = fetcher;
 
       if (!isLoading && !error && data) {
         const keys = Object.keys(
@@ -98,7 +93,7 @@ export function useForm<S extends z.ZodTypeAny, R, FResult = FetcherResult>({
         );
 
         keys.forEach((key) => {
-          setDefaultValuesFn(key, data[key] || '');
+          setDefaultValuesFn(key, (data as any)[key] || '');
         });
 
         // prevent next time form fill in

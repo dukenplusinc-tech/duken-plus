@@ -7,6 +7,7 @@ export interface DialogWrapperProps {
   title?: string;
   description?: string;
   cancelCaption?: string;
+  dialogClassName?: string;
 }
 
 export interface DialogModalPayload

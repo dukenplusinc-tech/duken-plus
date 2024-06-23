@@ -4,11 +4,11 @@ import { useCallback, useMemo } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
 
-import type { ConfirmDeleteContact } from '@/lib/primitives/dialog/confirm/delete';
+import type { ConfirmDeletePopUp } from '@/lib/primitives/dialog/confirm/delete';
 import { Button } from '@/components/ui/button';
 import { SmallSpinner } from '@/components/spinner/small';
 
-interface DataTableDeleteButton<TData> extends ConfirmDeleteContact {
+interface DataTableDeleteButton<TData> extends ConfirmDeletePopUp {
   table: Table<TData>;
 }
 

@@ -2,7 +2,7 @@
 
 import { FC, PropsWithChildren, useCallback, useState } from 'react';
 
-import { saveInvoke } from '@/lib/primitives/async/safe-invoke';
+import { safeInvoke } from '@/lib/primitives/async/safe-invoke';
 
 import { DialogContext, DialogContextState, LaunchParams } from './context';
 import { RenderDialog } from './render-dialog';
@@ -18,19 +18,19 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
   const { onCancel, onAction, onClose } = state;
 
   const handleCancel = useCallback(async () => {
-    await saveInvoke(onCancel);
+    await safeInvoke(onCancel);
 
     setState((prevState) => ({ ...prevState, render: null }));
 
-    await saveInvoke(onClose);
+    await safeInvoke(onClose);
   }, [onCancel, onClose]);
 
   const handleAction = useCallback(async () => {
-    await saveInvoke(onAction);
+    await safeInvoke(onAction);
 
     setState((prevState) => ({ ...prevState, render: null }));
 
-    await saveInvoke(onClose);
+    await safeInvoke(onClose);
   }, [onAction, onClose]);
 
   const launch = useCallback(

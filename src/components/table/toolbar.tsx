@@ -2,14 +2,14 @@
 
 import { PropsWithChildren } from 'react';
 
-import type { ConfirmDeleteContact } from '@/lib/primitives/dialog/confirm/delete';
+import type { ConfirmDeletePopUp } from '@/lib/primitives/dialog/confirm/delete';
 import { useDataTable } from '@/components/table/data-table-context';
 import { DataTableViewOptions } from '@/components/table/data-table-view-options';
 import { DataTableDeleteButton } from '@/components/table/delete';
 import { DataTableSearchBy } from '@/components/table/filters/search-by';
 
 interface DataTableToolbarProps<TData>
-  extends PropsWithChildren<ConfirmDeleteContact> {
+  extends PropsWithChildren<ConfirmDeletePopUp> {
   filterByColumn?: string;
 }
 

@@ -1,23 +1,22 @@
-import {FC, useCallback, useState} from "react";
+import { FC, useCallback, useState } from 'react';
 
+import { safeInvoke } from '@/lib/primitives/async/safe-invoke';
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction
-} from "@/components/ui/alert-dialog";
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
-import {saveInvoke} from "@/lib/primitives/async/safe-invoke";
-
-import type {LaunchParams} from './context'
+import type { LaunchParams } from './context';
 
 export interface RenderDialogProps extends LaunchParams {
-  cancelCaption?: string
-  actionCaption?: string
+  cancelCaption?: string;
+  actionCaption?: string;
 
   onCancel: () => void;
   onAction: () => void;
@@ -30,37 +29,44 @@ export const RenderDialog: FC<RenderDialogProps> = (props) => {
     onCancel,
     onAction,
     cancelCaption = 'Cancel',
-    actionCaption = 'Continue'
+    actionCaption = 'Continue',
   } = props;
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCancel = useCallback(async () => {
     setIsLoading(true);
-    await saveInvoke(onCancel);
+    await safeInvoke(onCancel);
     setIsLoading(false);
-  }, [onCancel])
+  }, [onCancel]);
 
   const handleAction = useCallback(async () => {
     setIsLoading(true);
-    await saveInvoke(onAction);
+    await safeInvoke(onAction);
     setIsLoading(false);
-  }, [onAction])
+  }, [onAction]);
 
   return (
     <AlertDialog open>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title || 'Are you absolutely sure?'}</AlertDialogTitle>
+          <AlertDialogTitle>
+            {title || 'Are you absolutely sure?'}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            {description || `This action cannot be undone. This will permanently remove your data from our servers.`}
+            {description ||
+              `This action cannot be undone. This will permanently remove your data from our servers.`}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading} onClick={handleCancel}>{cancelCaption}</AlertDialogCancel>
-          <AlertDialogAction disabled={isLoading} onClick={handleAction}>{actionCaption}</AlertDialogAction>
+          <AlertDialogCancel disabled={isLoading} onClick={handleCancel}>
+            {cancelCaption}
+          </AlertDialogCancel>
+          <AlertDialogAction disabled={isLoading} onClick={handleAction}>
+            {actionCaption}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
-}
+  );
+};

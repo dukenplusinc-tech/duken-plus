@@ -36,4 +36,4 @@ export const useConfirmDelete = ({ onConfirm }: ConfirmDeleteParams) => {
   );
 };
 
-export type ConfirmDeleteContact = ReturnType<typeof useConfirmDelete>;
+export type ConfirmDeletePopUp = ReturnType<typeof useConfirmDelete>;

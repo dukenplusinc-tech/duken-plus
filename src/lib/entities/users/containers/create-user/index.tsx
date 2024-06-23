@@ -13,9 +13,9 @@ export function CreateUserDialog() {
   const onOpen = () => {
     dialog.launch({
       render: <UserForm />,
-      title: 'Add New User',
+      title: 'Invite New User',
     });
   };
 
-  return <Button onClick={onOpen}>Add new user</Button>;
+  return <Button onClick={onOpen}>Invite new user</Button>;
 }

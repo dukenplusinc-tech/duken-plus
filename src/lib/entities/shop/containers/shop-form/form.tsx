@@ -2,6 +2,7 @@
 
 import { FC } from 'react';
 
+import { useCitiesOptions } from '@/lib/entities/cities/hooks/useCitiesOptions';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import {
@@ -26,6 +27,8 @@ import { useShopForm } from './hooks';
 
 export const UpdateShopForm: FC = () => {
   const { form, isProcessing, handleSubmit } = useShopForm();
+
+  const cities = useCitiesOptions();
 
   return (
     <>
@@ -61,12 +64,12 @@ export const UpdateShopForm: FC = () => {
                         <SelectValue placeholder="Choose the city" />
                       </SelectTrigger>
                       <SelectContent>
-                        {([] as any).map((role: any) => (
+                        {cities.map((option) => (
                           <SelectItem
-                            key={role.value}
-                            value={role.value.toString()}
+                            key={option.value}
+                            value={option.value.toString()}
                           >
-                            {role.label}
+                            {option.label}
                           </SelectItem>
                         ))}
                       </SelectContent>

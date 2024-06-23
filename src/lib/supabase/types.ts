@@ -37,16 +37,19 @@ export type Database = {
         Row: {
           external_id: string
           id: string
+          region: string | null
           title: string
         }
         Insert: {
           external_id: string
           id?: string
+          region?: string | null
           title: string
         }
         Update: {
           external_id?: string
           id?: string
+          region?: string | null
           title?: string
         }
         Relationships: []

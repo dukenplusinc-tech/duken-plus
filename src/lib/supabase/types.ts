@@ -133,6 +133,7 @@ export type Database = {
           created_at: string | null
           full_name: string | null
           id: string
+          language: string | null
           role_id: number | null
           updated_at: string | null
         }
@@ -141,6 +142,7 @@ export type Database = {
           created_at?: string | null
           full_name?: string | null
           id: string
+          language?: string | null
           role_id?: number | null
           updated_at?: string | null
         }
@@ -149,6 +151,7 @@ export type Database = {
           created_at?: string | null
           full_name?: string | null
           id?: string
+          language?: string | null
           role_id?: number | null
           updated_at?: string | null
         }
@@ -251,7 +254,35 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      extended_profile: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string | null
+          language: string | null
+          phone: string | null
+          role_id: number | null
+          updated_at: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       clean_old_logs: {

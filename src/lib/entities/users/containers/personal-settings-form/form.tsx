@@ -67,13 +67,13 @@ export const PersonalSettingsForm: FC = () => {
             <FormField
               control={form.control}
               name="phone"
-              render={({ field }) => (
+              render={({ field: { value, ...field } }) => (
                 <FormItem className="mb-4">
                   <FormLabel>Your Phone</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter you phone"
-                      type="phone"
+                      value={value || ''}
                       {...field}
                     />
                   </FormControl>
@@ -91,7 +91,7 @@ export const PersonalSettingsForm: FC = () => {
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={field.value || ''}
                     >
                       <SelectTrigger>
                         <SelectValue

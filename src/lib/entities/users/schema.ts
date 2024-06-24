@@ -39,3 +39,15 @@ export const personalPayload = z.object({
 });
 
 export type PersonalPayload = z.infer<typeof personalPayload>;
+
+export const securityPayload = z
+  .object({
+    password: z.string().min(3).max(128),
+    password_confirm: z.string(),
+  })
+  .refine((data) => data.password === data.password_confirm, {
+    message: "Passwords don't match",
+    path: ['password_confirm'],
+  });
+
+export type SecurityPayload = z.infer<typeof securityPayload>;

@@ -4,18 +4,17 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { redirectIfGuest } from '@/lib/auth/guard/auth/actions/redirectIfGuest';
+import { SecurityPayload } from '@/lib/entities/users/schema';
 import { createClient } from '@/lib/supabase/server';
 
-export async function changePassword(formData: FormData) {
+export async function updateSecuritySettings(payload: SecurityPayload) {
   await redirectIfGuest();
 
   const supabase = createClient();
 
-  const data = {
-    password: formData.get('password') as string,
-  };
-
-  await supabase.auth.updateUser(data);
+  await supabase.auth.updateUser({
+    password: payload.password,
+  });
 
   revalidatePath('/', 'layout');
   redirect('/');

@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
-import { ChangePasswordCard } from '@/lib/entities/settings/containers/change-password';
+import { SecuritySettings } from '@/lib/entities/settings/containers/security-settings';
 
 export const metadata: Metadata = {
-  title: 'Settings',
-  description: 'Settings',
+  title: 'Security Settings',
+  description: 'Security Settings',
 };
 
-export default async function GeneralSettingsPage() {
+export default async function SecuritySettingsPage() {
   return (
     <div className="grid gap-6">
-      <ChangePasswordCard />
+      <SecuritySettings />
     </div>
   );
 }

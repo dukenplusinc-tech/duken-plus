@@ -30,3 +30,12 @@ export const userActionLogSchema = z.object({
 });
 
 export type UserActionLog = z.infer<typeof userActionLogSchema>;
+
+export const personalPayload = z.object({
+  full_name: z.string().min(3).max(255),
+  email: z.string().email(),
+  phone: z.string().nullable(),
+  language: z.string().nullable(),
+});
+
+export type PersonalPayload = z.infer<typeof personalPayload>;

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ShoppingBag as LogoIcon, MapPin, PanelLeft } from 'lucide-react';
 
 import { brand } from '@/config/brand';
+import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { UserDropDownNav } from '@/lib/entities/users/containers/user-drop-down-nav';
 import { useBreadcrumbsLinks } from '@/lib/navigation/breadcrumbs/context';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
@@ -17,6 +18,8 @@ import { SearchComboBox } from '@/components/search-combo-box';
 export const HeaderNav: FC = () => {
   const menuItems = useHeaderMenu();
   const breadcrumbLinks = useBreadcrumbsLinks();
+
+  const { data: shop } = useShop();
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -38,10 +41,10 @@ export const HeaderNav: FC = () => {
             </Link>
 
             <div>
-              <span className="block font-bold">ShopName</span>
+              <span className="block font-bold">{shop?.title || '---'}</span>
               <span className="flex items-center">
                 <MapPin className="h-5 w-5 mr-2" />
-                City
+                {shop?.city || '---'}
               </span>
             </div>
           </nav>

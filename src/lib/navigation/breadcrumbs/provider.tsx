@@ -16,7 +16,11 @@ export const BreadcrumbsProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (pathname) {
-      const pieces = pathname.split('/').filter(Boolean);
+      const pieces = pathname
+        .split('/')
+        .filter(Boolean)
+        // remove lang from the list
+        .filter((_, idx) => idx > 0);
 
       const links: PageBreadcrumbLink[] = pieces.map((path, idx) => {
         // Generate the full URL up to the current piece
@@ -24,8 +28,6 @@ export const BreadcrumbsProvider: FC<PropsWithChildren> = ({ children }) => {
 
         // Generate a user-friendly label if necessary
         let label = path;
-        if (label === 'settings') label = 'Settings';
-        if (label === 'users') label = 'Users';
 
         return {
           label,

@@ -1,171 +1,171 @@
 {
   "combobox": {
-    "quick_access": "Quick access...",
-    "search": "Quick access...",
-    "cmd_placeholder": "Type a command or search...",
-    "empty": "No results found.",
-    "suggestions_label": "Suggestions",
+    "quick_access": "Жылдам қол жетімділік...",
+    "search": "Іздеу...",
+    "cmd_placeholder": "Бұйрық немесе іздеу сұрауын енгізіңіз...",
+    "empty": "Нәтижелер табылмады.",
+    "suggestions_label": "Ұсыныстар",
     "commands": {
-      "settings_label": "Settings"
+      "settings_label": "Параметрлер"
     }
   },
   "user_nav": {
-    "authenticated": "authenticated",
-    "settings_label": "Settings",
-    "logout": "Log out"
+    "authenticated": "аутентификацияланған",
+    "settings_label": "Параметрлер",
+    "logout": "Шығу"
   },
   "breadcrumbs": {
-    "home": "Home",
-    "users": "Users",
-    "settings": "Settings",
-    "personal": "Personal Settings",
-    "security": "security Settings"
+    "home": "Үй",
+    "users": "Пайдаланушылар",
+    "settings": "Параметрлер",
+    "personal": "Жеке параметрлер",
+    "security": "Қауіпсіздік параметрлері"
   },
   "menu": {
-    "label_home": "Home",
-    "label_contractors": "Contractors",
-    "label_debtors": "Debtors",
-    "label_blacklist": "Blacklist",
-    "label_cash_desk": "Cash Desk",
-    "label_notes": "Notes",
-    "label_chat": "Chat",
-    "label_statistics": "Statistics",
-    "label_subscription": "Subscription",
-    "label_users": "Users",
-    "label_settings": "Settings"
+    "label_home": "Үй",
+    "label_contractors": "Мердігерлер",
+    "label_debtors": "Қарызгерлер",
+    "label_blacklist": "Қара тізім",
+    "label_cash_desk": "Кассалық орын",
+    "label_notes": "Ескертпелер",
+    "label_chat": "Чат",
+    "label_statistics": "Статистика",
+    "label_subscription": "Жазылу",
+    "label_users": "Пайдаланушылар",
+    "label_settings": "Параметрлер"
   },
   "transitions": {
-    "loading_btn": "Loading"
+    "loading_btn": "Жүктеу"
   },
   "datatable": {
-    "filter_placeholder": "Type to filter",
-    "total_caption": "{total, number} total",
-    "selected_caption": "{selected, number} of {total, number} row(s) selected.",
-    "limit_caption": "Rows per page",
-    "pagination_caption": "Page {page, number} of {total, number}",
+    "filter_placeholder": "Фильтрлеу үшін енгізіңіз",
+    "total_caption": "{total, number} барлығы",
+    "selected_caption": "{selected, number} / {total, number} жол(дар) таңдалды.",
+    "limit_caption": "Беттегі жолдар саны",
+    "pagination_caption": "Бет {page, number} / {total, number}",
     "actions": {
-      "view_cation": "View",
-      "delete_cation": "Delete"
+      "view_cation": "Қарау",
+      "delete_cation": "Жою"
     },
     "view": {
-      "toggle_btn_caption": "View",
-      "toggle_cation": "Toggle columns"
+      "toggle_btn_caption": "Қарау",
+      "toggle_cation": "Бағандарды ауыстыру"
     },
-    "empty_message": "No results."
+    "empty_message": "Нәтижелер жоқ."
   },
   "auth": {
-    "title": "Login",
-    "subtitle": "Enter your email below to login to your account",
+    "title": "Кіру",
+    "subtitle": "Тіркелгіңізге кіру үшін төменде электрондық поштаңызды енгізіңіз",
     "form_label_email": "E-mail",
     "form_placeholder_email": "contact@example.com",
-    "form_label_password": "Password",
-    "form_placeholder_password": "Your password",
-    "forgot_pass_label": "Forgot your password?",
-    "submit_login": "Login",
-    "submit_recover": "Recover password",
-    "submit_continue": "Continue",
-    "dont_have_account_label": "Don&apos;t have an account?",
-    "signup_label": "Sign up",
+    "form_label_password": "Құпия сөз",
+    "form_placeholder_password": "Құпия сөзіңіз",
+    "forgot_pass_label": "Құпия сөзіңізді ұмыттыңыз ба?",
+    "submit_login": "Кіру",
+    "submit_recover": "Құпия сөзді қалпына келтіру",
+    "submit_continue": "Жалғастыру",
+    "dont_have_account_label": "Тіркелгіңіз жоқ па?",
+    "signup_label": "Тіркелу",
     "toast": {
       "recover": {
-        "title": "Password recovery email sent",
-        "description": "Please check your inbox and follow the instruction"
+        "title": "Құпия сөзді қалпына келтіру электрондық поштасы жіберілді",
+        "description": "Поштаңызды тексеріп, нұсқауларды орындаңыз"
       }
     },
     "alert": {
       "login": {
-        "description": "The password or email you entered is incorrect. Please try again."
+        "description": "Енгізілген құпия сөз немесе электрондық пошта дұрыс емес. Қайтадан көріңіз."
       },
       "recover": {
-        "description": "There was an issue sending the password recovery email. Please try again."
+        "description": "Құпия сөзді қалпына келтіру электрондық поштасын жіберу кезінде қате пайда болды. Қайтадан көріңіз."
       }
     },
     "recover": {
-      "title": "Remembered password?",
-      "btn_caption": "Try to log in"
+      "title": "Құпия сөзіңізді есіңізге түсірдіңіз бе?",
+      "btn_caption": "Кіруге тырысыңыз"
     }
   },
   "invited": {
-    "title": "You are invited",
-    "subtitle": "Setup your new password",
-    "form_label_password": "Password",
-    "form_placeholder_password": "Your password",
-    "form_label_password_confirm": "Repeat password",
-    "form_placeholder_password_confirm": "Your password again",
-    "submit": "Save Password",
-    "error_invalid_token": "Invalid token",
-    "error_wrong_password": "Passwords do not match"
+    "title": "Сіз шақырылдыңыз",
+    "subtitle": "Жаңа құпия сөзіңізді орнатыңыз",
+    "form_label_password": "Құпия сөз",
+    "form_placeholder_password": "Құпия сөзіңіз",
+    "form_label_password_confirm": "Құпия сөзді қайталаңыз",
+    "form_placeholder_password_confirm": "Құпия сөзіңізді қайта енгізіңіз",
+    "submit": "Құпия сөзді сақтау",
+    "error_invalid_token": "Жарамсыз токен",
+    "error_wrong_password": "Құпия сөздер сәйкес келмейді"
   },
   "reset_pass": {
-    "title": "Reset Password",
-    "subtitle": "Enter your new password",
-    "form_label_password": "New Password",
-    "form_placeholder_password": "Your new password",
-    "form_label_password_confirm": "Repeat password",
-    "form_placeholder_password_confirm": "Your password again",
-    "submit": "Reset Password",
-    "error_wrong_password": "Passwords do not match"
+    "title": "Құпия сөзді қалпына келтіру",
+    "subtitle": "Жаңа құпия сөзіңізді енгізіңіз",
+    "form_label_password": "Жаңа құпия сөз",
+    "form_placeholder_password": "Жаңа құпия сөзіңіз",
+    "form_label_password_confirm": "Құпия сөзді қайталаңыз",
+    "form_placeholder_password_confirm": "Құпия сөзіңізді қайта енгізіңіз",
+    "submit": "Құпия сөзді қалпына келтіру",
+    "error_wrong_password": "Құпия сөздер сәйкес келмейді"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Параметрлер",
     "general": {
-      "title": "General",
-      "form_title": "Shop Details",
-      "form_subtitle": "Fill the shop details",
-      "form_label_name": "Shop Name",
-      "form_placeholder_name": "Enter you shop name",
-      "form_label_city": "City",
-      "form_placeholder_city": "Choose the city",
-      "form_description_city": "Chose your shop city",
-      "form_label_address": "Address",
-      "form_placeholder_address": "Enter the shop address",
-      "form_save": "Save"
+      "title": "Жалпы",
+      "form_title": "Дүкеннің мәліметтері",
+      "form_subtitle": "Дүкеннің мәліметтерін толтырыңыз",
+      "form_label_name": "Дүкен атауы",
+      "form_placeholder_name": "Дүкен атауын енгізіңіз",
+      "form_label_city": "Қала",
+      "form_placeholder_city": "Қаланы таңдаңыз",
+      "form_description_city": "Дүкеніңіздің қаласын таңдаңыз",
+      "form_label_address": "Мекен-жайы",
+      "form_placeholder_address": "Дүкеніңіздің мекен-жайын енгізіңіз",
+      "form_save": "Сақтау"
     },
     "security": {
-      "title": "Security",
-      "form_title": "Security Settings",
-      "form_subtitle": "Fill the shop details",
-      "form_label_password": "Your New Password",
-      "form_placeholder_password": "Enter you new password",
-      "form_label_password_confirm": "Repeat Your Password",
-      "form_placeholder_password_confirm": "Enter you new password again",
-      "form_save": "Save"
+      "title": "Қауіпсіздік",
+      "form_title": "Қауіпсіздік параметрлері",
+      "form_subtitle": "Дүкеннің мәліметтерін толтырыңыз",
+      "form_label_password": "Жаңа құпия сөзіңіз",
+      "form_placeholder_password": "Жаңа құпия сөзді енгізіңіз",
+      "form_label_password_confirm": "Құпия сөзіңізді қайталаңыз",
+      "form_placeholder_password_confirm": "Жаңа құпия сөзді қайта енгізіңіз",
+      "form_save": "Сақтау"
     },
     "personal": {
-      "title": "Personal",
-      "form_title": "Personal Settings",
-      "form_subtitle": "Fill in the details",
-      "form_label_full_name": "Your Full Name",
-      "form_placeholder_full_name": "Enter your full name",
-      "form_label_email": "Your Email",
-      "form_placeholder_email": "Enter your email",
-      "form_label_phone": "Your Phone",
-      "form_placeholder_phone": "Enter your phone",
-      "form_label_lang": "Language",
-      "form_placeholder_lang": "Choose the language",
-      "form_save": "Save"
+      "title": "Жеке",
+      "form_title": "Жеке параметрлер",
+      "form_subtitle": "Мәліметтерді толтырыңыз",
+      "form_label_full_name": "Толық атыңыз",
+      "form_placeholder_full_name": "Толық атыңызды енгізіңіз",
+      "form_label_email": "Электрондық поштаңыз",
+      "form_placeholder_email": "Электрондық поштаңызды енгізіңіз",
+      "form_label_phone": "Телефоныңыз",
+      "form_placeholder_phone": "Телефон нөміріңізді енгізіңіз",
+      "form_label_lang": "Тіл",
+      "form_placeholder_lang": "Тілді таңдаңыз",
+      "form_save": "Сақтау"
     }
   },
   "users": {
-    "title": "Users",
-    "subtitle": "Manage your users and view their details",
+    "title": "Пайдаланушылар",
+    "subtitle": "Пайдаланушыларыңызды басқару және олардың мәліметтерін қарау",
     "invite": {
-      "invite_button_caption": "Invite new user",
-      "header": "Invite new user",
+      "invite_button_caption": "Жаңа пайдаланушыны шақыру",
+      "header": "Жаңа пайдаланушыны шақыру",
       "form_label_email": "E-mail",
       "form_placeholder_email": "contact@example.com",
-      "form_description_email": "We will send confirmation on this email",
-      "form_label_full_name": "Full Name",
-      "form_placeholder_full_name": "John Doe",
-      "form_description_full_name": "Enter the user full name",
-      "form_label_role": "Role",
-      "form_placeholder_role": "Chose the role",
-      "form_description_role": "Chose user role",
-      "form_submit": "Send Invitation"
+      "form_description_email": "Растау хатымыз осы электрондық поштаға жіберіледі",
+      "form_label_full_name": "Толық аты",
+      "form_placeholder_full_name": "Иван Иванов",
+      "form_description_full_name": "Пайдаланушының толық атын енгізіңіз",
+      "form_label_role": "Рөл",
+      "form_placeholder_role": "Рөлді таңдаңыз",
+      "form_description_role": "Пайдаланушының рөлін таңдаңыз",
+      "form_submit": "Шақыруды жіберу"
     }
   },
   "user_logs": {
-    "title": "View \"{name}\" logs",
-    "subtitle": "View user action logs"
+    "title": "\"{name}\" әрекет журналдарын көру",
+    "subtitle": "Пайдаланушының әрекет журналдарын көру"
   }
 }

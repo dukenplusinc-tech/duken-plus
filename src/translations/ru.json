@@ -1,171 +1,171 @@
 {
   "combobox": {
-    "quick_access": "Quick access...",
-    "search": "Quick access...",
-    "cmd_placeholder": "Type a command or search...",
-    "empty": "No results found.",
-    "suggestions_label": "Suggestions",
+    "quick_access": "Быстрый доступ...",
+    "search": "Поиск...",
+    "cmd_placeholder": "Введите команду или запрос...",
+    "empty": "Результаты не найдены.",
+    "suggestions_label": "Предложения",
     "commands": {
-      "settings_label": "Settings"
+      "settings_label": "Настройки"
     }
   },
   "user_nav": {
-    "authenticated": "authenticated",
-    "settings_label": "Settings",
-    "logout": "Log out"
+    "authenticated": "аутентифицирован",
+    "settings_label": "Настройки",
+    "logout": "Выйти"
   },
   "breadcrumbs": {
-    "home": "Home",
-    "users": "Users",
-    "settings": "Settings",
-    "personal": "Personal Settings",
-    "security": "security Settings"
+    "home": "Главная",
+    "users": "Пользователи",
+    "settings": "Настройки",
+    "personal": "Персональные настройки",
+    "security": "Настройки безопасности"
   },
   "menu": {
-    "label_home": "Home",
-    "label_contractors": "Contractors",
-    "label_debtors": "Debtors",
-    "label_blacklist": "Blacklist",
-    "label_cash_desk": "Cash Desk",
-    "label_notes": "Notes",
-    "label_chat": "Chat",
-    "label_statistics": "Statistics",
-    "label_subscription": "Subscription",
-    "label_users": "Users",
-    "label_settings": "Settings"
+    "label_home": "Главная",
+    "label_contractors": "Контрагенты",
+    "label_debtors": "Должники",
+    "label_blacklist": "Черный список",
+    "label_cash_desk": "Касса",
+    "label_notes": "Заметки",
+    "label_chat": "Чат",
+    "label_statistics": "Статистика",
+    "label_subscription": "Подписка",
+    "label_users": "Пользователи",
+    "label_settings": "Настройки"
   },
   "transitions": {
-    "loading_btn": "Loading"
+    "loading_btn": "Загрузка"
   },
   "datatable": {
-    "filter_placeholder": "Type to filter",
-    "total_caption": "{total, number} total",
-    "selected_caption": "{selected, number} of {total, number} row(s) selected.",
-    "limit_caption": "Rows per page",
-    "pagination_caption": "Page {page, number} of {total, number}",
+    "filter_placeholder": "Введите для фильтрации",
+    "total_caption": "{total, number} всего",
+    "selected_caption": "{selected, number} из {total, number} строк выбрано.",
+    "limit_caption": "Строк на страницу",
+    "pagination_caption": "Страница {page, number} из {total, number}",
     "actions": {
-      "view_cation": "View",
-      "delete_cation": "Delete"
+      "view_cation": "Просмотр",
+      "delete_cation": "Удалить"
     },
     "view": {
-      "toggle_btn_caption": "View",
-      "toggle_cation": "Toggle columns"
+      "toggle_btn_caption": "Просмотр",
+      "toggle_cation": "Переключить столбцы"
     },
-    "empty_message": "No results."
+    "empty_message": "Нет результатов."
   },
   "auth": {
-    "title": "Login",
-    "subtitle": "Enter your email below to login to your account",
+    "title": "Вход",
+    "subtitle": "Введите ваш email ниже для входа в аккаунт",
     "form_label_email": "E-mail",
     "form_placeholder_email": "contact@example.com",
-    "form_label_password": "Password",
-    "form_placeholder_password": "Your password",
-    "forgot_pass_label": "Forgot your password?",
-    "submit_login": "Login",
-    "submit_recover": "Recover password",
-    "submit_continue": "Continue",
-    "dont_have_account_label": "Don&apos;t have an account?",
-    "signup_label": "Sign up",
+    "form_label_password": "Пароль",
+    "form_placeholder_password": "Ваш пароль",
+    "forgot_pass_label": "Забыли пароль?",
+    "submit_login": "Войти",
+    "submit_recover": "Восстановить пароль",
+    "submit_continue": "Продолжить",
+    "dont_have_account_label": "Нет аккаунта?",
+    "signup_label": "Зарегистрироваться",
     "toast": {
       "recover": {
-        "title": "Password recovery email sent",
-        "description": "Please check your inbox and follow the instruction"
+        "title": "Письмо для восстановления пароля отправлено",
+        "description": "Пожалуйста, проверьте вашу почту и следуйте инструкциям"
       }
     },
     "alert": {
       "login": {
-        "description": "The password or email you entered is incorrect. Please try again."
+        "description": "Неправильный пароль или email. Пожалуйста, попробуйте снова."
       },
       "recover": {
-        "description": "There was an issue sending the password recovery email. Please try again."
+        "description": "Произошла ошибка при отправке письма для восстановления пароля. Пожалуйста, попробуйте снова."
       }
     },
     "recover": {
-      "title": "Remembered password?",
-      "btn_caption": "Try to log in"
+      "title": "Вспомнили пароль?",
+      "btn_caption": "Попробовать войти"
     }
   },
   "invited": {
-    "title": "You are invited",
-    "subtitle": "Setup your new password",
-    "form_label_password": "Password",
-    "form_placeholder_password": "Your password",
-    "form_label_password_confirm": "Repeat password",
-    "form_placeholder_password_confirm": "Your password again",
-    "submit": "Save Password",
-    "error_invalid_token": "Invalid token",
-    "error_wrong_password": "Passwords do not match"
+    "title": "Вы приглашены",
+    "subtitle": "Установите новый пароль",
+    "form_label_password": "Пароль",
+    "form_placeholder_password": "Ваш пароль",
+    "form_label_password_confirm": "Повторите пароль",
+    "form_placeholder_password_confirm": "Ваш пароль снова",
+    "submit": "Сохранить пароль",
+    "error_invalid_token": "Неверный токен",
+    "error_wrong_password": "Пароли не совпадают"
   },
   "reset_pass": {
-    "title": "Reset Password",
-    "subtitle": "Enter your new password",
-    "form_label_password": "New Password",
-    "form_placeholder_password": "Your new password",
-    "form_label_password_confirm": "Repeat password",
-    "form_placeholder_password_confirm": "Your password again",
-    "submit": "Reset Password",
-    "error_wrong_password": "Passwords do not match"
+    "title": "Сброс пароля",
+    "subtitle": "Введите новый пароль",
+    "form_label_password": "Новый пароль",
+    "form_placeholder_password": "Ваш новый пароль",
+    "form_label_password_confirm": "Повторите пароль",
+    "form_placeholder_password_confirm": "Ваш пароль снова",
+    "submit": "Сбросить пароль",
+    "error_wrong_password": "Пароли не совпадают"
   },
   "settings": {
-    "title": "Settings",
+    "title": "Настройки",
     "general": {
-      "title": "General",
-      "form_title": "Shop Details",
-      "form_subtitle": "Fill the shop details",
-      "form_label_name": "Shop Name",
-      "form_placeholder_name": "Enter you shop name",
-      "form_label_city": "City",
-      "form_placeholder_city": "Choose the city",
-      "form_description_city": "Chose your shop city",
-      "form_label_address": "Address",
-      "form_placeholder_address": "Enter the shop address",
-      "form_save": "Save"
+      "title": "Общие",
+      "form_title": "Детали магазина",
+      "form_subtitle": "Заполните детали магазина",
+      "form_label_name": "Название магазина",
+      "form_placeholder_name": "Введите название вашего магазина",
+      "form_label_city": "Город",
+      "form_placeholder_city": "Выберите город",
+      "form_description_city": "Выберите город вашего магазина",
+      "form_label_address": "Адрес",
+      "form_placeholder_address": "Введите адрес магазина",
+      "form_save": "Сохранить"
     },
     "security": {
-      "title": "Security",
-      "form_title": "Security Settings",
-      "form_subtitle": "Fill the shop details",
-      "form_label_password": "Your New Password",
-      "form_placeholder_password": "Enter you new password",
-      "form_label_password_confirm": "Repeat Your Password",
-      "form_placeholder_password_confirm": "Enter you new password again",
-      "form_save": "Save"
+      "title": "Безопасность",
+      "form_title": "Настройки безопасности",
+      "form_subtitle": "Заполните детали магазина",
+      "form_label_password": "Ваш новый пароль",
+      "form_placeholder_password": "Введите новый пароль",
+      "form_label_password_confirm": "Повторите ваш пароль",
+      "form_placeholder_password_confirm": "Введите новый пароль снова",
+      "form_save": "Сохранить"
     },
     "personal": {
-      "title": "Personal",
-      "form_title": "Personal Settings",
-      "form_subtitle": "Fill in the details",
-      "form_label_full_name": "Your Full Name",
-      "form_placeholder_full_name": "Enter your full name",
-      "form_label_email": "Your Email",
-      "form_placeholder_email": "Enter your email",
-      "form_label_phone": "Your Phone",
-      "form_placeholder_phone": "Enter your phone",
-      "form_label_lang": "Language",
-      "form_placeholder_lang": "Choose the language",
-      "form_save": "Save"
+      "title": "Персональные",
+      "form_title": "Персональные настройки",
+      "form_subtitle": "Заполните детали",
+      "form_label_full_name": "Ваше полное имя",
+      "form_placeholder_full_name": "Введите ваше полное имя",
+      "form_label_email": "Ваш Email",
+      "form_placeholder_email": "Введите ваш email",
+      "form_label_phone": "Ваш телефон",
+      "form_placeholder_phone": "Введите ваш телефон",
+      "form_label_lang": "Язык",
+      "form_placeholder_lang": "Выберите язык",
+      "form_save": "Сохранить"
     }
   },
   "users": {
-    "title": "Users",
-    "subtitle": "Manage your users and view their details",
+    "title": "Пользователи",
+    "subtitle": "Управляйте вашими пользователями и просматривайте их детали",
     "invite": {
-      "invite_button_caption": "Invite new user",
-      "header": "Invite new user",
+      "invite_button_caption": "Пригласить нового пользователя",
+      "header": "Пригласить нового пользователя",
       "form_label_email": "E-mail",
       "form_placeholder_email": "contact@example.com",
-      "form_description_email": "We will send confirmation on this email",
-      "form_label_full_name": "Full Name",
-      "form_placeholder_full_name": "John Doe",
-      "form_description_full_name": "Enter the user full name",
-      "form_label_role": "Role",
-      "form_placeholder_role": "Chose the role",
-      "form_description_role": "Chose user role",
-      "form_submit": "Send Invitation"
+      "form_description_email": "Мы отправим подтверждение на этот email",
+      "form_label_full_name": "Полное имя",
+      "form_placeholder_full_name": "Иван Иванов",
+      "form_description_full_name": "Введите полное имя пользователя",
+      "form_label_role": "Роль",
+      "form_placeholder_role": "Выберите роль",
+      "form_description_role": "Выберите роль пользователя",
+      "form_submit": "Отправить приглашение"
     }
   },
   "user_logs": {
-    "title": "View \"{name}\" logs",
-    "subtitle": "View user action logs"
+    "title": "Просмотр логов \"{name}\"",
+    "subtitle": "Просмотр логов действий пользователя"
   }
 }

@@ -1,12 +1,12 @@
-'use client';
+'use server';
 
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import * as fromUrl from '@/lib/url/generator';
 
-export default function NotFoundPage() {
-  const t = useTranslations('404_page');
+export default async function NotFoundPage() {
+  const t = await getTranslations('404_page');
 
   return (
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">

@@ -20,7 +20,7 @@ export async function inviteUser(values: InviteUser, redirectTo: string) {
   const profileResponse = await supabase.from('profiles').insert({
     id: data.user.id,
     full_name: values.full_name,
-    role_id: values.role_id,
+    role_id: Number(values.role_id),
   });
 
   if (profileResponse.error) {

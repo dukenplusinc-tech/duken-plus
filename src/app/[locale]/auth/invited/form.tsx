@@ -33,7 +33,7 @@ export const SetPasswordForm: FC = () => {
     } else {
       setError(t('error_invalid_token'));
     }
-  }, []);
+  }, [t]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

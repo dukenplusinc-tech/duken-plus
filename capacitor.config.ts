@@ -2,10 +2,10 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'app.vercel.bekbo.shop',
-  appName: 'bp-shop',
+  appName: 'ShopApp',
   webDir: 'public',
   server: {
-    url: 'http://192.168.68.102:3000',
+    url: 'https://bp-shop.vercel.app',
     cleartext: true,
   },
 };

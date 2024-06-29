@@ -52,7 +52,7 @@ export const LoginForm: FC = () => {
       setError(response.error);
     } else {
       if (mode === 'login') {
-        router.replace(fromUrl.toHome());
+        router.replace(fromUrl.toInit());
       } else {
         setMode('login');
         toast({

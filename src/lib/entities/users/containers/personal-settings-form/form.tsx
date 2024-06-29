@@ -102,7 +102,10 @@ export const PersonalSettingsForm: FC = () => {
                       <SelectTrigger>
                         <SelectValue
                           placeholder={
-                            field.value || t('form_placeholder_lang')
+                            (field.value &&
+                              languages.find((l) => l.value === field.value)
+                                ?.label) ||
+                            t('form_placeholder_lang')
                           }
                         />
                       </SelectTrigger>

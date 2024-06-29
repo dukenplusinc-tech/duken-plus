@@ -71,7 +71,7 @@ export const UpdateShopForm: FC = () => {
                       <SelectTrigger>
                         <SelectValue
                           placeholder={
-                            field.value || t('genera.form_placeholder_city')
+                            field.value || t('general.form_placeholder_city')
                           }
                         />
                       </SelectTrigger>

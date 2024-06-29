@@ -2,6 +2,10 @@ export function toHome(): string {
   return `/`;
 }
 
+export function toInit(): string {
+  return `/init`;
+}
+
 export function toSettings(): string {
   return `/settings`;
 }

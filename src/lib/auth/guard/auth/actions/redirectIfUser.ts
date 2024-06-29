@@ -1,12 +1,12 @@
-import {redirect} from 'next/navigation'
+import { redirect } from 'next/navigation';
 
-import {createClient} from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server';
 
 export async function redirectIfUser() {
-  const supabase = createClient()
+  const supabase = createClient();
 
-  const {data, error} = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser();
   if (data?.user) {
-    redirect('/')
+    redirect('/');
   }
 }

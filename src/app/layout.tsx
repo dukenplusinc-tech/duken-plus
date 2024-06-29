@@ -7,7 +7,7 @@ import { getMessages } from 'next-intl/server';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 
-import '../globals.css';
+import './globals.css';
 
 import { brand } from '@/config/brand';
 

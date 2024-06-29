@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 import { redirectIfNotAllowed } from '@/lib/auth/guard/auth/actions/redirectIfNotAllowed';
 import { RoleScope } from '@/lib/entities/roles/types';
@@ -24,15 +25,16 @@ export default async function UsersPage({
     notFound();
   }
 
+  const t = await getTranslations('user_logs');
+
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
-            View {profile.full_name}
-            {"'"}s logs
+            {t('title', { name: profile.full_name })}
           </h2>
-          <p className="text-muted-foreground">View user action logs</p>
+          <p className="text-muted-foreground">{t('subtitle')}</p>
         </div>
       </div>
       <UserActionsLog id={id} />

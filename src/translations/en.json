@@ -1,5 +1,169 @@
 {
-  "Index": {
-    "title": "Hello world!"
+  "combobox": {
+    "quick_access": "Quick access...",
+    "search": "Quick access...",
+    "cmd_placeholder": "Type a command or search...",
+    "empty": "No results found.",
+    "suggestions_label": "Suggestions",
+    "commands": {
+      "settings_label": "Settings"
+    }
+  },
+  "user_nav": {
+    "authenticated": "authenticated",
+    "settings_label": "Settings",
+    "logout": "Log out"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "menu": {
+    "label_home": "Home",
+    "label_contractors": "Contractors",
+    "label_debtors": "Debtors",
+    "label_blacklist": "Blacklist",
+    "label_cash_desk": "Cash Desk",
+    "label_notes": "Notes",
+    "label_chat": "Chat",
+    "label_statistics": "Statistics",
+    "label_subscription": "Subscription",
+    "label_users": "Users",
+    "label_settings": "Settings"
+  },
+  "transitions": {
+    "loading_btn": "Loading"
+  },
+  "datatable": {
+    "filter_placeholder": "Type to filter",
+    "total_caption": "{total, number} total",
+    "selected_caption": "{selected, number} of {total, number} row(s) selected.",
+    "limit_caption": "Rows per page",
+    "pagination_caption": "Page {page, number} of {total, number}",
+    "actions": {
+      "view_cation": "View",
+      "delete_cation": "Delete"
+    },
+    "view": {
+      "toggle_btn_caption": "View",
+      "toggle_cation": "Toggle columns"
+    },
+    "empty_message": "No results."
+  },
+  "auth": {
+    "title": "Login",
+    "subtitle": "Enter your email below to login to your account",
+    "form_label_email": "E-mail",
+    "form_placeholder_email": "contact@example.com",
+    "form_label_password": "Password",
+    "form_placeholder_password": "Your password",
+    "forgot_pass_label": "Forgot your password?",
+    "submit_login": "Login",
+    "submit_recover": "Recover password",
+    "submit_continue": "Continue",
+    "dont_have_account_label": "Don&apos;t have an account?",
+    "signup_label": "Sign up",
+    "toast": {
+      "recover": {
+        "title": "Password recovery email sent",
+        "description": "Please check your inbox and follow the instruction"
+      }
+    },
+    "alert": {
+      "login": {
+        "description": "The password or email you entered is incorrect. Please try again."
+      },
+      "recover": {
+        "description": "There was an issue sending the password recovery email. Please try again."
+      }
+    },
+    "recover": {
+      "title": "Remembered password?",
+      "btn_caption": "Try to log in"
+    }
+  },
+  "invited": {
+    "title": "You are invited",
+    "subtitle": "Setup your new password",
+    "form_label_password": "Password",
+    "form_placeholder_password": "Your password",
+    "form_label_password_confirm": "Repeat password",
+    "form_placeholder_password_confirm": "Your password again",
+    "submit": "Save Password",
+    "error_invalid_token": "Invalid token",
+    "error_wrong_password": "Passwords do not match"
+  },
+  "reset_pass": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password",
+    "form_label_password": "New Password",
+    "form_placeholder_password": "Your new password",
+    "form_label_password_confirm": "Repeat password",
+    "form_placeholder_password_confirm": "Your password again",
+    "submit": "Reset Password",
+    "error_wrong_password": "Passwords do not match"
+  },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "General",
+      "form_title": "Shop Details",
+      "form_subtitle": "Fill the shop details",
+      "form_label_name": "Shop Name",
+      "form_placeholder_name": "Enter you shop name",
+      "form_label_city": "City",
+      "form_placeholder_city": "Choose the city",
+      "form_description_city": "Chose your shop city",
+      "form_label_address": "Address",
+      "form_placeholder_address": "Enter the shop address",
+      "form_save": "Save"
+    },
+    "security": {
+      "title": "Security",
+      "form_title": "Security Settings",
+      "form_subtitle": "Fill the shop details",
+      "form_label_password": "Your New Password",
+      "form_placeholder_password": "Enter you new password",
+      "form_label_password_confirm": "Repeat Your Password",
+      "form_placeholder_password_confirm": "Enter you new password again",
+      "form_save": "Save"
+    },
+    "personal": {
+      "title": "Personal",
+      "form_title": "Personal Settings",
+      "form_subtitle": "Fill in the details",
+      "form_label_full_name": "Your Full Name",
+      "form_placeholder_full_name": "Enter your full name",
+      "form_label_email": "Your Email",
+      "form_placeholder_email": "Enter your email",
+      "form_label_phone": "Your Phone",
+      "form_placeholder_phone": "Enter your phone",
+      "form_label_lang": "Language",
+      "form_placeholder_lang": "Choose the language",
+      "form_save": "Save"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "subtitle": "Manage your users and view their details",
+    "invite": {
+      "invite_button_caption": "Invite new user",
+      "header": "Invite new user",
+      "form_label_email": "E-mail",
+      "form_placeholder_email": "contact@example.com",
+      "form_description_email": "We will send confirmation on this email",
+      "form_label_full_name": "Full Name",
+      "form_placeholder_full_name": "John Doe",
+      "form_description_full_name": "Enter the user full name",
+      "form_label_role": "Role",
+      "form_placeholder_role": "Chose the role",
+      "form_description_role": "Chose user role",
+      "form_submit": "Send Invitation"
+    }
+  },
+  "user_logs": {
+    "title": "View \"{name}\" logs",
+    "subtitle": "View user action logs"
   }
 }

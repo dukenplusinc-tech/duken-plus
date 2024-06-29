@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 import { useSignOut } from '@/lib/entities/users/hooks/useSignOut';
 import { useUser } from '@/lib/entities/users/hooks/useUser';
@@ -18,6 +19,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function UserDropDownNav() {
+  const t = useTranslations('user_nav');
+
   const user = useUser();
 
   const signOut = useSignOut();
@@ -38,7 +41,7 @@ export function UserDropDownNav() {
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.email}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user?.aud}
+              {user?.aud && t(user?.aud)}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -46,13 +49,13 @@ export function UserDropDownNav() {
         <DropdownMenuGroup>
           <Link href={fromUrl.toSettings()}>
             <DropdownMenuItem className="cursor-pointer">
-              Settings
+              {t('settings_label')}
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={signOut}>
-          Log out
+          {t('logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

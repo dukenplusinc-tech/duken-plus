@@ -1,6 +1,7 @@
 'use client';
 
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useCitiesOptions } from '@/lib/entities/cities/hooks/useCitiesOptions';
 import { Button } from '@/components/ui/button';
@@ -28,6 +29,8 @@ import {
 import { useShopForm } from './hooks';
 
 export const UpdateShopForm: FC = () => {
+  const t = useTranslations('settings');
+
   const { form, isProcessing, handleSubmit } = useShopForm();
 
   const cities = useCitiesOptions();
@@ -42,9 +45,12 @@ export const UpdateShopForm: FC = () => {
               name="title"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Shop Name</FormLabel>
+                  <FormLabel>{t('general.form_label_name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter you shop name" {...field} />
+                    <Input
+                      placeholder={t('general.form_placeholder_name')}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -56,7 +62,7 @@ export const UpdateShopForm: FC = () => {
               name="city"
               render={({ field }) => (
                 <FormItem className="mb-2">
-                  <FormLabel>City</FormLabel>
+                  <FormLabel>{t('general.form_label_city')}</FormLabel>
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
@@ -64,7 +70,9 @@ export const UpdateShopForm: FC = () => {
                     >
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={field.value || 'Choose the city'}
+                          placeholder={
+                            field.value || t('genera.form_placeholder_city')
+                          }
                         />
                       </SelectTrigger>
                       <SelectContent>
@@ -85,7 +93,9 @@ export const UpdateShopForm: FC = () => {
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormDescription>Chose your shop city</FormDescription>
+                  <FormDescription>
+                    {t('general.form_description_city')}
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -96,9 +106,12 @@ export const UpdateShopForm: FC = () => {
               name="address"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>{t('general.form_label_address')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter the shop address" {...field} />
+                    <Input
+                      placeholder={t('general.form_placeholder_address')}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +121,7 @@ export const UpdateShopForm: FC = () => {
 
           <CardFooter className="border-t px-6 py-4">
             <Button type="submit" loading={isProcessing}>
-              Save
+              {t('general.form_save')}
             </Button>
           </CardFooter>
         </form>

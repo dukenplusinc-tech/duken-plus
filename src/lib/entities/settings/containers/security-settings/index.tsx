@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { SecuritySettingsForm } from '@/lib/entities/users/containers/security-settings-form/form';
 import {
@@ -9,11 +10,13 @@ import {
 } from '@/components/ui/card';
 
 export const SecuritySettings: FC = () => {
+  const t = useTranslations('settings');
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Security Settings</CardTitle>
-        <CardDescription>Fill in the details</CardDescription>
+        <CardTitle>{t('security.form_title')}</CardTitle>
+        <CardDescription>{t('security.form_subtitle')}</CardDescription>
       </CardHeader>
 
       <SecuritySettingsForm />

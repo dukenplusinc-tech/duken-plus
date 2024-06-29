@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import * as fromUrl from '@/lib/url/generator';
 import { cn } from '@/lib/utils';
@@ -24,12 +25,14 @@ interface Command {
 const suggestedCommands: Command[] = [
   {
     type: 'settings',
-    label: 'Settings',
+    label: 'commands.settings_label',
     href: fromUrl.toSettings(),
   },
 ];
 
 export function SearchComboBox() {
+  const t = useTranslations('combobox');
+
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -67,21 +70,21 @@ export function SearchComboBox() {
         )}
         onClick={() => setOpen(true)}
       >
-        <span className="hidden lg:inline-flex">Quick access...</span>
-        <span className="inline-flex lg:hidden">Search...</span>
+        <span className="hidden lg:inline-flex">{t('quick_access')}</span>
+        <span className="inline-flex lg:hidden">{t('search')}</span>
         <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder={t('cmd_placeholder')} />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
+          <CommandEmpty>{t('empty')}</CommandEmpty>
+          <CommandGroup heading={t('suggestions_label')}>
             {suggestedCommands.map(({ type, label }) => (
               <CommandItem key={type} datatype={type} onSelect={handleChoose}>
-                {label}
+                {t(label)}
               </CommandItem>
             ))}
           </CommandGroup>

@@ -3,6 +3,7 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TriangleAlertIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { createClient } from '@/lib/supabase/client';
 import * as fromUrl from '@/lib/url/generator';
@@ -12,6 +13,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export const SetPasswordForm: FC = () => {
+  const t = useTranslations('invited');
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,7 +31,7 @@ export const SetPasswordForm: FC = () => {
     if (accessToken && refreshToken) {
       setToken({ access_token: accessToken, refresh_token: refreshToken });
     } else {
-      setError('Invalid token');
+      setError(t('error_invalid_token'));
     }
   }, []);
 
@@ -37,7 +40,7 @@ export const SetPasswordForm: FC = () => {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('error_wrong_password'));
       return;
     }
 
@@ -72,11 +75,12 @@ export const SetPasswordForm: FC = () => {
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div>
-        <Label htmlFor="password">New Password</Label>
+        <Label htmlFor="password">{t('form_label_password')}</Label>
         <Input
           id="password"
           type="password"
           name="password"
+          placeholder={t('form_placeholder_password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -84,11 +88,14 @@ export const SetPasswordForm: FC = () => {
         />
       </div>
       <div>
-        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Label htmlFor="confirm-password">
+          {t('form_label_password_confirm')}
+        </Label>
         <Input
           id="confirm-password"
           type="password"
           name="confirm-password"
+          placeholder={t('form_placeholder_password_confirm')}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
@@ -103,7 +110,7 @@ export const SetPasswordForm: FC = () => {
         </Alert>
       )}
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? '...' : 'Save Password'}
+        {t('submit')}
       </Button>
     </form>
   );

@@ -4,6 +4,7 @@ import { FC, FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { TriangleAlertIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import * as fromUrl from '@/lib/url/generator';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -15,6 +16,8 @@ import { toast } from '@/components/ui/use-toast';
 import { login, recoverPassword } from './actions';
 
 export const LoginForm: FC = () => {
+  const t = useTranslations('auth');
+
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'login' | 'password-recover'>('login');
@@ -53,8 +56,8 @@ export const LoginForm: FC = () => {
       } else {
         setMode('login');
         toast({
-          title: 'Password recovery email sent',
-          description: 'Please check your inbox and follow the instruction',
+          title: t('toast.recover.title'),
+          description: t('toast.recover.description'),
         });
       }
     }
@@ -64,22 +67,22 @@ export const LoginForm: FC = () => {
   const isPassRecover = mode === 'password-recover';
 
   const submitCaption = isLoginMode
-    ? 'Login'
+    ? 'submit_login'
     : isPassRecover
-      ? 'Recover password'
-      : 'Continue';
+      ? 'submit_recover'
+      : 'submit_continue';
 
   return (
     <>
       <form className="grid gap-4" onSubmit={handleSubmit}>
         <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('form_label_email')}</Label>
           <Input
             id="email"
             type="email"
             name="email"
-            placeholder="m@example.com"
             required
+            placeholder={t('form_placeholder_email')}
             disabled={isLoading}
           />
         </div>
@@ -87,7 +90,7 @@ export const LoginForm: FC = () => {
         {isLoginMode && (
           <div className="grid gap-2">
             <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('form_label_password')}</Label>
               <Button
                 type="button"
                 variant="link"
@@ -96,7 +99,7 @@ export const LoginForm: FC = () => {
                   setMode('password-recover');
                 }}
               >
-                Forgot your password?
+                {t('forgot_pass_label')}
               </Button>
             </div>
             <Input
@@ -104,6 +107,7 @@ export const LoginForm: FC = () => {
               type="password"
               name="password"
               required
+              placeholder={t('form_placeholder_password')}
               disabled={isLoading}
             />
           </div>
@@ -115,29 +119,29 @@ export const LoginForm: FC = () => {
             <AlertTitle>{error}</AlertTitle>
             <AlertDescription>
               {mode === 'login'
-                ? 'The password or email you entered is incorrect. Please try again.'
-                : 'There was an issue sending the password recovery email. Please try again.'}
+                ? t('alert.login.description')
+                : t('alert.recover.description')}
             </AlertDescription>
           </Alert>
         )}
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? '...' : submitCaption}
+        <Button type="submit" className="w-full" loading={isLoading}>
+          {t(submitCaption)}
         </Button>
       </form>
 
       {isLoginMode && (
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{' '}
+          {t('dont_have_account_label')}{' '}
           <Link href="#" className="underline" prefetch={false}>
-            Sign up
+            {t('signup_label')}
           </Link>
         </div>
       )}
 
       {isPassRecover && (
         <div className="mt-4 text-center text-sm">
-          Remembered password?
+          {t('recover.title')}
           <Button
             type="button"
             variant="link"
@@ -146,7 +150,7 @@ export const LoginForm: FC = () => {
               setMode('login');
             }}
           >
-            Try to log in
+            {t('recover.btn_caption')}
           </Button>
         </div>
       )}

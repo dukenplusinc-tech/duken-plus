@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useUserForm } from '@/lib/entities/users/containers/create-user/hooks';
 import { useRoleOptions } from '@/lib/entities/users/hooks/useRoleOptions';
@@ -22,6 +23,8 @@ import {
 } from '@/components/ui/select';
 
 export const UserForm: FC<{ id?: string }> = ({ id }) => {
+  const t = useTranslations('users.invite');
+
   const { form, isProcessing, handleSubmit } = useUserForm(id);
 
   const roles = useRoleOptions();
@@ -34,13 +37,11 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
           name="email"
           render={({ field }) => (
             <FormItem className="mb-2">
-              <FormLabel>E-mail</FormLabel>
+              <FormLabel>{t('form_label_email')}</FormLabel>
               <FormControl>
-                <Input placeholder="contact@example.com" {...field} />
+                <Input placeholder={t('form_placeholder_email')} {...field} />
               </FormControl>
-              <FormDescription>
-                We will send confirmation on this email
-              </FormDescription>
+              <FormDescription>{t('form_description_email')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -51,11 +52,16 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
           name="full_name"
           render={({ field }) => (
             <FormItem className="mb-2">
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>{t('form_label_full_name')}</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input
+                  placeholder={t('form_placeholder_full_name')}
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>Enter the user full name</FormDescription>
+              <FormDescription>
+                {t('form_description_full_name')}
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -66,14 +72,14 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
           name="role_id"
           render={({ field }) => (
             <FormItem className="mb-2">
-              <FormLabel>Role</FormLabel>
+              <FormLabel>{t('form_label_role')}</FormLabel>
               <FormControl>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Choose the role" />
+                    <SelectValue placeholder={t('form_placeholder_role')} />
                   </SelectTrigger>
                   <SelectContent>
                     {roles.map((role) => (
@@ -87,14 +93,14 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormDescription>Chose user role</FormDescription>
+              <FormDescription>{t('form_description_role')}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
         <Button loading={isProcessing} className="mt-4 w-full" type="submit">
-          {id ? 'Save' : 'Send Invitation'}
+          {t('form_submit')}
         </Button>
       </form>
     </Form>

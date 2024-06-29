@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +15,8 @@ interface DataTableToolbarProps<TData> {
 export function DataTableSearchBy<TData>({
   filterByColumn = 'title',
 }: DataTableToolbarProps<TData>) {
+  const t = useTranslations('datatable');
+
   const table = useDataTable<TData>();
 
   const [searchQuery, setSearchQuery] = useState(
@@ -29,7 +32,7 @@ export function DataTableSearchBy<TData>({
   return (
     <div className="flex flex-1 items-center space-x-2">
       <Input
-        placeholder="Type to filter..."
+        placeholder={t('filter_placeholder')}
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
         className="h-8 w-[150px] lg:w-[250px]"

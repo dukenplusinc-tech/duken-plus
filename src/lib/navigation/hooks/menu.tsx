@@ -28,50 +28,50 @@ export interface MenuItem {
 
 const sideMenu: MenuItem[] = [
   {
-    title: 'Home',
+    title: 'label_home',
     href: fromUrl.toHome(),
     icon: <Home className="h-5 w-5" />,
   },
   {
-    title: 'Contractors',
+    title: 'label_contractors',
     href: fromUrl.toContractors(),
     icon: <Building className="h-5 w-5" />,
   },
   {
-    title: 'Debtors',
+    title: 'label_debtors',
     href: fromUrl.toDebtors(),
     icon: <AlertTriangle className="h-5 w-5" />,
     scope: RoleScope.debtor,
   },
   {
-    title: 'Blacklist',
+    title: 'label_blacklist',
     href: fromUrl.toBlacklist(),
     icon: <UserX className="h-5 w-5" />,
     scope: RoleScope.debtor,
   },
   {
-    title: 'Cash Desk',
+    title: 'label_cash_desk',
     href: fromUrl.toCashDesk(),
     icon: <DollarSign className="h-5 w-5" />,
     scope: RoleScope.cashDesk,
   },
   {
-    title: 'Notes',
+    title: 'label_notes',
     href: fromUrl.toNotes(),
     icon: <StickyNote className="h-5 w-5" />,
   },
   {
-    title: 'Chat',
+    title: 'label_chat',
     href: fromUrl.toChat(),
     icon: <MessageCircle className="h-5 w-5" />,
   },
   {
-    title: 'Statistics',
+    title: 'label_statistics',
     href: fromUrl.toStatistics(),
     icon: <BarChart className="h-5 w-5" />,
   },
   {
-    title: 'Subscription',
+    title: 'label_subscription',
     href: fromUrl.toSubscription(),
     icon: <CheckSquare className="h-5 w-5" />,
   },
@@ -79,13 +79,13 @@ const sideMenu: MenuItem[] = [
 
 const sideMenuBottom: MenuItem[] = [
   {
-    title: 'Users',
+    title: 'label_users',
     href: fromUrl.toUsers(),
     icon: <Users className="h-5 w-5" />,
     scope: RoleScope.users,
   },
   {
-    title: 'Settings',
+    title: 'label_settings',
     href: fromUrl.toSettings(),
     icon: <Settings className="h-5 w-5" />,
   },

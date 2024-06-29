@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { UpdateShopForm } from '@/lib/entities/shop/containers/shop-form/form';
 import {
@@ -9,11 +10,13 @@ import {
 } from '@/components/ui/card';
 
 export const GeneralShopSettings: FC = () => {
+  const t = useTranslations('settings');
+
   return (
     <Card x-chunk="dashboard-04-chunk-1">
       <CardHeader>
-        <CardTitle>Shop Details</CardTitle>
-        <CardDescription>Fill the shop details</CardDescription>
+        <CardTitle>{t('general.form_title')}</CardTitle>
+        <CardDescription>{t('general.form_subtitle')}</CardDescription>
       </CardHeader>
 
       <UpdateShopForm />

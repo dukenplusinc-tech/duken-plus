@@ -1,5 +1,6 @@
 import { FC, Fragment } from 'react';
 import { SlashIcon } from '@radix-ui/react-icons';
+import { useTranslations } from 'next-intl';
 
 import * as fromUrl from '@/lib/url/generator';
 import {
@@ -20,11 +21,15 @@ export interface PageBreadcrumbsProps {
 }
 
 export const PageBreadcrumbs: FC<PageBreadcrumbsProps> = ({ links }) => {
+  const t = useTranslations('breadcrumbs');
+
   return (
     <Breadcrumb className="hidden md:flex">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href={fromUrl.toHome()}>Home</BreadcrumbLink>
+          <BreadcrumbLink href={fromUrl.toHome()}>
+            <span className="capitalize">{t('home')}</span>
+          </BreadcrumbLink>
         </BreadcrumbItem>
 
         {links?.map((link, idx) => (
@@ -35,10 +40,14 @@ export const PageBreadcrumbs: FC<PageBreadcrumbsProps> = ({ links }) => {
             <BreadcrumbItem>
               {link.href ? (
                 <BreadcrumbLink href={link.href || ''}>
-                  <span className="capitalize">{link.label}</span>
+                  <span className="capitalize">
+                    {t(link.label.toLowerCase())}
+                  </span>
                 </BreadcrumbLink>
               ) : (
-                <span className="capitalize">{link.label}</span>
+                <span className="capitalize">
+                  {t(link.label.toLowerCase())}
+                </span>
               )}
             </BreadcrumbItem>
           </Fragment>

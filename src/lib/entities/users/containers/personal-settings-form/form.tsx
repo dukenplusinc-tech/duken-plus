@@ -1,6 +1,7 @@
 'use client';
 
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { languages } from '@/config/languages';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,8 @@ import {
 import { usePersonalForm } from './hooks';
 
 export const PersonalSettingsForm: FC = () => {
+  const t = useTranslations('settings.personal');
+
   const { form, isProcessing, handleSubmit } = usePersonalForm();
 
   return (
@@ -37,9 +40,12 @@ export const PersonalSettingsForm: FC = () => {
               name="full_name"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Your Full Name</FormLabel>
+                  <FormLabel>{t('form_label_full_name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter you full name" {...field} />
+                    <Input
+                      placeholder={t('form_placeholder_full_name')}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -51,11 +57,11 @@ export const PersonalSettingsForm: FC = () => {
               name="email"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Your Email</FormLabel>
+                  <FormLabel>{t('form_label_email')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter you email"
                       type="email"
+                      placeholder={t('form_placeholder_email')}
                       {...field}
                     />
                   </FormControl>
@@ -69,10 +75,10 @@ export const PersonalSettingsForm: FC = () => {
               name="phone"
               render={({ field: { value, ...field } }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Your Phone</FormLabel>
+                  <FormLabel>{t('form_label_phone')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter you phone"
+                      placeholder={t('form_placeholder_phone')}
                       value={value || ''}
                       {...field}
                     />
@@ -87,7 +93,7 @@ export const PersonalSettingsForm: FC = () => {
               name="language"
               render={({ field }) => (
                 <FormItem className="mb-2">
-                  <FormLabel>Language</FormLabel>
+                  <FormLabel>{t('form_label_lang')}</FormLabel>
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
@@ -95,7 +101,9 @@ export const PersonalSettingsForm: FC = () => {
                     >
                       <SelectTrigger>
                         <SelectValue
-                          placeholder={field.value || 'Choose the language'}
+                          placeholder={
+                            field.value || t('form_placeholder_lang')
+                          }
                         />
                       </SelectTrigger>
                       <SelectContent>
@@ -118,7 +126,7 @@ export const PersonalSettingsForm: FC = () => {
 
           <CardFooter className="border-t px-6 py-4">
             <Button type="submit" loading={isProcessing}>
-              Save
+              {t('form_save')}
             </Button>
           </CardFooter>
         </form>

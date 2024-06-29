@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import * as fromUrl from '@/lib/url/generator';
 import { cn } from '@/lib/utils';
@@ -14,20 +15,21 @@ type SettingsMenuItem = {
 
 const links: SettingsMenuItem[] = [
   {
-    label: 'General',
+    label: 'general.title',
     href: fromUrl.toSettings(),
   },
   {
-    label: 'Security',
+    label: 'security.title',
     href: fromUrl.toSecuritySettings(),
   },
   {
-    label: 'Personal',
+    label: 'personal.title',
     href: fromUrl.toPersonalSettings(),
   },
 ];
 
 export const SettingsMenu: FC = () => {
+  const t = useTranslations('settings');
   const pathname = usePathname();
 
   return (
@@ -38,7 +40,7 @@ export const SettingsMenu: FC = () => {
           href={link.href}
           className={cn(link.href === pathname && 'font-semibold text-primary')}
         >
-          {link.label}
+          {t(link.label)}
         </Link>
       ))}
     </nav>

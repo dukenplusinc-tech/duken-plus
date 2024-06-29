@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 
 import { useDeleteUser } from '@/lib/entities/users/hooks/useDeleteUser';
 import * as fromUrl from '@/lib/url/generator';
@@ -22,6 +23,8 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const t = useTranslations('datatable.actions');
+
   const handleRemove = useDeleteUser(row.getValue('id'));
 
   return (
@@ -37,14 +40,14 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <Link href={fromUrl.toUser(row.getValue('id'))}>
-          <DropdownMenuItem>View</DropdownMenuItem>
+          <DropdownMenuItem>{t('view_cation')}</DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleRemove.onDelete}
           disabled={handleRemove.processing}
         >
-          Delete
+          {t('delete_cation')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

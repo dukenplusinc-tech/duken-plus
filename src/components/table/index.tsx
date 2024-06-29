@@ -16,6 +16,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 
 import { useFiltersCtx } from '@/lib/composite/filters/context';
 import { FailedFetchBanner } from '@/lib/primitives/banner/failed-fetch';
@@ -50,6 +51,8 @@ export function DataTable<TData, TValue>({
   error,
   children,
 }: DataTableProps<TData, TValue>) {
+  const t = useTranslations('datatable');
+
   const filtersCtx = useFiltersCtx();
 
   const [rowSelection, setRowSelection] = React.useState({});
@@ -148,7 +151,7 @@ export function DataTable<TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {t('empty_message')}
                   </TableCell>
                 </TableRow>
               )}

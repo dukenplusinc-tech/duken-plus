@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 import { redirectIfNotAllowed } from '@/lib/auth/guard/auth/actions/redirectIfNotAllowed';
 import { RoleScope } from '@/lib/entities/roles/types';
@@ -13,14 +14,14 @@ export const metadata: Metadata = {
 export default async function UsersPage() {
   await redirectIfNotAllowed(RoleScope.users);
 
+  const t = await getTranslations('users');
+
   return (
     <div className="h-full flex-1 flex-col space-y-8 p-8 flex">
       <div className="flex items-center justify-between space-y-2">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">Users</h2>
-          <p className="text-muted-foreground">
-            Manage your users and view their details
-          </p>
+          <h2 className="text-2xl font-bold tracking-tight">{t('title')}</h2>
+          <p className="text-muted-foreground">{t('subtitle')}</p>
         </div>
         <div className="flex items-center space-x-2">
           <CreateUserDialog />

@@ -2,6 +2,7 @@
 
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 
 import { useNoteFormLaunch } from '@/lib/entities/notes/containers/note-form';
 import { useDeleteNotes } from '@/lib/entities/notes/hooks/useDeleteNotes';
@@ -21,6 +22,8 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const t = useTranslations('datatable.actions');
+
   const handleOpen = useNoteFormLaunch(row.getValue('id'));
   const handleRemove = useDeleteNotes(row.getValue('id'));
 
@@ -36,13 +39,15 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem onClick={handleOpen}>View</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleOpen}>
+          {t('view_cation')}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleRemove.onDelete}
           disabled={handleRemove.processing}
         >
-          Delete
+          {t('delete_cation')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,18 +1,21 @@
 'use server';
 
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 
 import { SetPasswordForm } from './form';
 
 export default async function ConfirmPage() {
+  const t = await getTranslations('invited');
+
   return (
     <div className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">You are invited</h1>
+            <h1 className="text-3xl font-bold">{t('title')}</h1>
             <p className="text-balance text-muted-foreground">
-              Setup your new password
+              {t('subtitle')}
             </p>
           </div>
           <SetPasswordForm />

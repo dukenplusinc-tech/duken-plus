@@ -3,6 +3,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TriangleAlertIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { createClient } from '@/lib/supabase/client';
 import * as fromUrl from '@/lib/url/generator';
@@ -12,6 +13,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export const ResetPasswordForm: FC = () => {
+  const t = useTranslations('reset_pass');
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,7 +26,7 @@ export const ResetPasswordForm: FC = () => {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('error_wrong_password'));
       return;
     }
 
@@ -45,23 +48,27 @@ export const ResetPasswordForm: FC = () => {
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div>
-        <Label htmlFor="password">New Password</Label>
+        <Label htmlFor="password">{t('form_label_password')}</Label>
         <Input
           id="password"
           type="password"
           name="password"
           value={password}
+          placeholder={t('form_placeholder_password')}
           onChange={(e) => setPassword(e.target.value)}
           required
           disabled={isLoading}
         />
       </div>
       <div>
-        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Label htmlFor="confirm-password">
+          {t('form_label_password_confirm')}
+        </Label>
         <Input
           id="confirm-password"
           type="password"
           name="confirm-password"
+          placeholder={t('form_placeholder_password_confirm')}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
@@ -75,8 +82,8 @@ export const ResetPasswordForm: FC = () => {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? '...' : 'Reset Password'}
+      <Button type="submit" className="w-full" loading={isLoading}>
+        {t('submit')}
       </Button>
     </form>
   );

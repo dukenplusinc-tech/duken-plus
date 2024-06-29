@@ -1,6 +1,7 @@
 'use client';
 
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
@@ -17,6 +18,8 @@ import { Input } from '@/components/ui/input';
 import { useSecuritySettingsForm } from './hooks';
 
 export const SecuritySettingsForm: FC = () => {
+  const t = useTranslations('settings');
+
   const { form, isProcessing, handleSubmit } = useSecuritySettingsForm();
 
   return (
@@ -27,12 +30,15 @@ export const SecuritySettingsForm: FC = () => {
             <FormField
               control={form.control}
               name="password"
-              type="password"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Your New Password</FormLabel>
+                  <FormLabel>{t('security.form_label_password')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter you new password" {...field} />
+                    <Input
+                      type="password"
+                      placeholder={t('security.form_placeholder_password')}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -42,13 +48,17 @@ export const SecuritySettingsForm: FC = () => {
             <FormField
               control={form.control}
               name="password_confirm"
-              type="password"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  <FormLabel>Enter again Your Password</FormLabel>
+                  <FormLabel>
+                    {t('security.form_label_password_confirm')}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter you new password again"
+                      type="password"
+                      placeholder={t(
+                        'security.form_placeholder_password_confirm'
+                      )}
                       {...field}
                     />
                   </FormControl>
@@ -60,7 +70,7 @@ export const SecuritySettingsForm: FC = () => {
 
           <CardFooter className="border-t px-6 py-4">
             <Button type="submit" loading={isProcessing}>
-              Save
+              {t('security.form_save')}
             </Button>
           </CardFooter>
         </form>

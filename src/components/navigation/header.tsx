@@ -3,6 +3,7 @@
 import type { FC } from 'react';
 import Link from 'next/link';
 import { ShoppingBag as LogoIcon, MapPin, PanelLeft } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { brand } from '@/config/brand';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
@@ -16,6 +17,8 @@ import { PageBreadcrumbs } from '@/components/page/breadcrumbs';
 import { SearchComboBox } from '@/components/search-combo-box';
 
 export const HeaderNav: FC = () => {
+  const t = useTranslations('menu');
+
   const menuItems = useHeaderMenu();
   const breadcrumbLinks = useBreadcrumbsLinks();
 
@@ -57,7 +60,7 @@ export const HeaderNav: FC = () => {
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
                   {menu.icon}
-                  {menu.title}
+                  {t(menu.title)}
                 </Link>
               ))}
             </nav>

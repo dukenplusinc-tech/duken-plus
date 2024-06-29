@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Loader2 as Loader } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
 
@@ -56,6 +57,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    const t = useTranslations('transitions');
+
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
@@ -66,7 +69,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading ? (
           <span className="flex justify-center items-center">
-            Loading <Loader className="animate-spin ml-2" />
+            {t('loading_btn')} <Loader className="animate-spin ml-2" />
           </span>
         ) : (
           children

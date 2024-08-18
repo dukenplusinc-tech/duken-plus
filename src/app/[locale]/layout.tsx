@@ -8,6 +8,8 @@ import { Toaster } from '@/components/ui/toaster';
 
 import '../globals.css';
 
+import { IonicProvider } from '@/components/ionic/provider';
+
 export const metadata: Metadata = {
   title: brand.name,
   description: brand.description,
@@ -28,7 +30,7 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <IonicProvider>{children}</IonicProvider>
           <Toaster />
         </NextIntlClientProvider>
       </body>

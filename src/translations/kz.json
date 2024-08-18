@@ -22,6 +22,7 @@
     "security": "Қауіпсіздік параметрлері"
   },
   "menu": {
+    "mobile_header": "Menu",
     "label_home": "Үй",
     "label_contractors": "Мердігерлер",
     "label_debtors": "Қарызгерлер",

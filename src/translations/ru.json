@@ -22,6 +22,7 @@
     "security": "Настройки безопасности"
   },
   "menu": {
+    "mobile_header": "Menu",
     "label_home": "Главная",
     "label_contractors": "Контрагенты",
     "label_debtors": "Должники",

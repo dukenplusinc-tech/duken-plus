@@ -18,22 +18,7 @@ import { Menu } from '@/components/navigation/menu';
 setupIonicReact();
 
 function IonicProvider({ children }: PropsWithChildren) {
-  return (
-    <IonApp>
-      <Menu />
-      <IonPage id="main-content">
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
-            </IonButtons>
-            <IonTitle>todo: put there date</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">{children}</IonContent>
-      </IonPage>
-    </IonApp>
-  );
+  return <IonApp>{children}</IonApp>;
 }
 
 export default IonicProvider;

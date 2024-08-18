@@ -22,6 +22,7 @@
     "security": "security Settings"
   },
   "menu": {
+    "mobile_header": "Menu",
     "label_home": "Home",
     "label_contractors": "Contractors",
     "label_debtors": "Debtors",

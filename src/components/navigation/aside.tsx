@@ -50,7 +50,6 @@ export const AsideNav: FC = () => {
           <LogoIcon className="h-4 w-4 transition-all group-hover:scale-110" />
           <span className="sr-only">{brand.name}</span>
         </Link>
-
         <MenuList menu={sideMenu} />
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4">

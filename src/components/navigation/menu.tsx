@@ -1,7 +1,6 @@
 import { FC } from 'react';
+import Link from 'next/link';
 import {
-  IonAvatar,
-  IonButton,
   IonContent,
   IonHeader,
   IonIcon,
@@ -9,25 +8,11 @@ import {
   IonLabel,
   IonList,
   IonMenu,
-  IonMenuToggle,
+  IonSpinner,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import {
-  alertCircleOutline,
-  cardOutline,
-  cashOutline,
-  chatbubbleEllipsesOutline,
-  closeOutline,
-  documentOutline,
-  homeOutline,
-  location,
-  peopleOutline,
-  personOutline,
-  settingsOutline,
-  statsChartOutline,
-} from 'ionicons/icons';
-import { MapPin } from 'lucide-react';
+import { location } from 'ionicons/icons';
 import { useTranslations } from 'next-intl';
 
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
@@ -57,14 +42,25 @@ export const Menu: FC = () => {
         </div>
 
         <IonList>
-          <IonItem button>
-            <IonIcon icon={homeOutline} slot="start" />
-            <IonLabel>Home</IonLabel>
-          </IonItem>
-          <IonItem button>
-            <IonIcon icon={peopleOutline} slot="start" />
-            <IonLabel>Contractors</IonLabel>
-          </IonItem>
+          {menuItems?.length ? (
+            menuItems.map((menuItem, idx) => (
+              <Link
+                key={`${menuItem.title}_${idx.toString()}`}
+                href={menuItem.href}
+              >
+                <IonItem>
+                  {typeof menuItem.icon === 'string' && (
+                    <IonIcon icon={menuItem.icon} slot="start" />
+                  )}
+                  <IonLabel>{t(menuItem.title)}</IonLabel>
+                </IonItem>
+              </Link>
+            ))
+          ) : (
+            <div className="flex justify-center">
+              <IonSpinner name="dots" />
+            </div>
+          )}
         </IonList>
       </IonContent>
     </IonMenu>

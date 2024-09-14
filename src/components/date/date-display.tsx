@@ -24,5 +24,9 @@ export const DateDisplay: FC = () => {
     setFormattedDate(formatted);
   }, [locale, t]);
 
-  return <span>{formattedDate}</span>;
+  return (
+    <span className="bg-primary text-white text-md py-0.5 px-4 rounded-xl">
+      {formattedDate}
+    </span>
+  );
 };

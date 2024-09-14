@@ -11,6 +11,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 
+import { DateDisplay } from '@/components/date/date-display';
 import { Menu } from '@/components/navigation/menu';
 
 export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -23,7 +24,9 @@ export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
             </IonButtons>
-            <IonTitle>todo: put there date</IonTitle>
+            <IonTitle>
+              <DateDisplay />
+            </IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">{children}</IonContent>

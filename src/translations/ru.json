@@ -1,4 +1,5 @@
 {
+  "date": "dd.MM.yyyy, EEEE",
   "combobox": {
     "quick_access": "Быстрый доступ...",
     "search": "Поиск...",

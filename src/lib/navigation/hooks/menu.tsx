@@ -97,19 +97,6 @@ export function useFilterByScope(list: MenuItem[]) {
   }, [list, role]);
 }
 
-export function useAsideMenu() {
-  const side = useFilterByScope(sideMenu);
-  const menuBottom = useFilterByScope(sideMenuBottom);
-
-  return useMemo(
-    () => ({
-      sideMenu: side,
-      sideMenuBottom: menuBottom,
-    }),
-    [menuBottom, side]
-  );
-}
-
 const headerMenu = [...sideMenu, ...sideMenuBottom];
 
 export function useHeaderMenu() {

@@ -1,27 +1,30 @@
 'use client';
 
-import { FC } from 'react';
-import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
-import { ellipsisVertical } from 'ionicons/icons';
+import { FC, useMemo } from 'react';
 
 import { NoteForm } from '@/lib/entities/notes/containers/note-form/form';
+import { useDeleteNotes } from '@/lib/entities/notes/hooks/useDeleteNotes';
+import * as fromUrl from '@/lib/url/generator';
+import { DropdownButton } from '@/components/ui/ionic/dropdown';
 import { PageHeader } from '@/components/ui/page/header';
 
 export const NoteEdit: FC<{ id: string }> = ({ id }) => {
+  const handleRemove = useDeleteNotes(id, fromUrl.toNotes());
+
+  const options = useMemo(
+    () => [
+      {
+        label: 'Delete',
+        onClick: handleRemove.onDelete,
+        disabled: handleRemove.processing,
+      },
+    ],
+    [handleRemove]
+  );
+
   return (
     <>
-      <PageHeader
-        right={
-          <IonButton color="success">
-            <IonIcon
-              slot="icon-only"
-              size="large"
-              className="text-white"
-              icon={ellipsisVertical}
-            />
-          </IonButton>
-        }
-      >
+      <PageHeader right={<DropdownButton options={options} />}>
         Заметки
       </PageHeader>
 

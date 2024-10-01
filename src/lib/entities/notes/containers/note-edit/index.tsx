@@ -2,14 +2,12 @@
 
 import { FC } from 'react';
 import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
-import { add } from 'ionicons/icons';
+import { ellipsisVertical } from 'ionicons/icons';
 
 import { NoteForm } from '@/lib/entities/notes/containers/note-form/form';
 import { PageHeader } from '@/components/ui/page/header';
 
 export const NoteEdit: FC<{ id: string }> = ({ id }) => {
-  const isLoading = false;
-
   return (
     <>
       <PageHeader
@@ -19,7 +17,7 @@ export const NoteEdit: FC<{ id: string }> = ({ id }) => {
               slot="icon-only"
               size="large"
               className="text-white"
-              icon={add}
+              icon={ellipsisVertical}
             />
           </IonButton>
         }
@@ -27,13 +25,7 @@ export const NoteEdit: FC<{ id: string }> = ({ id }) => {
         Заметки
       </PageHeader>
 
-      {isLoading ? (
-        <div className="flex justify-center p-8">
-          <IonSpinner name="dots" />
-        </div>
-      ) : (
-        <NoteForm id={id} />
-      )}
+      <NoteForm id={id} />
     </>
   );
 };

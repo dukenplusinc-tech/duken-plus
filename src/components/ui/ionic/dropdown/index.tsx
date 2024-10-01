@@ -1,6 +1,4 @@
-'use client';
-
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, ReactNode, useState } from 'react';
 import {
   IonButton,
   IonIcon,
@@ -11,11 +9,21 @@ import {
 } from '@ionic/react';
 import { ellipsisVertical } from 'ionicons/icons';
 
-interface DropdownButtonProps {
-  options: { label: string; onClick: () => void; disabled?: boolean }[];
+export interface DropDownButtonOption {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
 }
 
-export const DropdownButton: FC<DropdownButtonProps> = ({ options }) => {
+interface DropdownButtonProps {
+  options: DropDownButtonOption[];
+  button?: ReactNode; // Custom button or trigger slot
+}
+
+export const DropdownButton: FC<DropdownButtonProps> = ({
+  options,
+  button,
+}) => {
   const [showPopover, setShowPopover] = useState(false);
   const [popoverEvent, setPopoverEvent] = useState<MouseEvent | undefined>(
     undefined
@@ -29,14 +37,19 @@ export const DropdownButton: FC<DropdownButtonProps> = ({ options }) => {
 
   return (
     <>
-      <IonButton color="success" onClick={openPopover}>
-        <IonIcon
-          slot="icon-only"
-          size="large"
-          className="text-white"
-          icon={ellipsisVertical}
-        />
-      </IonButton>
+      {/* Render custom button if provided, otherwise render default button */}
+      {button ? (
+        <div onClick={openPopover}>{button}</div>
+      ) : (
+        <IonButton color="success" onClick={openPopover}>
+          <IonIcon
+            slot="icon-only"
+            size="large"
+            className="text-white"
+            icon={ellipsisVertical}
+          />
+        </IonButton>
+      )}
 
       <IonPopover
         isOpen={showPopover}

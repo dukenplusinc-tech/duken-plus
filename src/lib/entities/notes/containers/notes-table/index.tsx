@@ -1,49 +1,19 @@
 'use client';
 
-import { FC, MouseEvent, useState } from 'react';
-import {
-  IonButton,
-  IonIcon,
-  IonList,
-  IonPopover,
-  IonSpinner,
-} from '@ionic/react';
+import { FC } from 'react';
+import { IonButton, IonIcon, IonList, IonSpinner } from '@ionic/react';
 import { add } from 'ionicons/icons';
 
-import { NoteDotMenu } from '@/lib/entities/notes/containers/notes-table/dot-menu';
 import { NoteItem } from '@/lib/entities/notes/containers/notes-table/item';
 import { useNotes } from '@/lib/entities/notes/hooks/useNotes';
-import type { Note } from '@/lib/entities/notes/schema';
 import { PageHeader } from '@/components/ui/page/header';
+import { EmptyScreen } from '@/components/ui/page/screen/empty';
 
 export const NotesTable: FC = () => {
   const { data, isLoading } = useNotes();
 
-  const [showPopover, setShowPopover] = useState({
-    isOpen: false,
-    event: null as Event | null,
-    note: null as Note | null,
-  });
-
-  const handleShowPopover =
-    (note: Note) => (event: MouseEvent<HTMLIonButtonElement>) => {
-      setShowPopover({
-        isOpen: true,
-        event: event.nativeEvent,
-        note,
-      });
-    };
-
-  const closePopover = () => {
-    setShowPopover({
-      isOpen: false,
-      event: null,
-      note: null,
-    });
-  };
-
   return (
-    <>
+    <div className="flex flex-col h-full">
       <PageHeader
         right={
           <IonButton color="success">
@@ -59,6 +29,12 @@ export const NotesTable: FC = () => {
         Заметки
       </PageHeader>
 
+      {!isLoading && !data.length && (
+        <EmptyScreen>
+          No Notes available. Press the + to add something
+        </EmptyScreen>
+      )}
+
       {isLoading ? (
         <div className="flex justify-center p-8">
           <IonSpinner name="dots" />
@@ -66,29 +42,10 @@ export const NotesTable: FC = () => {
       ) : (
         <IonList>
           {data.map((note) => (
-            <NoteItem
-              key={note.id}
-              note={note}
-              onActions={handleShowPopover(note)}
-            />
+            <NoteItem key={note.id} note={note} />
           ))}
         </IonList>
       )}
-
-      {/* Popover for Edit and Delete */}
-      <IonPopover
-        isOpen={showPopover.isOpen}
-        event={showPopover.event}
-        onDidDismiss={closePopover}
-      >
-        <div
-          onClickCapture={() => {
-            requestIdleCallback(closePopover);
-          }}
-        >
-          {showPopover.note && <NoteDotMenu note={showPopover.note} />}
-        </div>
-      </IonPopover>
-    </>
+    </div>
   );
 };

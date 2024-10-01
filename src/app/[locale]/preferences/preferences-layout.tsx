@@ -11,6 +11,7 @@ import {
 import * as icons from 'ionicons/icons';
 
 import { PersonalSettings } from '@/lib/entities/settings/containers/personal-settings';
+import { SecuritySettings } from '@/lib/entities/settings/containers/security-settings';
 
 interface TabItemType {
   id: string;
@@ -36,7 +37,7 @@ const tabs: TabItemType[] = [
     id: 'security',
     title: 'Security',
     icon: icons.lockClosedOutline,
-    render: <div>Security</div>,
+    render: <SecuritySettings />,
   },
 ];
 

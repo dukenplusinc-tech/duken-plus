@@ -1,19 +1,15 @@
 'use client';
 
 import { FC } from 'react';
-import { useTranslations } from 'next-intl';
-
-import { Button } from '@/components/ui/button';
-import { CardContent, CardFooter } from '@/components/ui/card';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+  IonButton,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonText,
+} from '@ionic/react';
+import { useTranslations } from 'next-intl';
 
 import { useSecuritySettingsForm } from './hooks';
 
@@ -23,58 +19,58 @@ export const SecuritySettingsForm: FC = () => {
   const { form, isProcessing, handleSubmit } = useSecuritySettingsForm();
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={handleSubmit}>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>{t('security.form_label_password')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder={t('security.form_placeholder_password')}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <form onSubmit={handleSubmit}>
+      <IonList>
+        {/* Password Field */}
+        <IonItem>
+          <IonLabel position="stacked">
+            {t('security.form_label_password')}
+          </IonLabel>
+          <IonInput
+            type="password"
+            placeholder={t('security.form_placeholder_password')}
+            value={form.watch('password')}
+            onIonInput={(e) => form.setValue('password', e.detail.value!)}
+          />
+        </IonItem>
+        {form.formState.errors.password && (
+          <IonText color="danger">
+            <small>{form.formState.errors.password.message}</small>
+          </IonText>
+        )}
 
-            <FormField
-              control={form.control}
-              name="password_confirm"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>
-                    {t('security.form_label_password_confirm')}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder={t(
-                        'security.form_placeholder_password_confirm'
-                      )}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
+        {/* Confirm Password Field */}
+        <IonItem>
+          <IonLabel position="stacked">
+            {t('security.form_label_password_confirm')}
+          </IonLabel>
+          <IonInput
+            type="password"
+            placeholder={t('security.form_placeholder_password_confirm')}
+            value={form.watch('password_confirm')}
+            onIonInput={(e) =>
+              form.setValue('password_confirm', e.detail.value!)
+            }
+          />
+        </IonItem>
+        {form.formState.errors.password_confirm && (
+          <IonText color="danger">
+            <small>{form.formState.errors.password_confirm.message}</small>
+          </IonText>
+        )}
 
-          <CardFooter className="border-t px-6 py-4">
-            <Button type="submit" loading={isProcessing}>
-              {t('security.form_save')}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
-    </>
+        {/* Save Button */}
+        <div className="ion-padding">
+          <IonButton
+            expand="block"
+            color="success"
+            type="submit"
+            disabled={isProcessing}
+          >
+            {t('security.form_save')}
+          </IonButton>
+        </div>
+      </IonList>
+    </form>
   );
 };

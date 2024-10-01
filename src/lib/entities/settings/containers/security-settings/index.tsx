@@ -2,24 +2,15 @@ import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { SecuritySettingsForm } from '@/lib/entities/users/containers/security-settings-form/form';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page/header';
 
 export const SecuritySettings: FC = () => {
-  const t = useTranslations('settings');
+  const t = useTranslations('settings.security');
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t('security.form_title')}</CardTitle>
-        <CardDescription>{t('security.form_subtitle')}</CardDescription>
-      </CardHeader>
-
+    <div className="flex flex-col h-full">
+      <PageHeader>{t('form_title')}</PageHeader>
       <SecuritySettingsForm />
-    </Card>
+    </div>
   );
 };

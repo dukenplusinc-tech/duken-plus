@@ -77,6 +77,11 @@ const sideMenuBottom: MenuItem[] = [
     href: fromUrl.toSettings(),
     icon: icons.settingsOutline,
   },
+  {
+    title: 'label_settings',
+    href: fromUrl.toPreferences(),
+    icon: icons.settingsOutline,
+  },
 ];
 
 export function useFilterByScope(list: MenuItem[]) {

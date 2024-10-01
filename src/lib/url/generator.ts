@@ -10,6 +10,10 @@ export function toSettings(): string {
   return `/settings`;
 }
 
+export function toPreferences(): string {
+  return `/preferences`;
+}
+
 export function toSecuritySettings(): string {
   return `/settings/security`;
 }

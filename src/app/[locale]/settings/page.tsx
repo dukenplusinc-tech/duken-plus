@@ -1,16 +1,12 @@
 import type { Metadata } from 'next';
 
-import { GeneralShopSettings } from '@/lib/entities/shop/containers/general-shop-settings';
+import { PreferencesTabLayout } from '@/app/settings/preferences-layout';
 
 export const metadata: Metadata = {
-  title: 'Settings',
-  description: 'Settings',
+  title: 'Preferences',
+  description: 'Manage your preferences',
 };
 
-export default async function GeneralSettingsPage() {
-  return (
-    <div className="grid gap-6">
-      <GeneralShopSettings />
-    </div>
-  );
+export default async function PreferenceTabPage() {
+  return <PreferencesTabLayout />;
 }

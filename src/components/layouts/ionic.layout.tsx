@@ -22,9 +22,9 @@ export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
+              <IonMenuButton className="bg-primary text-white rounded-xl"></IonMenuButton>
             </IonButtons>
-            <IonTitle>
+            <IonTitle className="text-right">
               <DateDisplay />
             </IonTitle>
           </IonToolbar>

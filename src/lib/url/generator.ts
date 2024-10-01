@@ -46,6 +46,10 @@ export function toNotes(): string {
   return `/notes`;
 }
 
+export function toNoteEdit(id: string): string {
+  return `/notes/${id}`;
+}
+
 export function toChat(): string {
   return `/chat`;
 }

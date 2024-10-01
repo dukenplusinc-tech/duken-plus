@@ -174,5 +174,11 @@
     "title": "Упс, бет табылмады!",
     "description": "Сіз іздеген бет жоқ немесе басқа орынға көшірілді.",
     "home_btn_caption": "Басты бетке өту"
+  },
+  "notes": {
+    "title": "Notes",
+    "title_edit": "Edit Note",
+    "title_add": "Create Note",
+    "empty_text": "No Notes available. Press the + to add something"
   }
 }

@@ -12,6 +12,7 @@ import * as icons from 'ionicons/icons';
 
 import { PersonalSettings } from '@/lib/entities/settings/containers/personal-settings';
 import { SecuritySettings } from '@/lib/entities/settings/containers/security-settings';
+import { GeneralShopSettings } from '@/lib/entities/shop/containers/general-shop-settings';
 
 interface TabItemType {
   id: string;
@@ -25,7 +26,7 @@ const tabs: TabItemType[] = [
     id: 'general',
     title: 'General',
     icon: icons.settingsOutline,
-    render: <div>General</div>,
+    render: <GeneralShopSettings />,
   },
   {
     id: 'personal',

@@ -8,6 +8,7 @@ import {
   IonLabel,
   IonList,
   IonMenu,
+  IonMenuToggle,
   IonSpinner,
   IonTitle,
   IonToolbar,
@@ -48,12 +49,14 @@ export const Menu: FC = () => {
                 key={`${menuItem.title}_${idx.toString()}`}
                 href={menuItem.href}
               >
-                <IonItem>
-                  {typeof menuItem.icon === 'string' && (
-                    <IonIcon icon={menuItem.icon} slot="start" />
-                  )}
-                  <IonLabel>{t(menuItem.title)}</IonLabel>
-                </IonItem>
+                <IonMenuToggle>
+                  <IonItem>
+                    {typeof menuItem.icon === 'string' && (
+                      <IonIcon icon={menuItem.icon} slot="start" />
+                    )}
+                    <IonLabel>{t(menuItem.title)}</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
               </Link>
             ))
           ) : (

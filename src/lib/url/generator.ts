@@ -46,6 +46,10 @@ export function toNotes(): string {
   return `/notes`;
 }
 
+export function toAddNote(): string {
+  return `/notes/create`;
+}
+
 export function toNoteEdit(id: string): string {
   return `/notes/${id}`;
 }

@@ -174,5 +174,11 @@
     "title": "Oops, page not found!",
     "description": "The page you are looking for does not exist or has been moved.",
     "home_btn_caption": "Go to Homepage"
+  },
+  "notes": {
+    "title": "Notes",
+    "title_edit": "Edit Note",
+    "title_add": "Create Note",
+    "empty_text": "No Notes available. Press the + to add something"
   }
 }

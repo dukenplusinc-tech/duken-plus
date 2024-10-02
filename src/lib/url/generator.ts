@@ -10,16 +10,12 @@ export function toSettings(): string {
   return `/settings`;
 }
 
-export function toSecuritySettings(): string {
-  return `/settings/security`;
-}
-
-export function toPersonalSettings(): string {
-  return `/settings/personal`;
-}
-
 export function toUsers(): string {
   return `/users`;
+}
+
+export function toInvite(): string {
+  return `/users/invite`;
 }
 
 export function toUser(id: string): string {
@@ -44,6 +40,14 @@ export function toCashDesk(): string {
 
 export function toNotes(): string {
   return `/notes`;
+}
+
+export function toAddNote(): string {
+  return `/notes/create`;
+}
+
+export function toNoteEdit(id: string): string {
+  return `/notes/${id}`;
 }
 
 export function toChat(): string {

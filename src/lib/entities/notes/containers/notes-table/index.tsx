@@ -1,31 +1,56 @@
 'use client';
 
-import type { FC } from 'react';
+import { FC } from 'react';
+import Link from 'next/link';
+import { IonButton, IonIcon, IonList, IonSpinner } from '@ionic/react';
+import { add } from 'ionicons/icons';
+import { useTranslations } from 'next-intl';
 
-import { useDeleteNotes } from '@/lib/entities/notes/hooks/useDeleteNotes';
+import { NoteItem } from '@/lib/entities/notes/containers/notes-table/item';
 import { useNotes } from '@/lib/entities/notes/hooks/useNotes';
-import { DataTable } from '@/components/table';
-import { DataTableToolbar } from '@/components/table/toolbar';
-
-import { columns } from './columns';
+import * as fromUrl from '@/lib/url/generator';
+import { PageHeader } from '@/components/ui/page/header';
+import { EmptyScreen } from '@/components/ui/page/screen/empty';
 
 export const NotesTable: FC = () => {
-  const { data, count, isLoading, error } = useNotes();
+  const t = useTranslations('notes');
 
-  const deleteProps = useDeleteNotes();
+  const { data, isLoading } = useNotes();
 
   return (
-    <DataTable
-      data={data}
-      count={count!}
-      columns={columns}
-      isLoading={isLoading}
-      error={error}
-    >
-      <DataTableToolbar
-        filterByColumn="title"
-        {...deleteProps}
-      ></DataTableToolbar>
-    </DataTable>
+    <div className="flex flex-col h-full">
+      <PageHeader
+        right={
+          <Link href={fromUrl.toAddNote()}>
+            <IonButton color="success">
+              <IonIcon
+                slot="icon-only"
+                size="large"
+                className="text-white"
+                icon={add}
+              />
+            </IonButton>
+          </Link>
+        }
+      >
+        {t('title')}
+      </PageHeader>
+
+      {!isLoading && !data.length && (
+        <EmptyScreen>{t('empty_text')}</EmptyScreen>
+      )}
+
+      {isLoading ? (
+        <div className="flex justify-center p-8">
+          <IonSpinner name="dots" />
+        </div>
+      ) : (
+        <IonList>
+          {data.map((note) => (
+            <NoteItem key={note.id} note={note} />
+          ))}
+        </IonList>
+      )}
+    </div>
   );
 };

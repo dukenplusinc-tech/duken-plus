@@ -1,14 +1,5 @@
 {
-  "combobox": {
-    "quick_access": "Quick access...",
-    "search": "Quick access...",
-    "cmd_placeholder": "Type a command or search...",
-    "empty": "No results found.",
-    "suggestions_label": "Suggestions",
-    "commands": {
-      "settings_label": "Settings"
-    }
-  },
+  "date": "dd.MM.yyyy, EEEE",
   "user_nav": {
     "authenticated": "authenticated",
     "settings_label": "Settings",
@@ -22,6 +13,7 @@
     "security": "security Settings"
   },
   "menu": {
+    "mobile_header": "Menu",
     "label_home": "Home",
     "label_contractors": "Contractors",
     "label_debtors": "Debtors",
@@ -172,5 +164,11 @@
     "title": "Oops, page not found!",
     "description": "The page you are looking for does not exist or has been moved.",
     "home_btn_caption": "Go to Homepage"
+  },
+  "notes": {
+    "title": "Notes",
+    "title_edit": "Edit Note",
+    "title_add": "Create Note",
+    "empty_text": "No Notes available. Press the + to add something"
   }
 }

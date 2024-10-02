@@ -1,20 +1,14 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Inter as FontSans } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
-import { cn } from '@/lib/utils';
+import { brand } from '@/config/brand';
 import { Toaster } from '@/components/ui/toaster';
 
 import '../globals.css';
 
-import { brand } from '@/config/brand';
-
-const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
+import { IonicProvider } from '@/components/ionic/provider';
 
 export const metadata: Metadata = {
   title: brand.name,
@@ -34,15 +28,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        suppressHydrationWarning
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.variable
-        )}
-      >
+      <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <IonicProvider>{children}</IonicProvider>
           <Toaster />
         </NextIntlClientProvider>
       </body>

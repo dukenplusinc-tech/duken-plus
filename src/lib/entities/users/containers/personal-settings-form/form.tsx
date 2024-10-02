@@ -1,139 +1,144 @@
 'use client';
 
 import { FC } from 'react';
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonSelect,
+  IonSelectOption,
+} from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
 import { languages } from '@/config/languages';
-import { Button } from '@/components/ui/button';
-import { CardContent, CardFooter } from '@/components/ui/card';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { useSignOut } from '@/lib/entities/users/hooks/useSignOut';
+import { useUser } from '@/lib/entities/users/hooks/useUser';
 
 import { usePersonalForm } from './hooks';
 
+export const UserInfoBlock: FC = () => {
+  const t = useTranslations('user_nav');
+
+  const user = useUser();
+  const signOut = useSignOut();
+
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <IonCard>
+      <IonCardHeader>
+        <IonLabel>
+          <h2>{user?.email}</h2>
+          <p>{user?.aud && t(user?.aud)}</p>
+        </IonLabel>
+      </IonCardHeader>
+
+      <IonCardContent>
+        <IonButton expand="block" color="danger" onClick={signOut}>
+          {t('logout')}
+        </IonButton>
+      </IonCardContent>
+    </IonCard>
+  );
+};
+
 export const PersonalSettingsForm: FC = () => {
   const t = useTranslations('settings.personal');
-
   const { form, isProcessing, handleSubmit } = usePersonalForm();
 
   return (
     <>
-      <Form {...form}>
-        <form onSubmit={handleSubmit}>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="full_name"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>{t('form_label_full_name')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t('form_placeholder_full_name')}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+      <form onSubmit={handleSubmit}>
+        <IonList>
+          {/* Full Name Field */}
+          <IonItem>
+            <IonLabel position="stacked">{t('form_label_full_name')}</IonLabel>
+            <IonInput
+              placeholder={t('form_placeholder_full_name')}
+              value={form.watch('full_name')}
+              onIonInput={(e) => form.setValue('full_name', e.detail.value!)}
             />
+          </IonItem>
+          {form.formState.errors.full_name && (
+            <IonLabel color="danger">
+              {form.formState.errors.full_name.message}
+            </IonLabel>
+          )}
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>{t('form_label_email')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder={t('form_placeholder_email')}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+          {/* Email Field */}
+          <IonItem>
+            <IonLabel position="stacked">{t('form_label_email')}</IonLabel>
+            <IonInput
+              type="email"
+              placeholder={t('form_placeholder_email')}
+              value={form.watch('email')}
+              onIonInput={(e) => form.setValue('email', e.detail.value!)}
             />
+          </IonItem>
+          {form.formState.errors.email && (
+            <IonLabel color="danger">
+              {form.formState.errors.email.message}
+            </IonLabel>
+          )}
 
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field: { value, ...field } }) => (
-                <FormItem className="mb-4">
-                  <FormLabel>{t('form_label_phone')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t('form_placeholder_phone')}
-                      value={value || ''}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+          {/* Phone Field */}
+          <IonItem>
+            <IonLabel position="stacked">{t('form_label_phone')}</IonLabel>
+            <IonInput
+              placeholder={t('form_placeholder_phone')}
+              value={form.watch('phone')}
+              onIonInput={(e) => form.setValue('phone', e.detail.value!)}
             />
+          </IonItem>
+          {form.formState.errors.phone && (
+            <IonLabel color="danger">
+              {form.formState.errors.phone.message}
+            </IonLabel>
+          )}
 
-            <FormField
-              control={form.control}
-              name="language"
-              render={({ field }) => (
-                <FormItem className="mb-2">
-                  <FormLabel>{t('form_label_lang')}</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value || ''}
-                    >
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder={
-                            (field.value &&
-                              languages.find((l) => l.value === field.value)
-                                ?.label) ||
-                            t('form_placeholder_lang')
-                          }
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {languages.map((option) => (
-                          <SelectItem
-                            key={option.value}
-                            value={option.value.toString()}
-                          >
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
+          {/* Language Select Field */}
+          <IonItem>
+            <IonLabel position="stacked">{t('form_label_lang')}</IonLabel>
+            <IonSelect
+              value={form.watch('language')}
+              placeholder={t('form_placeholder_lang')}
+              onIonChange={(e) => form.setValue('language', e.detail.value!)}
+            >
+              {languages.map((option) => (
+                <IonSelectOption key={option.value} value={option.value}>
+                  {option.label}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
+          </IonItem>
+          {form.formState.errors.language && (
+            <IonLabel color="danger">
+              {form.formState.errors.language.message}
+            </IonLabel>
+          )}
 
-          <CardFooter className="border-t px-6 py-4">
-            <Button type="submit" loading={isProcessing}>
+          {/* Save Button */}
+          <div className="ion-padding">
+            <IonButton
+              expand="block"
+              color="success"
+              type="submit"
+              disabled={isProcessing}
+            >
               {t('form_save')}
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
+            </IonButton>
+          </div>
+        </IonList>
+      </form>
+
+      <UserInfoBlock />
     </>
   );
 };

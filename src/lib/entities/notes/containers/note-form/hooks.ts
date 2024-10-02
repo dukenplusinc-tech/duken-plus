@@ -1,9 +1,12 @@
+import { useRouter } from 'next/navigation';
+
 import { useForm } from '@/lib/composite/form/useForm';
 import { createNote } from '@/lib/entities/notes/actions/createNote';
 import { updateNote } from '@/lib/entities/notes/actions/updateNote';
 import { useNoteById } from '@/lib/entities/notes/hooks/useNoteById';
 import { useNotes } from '@/lib/entities/notes/hooks/useNotes';
 import { NotePayload, notePayloadSchema } from '@/lib/entities/notes/schema';
+import * as fromUrl from '@/lib/url/generator';
 
 const defaultValues = {
   title: '',
@@ -11,8 +14,9 @@ const defaultValues = {
 };
 
 export function useNoteForm(id?: string) {
-  const { refresh } = useNotes();
+  const router = useRouter();
 
+  const { refresh } = useNotes();
   const noteById = useNoteById(id);
 
   return useForm<typeof notePayloadSchema, NotePayload>({
@@ -26,6 +30,8 @@ export function useNoteForm(id?: string) {
       }
 
       await refresh();
+
+      router.push(fromUrl.toNotes());
     },
     schema: notePayloadSchema,
   });

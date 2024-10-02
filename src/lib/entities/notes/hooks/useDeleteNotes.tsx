@@ -1,8 +1,11 @@
+import { useRouter } from 'next/navigation';
+
 import { removeNotes } from '@/lib/entities/notes/actions/removeNotes';
 import { useNotes } from '@/lib/entities/notes/hooks/useNotes';
 import { useConfirmDelete } from '@/lib/primitives/dialog/confirm/delete';
 
-export function useDeleteNotes(id?: string) {
+export function useDeleteNotes(id?: string, nextRoute?: string) {
+  const route = useRouter();
   const { refresh } = useNotes();
 
   return useConfirmDelete({
@@ -12,6 +15,10 @@ export function useDeleteNotes(id?: string) {
       await removeNotes(target!);
 
       await refresh();
+
+      if (nextRoute) {
+        route.push(nextRoute);
+      }
     },
   });
 }

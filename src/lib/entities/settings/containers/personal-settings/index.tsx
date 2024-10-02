@@ -2,24 +2,15 @@ import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { PersonalSettingsForm } from '@/lib/entities/users/containers/personal-settings-form/form';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { PageHeader } from '@/components/ui/page/header';
 
 export const PersonalSettings: FC = () => {
   const t = useTranslations('settings.personal');
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t('form_title')}</CardTitle>
-        <CardDescription>{t('form_subtitle')}</CardDescription>
-      </CardHeader>
-
+    <div className="flex flex-col h-full">
+      <PageHeader>{t('form_title')}</PageHeader>
       <PersonalSettingsForm />
-    </Card>
+    </div>
   );
 };

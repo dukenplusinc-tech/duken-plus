@@ -1,16 +1,15 @@
-import { FC } from 'react';
+'use client';
 
-import { Button } from '@/components/ui/button';
+import { FC } from 'react';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+  IonButton,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonSpinner,
+  IonTextarea,
+} from '@ionic/react';
 
 import { useNoteForm } from './hooks';
 
@@ -18,44 +17,53 @@ export const NoteForm: FC<{ id?: string }> = ({ id }) => {
   const { form, isProcessing, handleSubmit } = useNoteForm(id);
 
   return (
-    <Form {...form}>
+    <IonList>
       <form onSubmit={handleSubmit}>
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem className="mb-2">
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {/* Title Field */}
+        <IonItem>
+          <IonLabel position="stacked">Title</IonLabel>
+          <IonInput
+            value={form.watch('title')}
+            disabled={isProcessing}
+            onIonInput={(e) => form.setValue('title', e.detail.value!)} // Update form state
+            placeholder="Title"
+          />
+        </IonItem>
+        {form.formState.errors.title && (
+          <IonLabel color="danger">
+            {form.formState.errors.title.message}
+          </IonLabel>
+        )}
 
-        <FormField
-          control={form.control}
-          name="content"
-          render={({ field }) => (
-            <FormItem className="mb-2">
-              <FormLabel>Content</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Feel free to type your note there..."
-                  className="resize-none h-[250px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {/* Content Field */}
+        <IonItem>
+          <IonLabel position="stacked">Content</IonLabel>
+          <IonTextarea
+            value={form.watch('content')}
+            onIonInput={(e) => form.setValue('content', e.detail.value!)} // Update form state
+            placeholder="Feel free to type your note..."
+            rows={15}
+            autoGrow
+            disabled={isProcessing}
+          />
+        </IonItem>
+        {form.formState.errors.content && (
+          <IonLabel color="danger">
+            {form.formState.errors.content.message}
+          </IonLabel>
+        )}
 
-        <Button loading={isProcessing} className="mt-4 w-full" type="submit">
-          {id ? 'Save' : 'Create'}
-        </Button>
+        {/* Submit Button */}
+        <IonButton
+          className="mt-2"
+          expand="block"
+          color="success"
+          type="submit"
+          disabled={isProcessing}
+        >
+          {isProcessing ? <IonSpinner name="dots" /> : id ? 'Save' : 'Create'}
+        </IonButton>
       </form>
-    </Form>
+    </IonList>
   );
 };

@@ -59,9 +59,13 @@ export function useForm<S extends z.ZodTypeAny, R>({
           variant: 'destructive',
           title: '⚠️ Some error occurred',
           description: (
-            <pre className="mt-2 max-h-[340px] w-[340px] overflow-y-hidden rounded-md bg-slate-950 p-4">
-              <code className="text-white">{JSON.stringify(e, null, 2)}</code>
-            </pre>
+            <p>
+              <b>{String(e)}</b>
+
+              <pre className="mt-2 max-h-[340px] w-[340px] overflow-y-hidden rounded-md bg-slate-950 p-4">
+                <code className="text-white">{JSON.stringify(e, null, 2)}</code>
+              </pre>
+            </p>
           ),
         });
       }

@@ -33,32 +33,22 @@ export const UserActionsLog: FC<{ id: string; full_name: string }> = ({
       ) : (
         <IonList>
           {data.map((item) => (
-            <IonItem key={item.id}>
+            <IonItem key={item.id} lines="full">
+              {/* Action Badge */}
               <IonLabel>
-                <div className="flex space-x-2">
-                  <Badge>{item.action}</Badge>
-                </div>
+                <p className="truncate text-sm text-muted">
+                  Entity ID: {item.entity_id}
+                </p>
+
+                <Badge className="mr-2">{item.action}</Badge>
+                <Badge variant="outline">{item.entity}</Badge>
               </IonLabel>
-              <IonLabel>
-                <div className="flex space-x-2">
-                  <span className="max-w-[250px] truncate font-medium">
-                    {item.entity}
-                  </span>
-                </div>
-              </IonLabel>
-              <IonLabel>
-                <div className="flex space-x-2">
-                  <span className="max-w-[250px] truncate font-medium">
-                    {item.entity_id}
-                  </span>
-                </div>
-              </IonLabel>
-              <IonLabel>
-                <div className="flex space-x-2">
-                  <FormatDate className="font-medium">
-                    {item.timestamp}
-                  </FormatDate>
-                </div>
+
+              {/* Timestamp */}
+              <IonLabel slot="end" className="ion-text-end">
+                <p className="font-medium">
+                  <FormatDate>{item.timestamp}</FormatDate>
+                </p>
               </IonLabel>
             </IonItem>
           ))}

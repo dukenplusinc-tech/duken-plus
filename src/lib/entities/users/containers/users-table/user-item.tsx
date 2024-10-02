@@ -53,7 +53,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
 
   return (
     <Link href={fromUrl.toUser(user.id)}>
-      <IonItem button lines="full">
+      <IonItem detail button lines="full">
         <IonAvatar aria-hidden="true" slot="start">
           <Image
             width={40}

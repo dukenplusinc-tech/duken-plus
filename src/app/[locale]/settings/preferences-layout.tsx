@@ -29,16 +29,16 @@ const tabs: TabItemType[] = [
     render: <GeneralShopSettings />,
   },
   {
-    id: 'personal',
-    title: 'Personal',
-    icon: icons.personOutline,
-    render: <PersonalSettings />,
-  },
-  {
     id: 'security',
     title: 'Security',
     icon: icons.lockClosedOutline,
     render: <SecuritySettings />,
+  },
+  {
+    id: 'personal',
+    title: 'Personal',
+    icon: icons.personOutline,
+    render: <PersonalSettings />,
   },
 ];
 

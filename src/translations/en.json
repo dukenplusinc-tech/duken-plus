@@ -1,15 +1,5 @@
 {
   "date": "dd.MM.yyyy, EEEE",
-  "combobox": {
-    "quick_access": "Quick access...",
-    "search": "Quick access...",
-    "cmd_placeholder": "Type a command or search...",
-    "empty": "No results found.",
-    "suggestions_label": "Suggestions",
-    "commands": {
-      "settings_label": "Settings"
-    }
-  },
   "user_nav": {
     "authenticated": "authenticated",
     "settings_label": "Settings",

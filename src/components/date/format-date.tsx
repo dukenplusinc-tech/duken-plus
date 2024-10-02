@@ -3,7 +3,7 @@ import { FC, HTMLAttributes } from 'react';
 import { useFormattedDate } from '@/lib/composite/date/format/useFormattedDate';
 
 export interface FormatDateProps extends HTMLAttributes<HTMLSpanElement> {
-  children: string;
+  children: string | null;
 }
 
 export const FormatDate: FC<FormatDateProps> = ({

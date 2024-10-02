@@ -8,10 +8,9 @@ import { DropdownButton } from '@/components/ui/ionic/dropdown';
 
 interface NoteItemProps {
   note: Note;
-  actionsButton?: ReactNode; // Allows passing a dropdown or custom actions button
 }
 
-export const NoteItem: FC<NoteItemProps> = ({ note, actionsButton }) => {
+export const NoteItem: FC<NoteItemProps> = ({ note }) => {
   const options = useNoteDotMenu(note);
 
   return (

@@ -7,7 +7,10 @@ import { format, parseISO } from 'date-fns';
  * @param datetime
  * @param dateFormat
  */
-export const useFormattedDate = (datetime: string, dateFormat = 'PPpp') => {
+export const useFormattedDate = (
+  datetime: string | null,
+  dateFormat = 'PPpp'
+) => {
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {

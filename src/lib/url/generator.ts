@@ -10,16 +10,12 @@ export function toSettings(): string {
   return `/settings`;
 }
 
-export function toSecuritySettings(): string {
-  return `/settings/security`;
-}
-
-export function toPersonalSettings(): string {
-  return `/settings/personal`;
-}
-
 export function toUsers(): string {
   return `/users`;
+}
+
+export function toInvite(): string {
+  return `/users/invite`;
 }
 
 export function toUser(id: string): string {

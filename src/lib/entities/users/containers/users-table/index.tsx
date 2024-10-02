@@ -15,13 +15,13 @@ import { EmptyScreen } from '@/components/ui/page/screen/empty';
 export const UsersTable: FC = () => {
   const t = useTranslations('users');
 
-  const { data, count, isLoading, error } = useUsers();
+  const { data, isLoading } = useUsers();
 
   return (
     <div className="flex flex-col h-full">
       <PageHeader
         right={
-          <Link href={fromUrl.toAddNote()}>
+          <Link href={fromUrl.toInvite()}>
             <IonButton color="success">
               <IonIcon
                 slot="icon-only"

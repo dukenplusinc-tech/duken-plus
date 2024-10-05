@@ -11,9 +11,7 @@ export const AppProviders: FC<PropsWithChildren> = ({ children }) => {
     <TooltipProvider>
       <FiltersProvider>
         <DialogProvider>
-          <DialogModalProvider>
-            <BreadcrumbsProvider>{children}</BreadcrumbsProvider>
-          </DialogModalProvider>
+          <DialogModalProvider>{children}</DialogModalProvider>
         </DialogProvider>
       </FiltersProvider>
     </TooltipProvider>

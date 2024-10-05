@@ -1,7 +1,6 @@
 import type { FC, PropsWithChildren } from 'react';
 
 import { FiltersProvider } from '@/lib/composite/filters/provider';
-import { BreadcrumbsProvider } from '@/lib/navigation/breadcrumbs/provider';
 import { DialogProvider } from '@/lib/primitives/dialog/provider';
 import { DialogModalProvider } from '@/lib/primitives/modal/provider';
 import { TooltipProvider } from '@/components/ui/tooltip';

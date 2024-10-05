@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import {
   IonButton,
   IonInput,
@@ -47,21 +47,29 @@ export const UpdateShopForm: FC = () => {
             value={form.watch('city')}
             placeholder={t('general.form_placeholder_city')}
             onIonChange={(e) => form.setValue('city', e.detail.value!)}
+            interface="popover" // You can use "popover" or "action-sheet" for better UI
           >
             {cities.map(({ group, list }, idx) => (
-              <IonSelectOption key={idx.toString()} value={group}>
-                <IonLabel>{group}</IonLabel>
+              <Fragment key={idx.toString()}>
+                {/* Group Label: Add visual separation for group headers */}
+                <IonSelectOption
+                  disabled
+                  style={{ fontWeight: 'bold', color: 'black' }}
+                >
+                  {group}
+                </IonSelectOption>
+
+                {/* City Options */}
                 {list.map((option) => (
                   <IonSelectOption key={option.value} value={option.value}>
-                    {option.label}
+                    {option.label.length > 30
+                      ? `${option.label.substring(0, 27)}...` // Truncate long labels
+                      : option.label}
                   </IonSelectOption>
                 ))}
-              </IonSelectOption>
+              </Fragment>
             ))}
           </IonSelect>
-          <IonText>
-            <small>{t('general.form_description_city')}</small>
-          </IonText>
         </IonItem>
         {form.formState.errors.city && (
           <IonText color="danger">

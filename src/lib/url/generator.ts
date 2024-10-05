@@ -50,6 +50,10 @@ export function toNoteEdit(id: string): string {
   return `/notes/${id}`;
 }
 
+export function toNoteDetails(id: string): string {
+  return `/notes/${id}/view`;
+}
+
 export function toChat(): string {
   return `/chat`;
 }

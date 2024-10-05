@@ -169,6 +169,11 @@
     "title": "Notes",
     "title_edit": "Edit Note",
     "title_add": "Create Note",
-    "empty_text": "No Notes available. Press the + to add something"
+    "empty_text": "No Notes available. Press the + to add something",
+    "edit_btn": "Edit"
+  },
+  "loader": {
+    "message": "Loading, please wait. Touch to cancel",
+    "error": "Failed to load..."
   }
 }

@@ -18,7 +18,7 @@ export function useNoteDotMenu(note: Note): DropDownButtonOption[] {
     () => [
       {
         label: t('view_cation'),
-        onClick: () => router.push(fromUrl.toNoteEdit(note.id)),
+        onClick: () => router.push(fromUrl.toNoteDetails(note.id)),
       },
       {
         label: t('delete_cation'),

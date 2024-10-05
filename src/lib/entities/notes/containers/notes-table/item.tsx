@@ -16,7 +16,7 @@ export const NoteItem: FC<NoteItemProps> = ({ note }) => {
   const options = useNoteDotMenu(note);
 
   return (
-    <Link href={fromUrl.toNoteEdit(note.id)}>
+    <Link href={fromUrl.toNoteDetails(note.id)}>
       <IonItem detail button key={note.id}>
         <IonLabel>{note.title || '---'}</IonLabel>
         <DropdownButton

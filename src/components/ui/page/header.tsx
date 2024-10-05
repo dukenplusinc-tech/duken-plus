@@ -16,7 +16,7 @@ export const PageHeader: FC<PropsWithChildren<PageHeaderProps>> = ({
     <div
       {...props}
       className={cn(
-        'flex justify-between items-center -mt-4 -mx-4 py-4 px-8 border-b bg-primary text-white',
+        'flex justify-between items-center min-h-20 -mt-4 -mx-4 py-2 px-8 border-b bg-primary text-white',
         className
       )}
     >

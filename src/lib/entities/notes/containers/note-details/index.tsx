@@ -8,12 +8,15 @@ import { useTranslations } from 'next-intl';
 
 import { useDeleteNotes } from '@/lib/entities/notes/hooks/useDeleteNotes';
 import { useNoteById } from '@/lib/entities/notes/hooks/useNoteById';
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import * as fromUrl from '@/lib/url/generator';
 import { DropdownButton } from '@/components/ui/ionic/dropdown';
 import { EntityLoader } from '@/components/ui/loader';
 import { PageHeader } from '@/components/ui/page/header';
 
 export const NoteDetails: FC<{ id: string }> = ({ id }) => {
+  useActivateBackButton();
+
   const router = useRouter();
 
   const t = useTranslations();

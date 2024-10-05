@@ -5,6 +5,7 @@ import { IonItem, IonLabel, IonList, IonSpinner } from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
 import { useUserActionLogs } from '@/lib/entities/users/hooks/useUserActionLogs';
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Badge } from '@/components/ui/badge';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -14,6 +15,8 @@ export const UserActionsLog: FC<{ id: string; full_name: string }> = ({
   id,
   full_name,
 }) => {
+  useActivateBackButton();
+
   const t = useTranslations('user_logs');
 
   const { data, count, isLoading, error } = useUserActionLogs(id);

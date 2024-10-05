@@ -1,20 +1,29 @@
 'use client';
 
 import { FC, PropsWithChildren } from 'react';
+import { useRouter } from 'next/navigation';
 import {
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { arrowBack } from 'ionicons/icons';
 
+import { useBackButton } from '@/lib/navigation/back-button/context';
 import { DateDisplay } from '@/components/date/date-display';
 import { Menu } from '@/components/navigation/menu';
 
 export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
+  const { showBackButton } = useBackButton();
+
+  const router = useRouter();
+
   return (
     <>
       <Menu />
@@ -22,13 +31,24 @@ export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton className="bg-primary text-white rounded-xl"></IonMenuButton>
+              {showBackButton ? (
+                // Back Button if `showBackButton` is true
+                <IonButton fill="clear" onClick={() => router.back()}>
+                  <IonIcon slot="icon-only" icon={arrowBack} />
+                </IonButton>
+              ) : (
+                // Otherwise, show the Menu Button
+                <IonMenuButton className="bg-primary text-white rounded-xl" />
+              )}
             </IonButtons>
+
+            {/* Center Title or Right-aligned Date */}
             <IonTitle className="text-right">
               <DateDisplay />
             </IonTitle>
           </IonToolbar>
         </IonHeader>
+
         <IonContent className="ion-padding">{children}</IonContent>
       </IonPage>
     </>

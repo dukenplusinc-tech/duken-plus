@@ -17,7 +17,7 @@ export const NoteItem: FC<NoteItemProps> = ({ note }) => {
 
   return (
     <Link href={fromUrl.toNoteDetails(note.id)}>
-      <IonItem detail button key={note.id}>
+      <IonItem button key={note.id}>
         <IonLabel>{note.title || '---'}</IonLabel>
         <DropdownButton
           button={

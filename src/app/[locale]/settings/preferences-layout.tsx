@@ -47,7 +47,9 @@ export const PreferencesTabLayout: FC = () => {
     <IonTabs>
       {tabs.map((tab) => (
         <IonTab key={tab.id} tab={tab.id}>
-          <div className="ion-padding">{tab.render || 'Empty'}</div>
+          <div className="overflow-auto ion-padding">
+            {tab.render || 'Empty'}
+          </div>
         </IonTab>
       ))}
 

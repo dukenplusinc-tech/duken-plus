@@ -4,6 +4,7 @@ import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { ShopPayload, shopPayloadSchema } from '@/lib/entities/shop/schema';
 
 const defaultValues = {
+  id: '',
   title: '',
   address: '',
   city: '',

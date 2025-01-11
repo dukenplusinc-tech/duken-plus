@@ -1,36 +1,33 @@
 'use client';
 
-import {
-  UserActionLog,
-  userActionLogSchema,
-} from '@/lib/entities/users/schema';
-import { useQuery } from '@/lib/supabase/query';
+import { useMemo } from 'react';
+
+import { UserActionLog } from '@/lib/entities/users/schema';
+import { useInfiniteQuery } from '@/lib/supabase/useInfiniteQuery';
+
+const allowedFilters: string[] = [];
 
 export const useUserActionLogs = (id: string) => {
-  return useQuery<UserActionLog[]>(
-    'user_action_logs',
-    `
+  const filters = useMemo(
+    () => [
+      {
+        key: 'user_id',
+        eq: id,
+      },
+    ],
+    [id]
+  );
+
+  return useInfiniteQuery<UserActionLog>({
+    table: 'user_action_logs',
+    columns: `
         id,
         timestamp,
         action,
         entity,
         entity_id
       `,
-    {
-      allowedFilters: [],
-      filters: [
-        {
-          key: 'user_id',
-          eq: id,
-        },
-      ],
-      sort: [
-        {
-          id: 'timestamp',
-          desc: true,
-        },
-      ],
-      schema: userActionLogSchema,
-    }
-  );
+    allowedFilters,
+    filters,
+  });
 };

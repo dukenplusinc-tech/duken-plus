@@ -19,7 +19,7 @@ import { useShopForm } from './hooks';
 
 export const UpdateShopForm: FC = () => {
   const t = useTranslations('settings');
-  const { form, isProcessing, handleSubmit } = useShopForm();
+  const { form, data, isProcessing, handleSubmit } = useShopForm();
   const cities = useCitiesOptions();
 
   return (
@@ -44,6 +44,7 @@ export const UpdateShopForm: FC = () => {
         <IonItem>
           <IonLabel position="stacked">{t('general.form_label_city')}</IonLabel>
           <IonSelect
+            disabled={Boolean(data?.city)}
             value={form.watch('city')}
             placeholder={t('general.form_placeholder_city')}
             onIonChange={(e) => form.setValue('city', e.detail.value!)}
@@ -60,8 +61,11 @@ export const UpdateShopForm: FC = () => {
                 </IonSelectOption>
 
                 {/* City Options */}
-                {list.map((option) => (
-                  <IonSelectOption key={option.value} value={option.value}>
+                {list.map((option, idx) => (
+                  <IonSelectOption
+                    key={`${idx}_${option.value}`}
+                    value={option.value}
+                  >
                     {option.label.length > 30
                       ? `${option.label.substring(0, 27)}...` // Truncate long labels
                       : option.label}

@@ -1,13 +1,19 @@
 import { createContext, ReactNode } from 'react';
 
 export interface DialogWrapperProps {
+  autoClose?: boolean;
   open: boolean;
   setOpen?: (status: boolean) => void;
+  dialog?: boolean;
   desktopMedia?: string;
   title?: string;
   description?: string;
   cancelCaption?: string;
+  acceptCaption?: string;
   dialogClassName?: string;
+
+  onCancel?: () => void;
+  onAccept?: () => void;
 }
 
 export interface DialogModalPayload

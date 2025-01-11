@@ -10,32 +10,27 @@ import { RenderDialog } from './render-dialog';
 export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useState<Partial<DialogContextState>>({
     render: null,
-    onAction: null,
-    onCancel: null,
-    onClose: null,
     onModalClosed: null,
   });
 
-  const { onCancel, onAction, onClose } = state;
-
-  const handleCancel = useCallback(async () => {
-    await safeInvoke(onCancel, { toast: true });
-
-    setState((prevState) => ({ ...prevState, render: null }));
-
-    await safeInvoke(onClose);
-  }, [onCancel, onClose]);
-
-  const handleAction = useCallback(async () => {
-    await safeInvoke(onAction, { toast: true });
-
-    setState((prevState) => ({ ...prevState, render: null }));
-
-    await safeInvoke(onClose, { toast: true });
-  }, [onAction, onClose]);
-
   const launch = useCallback(
     (params?: LaunchParams) => {
+      const handleCancel = async () => {
+        await safeInvoke(params?.onCancel, { toast: true });
+
+        setState((prevState) => ({ ...prevState, render: null }));
+
+        await safeInvoke(params?.onClose);
+      };
+
+      const handleAction = async () => {
+        await safeInvoke(params?.onAction, { toast: true });
+
+        setState((prevState) => ({ ...prevState, render: null }));
+
+        await safeInvoke(params?.onClose, { toast: true });
+      };
+
       setState({
         onAction: params?.onAction,
         onCancel: params?.onCancel,
@@ -45,13 +40,19 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
           <RenderDialog
             title={params?.title}
             description={params?.description}
+            actionCaption={
+              params?.actionCaption || state?.actionCaption || 'Continue'
+            }
+            cancelCaption={
+              params?.cancelCaption || state?.cancelCaption || 'Cancel'
+            }
             onCancel={handleCancel}
             onAction={handleAction}
           />
         ),
       });
     },
-    [handleCancel, handleAction]
+    [state?.actionCaption, state?.cancelCaption]
   );
 
   const value = {

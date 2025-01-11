@@ -1,5 +1,8 @@
 {
   "date": "dd.MM.yyyy, EEEE",
+  "currency": {
+    "tenge": "тенге"
+  },
   "user_nav": {
     "authenticated": "аутентификацияланған",
     "settings_label": "Параметрлер",
@@ -11,6 +14,12 @@
     "settings": "Параметрлер",
     "personal": "Жеке параметрлер",
     "security": "Қауіпсіздік параметрлері"
+  },
+  "files": {
+    "no_image": "Сурет қолжетімсіз.",
+    "no_signature_image": "Қолтаңба жоқ",
+    "error": "Қате",
+    "open": "Ашу"
   },
   "menu": {
     "mobile_header": "Мәзір",
@@ -26,6 +35,14 @@
     "label_users": "Пайдаланушылар",
     "label_settings": "Параметрлер"
   },
+  "dialog": {
+    "accept": "Қабылдау",
+    "cancel": "Бас тарту"
+  },
+  "filters": {
+    "search": "Іздеу...",
+    "action": "Табу"
+  },
   "transitions": {
     "loading_btn": "Жүктелуде"
   },
@@ -36,6 +53,7 @@
     "limit_caption": "Беттегі жолдар саны",
     "pagination_caption": "Бет {page, number} ішінен {total, number}",
     "actions": {
+      "edit_caption": "Өзгерту",
       "view_cation": "Қарау",
       "delete_cation": "Жою"
     },
@@ -171,6 +189,99 @@
     "title_add": "Ескертпе қосу",
     "empty_text": "Ескертпелер жоқ. Қосу үшін + түймесін басыңыз",
     "edit_btn": "Ескертпені"
+  },
+  "contractors": {
+    "title": "Мердігерлер",
+    "title_edit": "Мердігерді өңдеу",
+    "title_add": "Жаңа мердігер қосу",
+    "empty_text": "Мердігерлер жоқ. Қосу үшін + басыңыз.",
+    "edit_btn": "Өңдеу",
+    "form_label_title": "Атауы",
+    "form_label_supervisor": "Супервайзер",
+    "form_label_supervisor_phone": "Телефон",
+    "form_label_sales_representative": "Сату өкілі",
+    "form_label_sales_representative_phone": "Телефон",
+    "form_label_sales_address": "Мекенжай",
+    "form_label_contract": "Шарт",
+    "form_label_note": "Қосымша",
+    "form_label_note_placeholder": "Қосымша ақпарат енгізіңіз",
+    "form_submit": "Қосу / Сақтау",
+    "sorting": {
+      "by_date": "Күні бойынша",
+      "by_title": "Атауы бойынша"
+    }
+  },
+  "debtors": {
+    "title": "Қарыз алушылар",
+    "title_edit": "Қарыз алушыны өңдеу",
+    "title_add": "Жаңа қарыз алушыны қосу",
+    "empty_text": "Қарыз алушылар жоқ. Қосу үшін + басыңыз.",
+    "edit_btn": "Өңдеу",
+    "form_label_full_name": "Толық аты",
+    "form_label_iin": "ЖСН",
+    "form_label_phone": "Телефон",
+    "form_label_address": "Мекенжай",
+    "form_label_max_amount": "Ең көп сома",
+    "form_label_work_place": "Жұмыс орны",
+    "form_label_photo": "Фото",
+    "form_label_id": "Жеке куәлік фотосы",
+    "form_label_signature": "Қолтаңба",
+    "form_label_note": "Қосымша ақпарат",
+    "form_label_note_placeholder": "Қосымша ақпарат енгізіңіз",
+    "form_submit": "Қосу / Сақтау",
+    "overdue_amount": "Уақтылы қарызын жаппаған борышкерлер бар:",
+    "sorting": {
+      "by_date": "Күні бойынша",
+      "by_balance": "Сома бойынша"
+    },
+    "black_list": {
+      "page": {
+        "title": "Қарыз алушылардың қара тізімі",
+        "search_placeholder": "ЖСН немесе Толық аты бойынша іздеу",
+        "sorting": {
+          "by_date": "Күні бойынша",
+          "by_name": "Әліпби тәртібімен"
+        }
+      },
+      "add_to_blacklist_title": "Қара тізімге қосу?",
+      "add_to_blacklist_description": "Бұл клиентті қара тізімге қосқыңыз келетініне сенімдісіз бе?",
+      "add_to_blacklist_confirm_caption": "Қосу",
+      "add_to_blacklist_cancel_caption": "Бас тарту",
+      "remove_from_blacklist_title": "Қара тізімнен жою?",
+      "remove_from_blacklist_description": "Бұл клиентті қара тізімнен жойғыңыз келетініне сенімдісіз бе?",
+      "remove_from_blacklist_confirm_caption": "Жою",
+      "remove_from_blacklist_cancel_caption": "Бас тарту"
+    },
+    "dot_menu": {
+      "view_info_caption": "Қарыз алушы туралы ақпаратты көру",
+      "add_to_blacklist_caption": "Қара тізімге қосу",
+      "remove_from_blacklist_caption": "Қара тізімнен жою",
+      "add_transaction_record": "Жазба қосу",
+      "repay_the_full_amount_caption": "Толық соманы өтеу"
+    }
+  },
+  "debtor_transactions": {
+    "sorting": {
+      "by_date": "Күні бойынша",
+      "by_amount": "Сомасы бойынша"
+    },
+    "empty_text": "Транзакциялар жоқ",
+    "form": {
+      "create_title": "Жазба қосу",
+      "is_loan": "Қарызға",
+      "form_label_amount": "Сома",
+      "form_label_description": "Сипаттама"
+    }
+  },
+  "upload": {
+    "images": {
+      "choose_file": "Файлды таңдау",
+      "no_image": "Сурет таңдалмады"
+    },
+    "signature": {
+      "modal_title": "Қолтаңбаңызды салыңыз",
+      "no_image": "Қолтаңба жоқ"
+    }
   },
   "loader": {
     "message": "Жүктелуде, күте тұрыңыз. Бас тарту үшін түртіңіз",

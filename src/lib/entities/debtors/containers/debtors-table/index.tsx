@@ -1,0 +1,90 @@
+'use client';
+
+import { FC, useMemo } from 'react';
+import Link from 'next/link';
+import { IonButton, IonList, IonSpinner } from '@ionic/react';
+import { HistoryIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
+import { DebtorItem } from '@/lib/entities/debtors/containers/debtors-table/item';
+import { OverdueWarning } from '@/lib/entities/debtors/containers/overdue-warning';
+import { TotalAmounts } from '@/lib/entities/debtors/containers/total-amounts';
+import { useDebtors } from '@/lib/entities/debtors/hooks/useDebtors';
+import * as fromUrl from '@/lib/url/generator';
+import { Button } from '@/components/ui/button';
+import { EmptyScreen } from '@/components/ui/page/screen/empty';
+import { ErrorScreen } from '@/components/ui/page/screen/error';
+
+export const DebtorsTable: FC = () => {
+  const t = useTranslations('debtors');
+
+  const { data, error, isLoading, sentinelRef } = useDebtors();
+
+  const sortByOptions = useMemo(
+    () => [
+      { label: t('sorting.by_date'), value: 'created_at' },
+      { label: t('sorting.by_balance'), value: 'balance' },
+    ],
+    [t]
+  );
+
+  return (
+    <div className="flex flex-col h-full">
+      <div className="mb-4">
+        <div className="flex items-center gap-4">
+          <div className="flex-1">
+            <Link href={fromUrl.toAddDebtor()}>
+              <IonButton expand="block" color="success">
+                <span className="text-white">{t('title_add')}</span>
+              </IonButton>
+            </Link>
+          </div>
+          <TotalAmounts />
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <OverdueWarning />
+      </div>
+
+      <div className="mb-2">
+        <SearchBar
+          searchByField="full_name"
+          sortByOptions={sortByOptions}
+          right={
+            <Link href={fromUrl.toDebtorHistory()}>
+              <Button
+                variant="default"
+                size="icon"
+                className="bg-primary hover:bg-primary/90 h-[38px] w-[38px]"
+              >
+                <HistoryIcon />
+              </Button>
+            </Link>
+          }
+        />
+      </div>
+
+      {error && <ErrorScreen error={error} />}
+
+      {!isLoading && data.length === 0 && (
+        <EmptyScreen>{t('empty_text')}</EmptyScreen>
+      )}
+
+      <IonList>
+        {data.map((item, index) => (
+          <DebtorItem key={`${index}_${item.id}`} debtor={item} />
+        ))}
+      </IonList>
+
+      {isLoading && (
+        <div className="flex justify-center p-8">
+          <IonSpinner name="dots" />
+        </div>
+      )}
+
+      <div ref={sentinelRef} className="sentinel" />
+    </div>
+  );
+};

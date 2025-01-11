@@ -10,18 +10,20 @@ import {
 import { ellipsisVertical } from 'ionicons/icons';
 
 export interface DropDownButtonOption {
-  label: string;
+  label: string | ReactNode;
   onClick: () => void;
   disabled?: boolean;
 }
 
 interface DropdownButtonProps {
   options: DropDownButtonOption[];
+  className?: string;
   button?: ReactNode; // Custom button or trigger slot
 }
 
 export const DropdownButton: FC<DropdownButtonProps> = ({
   options,
+  className,
   button,
 }) => {
   const [showPopover, setShowPopover] = useState(false);
@@ -30,7 +32,9 @@ export const DropdownButton: FC<DropdownButtonProps> = ({
   );
 
   const openPopover = (e: MouseEvent) => {
+    e.stopPropagation();
     e.preventDefault();
+
     setPopoverEvent(e);
     setShowPopover(true);
   };
@@ -39,7 +43,9 @@ export const DropdownButton: FC<DropdownButtonProps> = ({
     <>
       {/* Render custom button if provided, otherwise render default button */}
       {button ? (
-        <div onClick={openPopover}>{button}</div>
+        <div className={className} onClick={openPopover}>
+          {button}
+        </div>
       ) : (
         <IonButton color="success" onClick={openPopover}>
           <IonIcon
@@ -55,6 +61,9 @@ export const DropdownButton: FC<DropdownButtonProps> = ({
         isOpen={showPopover}
         event={popoverEvent}
         onDidDismiss={() => setShowPopover(false)}
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
       >
         <IonList>
           {options.map((option, index) => (

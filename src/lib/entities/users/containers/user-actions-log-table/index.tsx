@@ -19,7 +19,7 @@ export const UserActionsLog: FC<{ id: string; full_name: string }> = ({
 
   const t = useTranslations('user_logs');
 
-  const { data, count, isLoading, error } = useUserActionLogs(id);
+  const { data, sentinelRef, isLoading } = useUserActionLogs(id);
 
   return (
     <div className="flex flex-col h-full">
@@ -57,6 +57,8 @@ export const UserActionsLog: FC<{ id: string; full_name: string }> = ({
           ))}
         </IonList>
       )}
+
+      <div ref={sentinelRef} className="sentinel" />
     </div>
   );
 };

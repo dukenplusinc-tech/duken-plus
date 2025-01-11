@@ -26,12 +26,32 @@ export function toContractors(): string {
   return `/contractors`;
 }
 
+export function toAddContractor(): string {
+  return `/contractors/create`;
+}
+
+export function toContractorEdit(id: string): string {
+  return `/contractors/${id}`;
+}
+
 export function toDebtors(): string {
   return `/debtors`;
 }
 
+export function toDebtorHistory(): string {
+  return `/debtors/history`;
+}
+
+export function toAddDebtor(): string {
+  return `/debtors/create`;
+}
+
+export function toDebtorEdit(id: string): string {
+  return `/debtors/${id}`;
+}
+
 export function toBlacklist(): string {
-  return `/blacklist`;
+  return `/debtors/blacklist`;
 }
 
 export function toCashDesk(): string {

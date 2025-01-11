@@ -1,28 +1,16 @@
 'use client';
 
-import { Note, noteSchema as schema } from '@/lib/entities/notes/schema';
-import { useQuery } from '@/lib/supabase/query';
-
-const sort = [
-  {
-    id: 'updated_at',
-    desc: true,
-  },
-];
+import { Note } from '@/lib/entities/notes/schema';
+import { useInfiniteQuery } from '@/lib/supabase/useInfiniteQuery';
 
 export const useNotes = () => {
-  return useQuery<Note[]>(
-    'notes',
-    `
-        id,
+  return useInfiniteQuery<Note>({
+    table: 'notes',
+    columns: `id,
         title,
         content,
         created_at,
         updated_at
       `,
-    {
-      schema,
-      sort,
-    }
-  );
+  });
 };

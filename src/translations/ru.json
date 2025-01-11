@@ -1,5 +1,8 @@
 {
   "date": "dd.MM.yyyy, EEEE",
+  "currency": {
+    "tenge": "тенге"
+  },
   "user_nav": {
     "authenticated": "аутентифицирован",
     "settings_label": "Настройки",
@@ -11,6 +14,12 @@
     "settings": "Настройки",
     "personal": "Личные настройки",
     "security": "Настройки безопасности"
+  },
+  "files": {
+    "no_image": "Изображение недоступно.",
+    "no_signature_image": "Подпись отсутствует",
+    "error": "Ошибка",
+    "open": "Открыть"
   },
   "menu": {
     "mobile_header": "Меню",
@@ -26,6 +35,14 @@
     "label_users": "Пользователи",
     "label_settings": "Настройки"
   },
+  "dialog": {
+    "accept": "Принять",
+    "cancel": "Отмена"
+  },
+  "filters": {
+    "search": "Поиск...",
+    "action": "Найти"
+  },
   "transitions": {
     "loading_btn": "Загрузка"
   },
@@ -36,6 +53,7 @@
     "limit_caption": "Строк на страницу",
     "pagination_caption": "Страница {page, number} из {total, number}",
     "actions": {
+      "edit_caption": "Изменить",
       "view_cation": "Просмотр",
       "delete_cation": "Удалить"
     },
@@ -171,6 +189,99 @@
     "title_add": "Создать заметку",
     "empty_text": "Заметок нет. Нажмите +, чтобы добавить что-то",
     "edit_btn": "Редактировать"
+  },
+  "contractors": {
+    "title": "Подрядчики",
+    "title_edit": "Редактировать подрядчика",
+    "title_add": "Добавить нового подрядчика",
+    "empty_text": "Подрядчики отсутствуют. Нажмите +, чтобы добавить.",
+    "edit_btn": "Редактировать",
+    "form_label_title": "Название",
+    "form_label_supervisor": "Супервайзер",
+    "form_label_supervisor_phone": "Телефон",
+    "form_label_sales_representative": "Торговый представитель",
+    "form_label_sales_representative_phone": "Телефон",
+    "form_label_sales_address": "Адрес",
+    "form_label_contract": "Договор",
+    "form_label_note": "Дополнительно",
+    "form_label_note_placeholder": "Введите дополнительную информацию",
+    "form_submit": "Добавить / Сохранить",
+    "sorting": {
+      "by_date": "По дате",
+      "by_title": "По названию"
+    }
+  },
+  "debtors": {
+    "title": "Должники",
+    "title_edit": "Редактировать должника",
+    "title_add": "Добавить нового должника",
+    "empty_text": "Должники отсутствуют. Нажмите +, чтобы добавить.",
+    "edit_btn": "Редактировать",
+    "form_label_full_name": "ФИО",
+    "form_label_iin": "ИИН",
+    "form_label_phone": "Телефон",
+    "form_label_address": "Адрес",
+    "form_label_max_amount": "Макс. сумма",
+    "form_label_work_place": "Место работы",
+    "form_label_photo": "Фото",
+    "form_label_id": "Фото удостоверения",
+    "form_label_signature": "Подпись",
+    "form_label_note": "Дополнительно",
+    "form_label_note_placeholder": "Введите дополнительную информацию",
+    "form_submit": "Добавить / Сохранить",
+    "overdue_amount": "Есть должники не закрывшие долг вовремя:",
+    "sorting": {
+      "by_date": "По дате",
+      "by_balance": "По сумме"
+    },
+    "black_list": {
+      "page": {
+        "title": "Черный список должников",
+        "search_placeholder": "Поиск по ИИН или ФИО",
+        "sorting": {
+          "by_date": "По дате",
+          "by_name": "По алфавиту"
+        }
+      },
+      "add_to_blacklist_title": "Добавить в черный список?",
+      "add_to_blacklist_description": "Вы действительно хотите добавить этого клиента в черный список?",
+      "add_to_blacklist_confirm_caption": "Добавить",
+      "add_to_blacklist_cancel_caption": "Отменить",
+      "remove_from_blacklist_title": "Удалить из черного списка?",
+      "remove_from_blacklist_description": "Вы действительно хотите удалить этого клиента из черного списка?",
+      "remove_from_blacklist_confirm_caption": "Удалить",
+      "remove_from_blacklist_cancel_caption": "Отменить"
+    },
+    "dot_menu": {
+      "view_info_caption": "Информация о должнике",
+      "add_to_blacklist_caption": "Добавить в черный список",
+      "remove_from_blacklist_caption": "Удалить из черного списка",
+      "add_transaction_record": "Добавить запись",
+      "repay_the_full_amount_caption": "Погасить всю сумму"
+    }
+  },
+  "debtor_transactions": {
+    "sorting": {
+      "by_date": "По дате",
+      "by_amount": "По сумме"
+    },
+    "empty_text": "Транзакции отсутствуют",
+    "form": {
+      "create_title": "Добавить запись",
+      "is_loan": "В долг",
+      "form_label_amount": "Сумма",
+      "form_label_description": "Описание"
+    }
+  },
+  "upload": {
+    "images": {
+      "choose_file": "Выбрать файл",
+      "no_image": "Изображение не выбрано"
+    },
+    "signature": {
+      "modal_title": "Нарисуйте свою подпись",
+      "no_image": "Подпись отсутствует"
+    }
   },
   "loader": {
     "message": "Загрузка, пожалуйста подождите. Нажмите, чтобы отменить",

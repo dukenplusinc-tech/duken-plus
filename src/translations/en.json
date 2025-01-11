@@ -1,5 +1,8 @@
 {
   "date": "dd.MM.yyyy, EEEE",
+  "currency": {
+    "tenge": "tenge"
+  },
   "user_nav": {
     "authenticated": "authenticated",
     "settings_label": "Settings",
@@ -11,6 +14,12 @@
     "settings": "Settings",
     "personal": "Personal Settings",
     "security": "security Settings"
+  },
+  "files": {
+    "no_image": "No image available.",
+    "no_signature_image": "No signature",
+    "error": "Error",
+    "open": "Open"
   },
   "menu": {
     "mobile_header": "Menu",
@@ -26,6 +35,14 @@
     "label_users": "Users",
     "label_settings": "Settings"
   },
+  "dialog": {
+    "accept": "Accept",
+    "cancel": "Cancel"
+  },
+  "filters": {
+    "search": "Search...",
+    "action": "Find"
+  },
   "transitions": {
     "loading_btn": "Loading"
   },
@@ -36,6 +53,7 @@
     "limit_caption": "Rows per page",
     "pagination_caption": "Page {page, number} of {total, number}",
     "actions": {
+      "edit_caption": "Edit",
       "view_cation": "View",
       "delete_cation": "Delete"
     },
@@ -171,6 +189,99 @@
     "title_add": "Create Note",
     "empty_text": "No Notes available. Press the + to add something",
     "edit_btn": "Edit"
+  },
+  "contractors": {
+    "title": "Contractors",
+    "title_edit": "Edit Contractor",
+    "title_add": "Add New Contractor",
+    "empty_text": "No contractors available. Press the + to add something",
+    "edit_btn": "Edit",
+    "form_label_title": "Title",
+    "form_label_supervisor": "Supervisor",
+    "form_label_supervisor_phone": "Phone",
+    "form_label_sales_representative": "Sales Representative",
+    "form_label_sales_representative_phone": "Phone",
+    "form_label_sales_address": "Address",
+    "form_label_contract": "Contract",
+    "form_label_note": "Note",
+    "form_label_note_placeholder": "Enter the additional information",
+    "form_submit": "Add / Save",
+    "sorting": {
+      "by_date": "By Date",
+      "by_title": "By Title"
+    }
+  },
+  "debtors": {
+    "title": "Debtors",
+    "title_edit": "Edit Debtor",
+    "title_add": "Add New Debtor",
+    "empty_text": "No debtors available. Press the + to add something",
+    "edit_btn": "Edit",
+    "form_label_full_name": "Full Name",
+    "form_label_iin": "ID number",
+    "form_label_phone": "Phone",
+    "form_label_address": "Address",
+    "form_label_max_amount": "Max Amount",
+    "form_label_work_place": "Work Place",
+    "form_label_photo": "Photo",
+    "form_label_id": "ID photo",
+    "form_label_signature": "Signature",
+    "form_label_note": "Note",
+    "form_label_note_placeholder": "Enter the additional information",
+    "form_submit": "Add / Save",
+    "overdue_amount": "There are debtors who have not repaid their debts on time:",
+    "sorting": {
+      "by_date": "By Date",
+      "by_balance": "By Balance"
+    },
+    "black_list": {
+      "page": {
+        "title": "Debtors Blacklist",
+        "search_placeholder": "Search by ID number or Full Name",
+        "sorting": {
+          "by_date": "By Date",
+          "by_name": "By A-Z"
+        }
+      },
+      "add_to_blacklist_title": "Add to blacklist?",
+      "add_to_blacklist_description": "Are you sure you want to add this client to the blacklist?",
+      "add_to_blacklist_confirm_caption": "Add",
+      "add_to_blacklist_cancel_caption": "Cancel",
+      "remove_from_blacklist_title": "Remove from blacklist?",
+      "remove_from_blacklist_description": "Are you sure you want to remove this client to the blacklist?",
+      "remove_from_blacklist_confirm_caption": "Remove",
+      "remove_from_blacklist_cancel_caption": "Cancel"
+    },
+    "dot_menu": {
+      "view_info_caption": "View debtors info",
+      "add_to_blacklist_caption": "Add to blacklist",
+      "remove_from_blacklist_caption": "Remove from blacklist",
+      "add_transaction_record": "Add record",
+      "repay_the_full_amount_caption": "Repay the full amount"
+    }
+  },
+  "debtor_transactions": {
+    "sorting": {
+      "by_date": "By Date",
+      "by_amount": "By Amount"
+    },
+    "empty_text": "No transactions available",
+    "form": {
+      "create_title": "Add record",
+      "is_loan": "Loan",
+      "form_label_amount": "Amount",
+      "form_label_description": "Description"
+    }
+  },
+  "upload": {
+    "images": {
+      "choose_file": "Choose file",
+      "no_image": "No image selected"
+    },
+    "signature": {
+      "modal_title": "Draw your signature",
+      "no_image": "No signature"
+    }
   },
   "loader": {
     "message": "Loading, please wait. Touch to cancel",

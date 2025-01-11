@@ -14,25 +14,17 @@ import {
   ActiveFilter,
   FiltersContext,
   FiltersContextState,
-  Pagination,
   SortingState,
 } from '@/lib/composite/filters/context';
 
-const initialPagination = {
-  pageIndex: 0,
-  pageSize: 30,
-};
-
 export const FiltersProvider: FC<PropsWithChildren> = ({ children }) => {
   const [filters, setFilters] = useState<ActiveFilter[]>([]);
-  const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const reset = useCallback(() => {
     setFilters([]);
     setSorting([]);
-    setPagination(initialPagination);
   }, []);
 
   const ref = useRef({ reset });
@@ -40,8 +32,6 @@ export const FiltersProvider: FC<PropsWithChildren> = ({ children }) => {
   const value: FiltersContextState = useMemo(() => {
     return {
       applied: filters,
-      pagination,
-      setPagination,
       sorting,
       setSorting,
       setFilters,
@@ -71,7 +61,7 @@ export const FiltersProvider: FC<PropsWithChildren> = ({ children }) => {
         });
       },
     };
-  }, [filters, pagination, reset, sorting]);
+  }, [filters, reset, sorting]);
 
   // clear filters on router change
   useEffect(() => {

@@ -15,7 +15,7 @@ import { EmptyScreen } from '@/components/ui/page/screen/empty';
 export const UsersTable: FC = () => {
   const t = useTranslations('users');
 
-  const { data, isLoading } = useUsers();
+  const { data, isLoading, sentinelRef } = useUsers();
 
   return (
     <div className="flex flex-col h-full">
@@ -51,6 +51,8 @@ export const UsersTable: FC = () => {
           ))}
         </IonList>
       )}
+
+      <div ref={sentinelRef} className="sentinel" />
     </div>
   );
 };

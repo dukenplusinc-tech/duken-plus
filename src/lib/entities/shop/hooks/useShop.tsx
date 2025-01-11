@@ -1,5 +1,6 @@
 'use client';
 
+import { shop } from '@/config/shop';
 import {
   shopPayloadSchema as schema,
   ShopPayload,
@@ -8,9 +9,10 @@ import { useQueryById } from '@/lib/supabase/useQueryById';
 
 export const useShop = () => {
   return useQueryById<ShopPayload>(
-    'c3215c79-991e-433d-b71b-ed8dce6491e4', // hardcoded for now
+    shop.hardcodedId, // hardcoded for now
     'shops',
     `
+      id,
       title,
       address,
       city

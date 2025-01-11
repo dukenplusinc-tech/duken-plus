@@ -10,14 +10,15 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useMediaQuery } from '@/lib/hooks/use-media-query';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -46,21 +47,80 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
   title,
   description,
   children,
+  autoClose = true,
+  dialog = false,
   desktopMedia = '(min-width: 768px)',
-  cancelCaption = 'Cancel',
+  acceptCaption = 'dialog.accept',
+  cancelCaption = 'dialog.cancel',
   dialogClassName,
+  onCancel,
+  onAccept,
 }) => {
-  const isDesktop = useMediaQuery(desktopMedia);
+  const t = useTranslations();
+
+  const isDesktop = useMediaQuery(dialog ? '(min-width: 1px)' : desktopMedia);
+
+  const closeDialog = useCallback(() => {
+    if (setOpen) {
+      setOpen(false);
+    }
+  }, [setOpen]);
+
+  const handleAccept = useCallback(() => {
+    if (autoClose) {
+      closeDialog();
+    }
+
+    if (onAccept) {
+      onAccept();
+    }
+  }, [autoClose, closeDialog, onAccept]);
+
+  const handleCancel = useCallback(() => {
+    if (autoClose) {
+      closeDialog();
+    }
+
+    if (onCancel) {
+      onCancel();
+    }
+  }, [autoClose, closeDialog, onCancel]);
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className={cn('sm:max-w-[425px]', dialogClassName)}>
+        <DialogContent className={dialogClassName}>
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+            <DialogTitle>{title || <span>&nbsp;</span>}</DialogTitle>
+            {description && (
+              <DialogDescription>{description}</DialogDescription>
+            )}
           </DialogHeader>
-          {children}
+          <div className="max-h-[65vh] overflow-y-auto px-4 py-2">
+            {children}
+          </div>
+          <DialogFooter>
+            <div className="flex flex-1 justify-around">
+              {acceptCaption && (
+                <Button
+                  variant="success"
+                  className="flex-1 mr-2"
+                  onClick={handleAccept}
+                >
+                  {t(acceptCaption)}
+                </Button>
+              )}
+              {cancelCaption && (
+                <Button
+                  variant="destructive"
+                  className="flex-1"
+                  onClick={handleCancel}
+                >
+                  {t(cancelCaption)}
+                </Button>
+              )}
+            </div>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     );
@@ -77,7 +137,7 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
         {cancelCaption && (
           <DrawerFooter className="pt-2">
             <DrawerClose asChild>
-              <Button variant="outline">{cancelCaption}</Button>
+              <Button variant="outline">{t(cancelCaption)}</Button>
             </DrawerClose>
           </DrawerFooter>
         )}

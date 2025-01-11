@@ -19,6 +19,20 @@ export function withFilters<T extends Builder>(
         builder = builder.eq(key, apply.eq);
       } else if (apply?.neq) {
         builder = builder.neq(key, apply.neq);
+      } else if (apply?.like) {
+        builder = builder.like(key, apply.like);
+      } else if (apply?.search) {
+        let query = apply.search;
+
+        // break down by spaces
+        if (query.includes(' ') && !query.includes("'")) {
+          query = query
+            .split(' ')
+            .map((value) => `'${value}'`)
+            .join(' & ');
+        }
+
+        builder = builder.textSearch(key, query);
       }
     });
   }

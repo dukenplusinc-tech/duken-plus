@@ -18,6 +18,9 @@
         --background: 0 0% 100%;
         --foreground: 222.2 84% 4.9%;
 
+        --success: 96 40% 55%; /* HSL for #74b660 */
+        --success-foreground: 96 60% 95%; /* Lighter green for text/icons on green background */
+
         --card: 0 0% 100%;
         --card-foreground: 222.2 84% 4.9%;
 
@@ -37,19 +40,37 @@
         --accent: 210 40% 96.1%;
         --accent-foreground: 222.2 47.4% 11.2%;
 
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
+        --destructive: 0.94 59.3% 42.4%;
+        --destructive-foreground: 0.94 100% 95%;
 
         --border: 214.3 31.8% 91.4%;
         --input: 214.3 31.8% 91.4%;
         --ring: 222.2 84% 4.9%;
 
         --radius: 0.5rem;
+
+        /*  Ionic part  */
+        --ion-color-success: rgb(116, 182, 96);
+        --ion-color-success-rgb: 116, 182, 96; /* Also update the RGB shorthand variable */
+        --ion-color-success-contrast: #ffffff; /* Adjust contrast color if needed */
+        --ion-color-success-contrast-rgb: 255, 255, 255;
+        --ion-color-success-shade: rgb(100, 160, 85); /* Optional: Darker shade for pressed state */
+        --ion-color-success-tint: rgb(133, 202, 110); /* Optional: Lighter tint for hover state */
+
+        --ion-color-primary: hsl(192, 95%, 16%);
+        --ion-color-primary-rgb: 9, 37, 70; /* Convert HSL to RGB and replace this */
+        --ion-color-primary-contrast: #ffffff; /* Adjust contrast for text/icons on primary */
+        --ion-color-primary-contrast-rgb: 255, 255, 255;
+        --ion-color-primary-shade: hsl(192, 95%, 12%); /* Darker shade for pressed state */
+        --ion-color-primary-tint: hsl(192, 95%, 20%); /* Lighter tint for hover state */
     }
 
     .dark {
         --background: 222.2 84% 4.9%;
         --foreground: 210 40% 98%;
+
+        --success: 96 30% 45%; /* Darker green for dark mode */
+        --success-foreground: 96 60% 95%; /* Keep the foreground consistent */
 
         --card: 222.2 84% 4.9%;
         --card-foreground: 210 40% 98%;
@@ -70,13 +91,14 @@
         --accent: 217.2 32.6% 17.5%;
         --accent-foreground: 210 40% 98%;
 
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
+        --destructive: 0.94 59.3% 32%;
+        --destructive-foreground: 0.94 100% 95%;
 
         --border: 217.2 32.6% 17.5%;
         --input: 217.2 32.6% 17.5%;
         --ring: 212.7 26.8% 83.9%;
     }
+
 }
 
 @layer base {

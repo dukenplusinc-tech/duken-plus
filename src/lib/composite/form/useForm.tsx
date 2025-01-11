@@ -112,8 +112,9 @@ export function useForm<S extends z.ZodTypeAny, R>({
     return {
       form,
       result,
+      data: fetcher?.data,
       isProcessing: isProcessing || isUpdating,
       handleSubmit: form.handleSubmit(onSubmit),
     };
-  }, [form, isProcessing, isUpdating, onSubmit, result]);
+  }, [fetcher?.data, form, isProcessing, isUpdating, onSubmit, result]);
 }

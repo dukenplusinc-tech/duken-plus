@@ -1,15 +1,27 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import { useUser } from '@/lib/entities/users/hooks/useUser';
-import { User, userSchema } from '@/lib/entities/users/schema';
-import { useQuery } from '@/lib/supabase/query';
+import { User } from '@/lib/entities/users/schema';
+import { useInfiniteQuery } from '@/lib/supabase/useInfiniteQuery';
 
 export const useUsers = () => {
   const user = useUser()!;
 
-  return useQuery<User[]>(
-    'profiles',
-    `
+  const filters = useMemo(
+    () => [
+      {
+        key: 'id',
+        neq: user?.id,
+      },
+    ],
+    [user?.id]
+  );
+
+  return useInfiniteQuery<User>({
+    table: 'profiles',
+    columns: `
         id,
         full_name,
         avatar_url,
@@ -21,14 +33,6 @@ export const useUsers = () => {
         created_at,
         updated_at
       `,
-    {
-      schema: userSchema,
-      filters: [
-        {
-          key: 'id',
-          neq: user?.id,
-        },
-      ],
-    }
-  );
+    filters,
+  });
 };

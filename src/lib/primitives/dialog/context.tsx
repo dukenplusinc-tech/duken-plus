@@ -7,6 +7,8 @@ export interface DialogActions {
   onAction?: null | Handler;
   onClose?: null | Handler;
   onModalClosed?: null | Handler;
+  actionCaption?: string;
+  cancelCaption?: string;
 }
 
 export interface LaunchParams extends DialogActions {

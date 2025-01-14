@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { IonInput, IonItem, IonLabel, IonList, IonToggle } from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
@@ -14,6 +14,18 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
   const t = useTranslations('debtor_transactions.form');
 
   const { form, isProcessing, handleSubmit } = useDebtorTransactionForm(props);
+
+  const input = useRef<HTMLIonInputElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      input.current?.setFocus();
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [form, form.trigger]);
 
   const isLoan = form.watch('transaction_type') === TransactionType.loan;
 
@@ -38,6 +50,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
         <IonItem>
           <IonLabel position="stacked">{t('form_label_amount')}</IonLabel>
           <IonInput
+            ref={input}
             type="number"
             min="0"
             step="100"

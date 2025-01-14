@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { ellipsisVertical } from 'ionicons/icons';
 
+import { useTransactionForm } from '@/lib/entities/debtors/containers/transaction-form';
 import type { Debtor } from '@/lib/entities/debtors/schema';
 import { DropdownButton } from '@/components/ui/ionic/dropdown';
 
@@ -14,6 +15,10 @@ interface DebtorItemProps {
 export const DebtorItem: FC<DebtorItemProps> = ({ debtor }) => {
   const options = useDebtorDotMenu(debtor);
 
+  const handleAddTransactionRecord = useTransactionForm({
+    debtor_id: debtor.id,
+  });
+
   const color =
     debtor.balance === 0
       ? undefined
@@ -22,7 +27,11 @@ export const DebtorItem: FC<DebtorItemProps> = ({ debtor }) => {
         : 'danger';
 
   return (
-    <IonItem key={debtor.id} color={color}>
+    <IonItem
+      key={debtor.id}
+      color={color}
+      onClick={() => handleAddTransactionRecord()}
+    >
       <IonLabel>
         <span className="text-black">{debtor.full_name || '---'}</span>
       </IonLabel>

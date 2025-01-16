@@ -36,6 +36,7 @@ export const debtorPayloadSchema = z.object({
   iin: z.string(),
   phone: z.string().nullable(),
   address: z.string().nullable(),
+  balance: z.number(),
   max_credit_amount: z.number(),
   work_place: z.string().nullable(),
   additional_info: z.string().nullable(),

@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import { useForm as useFormHook } from 'react-hook-form';
 import * as z from 'zod';
 
+import { FormValidationError } from '@/lib/composite/form/errors';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { QueryByIdResult } from '@/lib/supabase/useQueryById';
 import { toast } from '@/components/ui/use-toast';
@@ -22,6 +24,8 @@ export function useForm<S extends z.ZodTypeAny, R>({
   fetcher,
   setDefaultValues,
 }: FormOptions<S, R>) {
+  const t = useTranslations('errors');
+
   const dialog = useModalDialog();
 
   const isInitializedRef = useRef(false);
@@ -55,16 +59,22 @@ export function useForm<S extends z.ZodTypeAny, R>({
 
         dialog.close();
       } catch (e) {
+        const isFormValidation = e instanceof FormValidationError;
+
         toast({
           variant: 'destructive',
-          title: '⚠️ Some error occurred',
+          title: `⚠️ ${t(isFormValidation ? 'validation_title' : 'title')}`,
           description: (
             <p>
-              <b>{String(e)}</b>
+              <b>{String(isFormValidation ? e.message : e)}</b>
 
-              <pre className="mt-2 max-h-[340px] w-[340px] overflow-y-hidden rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(e, null, 2)}</code>
-              </pre>
+              {!isFormValidation && (
+                <pre className="mt-2 max-h-[340px] w-[340px] overflow-y-hidden rounded-md bg-slate-950 p-4">
+                  <code className="text-white">
+                    {JSON.stringify(e, null, 2)}
+                  </code>
+                </pre>
+              )}
             </p>
           ),
         });
@@ -72,7 +82,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
 
       setIsProcessing(false);
     },
-    [dialog, fetcher, request]
+    [dialog, fetcher, request, t]
   );
 
   const setDefaultValuesFn = useMemo(() => {

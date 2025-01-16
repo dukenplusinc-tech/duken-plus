@@ -1,4 +1,11 @@
 {
+  "errors": {
+    "title": "Қате орын алды",
+    "validation_title": "Тексеру қатесі",
+    "rules": {
+      "limit_exceeded": "\"{limit}\" лимиті асып кетті"
+    }
+  },
   "date": "dd.MM.yyyy, EEEE",
   "currency": {
     "tenge": "тенге"

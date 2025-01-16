@@ -1,4 +1,11 @@
 {
+  "errors": {
+    "title": "Произошла ошибка",
+    "validation_title": "Ошибка валидации",
+    "rules": {
+      "limit_exceeded": "Лимит в \"{limit}\" был превышен"
+    }
+  },
   "date": "dd.MM.yyyy, EEEE",
   "currency": {
     "tenge": "тенге"

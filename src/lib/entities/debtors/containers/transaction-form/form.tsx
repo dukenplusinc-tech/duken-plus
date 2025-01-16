@@ -53,7 +53,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
             ref={input}
             type="number"
             min="0"
-            step="100"
+            step="1"
             value={form.watch('amount')}
             disabled={isProcessing}
             onIonInput={(e) =>

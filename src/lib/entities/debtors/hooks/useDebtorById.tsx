@@ -17,6 +17,7 @@ export const useDebtorById = (id: string | null = null) => {
         phone,
         address,
         max_credit_amount,
+        balance,
         work_place,
         additional_info,
         created_at,

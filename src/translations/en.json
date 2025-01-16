@@ -1,4 +1,11 @@
 {
+  "errors": {
+    "title": "Some error occurred",
+    "validation_title": "Validation error",
+    "rules": {
+      "limit_exceeded": "The limit of \"{limit}\" has been exceeded"
+    }
+  },
   "date": "dd.MM.yyyy, EEEE",
   "currency": {
     "tenge": "tenge"

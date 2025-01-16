@@ -4,6 +4,8 @@ import { ellipsisVertical } from 'ionicons/icons';
 
 import { useTransactionForm } from '@/lib/entities/debtors/containers/transaction-form';
 import type { Debtor } from '@/lib/entities/debtors/schema';
+import { simplifyNumber } from '@/lib/primitives/numbers/simplifyNumber';
+import { Badge } from '@/components/ui/badge';
 import { DropdownButton } from '@/components/ui/ionic/dropdown';
 
 import { useDebtorDotMenu } from './dot-menu';
@@ -34,6 +36,11 @@ export const DebtorItem: FC<DebtorItemProps> = ({ debtor }) => {
     >
       <IonLabel>
         <span className="text-black">{debtor.full_name || '---'}</span>
+        {debtor.max_credit_amount && (
+          <Badge className="ml-2">
+            {simplifyNumber(debtor.max_credit_amount)}
+          </Badge>
+        )}
       </IonLabel>
       <span className="text-black font-bold">{debtor.balance}</span>
       <DropdownButton

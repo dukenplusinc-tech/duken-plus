@@ -24,6 +24,7 @@ export const DebtorsTable: FC = () => {
   const sortByOptions = useMemo(
     () => [
       { label: t('sorting.by_date'), value: 'created_at' },
+      { label: t('sorting.by_full_name'), value: 'full_name' },
       { label: t('sorting.by_balance'), value: 'balance' },
     ],
     [t]

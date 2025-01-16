@@ -232,6 +232,7 @@
     "overdue_amount": "There are debtors who have not repaid their debts on time:",
     "sorting": {
       "by_date": "By Date",
+      "by_full_name": "By Full Name",
       "by_balance": "By Balance"
     },
     "black_list": {

@@ -232,6 +232,7 @@
     "overdue_amount": "Есть должники не закрывшие долг вовремя:",
     "sorting": {
       "by_date": "По дате",
+      "by_full_name": "По ФИО",
       "by_balance": "По сумме"
     },
     "black_list": {

@@ -9,12 +9,15 @@ import { useTranslations } from 'next-intl';
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { DebtorTransactionItem } from '@/lib/entities/debtors/containers/debtor-history-table/item';
 import { useDebtorTransactions } from '@/lib/entities/debtors/hooks/useDebtorTransactions';
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
 
 export const DebtorHistoryTable: FC = () => {
+  useActivateBackButton();
+
   const t = useTranslations('debtor_transactions');
 
   const { data, error, isLoading, sentinelRef } = useDebtorTransactions();

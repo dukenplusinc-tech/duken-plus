@@ -255,6 +255,7 @@
     },
     "dot_menu": {
       "view_info_caption": "Қарыз алушы туралы ақпаратты көру",
+      "view_history_caption": "Жазбалар тарихы",
       "add_to_blacklist_caption": "Қара тізімге қосу",
       "remove_from_blacklist_caption": "Қара тізімнен жою",
       "add_transaction_record": "Жазба қосу",

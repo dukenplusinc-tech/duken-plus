@@ -38,8 +38,10 @@ export function toDebtors(): string {
   return `/debtors`;
 }
 
-export function toDebtorHistory(): string {
-  return `/debtors/history`;
+export function toDebtorHistory(id?: string): string {
+  const qs = id ? `?debtor_id=${id}` : '';
+
+  return `/debtors/history${qs}`;
 }
 
 export function toAddDebtor(): string {

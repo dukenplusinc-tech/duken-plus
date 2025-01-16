@@ -116,6 +116,10 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
     router.push(fromUrl.toDebtorEdit(debtor.id));
   }, [debtor.id, router]);
 
+  const handleViewHistory = useCallback(() => {
+    router.push(fromUrl.toDebtorHistory(debtor.id));
+  }, [debtor.id, router]);
+
   const handleRemove = useDeleteDebtors(debtor.id);
   const handleChangeBlackList = useUpdateBlacklistDebtor(
     debtor.id,
@@ -137,6 +141,10 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
       {
         label: t('debtors.dot_menu.view_info_caption'),
         onClick: handleViewInfo,
+      },
+      {
+        label: t('debtors.dot_menu.view_history_caption'),
+        onClick: handleViewHistory,
       },
       {
         label: t(

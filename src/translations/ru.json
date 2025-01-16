@@ -255,6 +255,7 @@
     },
     "dot_menu": {
       "view_info_caption": "Информация о должнике",
+      "view_history_caption": "История записей",
       "add_to_blacklist_caption": "Добавить в черный список",
       "remove_from_blacklist_caption": "Удалить из черного списка",
       "add_transaction_record": "Добавить запись",

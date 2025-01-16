@@ -255,6 +255,7 @@
     },
     "dot_menu": {
       "view_info_caption": "View debtors info",
+      "view_history_caption": "Record History",
       "add_to_blacklist_caption": "Add to blacklist",
       "remove_from_blacklist_caption": "Remove from blacklist",
       "add_transaction_record": "Add record",

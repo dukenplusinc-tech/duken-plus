@@ -13,7 +13,12 @@ import {
 import { cameraOutline } from 'ionicons/icons';
 import { useTranslations } from 'next-intl';
 
+import { ImagePreview } from '@/lib/composite/files/image-preview';
+import { UploadEntities } from '@/lib/composite/uploads/types';
+
 export interface ImagePickerProps {
+  entity: UploadEntities;
+  id?: string;
   label?: string;
   onFileSelected?: (file: File) => void;
   onCameraCaptured?: (file: string) => void;
@@ -23,6 +28,8 @@ export type FileSelectedHandler = ImagePickerProps['onFileSelected'];
 export type CameraCapturedHandler = ImagePickerProps['onCameraCaptured'];
 
 export const ImagePicker: FC<ImagePickerProps> = ({
+  id,
+  entity,
   label,
   onFileSelected,
   onCameraCaptured,
@@ -103,7 +110,13 @@ export const ImagePicker: FC<ImagePickerProps> = ({
           <IonImg src={imagePreview} alt="Selected" className="max-w-32" />
         )}
 
-        {!imagePreview && <IonText color="medium">{t('no_image')}</IonText>}
+        {!imagePreview && !(entity && id) && (
+          <IonText color="medium">{t('no_image')}</IonText>
+        )}
+
+        {!imagePreview && entity && id && (
+          <ImagePreview entity={entity} id={id} />
+        )}
       </div>
     </IonItem>
   );

@@ -11,6 +11,7 @@ import {
 
 interface ImageUploaderProps {
   entity: UploadEntities;
+  id?: string;
   label?: string;
 }
 
@@ -18,7 +19,11 @@ function buildOperationName(...parts: string[]): string {
   return parts.join('_');
 }
 
-export const ImageUploader: FC<ImageUploaderProps> = ({ label, entity }) => {
+export const ImageUploader: FC<ImageUploaderProps> = ({
+  label,
+  entity,
+  id,
+}) => {
   const { registerUploader } = useUploadContext();
   const { buildUploaderHandler } = useUploader(entity);
 
@@ -48,6 +53,8 @@ export const ImageUploader: FC<ImageUploaderProps> = ({ label, entity }) => {
 
   return (
     <ImagePicker
+      entity={entity}
+      id={id}
       label={label}
       onFileSelected={handleFileChoose}
       onCameraCaptured={handleCameraCaptured}

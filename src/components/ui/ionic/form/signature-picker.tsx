@@ -5,10 +5,14 @@ import { IonButton, IonItem, IonLabel, IonText } from '@ionic/react';
 import { Pencil } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { ImagePreview } from '@/lib/composite/files/image-preview';
+import { UploadEntities } from '@/lib/composite/uploads/types';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { SignaturePad, SignaturePadType } from '@/components/ui/signature';
 
 export interface SignaturePickerProps {
+  entity?: UploadEntities;
+  id?: string;
   label?: string;
   onDrawCaptured?: (file: string) => void;
 }
@@ -18,6 +22,8 @@ export type DrawCapturedHandler = SignaturePickerProps['onDrawCaptured'];
 export const SignaturePicker: FC<SignaturePickerProps> = ({
   label,
   onDrawCaptured,
+  entity,
+  id,
 }) => {
   const t = useTranslations('upload.signature');
 
@@ -65,8 +71,12 @@ export const SignaturePicker: FC<SignaturePickerProps> = ({
                 className="max-h-[40px] object-contain"
               />
             ) : (
-              <IonText color="medium">{t('no_image')}</IonText>
+              !(entity && id) && (
+                <IonText color="medium">{t('no_image')}</IonText>
+              )
             )}
+
+            {entity && id && <ImagePreview entity={entity} id={id} />}
           </div>
           <div className="w-[60px] border-l border-black bg-[--ion-color-success]">
             <IonButton

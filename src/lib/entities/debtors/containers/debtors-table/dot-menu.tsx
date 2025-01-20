@@ -166,11 +166,12 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
       },
     ],
     [
+      t,
       debtor.balance,
       debtor.blacklist,
-      t,
       handleAddTransactionRecord,
       handleViewInfo,
+      handleViewHistory,
       handleChangeBlackList.onAction,
       handleChangeBlackList.processing,
       handleEdit,

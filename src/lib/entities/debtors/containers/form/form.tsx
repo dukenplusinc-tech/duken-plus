@@ -122,16 +122,19 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
         )}
 
         <ImageUploader
+          id={id}
           entity={UploadEntities.DebtorPhoto}
           label={t('form_label_photo')}
         />
 
         <ImageUploader
+          id={id}
           entity={UploadEntities.DebtorPhotoID}
           label={t('form_label_id')}
         />
 
         <SignatureUploader
+          id={id}
           entity={UploadEntities.DebtorSignature}
           label={t('form_label_signature')}
         />

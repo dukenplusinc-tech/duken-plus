@@ -1,5 +1,6 @@
 import { FC, useCallback, useMemo } from 'react';
 
+import { ImagePreview } from '@/lib/composite/files/image-preview';
 import { useUploadContext } from '@/lib/composite/uploads/manager';
 import { useUploader } from '@/lib/composite/uploads/manager/hooks';
 import { UploadEntities } from '@/lib/composite/uploads/types';
@@ -10,6 +11,7 @@ import {
 
 interface SignatureUploaderProps {
   entity: UploadEntities;
+  id?: string;
   label?: string;
 }
 
@@ -18,6 +20,7 @@ function buildOperationName(...parts: string[]): string {
 }
 
 export const SignatureUploader: FC<SignatureUploaderProps> = ({
+  id,
   label,
   entity,
 }) => {
@@ -39,5 +42,12 @@ export const SignatureUploader: FC<SignatureUploaderProps> = ({
     [buildUploaderHandler, entity, operationName, registerUploader]
   );
 
-  return <SignaturePicker label={label} onDrawCaptured={handleDrawCaptured} />;
+  return (
+    <SignaturePicker
+      entity={entity}
+      id={id}
+      label={label}
+      onDrawCaptured={handleDrawCaptured}
+    />
+  );
 };

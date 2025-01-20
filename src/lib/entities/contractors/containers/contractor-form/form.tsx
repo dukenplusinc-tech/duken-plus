@@ -137,6 +137,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
 
         {/* Contract Field */}
         <ImageUploader
+          id={id}
           entity={UploadEntities.Contractors}
           label={t('form_label_contract')}
         />

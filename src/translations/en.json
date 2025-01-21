@@ -279,7 +279,10 @@
       "create_title": "Add record",
       "is_loan": "Loan",
       "form_label_amount": "Amount",
-      "form_label_description": "Description"
+      "form_label_description": "Description",
+      "cancel_caption": "Cancel",
+      "minus_caption": "Minus",
+      "plus_caption": "Plus"
     }
   },
   "upload": {

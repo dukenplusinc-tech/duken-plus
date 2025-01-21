@@ -88,7 +88,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
             className="flex-1"
             onClick={handleClose}
           >
-            Cancel
+            {t('cancel_caption')}
           </Button>
 
           <div className="flex flex-1 justify-end">
@@ -99,7 +99,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
               className="flex-1 mr-2"
               onClick={handleSave(TransactionType.loan)}
             >
-              Minus
+              {t('minus_caption')}
             </Button>
 
             <Button
@@ -109,7 +109,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
               className="flex-1"
               onClick={handleSave(TransactionType.payback)}
             >
-              Plus
+              {t('plus_caption')}
             </Button>
           </div>
         </div>

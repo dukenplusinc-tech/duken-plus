@@ -279,7 +279,10 @@
       "create_title": "Жазба қосу",
       "is_loan": "Қарызға",
       "form_label_amount": "Сома",
-      "form_label_description": "Сипаттама"
+      "form_label_description": "Сипаттама",
+      "cancel_caption": "Бас тарту",
+      "minus_caption": "Минус",
+      "plus_caption": "Плюс"
     }
   },
   "upload": {

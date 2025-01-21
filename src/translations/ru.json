@@ -279,7 +279,10 @@
       "create_title": "Добавить запись",
       "is_loan": "В долг",
       "form_label_amount": "Сумма",
-      "form_label_description": "Описание"
+      "form_label_description": "Описание",
+      "cancel_caption": "Отменить",
+      "minus_caption": "Минус",
+      "plus_caption": "Плюс"
     }
   },
   "upload": {

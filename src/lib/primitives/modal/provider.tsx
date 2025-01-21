@@ -47,6 +47,7 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
   title,
   description,
   children,
+  footer = true,
   autoClose = true,
   dialog = false,
   desktopMedia = '(min-width: 768px)',
@@ -99,28 +100,30 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
           <div className="max-h-[65vh] overflow-y-auto px-4 py-2">
             {children}
           </div>
-          <DialogFooter>
-            <div className="flex flex-1 justify-around">
-              {acceptCaption && (
-                <Button
-                  variant="success"
-                  className="flex-1 mr-2"
-                  onClick={handleAccept}
-                >
-                  {t(acceptCaption)}
-                </Button>
-              )}
-              {cancelCaption && (
-                <Button
-                  variant="destructive"
-                  className="flex-1"
-                  onClick={handleCancel}
-                >
-                  {t(cancelCaption)}
-                </Button>
-              )}
-            </div>
-          </DialogFooter>
+          {footer && (
+            <DialogFooter>
+              <div className="flex flex-1 justify-around">
+                {acceptCaption && (
+                  <Button
+                    variant="success"
+                    className="flex-1 mr-2"
+                    onClick={handleAccept}
+                  >
+                    {t(acceptCaption)}
+                  </Button>
+                )}
+                {cancelCaption && (
+                  <Button
+                    variant="destructive"
+                    className="flex-1"
+                    onClick={handleCancel}
+                  >
+                    {t(cancelCaption)}
+                  </Button>
+                )}
+              </div>
+            </DialogFooter>
+          )}
         </DialogContent>
       </Dialog>
     );

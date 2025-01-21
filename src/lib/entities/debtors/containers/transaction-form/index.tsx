@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 
 import {
@@ -24,38 +24,16 @@ export function useTransactionForm({ id, debtor_id }: TransactionFormProps) {
     title = `${data?.debtor?.full_name} - ${transaction_date}`;
   }
 
-  const formRef = useRef<HTMLDivElement>(null);
-
   return useCallback(
     (balance?: number) =>
       dialog.launch({
         dialog: true,
         autoClose: false,
+        footer: false,
         title,
         render: (
-          <div ref={formRef}>
-            <TransactionForm id={id} debtor_id={debtor_id} balance={balance} />
-          </div>
+          <TransactionForm id={id} debtor_id={debtor_id} balance={balance} />
         ),
-        onCancel: () => {
-          dialog.close();
-        },
-        onAccept: () => {
-          const wrapper = formRef.current;
-
-          if (!wrapper) {
-            return;
-          }
-
-          // workaround to trigger form submit
-          const element = wrapper.querySelector<HTMLInputElement>(
-            'form input[type=submit]'
-          );
-
-          if (element) {
-            element.click();
-          }
-        },
       }),
     [debtor_id, dialog, id, title]
   );

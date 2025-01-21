@@ -1,6 +1,7 @@
 import { createContext, ReactNode } from 'react';
 
 export interface DialogWrapperProps {
+  footer?: boolean;
   autoClose?: boolean;
   open: boolean;
   setOpen?: (status: boolean) => void;

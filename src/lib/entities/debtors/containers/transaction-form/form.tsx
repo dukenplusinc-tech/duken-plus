@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef } from 'react';
-import { IonInput, IonItem, IonLabel, IonList, IonToggle } from '@ionic/react';
+import { FC, useCallback, useEffect, useRef } from 'react';
+import { IonInput, IonItem, IonLabel, IonList } from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
 import {
@@ -7,11 +7,15 @@ import {
   useDebtorTransactionForm,
 } from '@/lib/entities/debtors/containers/transaction-form/hooks';
 import { TransactionType } from '@/lib/entities/debtors/schema';
+import { useModalDialog } from '@/lib/primitives/modal/hooks';
+import { Button } from '@/components/ui/button';
 
 export interface TransactionFormProps extends DebtorTransactionFormParams {}
 
 export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
   const t = useTranslations('debtor_transactions.form');
+
+  const dialog = useModalDialog();
 
   const { form, isProcessing, handleSubmit } = useDebtorTransactionForm(props);
 
@@ -27,26 +31,20 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
     };
   }, [form, form.trigger]);
 
-  const isLoan = form.watch('transaction_type') === TransactionType.loan;
+  const handleClose = useCallback(() => {
+    dialog.close();
+  }, [dialog]);
+
+  const handleSave = useCallback(
+    (type: TransactionType) => () => {
+      form.setValue('transaction_type', type);
+    },
+    [form]
+  );
 
   return (
     <IonList>
       <form onSubmit={handleSubmit}>
-        <IonItem>
-          <IonLabel>{t('is_loan')}</IonLabel>
-          <IonToggle
-            checked={isLoan}
-            onIonChange={(e) =>
-              form.setValue(
-                'transaction_type',
-                e.detail.checked
-                  ? TransactionType.loan
-                  : TransactionType.payback
-              )
-            }
-          />
-        </IonItem>
-
         <IonItem>
           <IonLabel position="stacked">{t('form_label_amount')}</IonLabel>
           <IonInput
@@ -83,7 +81,38 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
           </IonLabel>
         )}
 
-        <input type="submit" className="hidden" />
+        <div className="mt-10 flex justify-between">
+          <Button
+            variant="link"
+            size="sm"
+            className="flex-1"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+
+          <div className="flex flex-1 justify-end">
+            <Button
+              type="submit"
+              variant="destructive"
+              size="sm"
+              className="flex-1 mr-2"
+              onClick={handleSave(TransactionType.loan)}
+            >
+              Minus
+            </Button>
+
+            <Button
+              type="submit"
+              variant="success"
+              size="sm"
+              className="flex-1"
+              onClick={handleSave(TransactionType.payback)}
+            >
+              Plus
+            </Button>
+          </div>
+        </div>
       </form>
     </IonList>
   );

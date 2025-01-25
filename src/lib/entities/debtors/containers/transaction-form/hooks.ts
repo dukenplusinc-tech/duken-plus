@@ -29,7 +29,7 @@ export function useDebtorTransactionForm({
   debtor_id,
   balance,
 }: DebtorTransactionFormParams) {
-  const t = useTranslations('errors');
+  const t = useTranslations('validation.errors');
 
   const fetcher = useDebtorTransactionById(id);
 

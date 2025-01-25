@@ -1,9 +1,15 @@
 {
-  "errors": {
-    "title": "Some error occurred",
-    "validation_title": "Validation error",
-    "rules": {
-      "limit_exceeded": "The limit of \"{limit}\" has been exceeded"
+  "validation": {
+    "success": {
+      "title": "🎉 Done",
+      "description": "All changes successfully saved"
+    },
+    "errors": {
+      "title": "Some error occurred",
+      "validation_title": "Validation error",
+      "rules": {
+        "limit_exceeded": "The limit of \"{limit}\" has been exceeded"
+      }
     }
   },
   "date": "dd.MM.yyyy, EEEE",

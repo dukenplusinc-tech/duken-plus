@@ -24,7 +24,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
   fetcher,
   setDefaultValues,
 }: FormOptions<S, R>) {
-  const t = useTranslations('errors');
+  const t = useTranslations('validation');
 
   const dialog = useModalDialog();
 
@@ -53,8 +53,8 @@ export function useForm<S extends z.ZodTypeAny, R>({
         }
 
         toast({
-          title: '🎉 Done',
-          description: 'All changes successfully saved',
+          title: t('success.title'),
+          description: t('success.description'),
         });
 
         dialog.close();
@@ -63,7 +63,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
 
         toast({
           variant: 'destructive',
-          title: `⚠️ ${t(isFormValidation ? 'validation_title' : 'title')}`,
+          title: `⚠️ ${t(isFormValidation ? 'errors.validation_title' : 'errors.title')}`,
           description: (
             <p>
               <b>{String(isFormValidation ? e.message : e)}</b>

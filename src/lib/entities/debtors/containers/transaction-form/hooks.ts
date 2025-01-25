@@ -61,11 +61,7 @@ export function useDebtorTransactionForm({
         const currentBalance = debtor?.balance;
 
         // check for `max_credit_amount` limit
-        if (
-          values.transaction_type === TransactionType.loan &&
-          limit &&
-          currentBalance
-        ) {
+        if (values.transaction_type === TransactionType.loan && limit) {
           const pendingBalance = currentBalance - values.amount;
 
           const canTakeInLoan = pendingBalance >= -1 * limit;

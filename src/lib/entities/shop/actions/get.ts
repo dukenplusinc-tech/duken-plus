@@ -1,6 +1,6 @@
 'use server';
 
-import { shop } from '@/config/shop';
+import { getShopId } from '@/lib/entities/shop/actions/getShopId';
 import type { Shop } from '@/lib/entities/shop/schema';
 import { createClient } from '@/lib/supabase/server';
 
@@ -10,7 +10,7 @@ export async function getShop(): Promise<Shop> {
   const { error, data } = await supabase
     .from('shops')
     .select('id, title')
-    .eq('id', shop.hardcodedId)
+    .eq('id', await getShopId())
     .single();
 
   if (error) {

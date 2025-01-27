@@ -12,7 +12,7 @@ export const usePersonalData = () => {
 
   return useQueryById<PersonalPayload>(
     user?.id!,
-    'extended_profile',
+    'extended_profiles',
     `
       full_name,
       language,

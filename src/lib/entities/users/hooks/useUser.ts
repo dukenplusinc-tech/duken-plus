@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { User } from '@supabase/auth-js';
 
-import { useUsers } from '@/lib/entities/users/hooks/useUsers';
 import { createClient } from '@/lib/supabase/client';
+import { useQueryById } from '@/lib/supabase/useQueryById';
 
 export function useUser(): User | null {
   const [user, setUser] = useState<User | null>(null);
@@ -46,3 +46,23 @@ export function useUserId(): string | null {
 
   return user?.id || null;
 }
+
+export interface Profile {
+  id: string;
+  full_name: string;
+  shop_id: string;
+}
+
+export const useProfile = () => {
+  const userId = useUserId();
+
+  return useQueryById<Profile>(
+    userId,
+    'profiles',
+    `
+      id,
+      full_name,
+      shop_id
+    `
+  );
+};

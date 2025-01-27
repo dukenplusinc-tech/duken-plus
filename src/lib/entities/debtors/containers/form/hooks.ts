@@ -19,6 +19,7 @@ const defaultValues: DebtorPayload = {
   additional_info: '',
   work_place: '',
   max_credit_amount: 0,
+  balance: 0,
   shop_id: '',
 };
 

@@ -21,12 +21,11 @@ export const DebtorItem: FC<DebtorItemProps> = ({ debtor }) => {
     debtor_id: debtor.id,
   });
 
-  const color =
-    debtor.balance === 0
-      ? undefined
-      : debtor.balance > 0
-        ? 'success'
-        : 'danger';
+  const color = debtor.is_overdue
+    ? 'danger'
+    : debtor.balance > 0
+      ? 'success'
+      : undefined;
 
   return (
     <IonItem

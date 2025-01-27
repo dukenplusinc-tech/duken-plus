@@ -5,6 +5,7 @@ export const debtorSchema = z.object({
   full_name: z.string(),
   iin: z.string(),
   blacklist: z.boolean(),
+  is_overdue: z.boolean().optional(),
   phone: z.string().nullable(),
   address: z.string().nullable(),
   max_credit_amount: z.number(),
@@ -28,7 +29,7 @@ export interface DebtorStats {
 
 export enum TransactionType {
   payback = 'purchase',
-  loan = 'payment',
+  loan = 'loan',
 }
 
 export const debtorPayloadSchema = z.object({

@@ -20,7 +20,8 @@ export const useDebtors = () => {
       created_at,
       updated_at,
       shop_id,
-      blacklist
+      blacklist,
+      is_overdue
     `,
   });
 };

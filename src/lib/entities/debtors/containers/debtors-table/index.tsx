@@ -45,9 +45,7 @@ export const DebtorsTable: FC = () => {
         </div>
       </div>
 
-      <div className="mb-4">
-        <OverdueWarning />
-      </div>
+      <OverdueWarning />
 
       <div className="mb-2">
         <SearchBar

@@ -35,6 +35,7 @@ export const DebtorHistoryTable: FC = () => {
       <div className="mb-2">
         <SearchBar
           searchByField="description"
+          defaultSortBy="transaction_date"
           sortByOptions={sortByOptions}
           right={
             <Link href={fromUrl.toDebtors()}>

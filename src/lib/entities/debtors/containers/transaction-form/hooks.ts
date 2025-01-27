@@ -6,10 +6,8 @@ import { useForm } from '@/lib/composite/form/useForm';
 import { createDebtorTransaction } from '@/lib/entities/debtors/actions/createDebtorTransaction';
 import { updateDebtorTransaction } from '@/lib/entities/debtors/actions/updateDebtorTransaction';
 import { useDebtorById } from '@/lib/entities/debtors/hooks/useDebtorById';
-import {
-  useBlackListedDebtors,
-  useDebtors,
-} from '@/lib/entities/debtors/hooks/useDebtors';
+import { useDebtors } from '@/lib/entities/debtors/hooks/useDebtors';
+import { useDebtorStats } from '@/lib/entities/debtors/hooks/useDebtorStats';
 import { useDebtorTransactionById } from '@/lib/entities/debtors/hooks/useDebtorTransactionById';
 import { useDebtorTransactions } from '@/lib/entities/debtors/hooks/useDebtorTransactions';
 import {
@@ -36,8 +34,8 @@ export function useDebtorTransactionForm({
   const { data: debtor } = useDebtorById(debtor_id);
 
   const { refresh: refreshDebtors } = useDebtors();
-  const { refresh: refreshBlacklist } = useBlackListedDebtors();
   const { refresh } = useDebtorTransactions();
+  const { refresh: refreshStats } = useDebtorStats();
 
   const defaultValues: DebtorTransactionPayload = useMemo(() => {
     const amount = balance ? Math.abs(balance) : 0;
@@ -73,7 +71,7 @@ export function useDebtorTransactionForm({
 
         await createDebtorTransaction(values);
 
-        await Promise.all([refreshDebtors(), refreshBlacklist()]);
+        await Promise.all([refreshDebtors(), refreshStats()]);
       }
 
       await refresh();

@@ -67,6 +67,12 @@ const sideMenu: MenuItem[] = [
 
 const sideMenuBottom: MenuItem[] = [
   {
+    title: 'label_employees',
+    href: fromUrl.toEmployees(),
+    icon: icons.personOutline,
+    scope: RoleScope.users,
+  },
+  {
     title: 'label_users',
     href: fromUrl.toUsers(),
     icon: icons.personCircleSharp,

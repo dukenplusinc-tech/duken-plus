@@ -45,6 +45,7 @@
     "label_chat": "Chat",
     "label_statistics": "Statistics",
     "label_subscription": "Subscription",
+    "label_employees": "Employees",
     "label_users": "Users",
     "label_settings": "Settings"
   },
@@ -190,6 +191,23 @@
   "user_logs": {
     "title": "View \"{name}\" logs",
     "subtitle": "View user action logs"
+  },
+  "employees": {
+    "title": "Employees",
+    "subtitle": "Manage your employees and view their details",
+    "empty_text": "Add new employee",
+    "invite": {
+      "invite_button_caption": "Add new employee",
+      "header": "Add new employee",
+      "form_label_full_name": "Full Name",
+      "form_placeholder_full_name": "John Doe",
+      "form_description_full_name": "Enter the user full name",
+      "form_submit": "Save"
+    }
+  },
+  "employee_logs": {
+    "title": "View \"{name}\" logs",
+    "subtitle": "View employee action logs"
   },
   "404_page": {
     "title": "Oops, page not found!",

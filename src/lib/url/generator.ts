@@ -14,6 +14,14 @@ export function toUsers(): string {
   return `/users`;
 }
 
+export function toEmployees(): string {
+  return `/employees`;
+}
+
+export function toEmployeeCreate(): string {
+  return `/employees/create`;
+}
+
 export function toInvite(): string {
   return `/users/invite`;
 }

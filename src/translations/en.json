@@ -190,24 +190,32 @@
   },
   "user_logs": {
     "title": "View \"{name}\" logs",
-    "subtitle": "View user action logs"
+    "subtitle": "View user action logs",
+    "empty_text": "No logs found",
+    "sorting": {
+      "by_date": "By Date",
+      "by_title": "By Title"
+    }
   },
   "employees": {
     "title": "Employees",
     "subtitle": "Manage your employees and view their details",
-    "empty_text": "Add new employee",
-    "invite": {
-      "invite_button_caption": "Add new employee",
-      "header": "Add new employee",
+    "empty_text": "Add new cashier",
+    "create": {
+      "invite_button_caption": "Add new cashier",
+      "header": "Add new cashier",
       "form_label_full_name": "Full Name",
       "form_placeholder_full_name": "John Doe",
       "form_description_full_name": "Enter the user full name",
+      "form_label_pin_code": "PIN code",
+      "form_placeholder_pin_code": "1234",
+      "form_description_pin_code": "Enter the cashier pin-code",
       "form_submit": "Save"
     }
   },
   "employee_logs": {
     "title": "View \"{name}\" logs",
-    "subtitle": "View employee action logs"
+    "subtitle": "View cashier action logs"
   },
   "404_page": {
     "title": "Oops, page not found!",

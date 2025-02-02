@@ -181,6 +181,7 @@ export type Database = {
           full_name: string
           id: string
           iin: string
+          is_overdue: boolean
           max_credit_amount: number
           phone: string | null
           shop_id: string
@@ -196,6 +197,7 @@ export type Database = {
           full_name: string
           id?: string
           iin: string
+          is_overdue?: boolean
           max_credit_amount: number
           phone?: string | null
           shop_id: string
@@ -211,6 +213,7 @@ export type Database = {
           full_name?: string
           id?: string
           iin?: string
+          is_overdue?: boolean
           max_credit_amount?: number
           phone?: string | null
           shop_id?: string
@@ -218,6 +221,41 @@ export type Database = {
           work_place?: string | null
         }
         Relationships: []
+      }
+      employees: {
+        Row: {
+          created_at: string | null
+          full_name: string
+          id: string
+          pin_code: string
+          shop_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          full_name: string
+          id?: string
+          pin_code: string
+          shop_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          full_name?: string
+          id?: string
+          pin_code?: string
+          shop_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employees_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       file_references: {
         Row: {
@@ -262,7 +300,7 @@ export type Database = {
             foreignKeyName: "file_references_uploaded_by_fkey"
             columns: ["uploaded_by"]
             isOneToOne: false
-            referencedRelation: "extended_profile"
+            referencedRelation: "extended_profiles"
             referencedColumns: ["id"]
           },
           {
@@ -305,6 +343,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string | null
+          employee_id: string | null
           full_name: string | null
           id: string
           language: string | null
@@ -315,6 +354,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string | null
+          employee_id?: string | null
           full_name?: string | null
           id: string
           language?: string | null
@@ -325,6 +365,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string | null
+          employee_id?: string | null
           full_name?: string | null
           id?: string
           language?: string | null
@@ -333,6 +374,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "profiles_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "profiles_role_id_fkey"
             columns: ["role_id"]
@@ -422,44 +470,55 @@ export type Database = {
         Row: {
           action: string
           details: Json | null
+          employee_id: string | null
           entity: string
           entity_id: string | null
           id: number
           timestamp: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           action: string
           details?: Json | null
+          employee_id?: string | null
           entity: string
           entity_id?: string | null
           id?: number
           timestamp?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           action?: string
           details?: Json | null
+          employee_id?: string | null
           entity?: string
           entity_id?: string | null
           id?: number
           timestamp?: string
-          user_id?: string
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_action_logs_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       debtor_statistics: {
         Row: {
+          overdue_debtors: number | null
           shop_id: string | null
-          total_debtors: number | null
           total_negative_balance: number | null
           total_positive_balance: number | null
         }
         Relationships: []
       }
-      extended_profile: {
+      extended_profiles: {
         Row: {
           avatar_url: string | null
           created_at: string | null
@@ -469,6 +528,7 @@ export type Database = {
           language: string | null
           phone: string | null
           role_id: number | null
+          shop_id: string | null
           updated_at: string | null
         }
         Relationships: [
@@ -479,12 +539,32 @@ export type Database = {
             referencedRelation: "roles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "profiles_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Functions: {
       clean_old_logs: {
         Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      recalculate_is_overdue: {
+        Args: {
+          debtor_id: string
+        }
+        Returns: undefined
+      }
+      update_debtor_balance: {
+        Args: {
+          debtor_id: string
+          new_balance: number
+        }
         Returns: undefined
       }
     }

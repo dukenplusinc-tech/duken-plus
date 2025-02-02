@@ -36,7 +36,11 @@ function useDotMenu(id: string): DropDownButtonOption[] {
     () => [
       {
         label: t('view_cation'),
-        onClick: () => router.push(fromUrl.toUser(id)), // Adjust for User view
+        onClick: () => router.push(fromUrl.toEmployeeLogs(id)),
+      },
+      {
+        label: t('edit_caption'),
+        onClick: () => router.push(fromUrl.toEmployeeEdit(id)),
       },
       {
         label: t('delete_cation'),
@@ -52,7 +56,7 @@ export const EmployeeItem: FC<EmployeeItemProps> = ({ employee }) => {
   const options = useDotMenu(employee.id);
 
   return (
-    <Link href={fromUrl.toUser(employee.id)}>
+    <Link href={fromUrl.toEmployeeLogs(employee.id)}>
       <IonItem button lines="full">
         <IonAvatar aria-hidden="true" slot="start">
           <Image

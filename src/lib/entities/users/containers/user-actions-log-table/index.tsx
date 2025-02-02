@@ -1,9 +1,10 @@
 'use client';
 
-import type { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { IonItem, IonLabel, IonList, IonSpinner } from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
+import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { useUserActionLogs } from '@/lib/entities/users/hooks/useUserActionLogs';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Badge } from '@/components/ui/badge';
@@ -11,19 +12,35 @@ import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { FormatDate } from '@/components/date/format-date';
 
-export const UserActionsLog: FC<{ id: string; full_name: string }> = ({
-  id,
-  full_name,
-}) => {
+export const UserActionsLog: FC<{
+  user_id?: string;
+  employee_id?: string;
+  full_name: string;
+}> = ({ user_id, employee_id, full_name }) => {
   useActivateBackButton();
 
   const t = useTranslations('user_logs');
 
-  const { data, sentinelRef, isLoading } = useUserActionLogs(id);
+  const { data, sentinelRef, isLoading } = useUserActionLogs({
+    user_id,
+    employee_id,
+  });
+
+  const sortByOptions = useMemo(
+    () => [
+      { label: t('sorting.by_date'), value: 'timestamp' },
+      { label: t('sorting.by_title'), value: 'action' },
+    ],
+    [t]
+  );
 
   return (
     <div className="flex flex-col h-full">
       <PageHeader>{t('title', { name: full_name })}</PageHeader>
+
+      <div className="my-3">
+        <SearchBar sortByOptions={sortByOptions} sortBy="timestamp" />
+      </div>
 
       {!isLoading && !data.length && (
         <EmptyScreen>{t('empty_text')}</EmptyScreen>

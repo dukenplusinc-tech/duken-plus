@@ -10,3 +10,10 @@ export const employeeSchema = z.object({
 });
 
 export type Employee = z.infer<typeof employeeSchema>;
+
+export const createEmployeeSchema = z.object({
+  full_name: z.string().min(3).max(255),
+  pin_code: z.string().min(4).max(4),
+});
+
+export type CreateEmployee = z.infer<typeof createEmployeeSchema>;

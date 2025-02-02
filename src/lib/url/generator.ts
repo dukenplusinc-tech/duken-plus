@@ -22,6 +22,14 @@ export function toEmployeeCreate(): string {
   return `/employees/create`;
 }
 
+export function toEmployeeLogs(id: string): string {
+  return `/employees/logs/${id}`;
+}
+
+export function toEmployeeEdit(id: string): string {
+  return `/employees/${id}`;
+}
+
 export function toInvite(): string {
   return `/users/invite`;
 }

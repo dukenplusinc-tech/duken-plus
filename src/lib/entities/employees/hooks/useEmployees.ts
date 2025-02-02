@@ -9,12 +9,6 @@ export const useEmployees = () => {
     columns: `
         id,
         full_name,
-        avatar_url,
-        role:role_id (
-          id,
-          name:role,
-          scope
-        ),
         created_at,
         updated_at
       `,

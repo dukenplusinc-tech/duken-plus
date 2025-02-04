@@ -198,8 +198,8 @@
     }
   },
   "employees": {
-    "title": "Employees",
-    "subtitle": "Manage your employees and view their details",
+    "title": "Cashiers",
+    "subtitle": "Manage your cashiers and view their details",
     "empty_text": "Add new cashier",
     "create": {
       "invite_button_caption": "Add new cashier",

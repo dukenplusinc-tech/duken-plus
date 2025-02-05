@@ -222,6 +222,51 @@ export type Database = {
         }
         Relationships: []
       }
+      employee_sessions: {
+        Row: {
+          admin_id: string
+          created_at: string | null
+          employee_id: string
+          expires_at: string
+          id: string
+          session_token: string
+          shop_id: string
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string | null
+          employee_id: string
+          expires_at: string
+          id?: string
+          session_token: string
+          shop_id: string
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string | null
+          employee_id?: string
+          expires_at?: string
+          id?: string
+          session_token?: string
+          shop_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employee_sessions_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_sessions_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       employees: {
         Row: {
           created_at: string | null

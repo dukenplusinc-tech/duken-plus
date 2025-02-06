@@ -16,6 +16,7 @@ import {
 import { location } from 'ionicons/icons';
 import { useTranslations } from 'next-intl';
 
+import { useEmployeeMode } from '@/lib/entities/employees/context';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
 
@@ -25,6 +26,7 @@ export const Menu: FC = () => {
   const menuItems = useHeaderMenu();
 
   const { data: shop } = useShop();
+  const employeeMode = useEmployeeMode();
 
   return (
     <IonMenu contentId="main-content">
@@ -43,8 +45,8 @@ export const Menu: FC = () => {
         </div>
 
         <IonList>
-          {menuItems?.length ? (
-            menuItems.map((menuItem, idx) => (
+          {menuItems?.length && !employeeMode.isLoading ? (
+            (employeeMode.isEmployee ? [] : menuItems).map((menuItem, idx) => (
               <Link
                 key={`${menuItem.title}_${idx.toString()}`}
                 href={menuItem.href}

@@ -3,7 +3,7 @@
 import { FC, PropsWithChildren, useState } from 'react';
 
 import { enableEmployeeMode } from '@/lib/entities/employees/actions/enableEmployeeMode';
-import { useEmployeeSession } from '@/lib/entities/employees/hooks/useEmployeeSession';
+import { useEmployeeCtx } from '@/lib/entities/employees/context';
 import { Card } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 
@@ -13,9 +13,9 @@ import { Header } from './Header';
 import { PinSection } from './PinSection';
 
 export const EmployeeMode: FC<PropsWithChildren> = () => {
-  const sessionManager = useEmployeeSession();
+  const sessionManager = useEmployeeCtx();
 
-  console.log({ existingSession: sessionManager.getToken() });
+  console.log({ existingSession: sessionManager });
 
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>('');
   const [pin, setPin] = useState<string[]>(Array(4).fill(''));
@@ -52,7 +52,9 @@ export const EmployeeMode: FC<PropsWithChildren> = () => {
         throw new Error('Failed to enable employee mode');
       }
 
-      sessionManager.saveToken(session.session_token);
+      sessionManager.saveSession({
+        sessionToken: session.session_token,
+      });
 
       console.log('Employee session:', session);
     } catch (error) {

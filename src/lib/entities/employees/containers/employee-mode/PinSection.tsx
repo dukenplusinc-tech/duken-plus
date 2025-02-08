@@ -1,7 +1,5 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Lock } from 'lucide-react';
-
-import { Button } from '@/components/ui/button';
 
 import { PinDisplay } from './PinDisplay';
 import { PinPad } from './PinPad';
@@ -21,23 +19,20 @@ export const PinSection: FC<PinSectionProps> = ({
   onSubmit,
   isLoading,
 }) => {
+  useEffect(() => {
+    if (!isLoading && !pin.includes('') && onSubmit) {
+      onSubmit();
+    }
+  }, [isLoading, onSubmit, pin]);
+
   return (
-    <div className="space-y-8">
-      <div className="space-y-6">
-        <div className="flex items-center gap-3 justify-center">
-          <Lock className="h-5 w-5 text-muted-foreground" />
-          <span className="text-sm font-medium">Enter PIN</span>
-        </div>
-        <PinDisplay pin={pin} />
-        <PinPad onPinInput={onPinInput} onDelete={onDelete} />
+    <div className="space-y-6">
+      <div className="flex items-center gap-3 justify-center">
+        <Lock className="h-5 w-5 text-muted-foreground" />
+        <span className="text-sm font-medium">Enter PIN</span>
       </div>
-      <Button
-        onClick={onSubmit}
-        disabled={isLoading || pin.includes('')}
-        className="w-full"
-      >
-        {isLoading ? 'Processing...' : 'Submit'}
-      </Button>
+      <PinDisplay pin={pin} />
+      <PinPad onPinInput={onPinInput} onDelete={onDelete} />
     </div>
   );
 };

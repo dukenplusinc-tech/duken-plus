@@ -98,7 +98,6 @@ export const useEmployeeMode = () => {
 
   return {
     isLoading: ctx.isLoading,
-    isEmployee: Boolean(ctx.isLoading && ctx.session?.sessionToken),
-    isAdmin: false,
+    isEmployee: Boolean(ctx.session?.sessionToken),
   };
 };

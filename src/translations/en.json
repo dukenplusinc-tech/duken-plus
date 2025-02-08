@@ -47,7 +47,8 @@
     "label_subscription": "Subscription",
     "label_employees": "Employees",
     "label_users": "Users",
-    "label_settings": "Settings"
+    "label_settings": "Settings",
+    "exit_cashier_mode": "Exit cashier mode"
   },
   "dialog": {
     "accept": "Accept",

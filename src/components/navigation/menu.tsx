@@ -19,14 +19,52 @@ import { useTranslations } from 'next-intl';
 import { useEmployeeMode } from '@/lib/entities/employees/context';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
+import { Button } from '@/components/ui/button';
+
+const MenuList: FC = () => {
+  const t = useTranslations('menu');
+
+  const menuItems = useHeaderMenu();
+  const employeeMode = useEmployeeMode();
+
+  if (!menuItems?.length || employeeMode.isLoading) {
+    return (
+      <div className="flex justify-center">
+        <IonSpinner name="dots" />
+      </div>
+    );
+  }
+
+  if (employeeMode.isEmployee) {
+    return (
+      <div className="my-5 flex justify-center">
+        <Button>{t('exit_cashier_mode')}</Button>
+      </div>
+    );
+  }
+
+  return (
+    <IonList>
+      {menuItems.map((menuItem, idx) => (
+        <Link key={`${menuItem.title}_${idx.toString()}`} href={menuItem.href}>
+          <IonMenuToggle>
+            <IonItem>
+              {typeof menuItem.icon === 'string' && (
+                <IonIcon icon={menuItem.icon} slot="start" />
+              )}
+              <IonLabel>{t(menuItem.title)}</IonLabel>
+            </IonItem>
+          </IonMenuToggle>
+        </Link>
+      ))}
+    </IonList>
+  );
+};
 
 export const Menu: FC = () => {
   const t = useTranslations('menu');
 
-  const menuItems = useHeaderMenu();
-
   const { data: shop } = useShop();
-  const employeeMode = useEmployeeMode();
 
   return (
     <IonMenu contentId="main-content">
@@ -44,29 +82,7 @@ export const Menu: FC = () => {
           </span>
         </div>
 
-        <IonList>
-          {menuItems?.length && !employeeMode.isLoading ? (
-            (employeeMode.isEmployee ? [] : menuItems).map((menuItem, idx) => (
-              <Link
-                key={`${menuItem.title}_${idx.toString()}`}
-                href={menuItem.href}
-              >
-                <IonMenuToggle>
-                  <IonItem>
-                    {typeof menuItem.icon === 'string' && (
-                      <IonIcon icon={menuItem.icon} slot="start" />
-                    )}
-                    <IonLabel>{t(menuItem.title)}</IonLabel>
-                  </IonItem>
-                </IonMenuToggle>
-              </Link>
-            ))
-          ) : (
-            <div className="flex justify-center">
-              <IonSpinner name="dots" />
-            </div>
-          )}
-        </IonList>
+        <MenuList />
       </IonContent>
     </IonMenu>
   );

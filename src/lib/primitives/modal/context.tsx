@@ -6,6 +6,7 @@ export interface DialogWrapperProps {
   open: boolean;
   setOpen?: (status: boolean) => void;
   dialog?: boolean;
+  wrapperClassName?: string;
   desktopMedia?: string;
   title?: string;
   description?: string;

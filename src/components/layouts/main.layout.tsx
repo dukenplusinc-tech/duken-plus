@@ -5,8 +5,8 @@ import { IonicLayout } from '@/components/layouts/ionic.layout';
 
 export const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <IonicLayout>
-      <AppProviders>{children}</AppProviders>
-    </IonicLayout>
+    <AppProviders>
+      <IonicLayout>{children}</IonicLayout>
+    </AppProviders>
   );
 };

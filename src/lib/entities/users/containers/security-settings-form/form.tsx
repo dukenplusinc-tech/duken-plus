@@ -21,6 +21,24 @@ export const SecuritySettingsForm: FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <IonList>
+        {/* PIN Field */}
+        <IonItem>
+          <IonLabel position="stacked">
+            {t('security.form_label_pin_code')}
+          </IonLabel>
+          <IonInput
+            maxlength={4}
+            placeholder={t('security.form_placeholder_pin_code')}
+            value={form.watch('pin_code')}
+            onIonInput={(e) => form.setValue('pin_code', e.detail.value!)}
+          />
+        </IonItem>
+        {form.formState.errors.pin_code && (
+          <IonText color="danger">
+            <small>{form.formState.errors.pin_code.message}</small>
+          </IonText>
+        )}
+
         {/* Password Field */}
         <IonItem>
           <IonLabel position="stacked">

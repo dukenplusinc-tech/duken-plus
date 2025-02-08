@@ -388,10 +388,10 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string | null
-          employee_id: string | null
           full_name: string | null
           id: string
           language: string | null
+          pin_code: string | null
           role_id: number | null
           shop_id: string | null
           updated_at: string | null
@@ -399,10 +399,10 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string | null
-          employee_id?: string | null
           full_name?: string | null
           id: string
           language?: string | null
+          pin_code?: string | null
           role_id?: number | null
           shop_id?: string | null
           updated_at?: string | null
@@ -410,22 +410,15 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string | null
-          employee_id?: string | null
           full_name?: string | null
           id?: string
           language?: string | null
+          pin_code?: string | null
           role_id?: number | null
           shop_id?: string | null
           updated_at?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "profiles_employee_id_fkey"
-            columns: ["employee_id"]
-            isOneToOne: false
-            referencedRelation: "employees"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "profiles_role_id_fkey"
             columns: ["role_id"]

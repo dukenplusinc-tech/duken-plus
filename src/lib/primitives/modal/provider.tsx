@@ -13,6 +13,7 @@ import {
 import { useTranslations } from 'next-intl';
 
 import { useMediaQuery } from '@/lib/hooks/use-media-query';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -50,6 +51,7 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
   footer = true,
   autoClose = true,
   dialog = false,
+  wrapperClassName = 'max-h-[65vh]',
   desktopMedia = '(min-width: 768px)',
   acceptCaption = 'dialog.accept',
   cancelCaption = 'dialog.cancel',
@@ -97,7 +99,7 @@ const DialogWrapper: FC<PropsWithChildren<DialogWrapperProps>> = ({
               <DialogDescription>{description}</DialogDescription>
             )}
           </DialogHeader>
-          <div className="max-h-[65vh] overflow-y-auto px-4 py-2">
+          <div className={cn('overflow-y-auto px-4 py-2', wrapperClassName)}>
             {children}
           </div>
           {footer && (

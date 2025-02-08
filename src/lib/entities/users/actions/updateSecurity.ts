@@ -12,9 +12,26 @@ export async function updateSecuritySettings(payload: SecurityPayload) {
 
   const supabase = createClient();
 
-  await supabase.auth.updateUser({
-    password: payload.password,
-  });
+  if (payload.pin_code) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      await supabase
+        .from('profiles')
+        .update({
+          pin_code: payload.pin_code,
+        })
+        .eq('id', user.id);
+    }
+  }
+
+  if (payload.password) {
+    await supabase.auth.updateUser({
+      password: payload.password,
+    });
+  }
 
   revalidatePath('/', 'layout');
   redirect('/');

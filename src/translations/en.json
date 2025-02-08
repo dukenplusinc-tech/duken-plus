@@ -150,6 +150,8 @@
       "title": "Security",
       "form_title": "Security Settings",
       "form_subtitle": "Fill the shop details",
+      "form_label_pin_code": "Your PIN code",
+      "form_placeholder_pin_code": "Enter your PIN code",
       "form_label_password": "Your New Password",
       "form_placeholder_password": "Enter you new password",
       "form_label_password_confirm": "Repeat Your Password",

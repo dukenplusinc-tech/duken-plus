@@ -3,6 +3,7 @@ import { updateSecuritySettings } from '@/lib/entities/users/actions/updateSecur
 import { SecurityPayload, securityPayload } from '@/lib/entities/users/schema';
 
 const defaultValues: SecurityPayload = {
+  pin_code: '',
   password: '',
   password_confirm: '',
 };

@@ -17,6 +17,7 @@ import { location } from 'ionicons/icons';
 import { useTranslations } from 'next-intl';
 
 import { useEmployeeMode } from '@/lib/entities/employees/context';
+import { useExitEmployeeMode } from '@/lib/entities/employees/hooks/useExitEmployeeMode';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
 import { Button } from '@/components/ui/button';
@@ -26,6 +27,7 @@ const MenuList: FC = () => {
 
   const menuItems = useHeaderMenu();
   const employeeMode = useEmployeeMode();
+  const handleExitEmployeeMode = useExitEmployeeMode();
 
   if (!menuItems?.length || employeeMode.isLoading) {
     return (
@@ -38,7 +40,9 @@ const MenuList: FC = () => {
   if (employeeMode.isEmployee) {
     return (
       <div className="my-5 flex justify-center">
-        <Button>{t('exit_cashier_mode')}</Button>
+        <Button onClick={handleExitEmployeeMode}>
+          {t('exit_cashier_mode')}
+        </Button>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { EmployeeMode } from '@/lib/entities/employees/containers/employee-mode';
+import { EmployeeModeGuard } from '@/lib/entities/employees/containers/employee-mode';
 
 export const metadata: Metadata = {
   title: 'Cash Desk',
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default async function CashDeskPage() {
-  return <EmployeeMode>Cash Desk</EmployeeMode>;
+  return <EmployeeModeGuard>Cash Desk</EmployeeModeGuard>;
 }

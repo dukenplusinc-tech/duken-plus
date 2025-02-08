@@ -66,6 +66,19 @@ export async function enableEmployeeMode({
     throw new Error(error.message);
   }
 
+  if (!data) {
+    return false;
+  }
+
+  const { data: employee } = await supabase
+    .from('employees')
+    .select('*')
+    .eq('admin_id', user.id)
+    .single();
+
   // Return the newly created session row.
-  return data;
+  return {
+    ...data,
+    full_name: employee?.full_name,
+  };
 }

@@ -37,31 +37,41 @@ const MenuList: FC = () => {
     );
   }
 
-  if (employeeMode.isEmployee) {
-    return (
-      <div className="my-5 flex justify-center">
-        <Button onClick={handleExitEmployeeMode}>
-          {t('exit_cashier_mode')}
-        </Button>
-      </div>
-    );
-  }
-
   return (
-    <IonList>
-      {menuItems.map((menuItem, idx) => (
-        <Link key={`${menuItem.title}_${idx.toString()}`} href={menuItem.href}>
-          <IonMenuToggle>
-            <IonItem>
-              {typeof menuItem.icon === 'string' && (
-                <IonIcon icon={menuItem.icon} slot="start" />
-              )}
-              <IonLabel>{t(menuItem.title)}</IonLabel>
-            </IonItem>
-          </IonMenuToggle>
-        </Link>
-      ))}
-    </IonList>
+    <>
+      {employeeMode.isEmployee && (
+        <div>
+          <div className="my-5 flex justify-center">
+            <span className="text-2xl font-bold">
+              {employeeMode.session?.full_name || '---'}
+            </span>
+          </div>
+          <div className="my-5 flex justify-center">
+            <Button onClick={handleExitEmployeeMode}>
+              {t('exit_cashier_mode')}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      <IonList>
+        {menuItems.map((menuItem, idx) => (
+          <Link
+            key={`${menuItem.title}_${idx.toString()}`}
+            href={menuItem.href}
+          >
+            <IonMenuToggle>
+              <IonItem>
+                {typeof menuItem.icon === 'string' && (
+                  <IonIcon icon={menuItem.icon} slot="start" />
+                )}
+                <IonLabel>{t(menuItem.title)}</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+          </Link>
+        ))}
+      </IonList>
+    </>
   );
 };
 

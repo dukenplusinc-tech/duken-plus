@@ -13,6 +13,7 @@ import { isValidToken } from '@/lib/entities/employees/actions/isValidToken';
 
 interface EmployeeSession {
   sessionToken: string;
+  full_name: string;
 }
 
 interface EmployeeModeContextValue {
@@ -36,7 +37,7 @@ export const EmployeeModeProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem(EMPLOYEE_TOKEN_KEY);
     if (token) {
-      setSession({ sessionToken: token });
+      setSession({ sessionToken: token, full_name: '---' });
     }
   }, []);
 
@@ -48,8 +49,10 @@ export const EmployeeModeProvider: FC<PropsWithChildren> = ({ children }) => {
       isValidToken({
         session_token: session.sessionToken,
       })
-        .then((isOk) => {
-          if (!isOk) {
+        .then((sess) => {
+          if (sess) {
+            setSession(sess);
+          } else {
             localStorage.removeItem(EMPLOYEE_TOKEN_KEY);
             setSession(null);
           }
@@ -99,5 +102,6 @@ export const useEmployeeMode = () => {
   return {
     isLoading: ctx.isLoading,
     isEmployee: Boolean(ctx.session?.sessionToken),
+    session: ctx.session,
   };
 };

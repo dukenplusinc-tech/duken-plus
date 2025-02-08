@@ -46,12 +46,13 @@ export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
         pin: pin.join(''),
       });
 
-      if (!session?.id) {
+      if (!session) {
         throw new Error('Failed to enable employee mode');
       }
 
       sessionManager.saveSession({
         sessionToken: session.session_token,
+        full_name: session.full_name || '---',
       });
 
       console.log('Employee session:', session);

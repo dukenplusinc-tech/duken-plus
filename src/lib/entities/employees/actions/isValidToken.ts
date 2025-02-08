@@ -27,7 +27,7 @@ export async function isValidToken({ session_token }: Params) {
 
   const { data: session } = await supabase
     .from('employee_sessions')
-    .select(`id, expires_at`)
+    .select(`id, expires_at, employee_id`)
     .eq('session_token', session_token)
     .eq('shop_id', shopId)
     .eq('admin_id', user.id)
@@ -47,5 +47,18 @@ export async function isValidToken({ session_token }: Params) {
     throw new Error('Session expired');
   }
 
-  return true;
+  const { data } = await supabase
+    .from('employees')
+    .select('*')
+    .eq('id', session.employee_id)
+    .single();
+
+  if (!data) {
+    return false;
+  }
+
+  return {
+    full_name: data.full_name,
+    sessionToken: session_token,
+  };
 }

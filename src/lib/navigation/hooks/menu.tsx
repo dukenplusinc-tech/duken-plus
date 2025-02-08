@@ -57,11 +57,13 @@ const sideMenu: MenuItem[] = [
     title: 'label_statistics',
     href: fromUrl.toStatistics(),
     icon: icons.barbellOutline,
+    scope: RoleScope.store,
   },
   {
     title: 'label_subscription',
     href: fromUrl.toSubscription(),
     icon: icons.checkboxOutline,
+    scope: RoleScope.store,
   },
 ];
 
@@ -82,6 +84,7 @@ const sideMenuBottom: MenuItem[] = [
     title: 'label_settings',
     href: fromUrl.toSettings(),
     icon: icons.settingsOutline,
+    scope: RoleScope.store,
   },
 ];
 

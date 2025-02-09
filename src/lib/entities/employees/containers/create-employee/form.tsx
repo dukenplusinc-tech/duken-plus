@@ -13,7 +13,7 @@ import { useTranslations } from 'next-intl';
 
 import { useEmployeeForm } from '@/lib/entities/employees/containers/create-employee/hooks';
 
-export const EmployeeForm: FC<{ id?: string }> = ({ id }) => {
+export const EmployeeForm: FC<{ id?: string | null }> = ({ id = null }) => {
   const t = useTranslations('employees.create');
   const { form, isProcessing, handleSubmit } = useEmployeeForm(id);
 

@@ -47,6 +47,7 @@ export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
       });
 
       if (!session) {
+        // noinspection ExceptionCaughtLocallyJS
         throw new Error('Failed to enable employee mode');
       }
 
@@ -54,8 +55,6 @@ export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
         sessionToken: session.session_token,
         full_name: session.full_name || '---',
       });
-
-      console.log('Employee session:', session);
     } catch (error) {
       toast({
         variant: 'destructive',

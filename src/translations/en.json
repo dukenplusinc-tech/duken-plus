@@ -214,6 +214,13 @@
       "form_placeholder_pin_code": "1234",
       "form_description_pin_code": "Enter the cashier pin-code",
       "form_submit": "Save"
+    },
+    "login": {
+      "enter_pin_label": "Enter PIN",
+      "welcome_message": "Welcome Back",
+      "select_profile_caption": "Please select your profile to continue",
+      "enter_pin_for_caption": "Enter PIN for {name}",
+      "select_profile_label": "Select your profile"
     }
   },
   "employee_logs": {

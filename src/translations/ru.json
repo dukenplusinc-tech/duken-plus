@@ -45,8 +45,10 @@
     "label_chat": "Чат",
     "label_statistics": "Статистика",
     "label_subscription": "Подписка",
+    "label_employees": "Сотрудники",
     "label_users": "Пользователи",
-    "label_settings": "Настройки"
+    "label_settings": "Настройки",
+    "exit_cashier_mode": "Выйти из режима кассира"
   },
   "dialog": {
     "accept": "Принять",
@@ -91,7 +93,7 @@
     "signup_label": "Зарегистрироваться",
     "toast": {
       "recover": {
-        "title": "Отправлено письмо для восстановления пароля",
+        "title": "Письмо для восстановления пароля отправлено",
         "description": "Проверьте почту и следуйте инструкциям"
       }
     },
@@ -100,7 +102,7 @@
         "description": "Неверный пароль или эл. почта. Попробуйте снова."
       },
       "recover": {
-        "description": "Произошла ошибка при отправке письма восстановления. Попробуйте снова."
+        "description": "Ошибка при отправке письма для восстановления пароля. Попробуйте снова."
       }
     },
     "recover": {
@@ -148,7 +150,9 @@
       "title": "Безопасность",
       "form_title": "Настройки безопасности",
       "form_subtitle": "Заполните данные магазина",
-      "form_label_password": "Новый пароль",
+      "form_label_pin_code": "Ваш PIN-код",
+      "form_placeholder_pin_code": "Введите PIN-код",
+      "form_label_password": "Ваш новый пароль",
       "form_placeholder_password": "Введите новый пароль",
       "form_label_password_confirm": "Повторите пароль",
       "form_placeholder_password_confirm": "Введите новый пароль еще раз",
@@ -158,12 +162,12 @@
       "title": "Личные",
       "form_title": "Личные настройки",
       "form_subtitle": "Заполните данные",
-      "form_label_full_name": "Полное имя",
-      "form_placeholder_full_name": "Введите полное имя",
-      "form_label_email": "Эл. почта",
-      "form_placeholder_email": "Введите эл. почту",
-      "form_label_phone": "Телефон",
-      "form_placeholder_phone": "Введите номер телефона",
+      "form_label_full_name": "Ваше полное имя",
+      "form_placeholder_full_name": "Введите ваше полное имя",
+      "form_label_email": "Ваша эл. почта",
+      "form_placeholder_email": "Введите вашу эл. почту",
+      "form_label_phone": "Ваш телефон",
+      "form_placeholder_phone": "Введите ваш телефон",
       "form_label_lang": "Язык",
       "form_placeholder_lang": "Выберите язык",
       "form_save": "Сохранить"
@@ -189,7 +193,39 @@
   },
   "user_logs": {
     "title": "Просмотр логов \"{name}\"",
-    "subtitle": "Просмотр действий пользователя"
+    "subtitle": "Просмотр действий пользователя",
+    "empty_text": "Логов не найдено",
+    "sorting": {
+      "by_date": "По дате",
+      "by_title": "По названию"
+    }
+  },
+  "employees": {
+    "title": "Кассиры",
+    "subtitle": "Управляйте кассирами и просматривайте их данные",
+    "empty_text": "Добавить нового кассира",
+    "create": {
+      "invite_button_caption": "Добавить нового кассира",
+      "header": "Добавить нового кассира",
+      "form_label_full_name": "Полное имя",
+      "form_placeholder_full_name": "Иван Иванов",
+      "form_description_full_name": "Введите полное имя пользователя",
+      "form_label_pin_code": "PIN-код",
+      "form_placeholder_pin_code": "1234",
+      "form_description_pin_code": "Введите PIN-код кассира",
+      "form_submit": "Сохранить"
+    },
+    "login": {
+      "enter_pin_label": "Введите PIN-код",
+      "welcome_message": "С возвращением",
+      "select_profile_caption": "Выберите свой профиль для продолжения",
+      "enter_pin_for_caption": "Введите PIN-код для {name}",
+      "select_profile_label": "Выберите профиль"
+    }
+  },
+  "employee_logs": {
+    "title": "Просмотр логов \"{name}\"",
+    "subtitle": "Просмотр действий кассира"
   },
   "404_page": {
     "title": "Ой, страница не найдена!",
@@ -200,23 +236,23 @@
     "title": "Заметки",
     "title_edit": "Редактировать заметку",
     "title_add": "Создать заметку",
-    "empty_text": "Заметок нет. Нажмите +, чтобы добавить что-то",
+    "empty_text": "Заметок нет. Нажмите +, чтобы добавить",
     "edit_btn": "Редактировать"
   },
   "contractors": {
-    "title": "Подрядчики",
-    "title_edit": "Редактировать подрядчика",
-    "title_add": "Добавить нового подрядчика",
-    "empty_text": "Подрядчики отсутствуют. Нажмите +, чтобы добавить.",
+    "title": "Контрагенты",
+    "title_edit": "Редактировать контрагента",
+    "title_add": "Добавить нового контрагента",
+    "empty_text": "Контрагенты отсутствуют. Нажмите +, чтобы добавить",
     "edit_btn": "Редактировать",
     "form_label_title": "Название",
-    "form_label_supervisor": "Супервайзер",
+    "form_label_supervisor": "Руководитель",
     "form_label_supervisor_phone": "Телефон",
     "form_label_sales_representative": "Торговый представитель",
     "form_label_sales_representative_phone": "Телефон",
     "form_label_sales_address": "Адрес",
     "form_label_contract": "Договор",
-    "form_label_note": "Дополнительно",
+    "form_label_note": "Заметка",
     "form_label_note_placeholder": "Введите дополнительную информацию",
     "form_submit": "Добавить / Сохранить",
     "sorting": {
@@ -228,46 +264,46 @@
     "title": "Должники",
     "title_edit": "Редактировать должника",
     "title_add": "Добавить нового должника",
-    "empty_text": "Должники отсутствуют. Нажмите +, чтобы добавить.",
+    "empty_text": "Должники отсутствуют. Нажмите +, чтобы добавить",
     "edit_btn": "Редактировать",
-    "form_label_full_name": "ФИО",
-    "form_label_iin": "ИИН",
+    "form_label_full_name": "Полное имя",
+    "form_label_iin": "Идентификационный номер",
     "form_label_phone": "Телефон",
     "form_label_address": "Адрес",
-    "form_label_max_amount": "Макс. сумма",
+    "form_label_max_amount": "Максимальная сумма",
     "form_label_work_place": "Место работы",
     "form_label_photo": "Фото",
     "form_label_id": "Фото удостоверения",
     "form_label_signature": "Подпись",
-    "form_label_note": "Дополнительно",
+    "form_label_note": "Заметка",
     "form_label_note_placeholder": "Введите дополнительную информацию",
     "form_submit": "Добавить / Сохранить",
-    "overdue_amount": "Есть должники не закрывшие долг вовремя:",
+    "overdue_amount": "Есть должники, которые не выплатили свои долги вовремя:",
     "sorting": {
       "by_date": "По дате",
-      "by_full_name": "По ФИО",
-      "by_balance": "По сумме"
+      "by_full_name": "По полному имени",
+      "by_balance": "По балансу"
     },
     "black_list": {
       "page": {
         "title": "Черный список должников",
-        "search_placeholder": "Поиск по ИИН или ФИО",
+        "search_placeholder": "Поиск по идентификационному номеру или полному имени",
         "sorting": {
           "by_date": "По дате",
           "by_name": "По алфавиту"
         }
       },
       "add_to_blacklist_title": "Добавить в черный список?",
-      "add_to_blacklist_description": "Вы действительно хотите добавить этого клиента в черный список?",
+      "add_to_blacklist_description": "Вы уверены, что хотите добавить этого клиента в черный список?",
       "add_to_blacklist_confirm_caption": "Добавить",
-      "add_to_blacklist_cancel_caption": "Отменить",
+      "add_to_blacklist_cancel_caption": "Отмена",
       "remove_from_blacklist_title": "Удалить из черного списка?",
-      "remove_from_blacklist_description": "Вы действительно хотите удалить этого клиента из черного списка?",
+      "remove_from_blacklist_description": "Вы уверены, что хотите удалить этого клиента из черного списка?",
       "remove_from_blacklist_confirm_caption": "Удалить",
-      "remove_from_blacklist_cancel_caption": "Отменить"
+      "remove_from_blacklist_cancel_caption": "Отмена"
     },
     "dot_menu": {
-      "view_info_caption": "Информация о должнике",
+      "view_info_caption": "Просмотр информации о должнике",
       "view_history_caption": "История записей",
       "add_to_blacklist_caption": "Добавить в черный список",
       "remove_from_blacklist_caption": "Удалить из черного списка",
@@ -280,13 +316,13 @@
       "by_date": "По дате",
       "by_amount": "По сумме"
     },
-    "empty_text": "Транзакции отсутствуют",
+    "empty_text": "Нет доступных транзакций",
     "form": {
       "create_title": "Добавить запись",
-      "is_loan": "В долг",
+      "is_loan": "Кредит",
       "form_label_amount": "Сумма",
       "form_label_description": "Описание",
-      "cancel_caption": "Отменить",
+      "cancel_caption": "Отмена",
       "minus_caption": "Минус",
       "plus_caption": "Плюс"
     }
@@ -303,6 +339,6 @@
   },
   "loader": {
     "message": "Загрузка, пожалуйста подождите. Нажмите, чтобы отменить",
-    "error": "Не удалось загрузить..."
+    "error": "Ошибка загрузки..."
   }
 }

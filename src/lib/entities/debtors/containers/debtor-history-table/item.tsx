@@ -3,7 +3,10 @@ import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { ellipsisVertical } from 'ionicons/icons';
 
 import { useDebtorTransactionDotMenu } from '@/lib/entities/debtors/containers/debtor-history-table/dot-menu';
-import { DebtorTransaction } from '@/lib/entities/debtors/schema';
+import {
+  DebtorTransaction,
+  TransactionType,
+} from '@/lib/entities/debtors/schema';
 import { cn } from '@/lib/utils';
 import { DropdownButton } from '@/components/ui/ionic/dropdown';
 
@@ -19,7 +22,7 @@ export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
   const { transaction_type, amount, transaction_date, description } =
     transaction;
 
-  const isLoan = transaction_type === 'payment';
+  const isLoan = transaction_type === TransactionType.loan;
 
   const sign = isLoan ? '-' : '+';
 

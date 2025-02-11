@@ -33,10 +33,10 @@ export enum TransactionType {
 }
 
 export const debtorPayloadSchema = z.object({
-  full_name: z.string(),
-  iin: z.string(),
-  phone: z.string().nullable(),
-  address: z.string().nullable(),
+  full_name: z.string().min(1),
+  iin: z.string().length(12),
+  phone: z.string().min(1),
+  address: z.string().min(1),
   balance: z.number(),
   max_credit_amount: z.number(),
   work_place: z.string().nullable(),

@@ -19,12 +19,12 @@ export const contractorSchema = z.object({
 export type Contractor = z.infer<typeof contractorSchema>;
 
 export const contractorPayloadSchema = z.object({
-  title: z.string(),
+  title: z.string().min(1),
   supervisor: z.string(),
   supervisor_phone: z.string(),
   sales_representative: z.string(),
   sales_representative_phone: z.string(),
-  address: z.string(),
+  address: z.string().min(1),
   note: z.string(),
 });
 

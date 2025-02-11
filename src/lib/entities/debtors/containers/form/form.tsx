@@ -44,6 +44,8 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
         <IonItem>
           <IonLabel position="stacked">{t('form_label_iin')}</IonLabel>
           <IonInput
+            minlength={12}
+            maxlength={12}
             value={form.watch('iin')}
             disabled={isProcessing}
             onIonInput={(e) => form.setValue('iin', e.detail.value!)}

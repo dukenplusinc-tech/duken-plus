@@ -50,7 +50,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
           <IonInput
             ref={input}
             type="number"
-            min="0"
+            min="1"
             step="1"
             value={form.watch('amount')}
             disabled={isProcessing}
@@ -61,7 +61,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
           />
         </IonItem>
         {form.formState.errors.amount && (
-          <IonLabel color="danger">
+          <IonLabel className="px-5" color="danger">
             {form.formState.errors.amount.message}
           </IonLabel>
         )}

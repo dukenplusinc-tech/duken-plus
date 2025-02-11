@@ -50,7 +50,7 @@ export type DebtorPayload = z.infer<typeof debtorPayloadSchema>;
 export const debtorTransactionSchema = z.object({
   transaction_type: z.string(),
   debtor_id: z.string(),
-  amount: z.number(),
+  amount: z.number().positive(),
   description: z.string().nullable(),
   transaction_date: z.string().readonly().optional(),
   debtor: debtorSchema.pick({ full_name: true }).readonly().optional(),

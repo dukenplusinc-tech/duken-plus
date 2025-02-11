@@ -83,8 +83,8 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
 
         <div className="mt-10 flex justify-between">
           <Button
+            loading={isProcessing}
             variant="link"
-            size="sm"
             className="flex-1"
             onClick={handleClose}
           >
@@ -93,9 +93,9 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
 
           <div className="flex flex-1 justify-end">
             <Button
+              disabled={isProcessing}
               type="submit"
               variant="destructive"
-              size="sm"
               className="flex-1 mr-2"
               onClick={handleSave(TransactionType.loan)}
             >
@@ -103,9 +103,9 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
             </Button>
 
             <Button
+              disabled={isProcessing}
               type="submit"
               variant="success"
-              size="sm"
               className="flex-1"
               onClick={handleSave(TransactionType.payback)}
             >

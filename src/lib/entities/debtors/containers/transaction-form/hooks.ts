@@ -5,6 +5,7 @@ import { FormValidationError } from '@/lib/composite/form/errors';
 import { useForm } from '@/lib/composite/form/useForm';
 import { createDebtorTransaction } from '@/lib/entities/debtors/actions/createDebtorTransaction';
 import { updateDebtorTransaction } from '@/lib/entities/debtors/actions/updateDebtorTransaction';
+import { useAddedBy } from '@/lib/entities/debtors/hooks/useAddedBy';
 import { useDebtorById } from '@/lib/entities/debtors/hooks/useDebtorById';
 import { useDebtors } from '@/lib/entities/debtors/hooks/useDebtors';
 import { useDebtorStats } from '@/lib/entities/debtors/hooks/useDebtorStats';
@@ -45,13 +46,18 @@ export function useDebtorTransactionForm({
       debtor_id: debtor_id || '',
       amount,
       description: '',
+      added_by: '',
     };
   }, [balance, debtor_id]);
+
+  const added_by = useAddedBy();
 
   return useForm<typeof debtorTransactionSchema, DebtorTransactionPayload>({
     defaultValues,
     fetcher,
     request: async (values) => {
+      values.added_by = added_by;
+
       if (id) {
         await updateDebtorTransaction(id, values);
       } else {

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { ellipsisVertical } from 'ionicons/icons';
+import { useTranslations } from 'next-intl';
 
 import { useDebtorTransactionDotMenu } from '@/lib/entities/debtors/containers/debtor-history-table/dot-menu';
 import {
@@ -17,6 +18,8 @@ interface DebtorTransactionItemProps {
 export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
   transaction,
 }) => {
+  const t = useTranslations('debtor_transactions');
+
   const options = useDebtorTransactionDotMenu(transaction);
 
   const { transaction_type, amount, transaction_date, description } =
@@ -47,6 +50,11 @@ export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
           <div>{description || '---'}</div>
         </div>
       </IonLabel>
+      {transaction?.added_by && (
+        <div className="font-medium">
+          {t('captions_by')} {transaction?.added_by}
+        </div>
+      )}
       <DropdownButton
         button={
           <IonButton fill="clear">

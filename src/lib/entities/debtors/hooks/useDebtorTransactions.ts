@@ -34,6 +34,7 @@ export const useDebtorTransactions = () => {
       amount,
       transaction_date,
       description,
+      added_by,
       debtor:debtors (
         full_name
       )

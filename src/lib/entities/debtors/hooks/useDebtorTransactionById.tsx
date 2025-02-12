@@ -17,6 +17,7 @@ export const useDebtorTransactionById = (id: string | null = null) => {
       amount,
       transaction_date,
       description,
+      added_by,
       debtor:debtors (
         full_name
       )

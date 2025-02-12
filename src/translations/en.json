@@ -325,7 +325,8 @@
       "cancel_caption": "Cancel",
       "minus_caption": "Minus",
       "plus_caption": "Plus"
-    }
+    },
+    "captions_by": "by: "
   },
   "upload": {
     "images": {

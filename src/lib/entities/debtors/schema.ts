@@ -52,6 +52,7 @@ export const debtorTransactionSchema = z.object({
   debtor_id: z.string(),
   amount: z.number().positive(),
   description: z.string().nullable(),
+  added_by: z.string().nullable(),
   transaction_date: z.string().readonly().optional(),
   debtor: debtorSchema.pick({ full_name: true }).readonly().optional(),
 });
@@ -62,6 +63,7 @@ export interface DebtorTransaction {
   debtor_id: string;
   amount: number;
   description: string | null;
+  added_by: string | null;
   transaction_date?: string;
   debtor: Pick<Debtor, 'full_name'>;
 }

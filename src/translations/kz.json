@@ -328,6 +328,10 @@
     },
     "captions_by": "авторы: "
   },
+  "user_action_logs": {
+    "debtor_name_caption": "Берешек",
+    "debtor_balance_caption": "Транзакция кезіндегі баланс"
+  },
   "upload": {
     "images": {
       "choose_file": "Файлды таңдау",

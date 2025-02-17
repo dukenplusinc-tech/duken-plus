@@ -328,6 +328,10 @@
     },
     "captions_by": "by: "
   },
+  "user_action_logs": {
+    "debtor_name_caption": "Debtor",
+    "debtor_balance_caption": "Balance at transaction"
+  },
   "upload": {
     "images": {
       "choose_file": "Choose file",

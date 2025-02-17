@@ -328,6 +328,10 @@
     },
     "captions_by": "от: "
   },
+  "user_action_logs": {
+    "debtor_name_caption": "Должник",
+    "debtor_balance_caption": "Баланс на момент транзакции"
+  },
   "upload": {
     "images": {
       "choose_file": "Выбрать файл",

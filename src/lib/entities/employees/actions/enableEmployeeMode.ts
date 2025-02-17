@@ -46,14 +46,14 @@ export async function enableEmployeeMode({
   const sessionToken = crypto.randomUUID();
 
   // Calculate the expiration time: 8 hours from now
-  const oneHourInMilliseconds = 8 * 60 * 60 * 1000;
-  const expiresAt = new Date(Date.now() + oneHourInMilliseconds).toISOString();
+  const expiresAt = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString();
 
-  // Insert a new employee session row.
+  // Insert a new employee session row with `auth_id`
   const { data, error } = await supabase
     .from('employee_sessions')
     .insert({
-      admin_id: user.id, // The authenticated admin creating the session.
+      auth_id: user.id, // Store the current authenticated user's ID
+      admin_id: user.id, // Keep this as the admin who initiated the session
       employee_id: employeeId,
       shop_id: shopId,
       expires_at: expiresAt,

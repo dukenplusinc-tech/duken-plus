@@ -37,7 +37,8 @@ export const useUserActionLogs = ({
         timestamp,
         action,
         entity,
-        entity_id
+        entity_id,
+        details
       `,
     allowedFilters,
     filters,

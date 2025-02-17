@@ -27,6 +27,7 @@ export const userActionLogSchema = z.object({
   action: z.string(),
   entity: z.string(),
   entity_id: z.string(),
+  details: z.any().optional(),
 });
 
 export type UserActionLog = z.infer<typeof userActionLogSchema>;

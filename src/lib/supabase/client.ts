@@ -10,3 +10,5 @@ export const createClient = () =>
   );
 
 export type Builder = PostgrestFilterBuilder<any, any, any>;
+
+export const supabase = createClient(); // Initialize client at the start

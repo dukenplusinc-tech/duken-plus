@@ -29,7 +29,7 @@ export const TransactionForm: FC<DebtorTransactionFormParams> = (props) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [form, form.trigger]);
+  }, [form]);
 
   const handleClose = useCallback(() => {
     dialog.close();

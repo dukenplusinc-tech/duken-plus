@@ -99,6 +99,9 @@
         --ring: 212.7 26.8% 83.9%;
     }
 
+    .no-ripple {
+        --ripple-color: transparent;
+    }
 }
 
 @layer base {

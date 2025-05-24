@@ -345,5 +345,52 @@
   "loader": {
     "message": "Загрузка, пожалуйста подождите. Нажмите, чтобы отменить",
     "error": "Ошибка загрузки..."
+  },
+  "subscription": {
+    "title": "Подписка",
+    "shop_label": "магазин",
+    "id_label": "id (лицевой счет)",
+    "pay_for_subscription": "Оплатите подписку",
+    "last_payment": "Последняя оплата",
+    "via_label": "через",
+    "sub_for_1_month_label": "Продлить на 1 месяц через",
+    "manual_payment_label": "Связь с нами для оплаты",
+    "paid_until": "Оплачено до",
+    "days_remaining": "Осталось {days} дней",
+    "transactions": {
+      "sorting": {
+        "by_date": "По дате",
+        "by_amount": "По сумме"
+      }
+    }
+  },
+  "expenses": {
+    "dialog": {
+      "title": "Добавить расход"
+    },
+    "summary": {
+      "today_label": "Общий расход на сегодня:",
+      "yesterday_label": "Расходы <br /> за вчера:",
+      "tomorrow_label": "Расходы <br /> на вчера:"
+    },
+    "form": {
+      "label_type": "Тип",
+      "label_type_placeholder": "Выберите или введите тип",
+      "label_amount": "Сумма",
+      "label_date": "Дата",
+      "cancel": "Отмена",
+      "submit": "Сохранить"
+    }
+  },
+  "cash_desk": {
+    "form": {
+      "create_title": "Добавить запись",
+      "form_label_amount": "Сумма",
+      "form_label_from": "Имя клиента",
+      "form_label_bank_name": "Название банка",
+      "form_label_description": "Описание",
+      "save_caption": "Добавить",
+      "cancel_caption": "Отмена"
+    }
   }
 }

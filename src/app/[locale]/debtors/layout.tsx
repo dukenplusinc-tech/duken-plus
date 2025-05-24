@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { redirectIfGuest } from '@/lib/auth/guard/auth/actions/redirectIfGuest';
+import { validateUser } from '@/lib/auth/guard/auth/actions/validateUser';
 import { MainLayout } from '@/components/layouts/main.layout';
 
 export default async function SettingsLayout({
@@ -8,7 +8,7 @@ export default async function SettingsLayout({
 }: {
   children: ReactNode;
 }) {
-  await redirectIfGuest();
+  await validateUser();
 
   return <MainLayout>{children}</MainLayout>;
 }

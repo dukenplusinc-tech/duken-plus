@@ -18,6 +18,7 @@ interface Options {
   allowedFilters?: string[];
   filters?: ActiveFilter[];
   sort?: SortingState | undefined;
+  limit?: number | undefined;
 }
 
 export function useQuery<T extends Array<unknown>>(
@@ -28,6 +29,7 @@ export function useQuery<T extends Array<unknown>>(
     allowedFilters,
     filters: customFilters = [],
     sort: customSort = undefined,
+    limit = undefined,
   }: Options = {}
 ) {
   // Supabase client
@@ -56,8 +58,13 @@ export function useQuery<T extends Array<unknown>>(
 
     // Apply sorting
     baseQuery = withSorting(baseQuery, customSort || sorting);
+
+    if (limit) {
+      baseQuery = baseQuery.limit(limit);
+    }
+
     return baseQuery;
-  }, [client, table, columns, filters, customSort, sorting]);
+  }, [client, table, columns, filters, customSort, sorting, limit]);
 
   // Use SWR to fetch the data
   const { data, error, count, mutate, isValidating } = useQuerySwr(query);

@@ -345,5 +345,52 @@
   "loader": {
     "message": "Loading, please wait. Touch to cancel",
     "error": "Failed to load..."
+  },
+  "subscription": {
+    "title": "Subscription",
+    "shop_label": "Shop",
+    "id_label": "ID (account number)",
+    "pay_for_subscription": "Pay for subscription",
+    "last_payment": "Last payment",
+    "via_label": "via",
+    "sub_for_1_month_label": "Renew for 1 month via",
+    "manual_payment_label": "Contact us for payment",
+    "paid_until": "Paid until",
+    "days_remaining": "Remaining {days} days",
+    "transactions": {
+      "sorting": {
+        "by_date": "By Date",
+        "by_amount": "By Amount"
+      }
+    }
+  },
+  "expenses": {
+    "dialog": {
+      "title": "Add Expense"
+    },
+    "summary": {
+      "today_label": "Total expenses for today:",
+      "yesterday_label": "Expenses <br /> for yesterday:",
+      "tomorrow_label": "Expenses <br /> for tomorrow:"
+    },
+    "form": {
+      "label_type": "Type",
+      "label_type_placeholder": "Choose or enter the type",
+      "label_amount": "Amount",
+      "label_date": "Date",
+      "cancel": "Cancel",
+      "submit": "Save"
+    }
+  },
+  "cash_desk": {
+    "form": {
+      "create_title": "Add record",
+      "form_label_amount": "Amount",
+      "form_label_from": "Customer Name",
+      "form_label_bank_name": "Bank Name",
+      "form_label_description": "Description",
+      "save_caption": "Add",
+      "cancel_caption": "Cancel"
+    }
   }
 }

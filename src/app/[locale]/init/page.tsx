@@ -1,8 +1,8 @@
-import { redirectIfGuest } from '@/lib/auth/guard/auth/actions/redirectIfGuest';
 import { redirectToDefaultLocale } from '@/lib/auth/guard/auth/actions/redirectToDefaultLocale';
+import { validateUser } from '@/lib/auth/guard/auth/actions/validateUser';
 
 export default async function Init() {
-  await redirectIfGuest();
+  await validateUser();
   await redirectToDefaultLocale();
 
   return null;

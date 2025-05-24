@@ -345,5 +345,52 @@
   "loader": {
     "message": "Жүктелуде, күте тұрыңыз. Бас тарту үшін түртіңіз",
     "error": "Жүктеу сәтсіз аяқталды..."
+  },
+  "subscription": {
+    "title": "Жазылу",
+    "shop_label": "Дүкен",
+    "id_label": "ID (жеке шот)",
+    "pay_for_subscription": "Жазылымды төлеңіз",
+    "last_payment": "Соңғы төлем",
+    "via_label": "арқылы",
+    "sub_for_1_month_label": "1 айға ұзарту арқылы",
+    "manual_payment_label": "Төлем жасау үшін бізбен байланысыңыз",
+    "paid_until": "Төленгенге дейін",
+    "days_remaining": "{days} күн қалды",
+    "transactions": {
+      "sorting": {
+        "by_date": "Күні бойынша",
+        "by_amount": "Сома бойынша"
+      }
+    }
+  },
+  "expenses": {
+    "dialog": {
+      "title": "Шығын қосу"
+    },
+    "summary": {
+      "today_label": "Бүгінгі жалпы шығын:",
+      "yesterday_label": "Шығындар <br /> кешегі күнге:",
+      "tomorrow_label": "Шығындар <br /> ертеңге:"
+    },
+    "form": {
+      "label_type": "Түрі",
+      "label_type_placeholder": "Түрін таңдаңыз немесе енгізіңіз",
+      "label_amount": "Сомасы",
+      "label_date": "Күні",
+      "cancel": "Бас тарту",
+      "submit": "Сақтау"
+    }
+  },
+  "cash_desk": {
+    "form": {
+      "create_title": "Жазбаны қосу",
+      "form_label_amount": "Сома",
+      "form_label_from": "Тапсырыс берушінің аты",
+      "form_label_bank_name": "Банк атауы",
+      "form_label_description": "Сипаттама",
+      "save_caption": "Қосу",
+      "cancel_caption": "Бас тарту"
+    }
   }
 }

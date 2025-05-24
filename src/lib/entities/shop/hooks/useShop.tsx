@@ -7,6 +7,12 @@ import {
 import { useProfile } from '@/lib/entities/users/hooks/useUser';
 import { useQueryById } from '@/lib/supabase/useQueryById';
 
+export const useShopID = () => {
+  const { data: profile } = useProfile();
+
+  return profile?.shop_id || null;
+};
+
 export const useShop = () => {
   const { data: profile } = useProfile();
 

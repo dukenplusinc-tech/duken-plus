@@ -3,12 +3,12 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { redirectIfGuest } from '@/lib/auth/guard/auth/actions/redirectIfGuest';
+import { validateUser } from '@/lib/auth/guard/auth/actions/validateUser';
 import { SecurityPayload } from '@/lib/entities/users/schema';
 import { createClient } from '@/lib/supabase/server';
 
 export async function updateSecuritySettings(payload: SecurityPayload) {
-  await redirectIfGuest();
+  await validateUser();
 
   const supabase = createClient();
 

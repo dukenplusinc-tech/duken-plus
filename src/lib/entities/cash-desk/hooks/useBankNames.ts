@@ -6,7 +6,10 @@ import { useQuery } from '@/lib/supabase/query';
 export const useBankNames = () => {
   const { data, error, isLoading, refresh } = useQuery<BankName[]>(
     'bank_names_view',
-    'bank_name'
+    'bank_name',
+    {
+      sort: [],
+    }
   );
 
   return {

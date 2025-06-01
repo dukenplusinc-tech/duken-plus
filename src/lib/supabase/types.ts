@@ -618,6 +618,22 @@ export type Database = {
       }
     }
     Views: {
+      bank_names_view: {
+        Row: {
+          bank_name: string | null
+        }
+        Relationships: []
+      }
+      cash_register_ui_view: {
+        Row: {
+          bank_total: number | null
+          banks: Json | null
+          cash_total: number | null
+          shop_id: string | null
+          total_amount: number | null
+        }
+        Relationships: []
+      }
       debtor_statistics: {
         Row: {
           overdue_debtors: number | null

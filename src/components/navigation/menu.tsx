@@ -17,17 +17,15 @@ import { location } from 'ionicons/icons';
 import { useTranslations } from 'next-intl';
 
 import { useEmployeeMode } from '@/lib/entities/employees/context';
-import { useExitEmployeeMode } from '@/lib/entities/employees/hooks/useExitEmployeeMode';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
+import { UserSwitcher } from '@/lib/entities/users/containers/user-switcher';
 import { useHeaderMenu } from '@/lib/navigation/hooks/menu';
-import { Button } from '@/components/ui/button';
 
 const MenuList: FC = () => {
   const t = useTranslations('menu');
 
   const menuItems = useHeaderMenu();
   const employeeMode = useEmployeeMode();
-  const handleExitEmployeeMode = useExitEmployeeMode();
 
   if (!menuItems?.length || employeeMode.isLoading) {
     return (
@@ -39,20 +37,7 @@ const MenuList: FC = () => {
 
   return (
     <>
-      {employeeMode.isEmployee && (
-        <div>
-          <div className="my-5 flex justify-center">
-            <span className="text-2xl font-bold">
-              {employeeMode.session?.full_name || '---'}
-            </span>
-          </div>
-          <div className="my-5 flex justify-center">
-            <Button onClick={handleExitEmployeeMode}>
-              {t('exit_cashier_mode')}
-            </Button>
-          </div>
-        </div>
-      )}
+      <UserSwitcher />
 
       <IonList>
         {menuItems.map((menuItem, idx) => (

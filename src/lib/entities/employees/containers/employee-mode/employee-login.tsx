@@ -4,15 +4,17 @@ import { FC, PropsWithChildren, useState } from 'react';
 
 import { enableEmployeeMode } from '@/lib/entities/employees/actions/enableEmployeeMode';
 import { useEmployeeCtx } from '@/lib/entities/employees/context';
-import { Card } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 
 import { BackButton } from './BackButton';
 import { EmployeeSelect } from './EmployeeSelect';
 import { Header } from './Header';
 import { PinSection } from './PinSection';
+import type { EmployeeModeProps } from './types';
 
-export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
+export const EmployeeModeLogin: FC<PropsWithChildren<EmployeeModeProps>> = ({
+  onSuccess,
+}) => {
   const sessionManager = useEmployeeCtx();
 
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>('');
@@ -55,6 +57,10 @@ export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
         sessionToken: session.session_token,
         full_name: session.full_name || '---',
       });
+
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -69,7 +75,7 @@ export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
 
   return (
     <div className="h-full flex items-center justify-center">
-      <Card className="w-full max-w-md p-6 space-y-8 relative">
+      <div className="w-full max-w-md p-6 space-y-8 relative">
         {stage === 'enter-pin' && <BackButton onClick={handleBack} />}
         <Header stage={stage} selectedEmployeeId={selectedEmployeeId} />
         {stage === 'select-user' ? (
@@ -105,7 +111,7 @@ export const EmployeeModeLogin: FC<PropsWithChildren> = () => {
             isLoading={isLoading}
           />
         )}
-      </Card>
+      </div>
     </div>
   );
 };

@@ -1,13 +1,14 @@
 'use client';
 
-import { FC, PropsWithChildren } from 'react';
+import { FC } from 'react';
 import { Loader2 as Loader } from 'lucide-react';
 
 import { useEmployeeCtx } from '@/lib/entities/employees/context';
 
 import { EmployeeModeLogin } from './employee-login';
+import type { EmployeeModeProps } from './types';
 
-export const EmployeeModeGuard: FC<PropsWithChildren> = ({ children }) => {
+export const EmployeeMode: FC<EmployeeModeProps> = ({ onSuccess }) => {
   const sessionManager = useEmployeeCtx();
 
   if (sessionManager.isLoading) {
@@ -18,9 +19,5 @@ export const EmployeeModeGuard: FC<PropsWithChildren> = ({ children }) => {
     );
   }
 
-  if (sessionManager.session?.sessionToken) {
-    return children;
-  }
-
-  return <EmployeeModeLogin />;
+  return <EmployeeModeLogin onSuccess={onSuccess} />;
 };

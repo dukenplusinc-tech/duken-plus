@@ -48,6 +48,7 @@
     "label_employees": "Employees",
     "label_users": "Users",
     "label_settings": "Settings",
+    "enter_cashier_mode": "Enter cashier mode",
     "exit_cashier_mode": "Exit cashier mode"
   },
   "dialog": {

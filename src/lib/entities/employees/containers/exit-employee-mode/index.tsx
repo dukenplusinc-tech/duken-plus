@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 
 import { isValidAdminPin } from '@/lib/entities/employees/actions/isValidAdminPin';
 import { PinSection } from '@/lib/entities/employees/containers/employee-mode/PinSection';
+import { EmployeeModeProps } from '@/lib/entities/employees/containers/employee-mode/types';
 import { useEmployeeCtx } from '@/lib/entities/employees/context';
 import * as fromUrl from '@/lib/url/generator';
 import { toast } from '@/components/ui/use-toast';
 
-export const ExitEmployeeMode: FC = () => {
+export const ExitEmployeeMode: FC<EmployeeModeProps> = ({ onSuccess }) => {
   const router = useRouter();
   const ctx = useEmployeeCtx();
 
@@ -56,7 +57,11 @@ export const ExitEmployeeMode: FC = () => {
 
       ctx.clearSession();
 
-      await router.push(fromUrl.toHome());
+      if (onSuccess) {
+        onSuccess();
+      }
+
+      router.push(fromUrl.toHome());
     } catch (error) {
       toast({
         variant: 'destructive',

@@ -48,6 +48,7 @@
     "label_employees": "Сотрудники",
     "label_users": "Пользователи",
     "label_settings": "Настройки",
+    "enter_cashier_mode": "В режим кассира",
     "exit_cashier_mode": "Выйти из режима кассира"
   },
   "dialog": {

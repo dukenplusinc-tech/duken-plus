@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 
-import { EmployeeModeGuard } from '@/lib/entities/employees/containers/employee-mode';
-
 import CashDesk from './cash-desk';
 
 export const metadata: Metadata = {
@@ -10,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default async function CashDeskPage() {
-  return (
-    <EmployeeModeGuard>
-      <CashDesk />
-    </EmployeeModeGuard>
-  );
+  return <CashDesk />;
 }

@@ -78,18 +78,20 @@ export default function CashRegisterPage() {
           <CardContent className="p-4">
             <h3 className="font-medium mb-2">По банкам:</h3>
             <div className="space-y-2">
-              {stats.data?.banks?.map((bank) => (
-                <div
-                  key={bank.bank_name}
-                  className="flex justify-between items-center"
-                >
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                    <span>{bank.bank_name}</span>
+              {stats.data?.banks
+                ?.filter(({ bank_name }) => bank_name)
+                ?.map((bank) => (
+                  <div
+                    key={bank.bank_name}
+                    className="flex justify-between items-center"
+                  >
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                      <span>{bank.bank_name}</span>
+                    </div>
+                    <Money className="font-medium">{bank.amount}</Money>
                   </div>
-                  <Money className="font-medium">{bank.amount}</Money>
-                </div>
-              ))}
+                ))}
             </div>
           </CardContent>
         </Card>

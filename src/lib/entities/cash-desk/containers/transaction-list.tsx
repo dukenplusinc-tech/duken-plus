@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 
 import type { CashRegister as Transaction } from '@/lib/entities/cash-desk/schema';
+import { Badge } from '@/components/ui/badge';
 import { Money } from '@/components/numbers/money';
 
 interface TransactionListProps {
@@ -51,6 +52,11 @@ export default function TransactionList({
                   </div>
                 </div>
                 <div className="flex items-center">
+                  {transaction.bank_name && (
+                    <Badge variant="secondary" className="mr-2">
+                      {transaction.bank_name}
+                    </Badge>
+                  )}
                   <Money className="font-bold mr-2">{transaction.amount}</Money>
                   {/*<Button variant="ghost" size="icon" className="h-8 w-8">*/}
                   {/*  <MoreVertical className="h-4 w-4" />*/}

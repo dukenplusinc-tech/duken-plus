@@ -177,7 +177,7 @@ export function Autocomplete({
   // Mobile full-screen dialog
   if (isMobile) {
     return (
-      <div className={cn('space-y-2', className)}>
+      <div className={cn('space-y-2 w-full', className)}>
         {label && (
           <label className="text-sm font-medium text-gray-700">{label}</label>
         )}

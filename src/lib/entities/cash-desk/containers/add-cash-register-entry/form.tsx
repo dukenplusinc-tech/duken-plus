@@ -92,7 +92,9 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
                 options={banks}
                 value={form.watch('bank_name') || ''}
                 disabled={isProcessing}
-                onValueChange={(value) => form.setValue('bank_name', value!)}
+                onValueChange={(value) =>
+                  form.setValue('bank_name', value!?.toLowerCase())
+                }
                 placeholder={t('form_label_bank_name')}
                 searchPlaceholder="Search banks..."
                 emptyMessage="No banks found."

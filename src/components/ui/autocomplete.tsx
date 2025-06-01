@@ -2,7 +2,7 @@
 
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { Check, ChevronDown, X } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -14,12 +14,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
   Popover,
   PopoverContent,
@@ -47,6 +42,7 @@ function useIsMobile() {
 export interface AutocompleteOption {
   value: string;
   label: string;
+
   [key: string]: any;
 }
 
@@ -183,6 +179,7 @@ export function Autocomplete({
         )}
         <div className="relative">
           <Button
+            type="button"
             variant="outline"
             onClick={() => setOpen(true)}
             className="w-full justify-between h-12 bg-white border border-gray-300 hover:border-gray-400 font-normal"
@@ -212,6 +209,7 @@ export function Autocomplete({
                         <p className="text-gray-500 mb-4">{emptyMessage}</p>
                         {allowCustomValue && searchValue && (
                           <Button
+                            type="button"
                             variant="outline"
                             className="w-full"
                             onClick={() => handleSelect(searchValue)}
@@ -244,6 +242,7 @@ export function Autocomplete({
 
                 <div className="p-4 border-t">
                   <Button
+                    type="button"
                     variant="outline"
                     className="w-full h-12"
                     onClick={() => setOpen(false)}
@@ -271,6 +270,7 @@ export function Autocomplete({
         <Popover open={open} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <Button
+              type="button"
               variant="outline"
               role="combobox"
               aria-expanded={open}
@@ -305,6 +305,7 @@ export function Autocomplete({
                     </p>
                     {allowCustomValue && searchValue && (
                       <Button
+                        type="button"
                         variant="ghost"
                         className="w-full mt-2 justify-start"
                         onClick={() => handleSelect(searchValue)}

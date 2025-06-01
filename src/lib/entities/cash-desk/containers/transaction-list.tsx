@@ -1,41 +1,27 @@
-import { MoreVertical } from 'lucide-react';
+import { format } from 'date-fns';
 
-import { Button } from '@/components/ui/button';
-
-interface Transaction {
-  id: number;
-  date: string;
-  type: string;
-  amount: number;
-  from: string;
-}
+import type { CashRegister as Transaction } from '@/lib/entities/cash-desk/schema';
+import { Money } from '@/components/numbers/money';
 
 interface TransactionListProps {
   transactions: Transaction[];
-  filter: 'all' | 'cash' | 'non-cash';
 }
 
 export default function TransactionList({
   transactions,
-  filter,
 }: TransactionListProps) {
-  // Filter transactions based on the selected tab
-  const filteredTransactions = transactions.filter((transaction) => {
-    if (filter === 'all') return true;
-    if (filter === 'cash') return transaction.type === 'Cash';
-    if (filter === 'non-cash') return transaction.type !== 'Cash';
-
-    return true;
-  });
-
   // Group transactions by date
   const groupedTransactions: Record<string, Transaction[]> = {};
 
-  filteredTransactions.forEach((transaction) => {
-    if (!groupedTransactions[transaction.date]) {
-      groupedTransactions[transaction.date] = [];
+  transactions.forEach((transaction) => {
+    const date = transaction.date
+      ? format(new Date(transaction.date), 'dd.MM.yyyy')
+      : '---';
+
+    if (!groupedTransactions[date]) {
+      groupedTransactions[date] = [];
     }
-    groupedTransactions[transaction.date].push(transaction);
+    groupedTransactions[date].push(transaction);
   });
 
   return (
@@ -50,26 +36,25 @@ export default function TransactionList({
               <div
                 key={transaction.id}
                 className={`flex justify-between items-center p-3 rounded-md ${
-                  transaction.type === 'Cash'
+                  transaction.type === 'cash'
                     ? 'bg-primary/10'
-                    : transaction.type === 'Kaspi'
+                    : transaction.type === 'bank_transfer'
                       ? 'bg-green-100'
                       : 'bg-blue-100'
                 }`}
               >
                 <div>
-                  <div className="font-medium">{transaction.type}</div>
+                  <div className="font-medium">{transaction.from}</div>
                   <div className="text-sm text-muted-foreground">
-                    {transaction.from}
+                    Added by:{' '}
+                    <span className="font-bold">{transaction.added_by}</span>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <span className="font-bold mr-2">
-                    {transaction.amount.toLocaleString()} тг
-                  </span>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
+                  <Money className="font-bold mr-2">{transaction.amount}</Money>
+                  {/*<Button variant="ghost" size="icon" className="h-8 w-8">*/}
+                  {/*  <MoreVertical className="h-4 w-4" />*/}
+                  {/*</Button>*/}
                 </div>
               </div>
             ))}
@@ -77,7 +62,7 @@ export default function TransactionList({
         </div>
       ))}
 
-      {filteredTransactions.length === 0 && (
+      {transactions.length === 0 && (
         <div className="text-center py-8 text-muted-foreground">
           Нет транзакций
         </div>

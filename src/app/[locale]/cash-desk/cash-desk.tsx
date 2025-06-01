@@ -4,50 +4,16 @@ import { CalendarRange, Plus } from 'lucide-react';
 
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { useAddCashRegisterEntryForm } from '@/lib/entities/cash-desk/containers/add-cash-register-entry';
-import TransactionList from '@/lib/entities/cash-desk/containers/transaction-list';
+import { CashEntriesTabs } from '@/lib/entities/cash-desk/containers/cash-entries-tabs';
 import { useCashDeskStat } from '@/lib/entities/cash-desk/hooks/useCashDeskStat';
 import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Money } from '@/components/numbers/money';
 
 export default function CashRegisterPage() {
   const stats = useCashDeskStat();
   const handleAddTransaction = useAddCashRegisterEntryForm();
-
-  // Sample data for demonstration
-  const transactions = [
-    {
-      id: 1,
-      date: '19.04.2025',
-      type: 'Kaspi',
-      amount: 15000,
-      from: 'Алексей',
-    },
-    { id: 2, date: '19.04.2025', type: 'Halyk', amount: 8500, from: 'Мария' },
-    {
-      id: 3,
-      date: '19.04.2025',
-      type: 'Cash',
-      amount: 25000,
-      from: 'Закрытие смены',
-    },
-    {
-      id: 4,
-      date: '18.04.2025',
-      type: 'Kaspi',
-      amount: 12000,
-      from: 'Дмитрий',
-    },
-    {
-      id: 5,
-      date: '18.04.2025',
-      type: 'Cash',
-      amount: 18000,
-      from: 'Закрытие смены',
-    },
-  ];
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -130,7 +96,7 @@ export default function CashRegisterPage() {
 
         {/* Search and Filters */}
         <div className="flex gap-2 mb-4">
-          <SearchBar />
+          <SearchBar searchByField="from" />
 
           <Button
             variant="outline"
@@ -140,26 +106,7 @@ export default function CashRegisterPage() {
           </Button>
         </div>
 
-        {/* Tabs and Transaction List */}
-        <Tabs defaultValue="all" className="mb-4">
-          <TabsList className="grid grid-cols-3 mb-2">
-            <TabsTrigger value="all">Все</TabsTrigger>
-            <TabsTrigger value="cash">Наличные</TabsTrigger>
-            <TabsTrigger value="non-cash">Безнал</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="all">
-            <TransactionList transactions={transactions} filter="all" />
-          </TabsContent>
-
-          <TabsContent value="cash">
-            <TransactionList transactions={transactions} filter="cash" />
-          </TabsContent>
-
-          <TabsContent value="non-cash">
-            <TransactionList transactions={transactions} filter="non-cash" />
-          </TabsContent>
-        </Tabs>
+        <CashEntriesTabs />
       </div>
     </main>
   );

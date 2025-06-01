@@ -96,7 +96,7 @@ export default function CashRegisterPage() {
 
         {/* Search and Filters */}
         <div className="flex gap-2 mb-4">
-          <SearchBar searchByField="from" />
+          <SearchBar searchByField="from" sortBy="date" />
 
           <Button
             variant="outline"

@@ -1,11 +1,9 @@
 import type { ActiveFilter } from '@/lib/composite/filters/context';
-import type { Builder } from '@/lib/supabase/client';
-
-export function withFilters<T extends Builder>(
-  query: T,
+export function withFilters(
+  query: any,
   filters: ActiveFilter[] | undefined | null
 ) {
-  let builder = query;
+  let builder = query as any;
 
   if (filters) {
     filters.forEach(({ key, ...apply }) => {

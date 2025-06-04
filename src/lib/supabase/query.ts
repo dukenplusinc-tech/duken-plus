@@ -67,7 +67,7 @@ export function useQuery<T extends Array<unknown>>(
   }, [client, table, columns, filters, customSort, sorting, limit]);
 
   // Use SWR to fetch the data
-  const { data, error, count, mutate, isValidating } = useQuerySwr(query);
+  const { data, error, count, mutate, isValidating } = useQuerySwr(query as any);
 
   // Validate data with schema, if provided
   const result = useMemo(() => {

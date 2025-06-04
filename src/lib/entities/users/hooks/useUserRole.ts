@@ -4,9 +4,14 @@ import { useEmployeeMode } from '@/lib/entities/employees/context';
 import { RoleScope } from '@/lib/entities/roles/types';
 import { useUser } from '@/lib/entities/users/hooks/useUser';
 import type { User } from '@/lib/entities/users/schema';
+import type { Role } from '@/lib/entities/roles/schema';
 import { createClient } from '@/lib/supabase/client';
 
 type UserRole = User['role'];
+
+interface QueryResult {
+  role: Role;
+}
 
 export const useUserRole = (): UserRole | null => {
   const user = useUser()!;
@@ -27,7 +32,9 @@ export const useUserRole = (): UserRole | null => {
     .eq('id', user?.id)
     .single();
 
-  const { data } = useQuery(user?.id ? promise : null);
+  const { data } = useQuery<QueryResult>(
+    user?.id ? (promise as any) : null
+  );
   const employeeMode = useEmployeeMode();
 
   if (employeeMode.isEmployee) {

@@ -34,7 +34,7 @@ export function useQueryById<T extends unknown>(
   };
 
   const { count, isLoading, data, error, mutate, isValidating } = useQuerySwr(
-    id ? buildPromise() : null
+    id ? (buildPromise() as any) : null
   );
 
   return useMemo(() => {

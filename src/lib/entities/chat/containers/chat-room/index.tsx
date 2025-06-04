@@ -3,7 +3,7 @@
 import type React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { IonButton } from '@ionic/react';
-import { ArrowUp, Camera, MoreVertical } from 'lucide-react';
+import { ArrowUp, Camera, MoreVertical, X } from 'lucide-react';
 
 import { useChatMessages } from '@/lib/entities/chat/hooks/useChatMessages';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
@@ -16,11 +16,16 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
+import { ChatImagePicker } from '@/lib/entities/chat/components/chat-image-picker';
+import { useImageViewer } from '@/lib/composite/image/viewer/context';
 
 export function ChatRoom() {
   const { messages, sendMessage } = useChatMessages();
   const { data: shop } = useShop();
   const [newMessage, setNewMessage] = useState('');
+  const [image, setImage] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const imageViewer = useImageViewer();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -42,10 +47,11 @@ export function ChatRoom() {
   }, [newMessage]);
 
   const handleSendMessage = async () => {
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() && !image) return;
 
-    await sendMessage(newMessage);
+    await sendMessage(newMessage, image || undefined);
     setNewMessage('');
+    setImage(null);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -53,6 +59,11 @@ export function ChatRoom() {
       e.preventDefault();
       handleSendMessage();
     }
+  };
+
+  const handleImageSelected = (dataUrl: string) => {
+    setImage(dataUrl);
+    setPickerOpen(false);
   };
 
   return (
@@ -156,7 +167,8 @@ export function ChatRoom() {
                       <img
                         src={message.image || '/placeholder.svg'}
                         alt="Message attachment"
-                        className="max-w-full rounded-md border border-gray-200"
+                        className="max-w-xs max-h-60 cursor-pointer rounded-md border border-gray-200"
+                        onClick={() => imageViewer.openViewer(message.image!)}
                       />
                     </div>
                   )}
@@ -176,6 +188,24 @@ export function ChatRoom() {
         <CardContent className="p-3">
           <div className="flex items-end">
             <div className="flex-1 relative">
+              {image && (
+                <div className="mb-2 relative max-w-[200px]">
+                  <img
+                    src={image}
+                    alt="preview"
+                    className="rounded-md border border-gray-200 max-h-32 cursor-pointer"
+                    onClick={() => imageViewer.openViewer(image)}
+                  />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute -top-2 -right-2"
+                    onClick={() => setImage(null)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
               <Textarea
                 ref={textareaRef}
                 value={newMessage}
@@ -185,18 +215,25 @@ export function ChatRoom() {
                 className="resize-none min-h-[40px] max-h-[120px] pl-16 pr-24 border-2 border-gray-300 rounded-md"
               />
               <div className="absolute left-3 bottom-0 flex items-center h-full">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 p-0 rounded-full"
-                >
-                  <Camera className="h-6 w-6 text-gray-500" />
-                </Button>
+                <Popover open={pickerOpen} onOpenChange={setPickerOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-12 w-12 p-0 rounded-full"
+                    >
+                      <Camera className="h-6 w-6 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <ChatImagePicker onImage={handleImageSelected} />
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="absolute right-3 bottom-0 flex items-center h-full pointer-events-none">
                 <Button
                   onClick={handleSendMessage}
-                  disabled={!newMessage.trim()}
+                  disabled={!newMessage.trim() && !image}
                   className="h-8 px-3 py-1 bg-success hover:bg-success/90 text-white rounded-md pointer-events-auto flex items-center gap-1"
                 >
                   <span>Send</span>

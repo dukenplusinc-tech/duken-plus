@@ -129,7 +129,7 @@ export const useChatMessages = () => {
   const userId = useUserId();
 
   const sendMessage = useCallback(
-    async (content: string) => {
+    async (content: string, image?: string) => {
       if (!shop?.id || !shop?.city) return;
 
       const { data, error } = await supabase
@@ -138,6 +138,7 @@ export const useChatMessages = () => {
           content,
           shop_id: shop.id,
           user_id: userId,
+          image: image || null,
         })
         .select('*')
         .single();

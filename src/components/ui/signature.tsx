@@ -1,12 +1,14 @@
 import React, { forwardRef } from 'react';
-import SignatureCanvas from 'react-signature-canvas';
+import type SignatureCanvas from 'react-signature-canvas';
+
+const ReactSignatureCanvas = require('react-signature-canvas'); // <-- CJS require
 
 export type SignaturePadType = SignatureCanvas;
 
-export const SignaturePad = forwardRef<SignatureCanvas>((props, ref) => {
+export const SignaturePad = forwardRef<SignatureCanvas>((props: any, ref) => {
   return (
     <div className="border border-black rounded-lg bg-white">
-      <SignatureCanvas
+      <ReactSignatureCanvas
         {...props}
         ref={ref}
         canvasProps={{

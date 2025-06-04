@@ -25,6 +25,7 @@ export interface ChatMessage {
   user_id: string | null;
   shop_id: string;
   image?: string | null;
+  reply_to: string | null;
   shop_title?: string;
 }
 
@@ -167,7 +168,7 @@ export const useChatMessages = () => {
   const userId = useUserId();
 
   const sendMessage = useCallback(
-    async (content: string, image?: string) => {
+    async (content: string, image?: string, replyTo?: string | null) => {
       if (!shop?.id || !shop?.city) return;
 
       const { data, error } = await supabase
@@ -177,6 +178,7 @@ export const useChatMessages = () => {
           shop_id: shop.id,
           user_id: userId,
           image: image || null,
+          reply_to: replyTo || null,
         })
         .select('*')
         .single();
@@ -281,6 +283,19 @@ export const useChatMessages = () => {
     [supabase]
   );
 
+  const reportMessage = useCallback(
+    async (id: string) => {
+      const { error } = await supabase
+        .from('chat_reports')
+        .insert({ chat_message_id: id });
+
+      if (error) {
+        console.error('Failed to report message', error);
+      }
+    },
+    [supabase]
+  );
+
   return {
     messages,
     sendMessage,
@@ -288,6 +303,7 @@ export const useChatMessages = () => {
     hasMore,
     editMessage,
     deleteMessage,
+    reportMessage,
     reload: fetchMessages,
   };
 };

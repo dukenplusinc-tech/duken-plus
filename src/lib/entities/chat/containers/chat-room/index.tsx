@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 
 import { useImageViewer } from '@/lib/composite/image/viewer/context';
 import { ChatImagePicker } from '@/lib/entities/chat/components/chat-image-picker';
-import { useChatMessages } from '@/lib/entities/chat/hooks/useChatMessages';
+import { useChatMessages, type ChatMessage } from '@/lib/entities/chat/hooks/useChatMessages';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/components/ui/use-toast';
 
 export function ChatRoom() {
   const t = useTranslations('chat');
@@ -29,12 +30,14 @@ export function ChatRoom() {
     hasMore,
     editMessage,
     deleteMessage,
+    reportMessage,
   } = useChatMessages();
   const { data: shop } = useShop();
   const [newMessage, setNewMessage] = useState('');
   const [image, setImage] = useState<string | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
+  const [replyTo, setReplyTo] = useState<ChatMessage | null>(null);
   const imageViewer = useImageViewer();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -87,10 +90,11 @@ export function ChatRoom() {
       await editMessage(editing, newMessage, image);
       setEditing(null);
     } else {
-      await sendMessage(newMessage, image || undefined);
+      await sendMessage(newMessage, image || undefined, replyTo?.id ?? null);
     }
     setNewMessage('');
     setImage(null);
+    setReplyTo(null);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -141,6 +145,10 @@ export function ChatRoom() {
                 minute: '2-digit',
               })
             : '';
+
+          const replyMsg = message.reply_to
+            ? messages.find((m) => m.id === message.reply_to)
+            : null;
 
           return (
             <div
@@ -196,12 +204,23 @@ export function ChatRoom() {
                             <Button
                               variant="ghost"
                               className="justify-start font-medium h-10 px-4 hover:bg-green-100"
+                              onClick={() => {
+                                setReplyTo(message);
+                                textareaRef.current?.focus();
+                              }}
                             >
                               {t('reply')}
                             </Button>
                             <Button
                               variant="ghost"
                               className="justify-start font-medium h-10 px-4 hover:bg-red-100"
+                              onClick={() => {
+                                reportMessage(message.id).then(() =>
+                                  toast({
+                                    description: t('report_confirmation'),
+                                  })
+                                );
+                              }}
                             >
                               {t('report')}
                             </Button>
@@ -213,6 +232,16 @@ export function ChatRoom() {
                 </div>
 
                 <CardContent className="p-3">
+                  {replyMsg && (
+                    <div className="border-l-2 pl-2 mb-1 text-xs text-gray-500">
+                      <strong>
+                        {replyMsg.shop_id === shop?.id
+                          ? t('you')
+                          : replyMsg.shop_title || shop?.title || '---'}
+                      </strong>
+                      : {replyMsg.content}
+                    </div>
+                  )}
                   <p className="whitespace-pre-wrap">{message.content}</p>
                   {message.image && (
                     <div className="mt-2">
@@ -253,6 +282,19 @@ export function ChatRoom() {
                       setEditing(null);
                       setNewMessage('');
                     }}
+                  >
+                    {t('cancel')}
+                  </Button>
+                </div>
+              )}
+              {replyTo && (
+                <div className="text-sm text-gray-500 mb-1 flex justify-between">
+                  <span>{t('replying')}</span>
+                  <span className="truncate ml-2 text-xs">{replyTo.content}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setReplyTo(null)}
                   >
                     {t('cancel')}
                   </Button>

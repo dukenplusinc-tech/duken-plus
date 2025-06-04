@@ -414,6 +414,8 @@
     "delete_for_all": "Delete for all",
     "reply": "Reply",
     "report": "Report",
+    "replying": "Replying",
+    "report_confirmation": "Message reported to administrator",
     "edited": "edited",
     "editing": "Editing message",
     "cancel": "Cancel",

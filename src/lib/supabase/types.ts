@@ -55,6 +55,7 @@ export type Database = {
           image: string | null;
           shop_id: string;
           user_id: string | null;
+          reply_to: string | null;
         };
         Insert: {
           content: string;
@@ -65,6 +66,7 @@ export type Database = {
           image?: string | null;
           shop_id: string;
           user_id?: string | null;
+          reply_to?: string | null;
         };
         Update: {
           content?: string;
@@ -75,6 +77,7 @@ export type Database = {
           image?: string | null;
           shop_id?: string;
           user_id?: string | null;
+          reply_to?: string | null;
         };
         Relationships: [
           {
@@ -82,6 +85,35 @@ export type Database = {
             columns: ['shop_id'];
             isOneToOne: false;
             referencedRelation: 'shops';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      chat_reports: {
+        Row: {
+          id: string;
+          chat_message_id: string;
+          created_at: string;
+          user_id: string | null;
+        };
+        Insert: {
+          id?: string;
+          chat_message_id: string;
+          created_at?: string;
+          user_id?: string | null;
+        };
+        Update: {
+          id?: string;
+          chat_message_id?: string;
+          created_at?: string;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'chat_reports_chat_message_id_fkey';
+            columns: ['chat_message_id'];
+            isOneToOne: false;
+            referencedRelation: 'chat_messages';
             referencedColumns: ['id'];
           },
         ];

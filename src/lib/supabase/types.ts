@@ -190,13 +190,6 @@ export type Database = {
             foreignKeyName: "debtor_transactions_debtor_id_fkey"
             columns: ["debtor_id"]
             isOneToOne: false
-            referencedRelation: "blacklisted_debtors_by_city"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "debtor_transactions_debtor_id_fkey"
-            columns: ["debtor_id"]
-            isOneToOne: false
             referencedRelation: "debtors"
             referencedColumns: ["id"]
           },
@@ -666,26 +659,6 @@ export type Database = {
       bank_names_view: {
         Row: {
           bank_name: string | null
-        }
-        Relationships: []
-      }
-      blacklisted_debtors_by_city: {
-        Row: {
-          additional_info: string | null
-          address: string | null
-          balance: number | null
-          blacklist: boolean | null
-          city: string | null
-          created_at: string | null
-          full_name: string | null
-          id: string | null
-          iin: string | null
-          is_overdue: boolean | null
-          max_credit_amount: number | null
-          phone: string | null
-          shop_id: string | null
-          updated_at: string | null
-          work_place: string | null
         }
         Relationships: []
       }

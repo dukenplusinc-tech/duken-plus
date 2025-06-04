@@ -404,5 +404,21 @@
       "save_caption": "Add",
       "cancel_caption": "Cancel"
     }
+  },
+  "chat": {
+    "page_title": "Chat",
+    "store": "Store",
+    "send": "Send",
+    "choose": "Choose",
+    "edit": "Edit",
+    "delete_for_all": "Delete for all",
+    "reply": "Reply",
+    "report": "Report",
+    "edited": "edited",
+    "editing": "Editing message",
+    "cancel": "Cancel",
+    "message_placeholder": "Message...",
+    "today": "today",
+    "you": "You"
   }
 }

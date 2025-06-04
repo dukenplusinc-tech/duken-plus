@@ -404,5 +404,21 @@
       "save_caption": "Добавить",
       "cancel_caption": "Отмена"
     }
+  },
+  "chat": {
+    "page_title": "Чат",
+    "store": "Магазин",
+    "send": "Отправить",
+    "choose": "Выбрать",
+    "edit": "Изменить",
+    "delete_for_all": "Удалить у всех",
+    "reply": "Ответить",
+    "report": "Пожаловаться",
+    "edited": "изменено",
+    "editing": "Редактирование сообщения",
+    "cancel": "Отмена",
+    "message_placeholder": "Сообщение...",
+    "today": "сегодня",
+    "you": "Вы"
   }
 }

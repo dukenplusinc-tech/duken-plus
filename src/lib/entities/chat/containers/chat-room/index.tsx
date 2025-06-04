@@ -1,10 +1,13 @@
 'use client';
 
 import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { IonButton } from '@ionic/react';
 import { ArrowUp, Camera, MoreVertical, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
+import { useImageViewer } from '@/lib/composite/image/viewer/context';
+import { ChatImagePicker } from '@/lib/entities/chat/components/chat-image-picker';
 import { useChatMessages } from '@/lib/entities/chat/hooks/useChatMessages';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { Button } from '@/components/ui/button';
@@ -16,25 +19,57 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
-import { ChatImagePicker } from '@/lib/entities/chat/components/chat-image-picker';
-import { useImageViewer } from '@/lib/composite/image/viewer/context';
 
 export function ChatRoom() {
-  const { messages, sendMessage } = useChatMessages();
+  const t = useTranslations('chat');
+  const {
+    messages,
+    sendMessage,
+    loadOlder,
+    hasMore,
+    editMessage,
+    deleteMessage,
+  } = useChatMessages();
   const { data: shop } = useShop();
   const [newMessage, setNewMessage] = useState('');
   const [image, setImage] = useState<string | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [editing, setEditing] = useState<string | null>(null);
   const imageViewer = useImageViewer();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleScroll = useCallback(async () => {
+    const container = containerRef.current;
+    if (!container || container.scrollTop > 50 || !hasMore) return;
+    const prevHeight = container.scrollHeight;
+    await loadOlder();
+    requestAnimationFrame(() => {
+      if (container) {
+        const diff = container.scrollHeight - prevHeight;
+        container.scrollTop = diff <= 50 ? diff + 1 : diff;
+      }
+    });
+  }, [loadOlder, hasMore]);
+
+  const lastIdRef = useRef<string | null>(null);
+  const initialLoadedRef = useRef(false);
+
   useEffect(() => {
-    scrollToBottom();
+    const lastId = messages[messages.length - 1]?.id;
+    if (lastId && lastId !== lastIdRef.current) {
+      lastIdRef.current = lastId;
+      scrollToBottom();
+    }
+    if (!initialLoadedRef.current && messages.length) {
+      initialLoadedRef.current = true;
+      scrollToBottom();
+    }
   }, [messages]);
 
   // Auto-resize textarea based on content
@@ -48,8 +83,12 @@ export function ChatRoom() {
 
   const handleSendMessage = async () => {
     if (!newMessage.trim() && !image) return;
-
-    await sendMessage(newMessage, image || undefined);
+    if (editing) {
+      await editMessage(editing, newMessage, image);
+      setEditing(null);
+    } else {
+      await sendMessage(newMessage, image || undefined);
+    }
     setNewMessage('');
     setImage(null);
   };
@@ -70,16 +109,22 @@ export function ChatRoom() {
     <div className="flex flex-col h-full">
       <PageHeader
         className="mb-4"
-        right={<IonButton color="success">{shop?.title || 'STORE'}</IonButton>}
+        right={
+          <IonButton color="success">{shop?.title || t('store')}</IonButton>
+        }
       >
-        CHAT
+        {t('page_title')}
       </PageHeader>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto px-3">
+      <div
+        className="flex-1 overflow-y-auto px-3"
+        ref={containerRef}
+        onScroll={handleScroll}
+      >
         <div className="flex justify-center mb-4">
           <div className="bg-gray-300 text-gray-700 px-4 py-1 rounded-full text-sm">
-            сегодня
+            {t('today')}
           </div>
         </div>
 
@@ -87,7 +132,7 @@ export function ChatRoom() {
           const isOwn = message.shop_id === shop?.id;
 
           const sender = isOwn
-            ? 'Вы'
+            ? t('you')
             : message.shop_title || shop?.title || '---';
 
           const time = message.created_at
@@ -129,14 +174,21 @@ export function ChatRoom() {
                             <Button
                               variant="ghost"
                               className="justify-start font-medium h-10 px-4 hover:bg-green-100"
+                              onClick={() => {
+                                setNewMessage(message.content);
+                                setImage(message.image || null);
+                                setEditing(message.id);
+                                textareaRef.current?.focus();
+                              }}
                             >
-                              Изменить
+                              {t('edit')}
                             </Button>
                             <Button
                               variant="ghost"
                               className="justify-start h-10 font-medium px-4 hover:bg-red-100"
+                              onClick={() => deleteMessage(message.id)}
                             >
-                              Удалить у всех
+                              {t('delete_for_all')}
                             </Button>
                           </>
                         ) : (
@@ -145,13 +197,13 @@ export function ChatRoom() {
                               variant="ghost"
                               className="justify-start font-medium h-10 px-4 hover:bg-green-100"
                             >
-                              Ответить
+                              {t('reply')}
                             </Button>
                             <Button
                               variant="ghost"
                               className="justify-start font-medium h-10 px-4 hover:bg-red-100"
                             >
-                              Пожаловаться
+                              {t('report')}
                             </Button>
                           </>
                         )}
@@ -174,6 +226,9 @@ export function ChatRoom() {
                   )}
                   <div className="text-right mt-1 text-xs text-gray-500">
                     {time}
+                    {message.updated_at && (
+                      <span className="ml-1">({t('edited')})</span>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -188,6 +243,21 @@ export function ChatRoom() {
         <CardContent className="p-3">
           <div className="flex items-end">
             <div className="flex-1 relative">
+              {editing && (
+                <div className="text-sm text-gray-500 mb-1 flex justify-between">
+                  <span>{t('editing')}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setEditing(null);
+                      setNewMessage('');
+                    }}
+                  >
+                    {t('cancel')}
+                  </Button>
+                </div>
+              )}
               {image && (
                 <div className="mb-2 relative max-w-[200px]">
                   <img
@@ -206,12 +276,17 @@ export function ChatRoom() {
                   </Button>
                 </div>
               )}
+            </div>
+          </div>
+
+          <div className="flex items-end">
+            <div className="flex-1 relative">
               <Textarea
                 ref={textareaRef}
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Сообщение..."
+                placeholder={t('message_placeholder')}
                 className="resize-none min-h-[40px] max-h-[120px] pl-16 pr-24 border-2 border-gray-300 rounded-md"
               />
               <div className="absolute left-3 bottom-0 flex items-center h-full">
@@ -236,7 +311,7 @@ export function ChatRoom() {
                   disabled={!newMessage.trim() && !image}
                   className="h-8 px-3 py-1 bg-success hover:bg-success/90 text-white rounded-md pointer-events-auto flex items-center gap-1"
                 >
-                  <span>Send</span>
+                  <span>{t('send')}</span>
                   <ArrowUp className="h-4 w-4" />
                 </Button>
               </div>

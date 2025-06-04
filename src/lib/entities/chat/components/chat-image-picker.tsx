@@ -4,6 +4,7 @@ import { FC, useCallback } from 'react';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonButton, IonIcon } from '@ionic/react';
 import { cameraOutline, imagesOutline } from 'ionicons/icons';
+import { useTranslations } from 'next-intl';
 
 export interface ChatImagePickerProps {
   onImage?: (dataUrl: string) => void;
@@ -35,6 +36,7 @@ async function resizeDataUrl(
 }
 
 export const ChatImagePicker: FC<ChatImagePickerProps> = ({ onImage }) => {
+  const t = useTranslations('chat');
   const processImage = useCallback(
     async (dataUrl: string) => {
       const resized = await resizeDataUrl(dataUrl, 800, 800);
@@ -78,8 +80,13 @@ export const ChatImagePicker: FC<ChatImagePickerProps> = ({ onImage }) => {
       <IonButton color="success">
         <label className="m-0 text-white">
           <IonIcon slot="start" icon={imagesOutline} className="mr-1" />
-          Choose
-          <input type="file" accept="image/*" hidden onChange={handleFileChange} />
+          {t('choose')}
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={handleFileChange}
+          />
         </label>
       </IonButton>
       <IonButton color="success" onClick={takePhoto}>

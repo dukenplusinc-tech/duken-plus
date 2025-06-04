@@ -404,5 +404,21 @@
       "save_caption": "Қосу",
       "cancel_caption": "Бас тарту"
     }
+  },
+  "chat": {
+    "page_title": "Чат",
+    "store": "Дүкен",
+    "send": "Жіберу",
+    "choose": "Таңдау",
+    "edit": "Өзгерту",
+    "delete_for_all": "Барлығынан жою",
+    "reply": "Жауап беру",
+    "report": "Шағымдану",
+    "edited": "өзгертілген",
+    "editing": "Хабарламаны өңдеу",
+    "cancel": "Бас тарту",
+    "message_placeholder": "Хабарлама...",
+    "today": "бүгін",
+    "you": "Сіз"
   }
 }

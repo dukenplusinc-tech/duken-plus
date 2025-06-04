@@ -10,7 +10,13 @@ import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useFiltersCtx } from '@/lib/composite/filters/context'
 
-export const DateFilterButton: FC = () => {
+export interface DateFilterButtonProps {
+  disableFutureDates?: boolean
+}
+
+export const DateFilterButton: FC<DateFilterButtonProps> = ({
+  disableFutureDates = true,
+}) => {
   const { setFilters, removeFilter } = useFiltersCtx()
   const [range, setRange] = useState<DateRange>()
 
@@ -42,7 +48,12 @@ export const DateFilterButton: FC = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="end">
-        <Calendar mode="range" selected={range} onSelect={handleSelect} />
+        <Calendar
+          mode="range"
+          selected={range}
+          onSelect={handleSelect}
+          disabled={disableFutureDates ? { after: new Date() } : undefined}
+        />
       </PopoverContent>
     </Popover>
   )

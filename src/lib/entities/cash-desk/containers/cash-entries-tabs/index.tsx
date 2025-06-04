@@ -1,33 +1,58 @@
 'use client';
 
 import { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
-import TransactionList from '@/lib/entities/cash-desk/containers/transaction-list';
+import CashEntriesTabContent from '@/lib/entities/cash-desk/containers/cash-entries-tabs/tab-content';
 import { useCashDeskEntries } from '@/lib/entities/cash-desk/hooks/useCashDeskEntries';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const CashEntriesTabs: FC = () => {
-  const { data: all } = useCashDeskEntries();
-  const { data: cash } = useCashDeskEntries('cash');
-  const { data: bank } = useCashDeskEntries('bank_transfer');
+  const t = useTranslations('cash_desk.tabs');
+  const {
+    data: all,
+    isLoading: loadingAll,
+    sentinelRef: sentinelAll,
+  } = useCashDeskEntries();
+  const {
+    data: cash,
+    isLoading: loadingCash,
+    sentinelRef: sentinelCash,
+  } = useCashDeskEntries('cash');
+  const {
+    data: bank,
+    isLoading: loadingBank,
+    sentinelRef: sentinelBank,
+  } = useCashDeskEntries('bank_transfer');
 
   return (
     <Tabs defaultValue="all" className="mb-4">
       <TabsList className="grid grid-cols-3 mb-2">
-        <TabsTrigger value="all">Все</TabsTrigger>
-        <TabsTrigger value="cash">Наличные</TabsTrigger>
-        <TabsTrigger value="bank">Безнал</TabsTrigger>
+        <TabsTrigger value="all">{t('all')}</TabsTrigger>
+        <TabsTrigger value="cash">{t('cash')}</TabsTrigger>
+        <TabsTrigger value="bank">{t('bank')}</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="all">
-        <TransactionList transactions={all} />
-      </TabsContent>
-      <TabsContent value="cash">
-        <TransactionList transactions={cash} />
-      </TabsContent>
-      <TabsContent value="bank">
-        <TransactionList transactions={bank} />
-      </TabsContent>
+      <CashEntriesTabContent
+        value="all"
+        transactions={all}
+        loading={loadingAll}
+        sentinelRef={sentinelAll}
+      />
+
+      <CashEntriesTabContent
+        value="cash"
+        transactions={cash}
+        loading={loadingCash}
+        sentinelRef={sentinelCash}
+      />
+
+      <CashEntriesTabContent
+        value="bank"
+        transactions={bank}
+        loading={loadingBank}
+        sentinelRef={sentinelBank}
+      />
     </Tabs>
   );
 };

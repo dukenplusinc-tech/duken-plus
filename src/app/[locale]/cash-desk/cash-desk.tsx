@@ -3,6 +3,7 @@
 import { Plus } from 'lucide-react';
 
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
+import { useTranslations } from 'next-intl';
 import { useAddCashRegisterEntryForm } from '@/lib/entities/cash-desk/containers/add-cash-register-entry';
 import { CashEntriesTabs } from '@/lib/entities/cash-desk/containers/cash-entries-tabs';
 import { useCashDeskStat } from '@/lib/entities/cash-desk/hooks/useCashDeskStat';
@@ -13,6 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Money } from '@/components/numbers/money';
 
 export default function CashRegisterPage() {
+  const t = useTranslations('cash_desk.labels');
   const stats = useCashDeskStat();
   const handleAddTransaction = useAddCashRegisterEntryForm();
 
@@ -23,7 +25,7 @@ export default function CashRegisterPage() {
         <div className="grid grid-cols-2 gap-2 mb-2">
           <Card className="bg-primary text-primary-foreground">
             <CardContent className="p-4">
-              <div className="text-sm opacity-80">Наличные</div>
+              <div className="text-sm opacity-80">{t('cash')}</div>
               <Money className="text-2xl font-bold">
                 {stats.data?.cash_total}
               </Money>
@@ -31,7 +33,7 @@ export default function CashRegisterPage() {
           </Card>
           <Card className="bg-primary text-primary-foreground">
             <CardContent className="p-4">
-              <div className="text-sm opacity-80">Безналичные</div>
+              <div className="text-sm opacity-80">{t('bank')}</div>
               <Money className="text-2xl font-bold">
                 {stats.data?.bank_total}
               </Money>
@@ -43,7 +45,7 @@ export default function CashRegisterPage() {
           <CardContent className="p-4">
             <div className="flex justify-between items-center">
               <div>
-                <div className="text-sm text-muted-foreground">Общая сумма</div>
+                <div className="text-sm text-muted-foreground">{t('total')}</div>
                 <Money className="text-3xl font-bold text-primary">
                   {stats.data?.total_amount}
                 </Money>
@@ -56,7 +58,7 @@ export default function CashRegisterPage() {
                     handleAddTransaction({ type: CashRegisterType.CASH })
                   }
                 >
-                  Наличные
+                  {t('cash')}
                 </Button>
                 <Button
                   variant="outline"
@@ -67,7 +69,7 @@ export default function CashRegisterPage() {
                     })
                   }
                 >
-                  <Plus className="mr-1 h-4 w-4" /> Перевод
+                  <Plus className="mr-1 h-4 w-4" /> {t('transfer')}
                 </Button>
               </div>
             </div>

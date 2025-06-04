@@ -384,6 +384,17 @@
     }
   },
   "cash_desk": {
+    "tabs": {
+      "all": "All",
+      "cash": "Cash",
+      "bank": "Bank transfer"
+    },
+    "labels": {
+      "cash": "Cash",
+      "bank": "Bank",
+      "transfer": "Transfer",
+      "total": "Total amount"
+    },
     "form": {
       "create_title": "Add record",
       "form_label_amount": "Amount",

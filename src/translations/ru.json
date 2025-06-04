@@ -384,6 +384,17 @@
     }
   },
   "cash_desk": {
+    "tabs": {
+      "all": "Все",
+      "cash": "Наличные",
+      "bank": "Безнал"
+    },
+    "labels": {
+      "cash": "Наличные",
+      "bank": "Безналичные",
+      "transfer": "Перевод",
+      "total": "Общая сумма"
+    },
     "form": {
       "create_title": "Добавить запись",
       "form_label_amount": "Сумма",

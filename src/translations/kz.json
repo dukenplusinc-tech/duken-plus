@@ -384,6 +384,17 @@
     }
   },
   "cash_desk": {
+    "tabs": {
+      "all": "Барлығы",
+      "cash": "Қолма-қол",
+      "bank": "Банктік аударым"
+    },
+    "labels": {
+      "cash": "Қолма-қол",
+      "bank": "Банктік",
+      "transfer": "Аудару",
+      "total": "Жалпы сома"
+    },
     "form": {
       "create_title": "Жазбаны қосу",
       "form_label_amount": "Сома",

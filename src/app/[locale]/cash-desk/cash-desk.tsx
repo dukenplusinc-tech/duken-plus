@@ -1,6 +1,6 @@
 'use client';
 
-import { CalendarRange, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { useAddCashRegisterEntryForm } from '@/lib/entities/cash-desk/containers/add-cash-register-entry';
@@ -8,6 +8,7 @@ import { CashEntriesTabs } from '@/lib/entities/cash-desk/containers/cash-entrie
 import { useCashDeskStat } from '@/lib/entities/cash-desk/hooks/useCashDeskStat';
 import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
 import { Button } from '@/components/ui/button';
+import { DateFilterButton } from '@/lib/composite/filters/ui/date-filter-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Money } from '@/components/numbers/money';
 
@@ -99,13 +100,7 @@ export default function CashRegisterPage() {
         {/* Search and Filters */}
         <div className="flex gap-2 mb-4">
           <SearchBar searchByField="from" sortBy="date" />
-
-          <Button
-            variant="outline"
-            className="border-2 border-primary/30 aspect-square p-2"
-          >
-            <CalendarRange className="h-5 w-5" />
-          </Button>
+          <DateFilterButton />
         </div>
 
         <CashEntriesTabs />

@@ -14,6 +14,7 @@ export type Database = {
           added_by: string | null
           amount: number
           bank_name: string | null
+          created_at: string | null
           date: string | null
           from: string | null
           id: string
@@ -24,6 +25,7 @@ export type Database = {
           added_by?: string | null
           amount: number
           bank_name?: string | null
+          created_at?: string | null
           date?: string | null
           from?: string | null
           id?: string
@@ -34,6 +36,7 @@ export type Database = {
           added_by?: string | null
           amount?: number
           bank_name?: string | null
+          created_at?: string | null
           date?: string | null
           from?: string | null
           id?: string
@@ -41,6 +44,41 @@ export type Database = {
           type?: Database["public"]["Enums"]["transaction_type"]
         }
         Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          image: string | null
+          shop_id: string
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          shop_id: string
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          shop_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       cities: {
         Row: {
@@ -148,6 +186,13 @@ export type Database = {
           transaction_type?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "debtor_transactions_debtor_id_fkey"
+            columns: ["debtor_id"]
+            isOneToOne: false
+            referencedRelation: "blacklisted_debtors_by_city"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "debtor_transactions_debtor_id_fkey"
             columns: ["debtor_id"]
@@ -621,6 +666,26 @@ export type Database = {
       bank_names_view: {
         Row: {
           bank_name: string | null
+        }
+        Relationships: []
+      }
+      blacklisted_debtors_by_city: {
+        Row: {
+          additional_info: string | null
+          address: string | null
+          balance: number | null
+          blacklist: boolean | null
+          city: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string | null
+          iin: string | null
+          is_overdue: boolean | null
+          max_credit_amount: number | null
+          phone: string | null
+          shop_id: string | null
+          updated_at: string | null
+          work_place: string | null
         }
         Relationships: []
       }

@@ -32,21 +32,21 @@ export function SubscriptionDisplayInfo({
 
         <div className="space-y-1">
           <p className="text-center text-gray-500">{t('id_label')}:</p>
-          <p className="text-center text-xl font-bold">
-            {subscription.shop_id}
-          </p>
+          <p className="text-center text-xl font-bold">{shop.id}</p>
         </div>
 
         <div className="space-y-1">
           <p className="text-center text-gray-500">{t('paid_until')}:</p>
           <p className="text-center text-xl font-bold">
-            {new Date(subscription.available_until)
-              .toLocaleDateString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-              })
-              .replace(/\./g, '.')}
+            {subscription.available_until
+              ? new Date(subscription.available_until)
+                  .toLocaleDateString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  })
+                  .replace(/\./g, '.')
+              : '---'}
           </p>
         </div>
 
@@ -72,14 +72,20 @@ export function SubscriptionDisplayInfo({
         <div className="space-y-1">
           <p className="text-center text-gray-500">{t('last_payment')}:</p>
           <p className="text-center">
-            {new Date(subscription.date)
-              .toLocaleDateString('ru-RU', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-              })
-              .replace(/\./g, '.')}{' '}
-            {t('via_label')} {subscription.payment_method}
+            {subscription.date
+              ? new Date(subscription.date)
+                  .toLocaleDateString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  })
+                  .replace(/\./g, '.')
+              : '---'}{' '}
+            {subscription.payment_method && (
+              <span>
+                {t('via_label')} {subscription.payment_method}
+              </span>
+            )}
           </p>
         </div>
 

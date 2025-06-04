@@ -5,6 +5,7 @@ import { useEntityImage } from '@/lib/composite/files/hooks/useEntityImage';
 import { UploadEntities } from '@/lib/composite/uploads/types';
 import type { Debtor } from '@/lib/entities/debtors/schema';
 import * as fromUrl from '@/lib/url/generator';
+import { useShopID } from '@/lib/entities/shop/hooks/useShop';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface DebtorCardProps {
@@ -12,16 +13,18 @@ interface DebtorCardProps {
 }
 
 export function DebtorCard({ debtor }: DebtorCardProps) {
-  const { id, iin, full_name } = debtor;
+  const { id, iin, full_name, shop_id } = debtor;
+
+  const currentShopId = useShopID();
+  const allowEdit = currentShopId === shop_id;
 
   const { imageUrl, loading } = useEntityImage({
     id,
     entity: UploadEntities.DebtorPhoto,
   });
 
-  return (
-    <Link href={fromUrl.toDebtorEdit(debtor.id)}>
-      <div className="flex flex-col items-center p-4 border-2 border-primary rounded-md aspect-[1/1.2] max-w-[250px]">
+  const card = (
+    <div className="flex flex-col items-center p-4 border-2 border-primary rounded-md aspect-[1/1.2] max-w-[250px]">
         <div className="w-24 h-24 mb-4">
           <Avatar className="w-full h-full border-2 border-primary rounded-md">
             {loading ? (
@@ -47,6 +50,11 @@ export function DebtorCard({ debtor }: DebtorCardProps) {
           <p className="text-primary text-md">{iin}</p>
         </div>
       </div>
-    </Link>
+  );
+
+  return allowEdit ? (
+    <Link href={fromUrl.toDebtorEdit(debtor.id)}>{card}</Link>
+  ) : (
+    card
   );
 }

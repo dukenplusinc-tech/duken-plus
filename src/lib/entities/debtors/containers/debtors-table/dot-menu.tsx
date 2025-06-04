@@ -9,6 +9,7 @@ import { useTransactionForm } from '@/lib/entities/debtors/containers/transactio
 import { useDeleteDebtors } from '@/lib/entities/debtors/hooks/useDeleteDebtors';
 import { useUpdateBlacklistDebtor } from '@/lib/entities/debtors/hooks/useToggleBlacklistDebtor';
 import type { Debtor } from '@/lib/entities/debtors/schema';
+import { useShopID } from '@/lib/entities/shop/hooks/useShop';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import * as fromUrl from '@/lib/url/generator';
 import { InfoRow } from '@/components/ui/content/dialog';
@@ -17,6 +18,8 @@ import type { DropDownButtonOption } from '@/components/ui/ionic/dropdown';
 export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
   const t = useTranslations();
   const router = useRouter();
+  const shopId = useShopID();
+  const canEdit = shopId === debtor.shop_id;
 
   const dialog = useModalDialog();
 
@@ -24,7 +27,7 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
     dialog.launch({
       title: debtor.full_name,
       dialog: true,
-      acceptCaption: 'debtors.edit_btn',
+      acceptCaption: canEdit ? 'debtors.edit_btn' : undefined,
       render: (
         <div>
           <InfoRow
@@ -89,9 +92,11 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
           />
         </div>
       ),
-      onAccept: () => {
-        router.push(fromUrl.toDebtorEdit(debtor.id));
-      },
+      onAccept: canEdit
+        ? () => {
+            router.push(fromUrl.toDebtorEdit(debtor.id));
+          }
+        : undefined,
     });
   }, [
     debtor.additional_info,
@@ -106,6 +111,7 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
     dialog,
     router,
     t,
+    canEdit,
   ]);
 
   const handleAddTransactionRecord = useTransactionForm({
@@ -113,8 +119,10 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
   });
 
   const handleEdit = useCallback(() => {
-    router.push(fromUrl.toDebtorEdit(debtor.id));
-  }, [debtor.id, router]);
+    if (canEdit) {
+      router.push(fromUrl.toDebtorEdit(debtor.id));
+    }
+  }, [canEdit, debtor.id, router]);
 
   const handleViewHistory = useCallback(() => {
     router.push(fromUrl.toDebtorHistory(debtor.id));
@@ -155,10 +163,16 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
         onClick: handleChangeBlackList.onAction,
         disabled: handleChangeBlackList.processing,
       },
-      {
-        label: t('datatable.actions.edit_caption'),
-        onClick: handleEdit,
-      },
+      ...(
+        canEdit
+          ? ([
+              {
+                label: t('datatable.actions.edit_caption'),
+                onClick: handleEdit,
+              },
+            ] as DropDownButtonOption[])
+          : []
+      ),
       {
         label: t('datatable.actions.delete_cation'),
         onClick: handleRemove.onDelete,
@@ -175,6 +189,7 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
       handleChangeBlackList.onAction,
       handleChangeBlackList.processing,
       handleEdit,
+      canEdit,
       handleRemove.onDelete,
       handleRemove.processing,
     ]

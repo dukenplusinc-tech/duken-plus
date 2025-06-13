@@ -8,7 +8,10 @@ import { useTranslations } from 'next-intl';
 
 import { useImageViewer } from '@/lib/composite/image/viewer/context';
 import { ChatImagePicker } from '@/lib/entities/chat/components/chat-image-picker';
-import { useChatMessages, type ChatMessage } from '@/lib/entities/chat/hooks/useChatMessages';
+import {
+  useChatMessages,
+  type ChatMessage,
+} from '@/lib/entities/chat/hooks/useChatMessages';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -43,11 +46,26 @@ export function ChatRoom() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const scrollLockRef = useRef(false);
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    scrollLockRef.current = true;
+
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+      setTimeout(() => {
+        scrollLockRef.current = false;
+      }, 3_000);
+    });
   };
 
   const handleScroll = useCallback(async () => {
+    // lock loading on scroll
+    if (scrollLockRef.current) {
+      return;
+    }
+
     const container = containerRef.current;
     if (!container || container.scrollTop > 50 || !hasMore) return;
     const prevHeight = container.scrollHeight;
@@ -60,15 +78,9 @@ export function ChatRoom() {
     });
   }, [loadOlder, hasMore]);
 
-  const lastIdRef = useRef<string | null>(null);
   const initialLoadedRef = useRef(false);
 
   useEffect(() => {
-    const lastId = messages[messages.length - 1]?.id;
-    if (lastId && lastId !== lastIdRef.current) {
-      lastIdRef.current = lastId;
-      scrollToBottom();
-    }
     if (!initialLoadedRef.current && messages.length) {
       initialLoadedRef.current = true;
       scrollToBottom();
@@ -114,7 +126,9 @@ export function ChatRoom() {
       <PageHeader
         className="mb-4"
         right={
-          <IonButton color="success">{shop?.title || t('store')}</IonButton>
+          shop?.title ? (
+            <IonButton color="success">{shop?.title}</IonButton>
+          ) : null
         }
       >
         {t('page_title')}
@@ -290,7 +304,9 @@ export function ChatRoom() {
               {replyTo && (
                 <div className="text-sm text-gray-500 mb-1 flex justify-between">
                   <span>{t('replying')}</span>
-                  <span className="truncate ml-2 text-xs">{replyTo.content}</span>
+                  <span className="truncate ml-2 text-xs">
+                    {replyTo.content}
+                  </span>
                   <Button
                     variant="ghost"
                     size="sm"

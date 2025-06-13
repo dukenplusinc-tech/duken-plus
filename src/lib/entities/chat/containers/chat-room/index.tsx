@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
+import { FormatDate } from '@/components/date/format-date';
 
 export function ChatRoom() {
   const t = useTranslations('chat');
@@ -140,144 +141,178 @@ export function ChatRoom() {
         ref={containerRef}
         onScroll={handleScroll}
       >
-        <div className="flex justify-center mb-4">
-          <div className="bg-gray-300 text-gray-700 px-4 py-1 rounded-full text-sm">
-            {t('today')}
-          </div>
-        </div>
+        {Object.entries(
+          messages.reduce(
+            (acc, message) => {
+              const date = message.created_at
+                ? new Date(message.created_at).toISOString().split('T')[0]
+                : 'unknown';
+              acc[date] = acc[date] || [];
+              acc[date].push(message);
+              return acc;
+            },
+            {} as Record<string, ChatMessage[]>
+          )
+        ).map(([dateStr, group]) => {
+          const d = new Date(dateStr);
+          const today = new Date();
+          const isToday =
+            d.getFullYear() === today.getFullYear() &&
+            d.getMonth() === today.getMonth() &&
+            d.getDate() === today.getDate();
 
-        {messages.map((message) => {
-          const isOwn = message.shop_id === shop?.id;
-
-          const sender = isOwn
-            ? t('you')
-            : message.shop_title || shop?.title || '---';
-
-          const time = message.created_at
-            ? new Date(message.created_at).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })
-            : '';
-
-          const replyMsg = message.reply_to
-            ? messages.find((m) => m.id === message.reply_to)
-            : null;
+          const label = isToday ? (
+            t('today')
+          ) : (
+            <FormatDate format="PP">{dateStr}</FormatDate>
+          );
 
           return (
-            <div
-              key={message.id}
-              className={`mb-4 ${isOwn ? 'ml-auto max-w-[85%]' : 'mr-auto max-w-[85%]'}`}
-            >
-              <Card
-                className={`border-0 shadow-sm overflow-hidden ${isOwn ? 'bg-green-100' : 'bg-white'}`}
-              >
-                <div
-                  className={`border-b ${isOwn ? 'bg-green-200' : 'bg-gray-200'} p-2 flex justify-between items-center`}
-                >
-                  <span className="font-medium">{sender}</span>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 rounded-full hover:bg-black/10"
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-auto p-0"
-                      align={isOwn ? 'end' : 'start'}
-                    >
-                      <div className="flex flex-col">
-                        {isOwn ? (
-                          <>
-                            <Button
-                              variant="ghost"
-                              className="justify-start font-medium h-10 px-4 hover:bg-green-100"
-                              onClick={() => {
-                                setNewMessage(message.content);
-                                setImage(message.image || null);
-                                setEditing(message.id);
-                                textareaRef.current?.focus();
-                              }}
-                            >
-                              {t('edit')}
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              className="justify-start h-10 font-medium px-4 hover:bg-red-100"
-                              onClick={() => deleteMessage(message.id)}
-                            >
-                              {t('delete_for_all')}
-                            </Button>
-                          </>
-                        ) : (
-                          <>
-                            <Button
-                              variant="ghost"
-                              className="justify-start font-medium h-10 px-4 hover:bg-green-100"
-                              onClick={() => {
-                                setReplyTo(message);
-                                textareaRef.current?.focus();
-                              }}
-                            >
-                              {t('reply')}
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              className="justify-start font-medium h-10 px-4 hover:bg-red-100"
-                              onClick={() => {
-                                reportMessage(message.id).then(() =>
-                                  toast({
-                                    description: t('report_confirmation'),
-                                  })
-                                );
-                              }}
-                            >
-                              {t('report')}
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+            <div key={dateStr}>
+              <div className="flex justify-center mb-4">
+                <div className="bg-gray-300 text-gray-700 px-4 py-1 rounded-full text-sm">
+                  {label}
                 </div>
+              </div>
 
-                <CardContent className="p-3">
-                  {replyMsg && (
-                    <div className="border-l-2 pl-2 mb-1 text-xs text-gray-500">
-                      <strong>
-                        {replyMsg.shop_id === shop?.id
-                          ? t('you')
-                          : replyMsg.shop_title || shop?.title || '---'}
-                      </strong>
-                      : {replyMsg.content}
-                    </div>
-                  )}
-                  <p className="whitespace-pre-wrap">{message.content}</p>
-                  {message.image && (
-                    <div className="mt-2">
-                      <img
-                        src={message.image || '/placeholder.svg'}
-                        alt="Message attachment"
-                        className="max-w-xs max-h-60 cursor-pointer rounded-md border border-gray-200"
-                        onClick={() => imageViewer.openViewer(message.image!)}
-                      />
-                    </div>
-                  )}
-                  <div className="text-right mt-1 text-xs text-gray-500">
-                    {time}
-                    {message.updated_at && (
-                      <span className="ml-1">({t('edited')})</span>
-                    )}
+              {group.map((message) => {
+                const isOwn = message.shop_id === shop?.id;
+
+                const sender = isOwn
+                  ? t('you')
+                  : message.shop_title || shop?.title || '---';
+
+                const time = message.created_at
+                  ? new Date(message.created_at).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })
+                  : '';
+
+                const replyMsg = message.reply_to
+                  ? messages.find((m) => m.id === message.reply_to)
+                  : null;
+
+                return (
+                  <div
+                    key={message.id}
+                    className={`mb-4 ${isOwn ? 'ml-auto max-w-[85%]' : 'mr-auto max-w-[85%]'}`}
+                  >
+                    <Card
+                      className={`border-0 shadow-sm overflow-hidden ${isOwn ? 'bg-green-100' : 'bg-white'}`}
+                    >
+                      <div
+                        className={`border-b ${isOwn ? 'bg-green-200' : 'bg-gray-200'} p-2 flex justify-between items-center`}
+                      >
+                        <span className="font-medium">{sender}</span>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-full hover:bg-black/10"
+                            >
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent
+                            className="w-auto p-0"
+                            align={isOwn ? 'end' : 'start'}
+                          >
+                            <div className="flex flex-col">
+                              {isOwn ? (
+                                <>
+                                  <Button
+                                    variant="ghost"
+                                    className="justify-start font-medium h-10 px-4 hover:bg-green-100"
+                                    onClick={() => {
+                                      setNewMessage(message.content);
+                                      setImage(message.image || null);
+                                      setEditing(message.id);
+                                      textareaRef.current?.focus();
+                                    }}
+                                  >
+                                    {t('edit')}
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    className="justify-start h-10 font-medium px-4 hover:bg-red-100"
+                                    onClick={() => deleteMessage(message.id)}
+                                  >
+                                    {t('delete_for_all')}
+                                  </Button>
+                                </>
+                              ) : (
+                                <>
+                                  <Button
+                                    variant="ghost"
+                                    className="justify-start font-medium h-10 px-4 hover:bg-green-100"
+                                    onClick={() => {
+                                      setReplyTo(message);
+                                      textareaRef.current?.focus();
+                                    }}
+                                  >
+                                    {t('reply')}
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    className="justify-start font-medium h-10 px-4 hover:bg-red-100"
+                                    onClick={() => {
+                                      reportMessage(message.id).then(() =>
+                                        toast({
+                                          description: t('report_confirmation'),
+                                        })
+                                      );
+                                    }}
+                                  >
+                                    {t('report')}
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+
+                      <CardContent className="p-3">
+                        {replyMsg && (
+                          <div className="border-l-2 pl-2 mb-1 text-xs text-gray-500">
+                            <strong>
+                              {replyMsg.shop_id === shop?.id
+                                ? t('you')
+                                : replyMsg.shop_title || shop?.title || '---'}
+                            </strong>
+                            : {replyMsg.content}
+                          </div>
+                        )}
+                        <p className="whitespace-pre-wrap">{message.content}</p>
+                        {message.image && (
+                          <div className="mt-2">
+                            <img
+                              src={message.image || '/placeholder.svg'}
+                              alt="Message attachment"
+                              className="max-w-xs max-h-60 cursor-pointer rounded-md border border-gray-200"
+                              onClick={() =>
+                                imageViewer.openViewer(message.image!)
+                              }
+                            />
+                          </div>
+                        )}
+                        <div className="text-right mt-1 text-xs text-gray-500">
+                          {time}
+                          {message.updated_at && (
+                            <span className="ml-1">({t('edited')})</span>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
-                </CardContent>
-              </Card>
+                );
+              })}
             </div>
           );
         })}
+
         <div ref={messagesEndRef} className="h-4" />
       </div>
 

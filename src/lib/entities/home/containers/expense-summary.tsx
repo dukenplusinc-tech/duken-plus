@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 
 import { useTotalExpenses } from '@/lib/entities/expenses/hooks/useTotalExpenses';
 import { Card, CardContent } from '@/components/ui/card';
+import { Money } from '@/components/numbers/money';
 
 export default function ExpenseSummary() {
   const t = useTranslations('expenses');
@@ -23,7 +24,7 @@ export default function ExpenseSummary() {
             {loading ? (
               <Loader className="h-4 w-4 animate-spin" />
             ) : (
-              `${totalYesterday} тг`
+              <Money>{totalYesterday}</Money>
             )}
           </p>
         </CardContent>
@@ -40,7 +41,7 @@ export default function ExpenseSummary() {
             {loading ? (
               <Loader className="h-4 w-4 animate-spin" />
             ) : (
-              `${totalTomorrow} тг`
+              <Money>{totalTomorrow}</Money>
             )}
           </p>
         </CardContent>

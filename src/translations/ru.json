@@ -261,6 +261,10 @@
       "by_title": "По названию"
     }
   },
+  "deliveries": {
+    "title": "Поставки на сегодня",
+    "empty_text": "Пусто на сегодня"
+  },
   "debtors": {
     "title": "Должники",
     "title_edit": "Редактировать должника",
@@ -373,7 +377,7 @@
     "summary": {
       "today_label": "Общий расход на сегодня:",
       "yesterday_label": "Расходы <br /> за вчера:",
-      "tomorrow_label": "Расходы <br /> на вчера:"
+      "tomorrow_label": "Расходы <br /> на завтра:"
     },
     "form": {
       "label_type": "Тип",

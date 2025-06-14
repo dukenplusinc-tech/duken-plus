@@ -25,3 +25,21 @@ export const PageHeader: FC<PropsWithChildren<PageHeaderProps>> = ({
     </div>
   );
 };
+
+export const PageSubHeader: FC<PropsWithChildren<PageHeaderProps>> = ({
+  children,
+  className,
+  ...props
+}) => {
+  return (
+    <div
+      {...props}
+      className={cn(
+        'flex justify-between items-center min-h-20 -mt-4 -mx-4 py-2 px-8 border-b bg-success text-white',
+        className
+      )}
+    >
+      <h2 className="flex-1 text-l text-center font-bold">{children}</h2>
+    </div>
+  );
+};

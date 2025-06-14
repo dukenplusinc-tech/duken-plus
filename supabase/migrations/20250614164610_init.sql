@@ -1,310 +1,4 @@
-create schema if not exists "private";
-
-create or replace view "private"."extended_profile" as  SELECT p.id,
-    p.full_name,
-    p.avatar_url,
-    p.role_id,
-    p.language,
-    p.created_at,
-    p.updated_at,
-    u.email,
-    u.phone
-   FROM (profiles p
-     JOIN auth.users u ON ((p.id = u.id)));
-
-
-
 create type "public"."transaction_type" as enum ('cash', 'bank_transfer');
-
-drop policy "Allow doctors to select sessions with no doctor assigned" on "public"."call_sessions";
-
-drop policy "Allow doctors to select their own call sessions" on "public"."call_sessions";
-
-drop policy "Allow pet owners to select their call sessions" on "public"."call_sessions";
-
-drop policy "Allow select for own doctor record" on "public"."doctors";
-
-drop policy "Allow update for own doctor record" on "public"."doctors";
-
-drop policy "Allow select for own pet_owner record" on "public"."pet_owners";
-
-drop policy "Allow update for own pet_owner record" on "public"."pet_owners";
-
-drop policy "Allow owners to select their pets" on "public"."pets";
-
-drop policy "Allow owners to update their pets" on "public"."pets";
-
-revoke delete on table "public"."call_sessions" from "anon";
-
-revoke insert on table "public"."call_sessions" from "anon";
-
-revoke references on table "public"."call_sessions" from "anon";
-
-revoke select on table "public"."call_sessions" from "anon";
-
-revoke trigger on table "public"."call_sessions" from "anon";
-
-revoke truncate on table "public"."call_sessions" from "anon";
-
-revoke update on table "public"."call_sessions" from "anon";
-
-revoke delete on table "public"."call_sessions" from "authenticated";
-
-revoke insert on table "public"."call_sessions" from "authenticated";
-
-revoke references on table "public"."call_sessions" from "authenticated";
-
-revoke select on table "public"."call_sessions" from "authenticated";
-
-revoke trigger on table "public"."call_sessions" from "authenticated";
-
-revoke truncate on table "public"."call_sessions" from "authenticated";
-
-revoke update on table "public"."call_sessions" from "authenticated";
-
-revoke delete on table "public"."call_sessions" from "service_role";
-
-revoke insert on table "public"."call_sessions" from "service_role";
-
-revoke references on table "public"."call_sessions" from "service_role";
-
-revoke select on table "public"."call_sessions" from "service_role";
-
-revoke trigger on table "public"."call_sessions" from "service_role";
-
-revoke truncate on table "public"."call_sessions" from "service_role";
-
-revoke update on table "public"."call_sessions" from "service_role";
-
-revoke delete on table "public"."doctors" from "anon";
-
-revoke insert on table "public"."doctors" from "anon";
-
-revoke references on table "public"."doctors" from "anon";
-
-revoke select on table "public"."doctors" from "anon";
-
-revoke trigger on table "public"."doctors" from "anon";
-
-revoke truncate on table "public"."doctors" from "anon";
-
-revoke update on table "public"."doctors" from "anon";
-
-revoke delete on table "public"."doctors" from "authenticated";
-
-revoke insert on table "public"."doctors" from "authenticated";
-
-revoke references on table "public"."doctors" from "authenticated";
-
-revoke select on table "public"."doctors" from "authenticated";
-
-revoke trigger on table "public"."doctors" from "authenticated";
-
-revoke truncate on table "public"."doctors" from "authenticated";
-
-revoke update on table "public"."doctors" from "authenticated";
-
-revoke delete on table "public"."doctors" from "service_role";
-
-revoke insert on table "public"."doctors" from "service_role";
-
-revoke references on table "public"."doctors" from "service_role";
-
-revoke select on table "public"."doctors" from "service_role";
-
-revoke trigger on table "public"."doctors" from "service_role";
-
-revoke truncate on table "public"."doctors" from "service_role";
-
-revoke update on table "public"."doctors" from "service_role";
-
-revoke delete on table "public"."pet_owners" from "anon";
-
-revoke insert on table "public"."pet_owners" from "anon";
-
-revoke references on table "public"."pet_owners" from "anon";
-
-revoke select on table "public"."pet_owners" from "anon";
-
-revoke trigger on table "public"."pet_owners" from "anon";
-
-revoke truncate on table "public"."pet_owners" from "anon";
-
-revoke update on table "public"."pet_owners" from "anon";
-
-revoke delete on table "public"."pet_owners" from "authenticated";
-
-revoke insert on table "public"."pet_owners" from "authenticated";
-
-revoke references on table "public"."pet_owners" from "authenticated";
-
-revoke select on table "public"."pet_owners" from "authenticated";
-
-revoke trigger on table "public"."pet_owners" from "authenticated";
-
-revoke truncate on table "public"."pet_owners" from "authenticated";
-
-revoke update on table "public"."pet_owners" from "authenticated";
-
-revoke delete on table "public"."pet_owners" from "service_role";
-
-revoke insert on table "public"."pet_owners" from "service_role";
-
-revoke references on table "public"."pet_owners" from "service_role";
-
-revoke select on table "public"."pet_owners" from "service_role";
-
-revoke trigger on table "public"."pet_owners" from "service_role";
-
-revoke truncate on table "public"."pet_owners" from "service_role";
-
-revoke update on table "public"."pet_owners" from "service_role";
-
-revoke delete on table "public"."pets" from "anon";
-
-revoke insert on table "public"."pets" from "anon";
-
-revoke references on table "public"."pets" from "anon";
-
-revoke select on table "public"."pets" from "anon";
-
-revoke trigger on table "public"."pets" from "anon";
-
-revoke truncate on table "public"."pets" from "anon";
-
-revoke update on table "public"."pets" from "anon";
-
-revoke delete on table "public"."pets" from "authenticated";
-
-revoke insert on table "public"."pets" from "authenticated";
-
-revoke references on table "public"."pets" from "authenticated";
-
-revoke select on table "public"."pets" from "authenticated";
-
-revoke trigger on table "public"."pets" from "authenticated";
-
-revoke truncate on table "public"."pets" from "authenticated";
-
-revoke update on table "public"."pets" from "authenticated";
-
-revoke delete on table "public"."pets" from "service_role";
-
-revoke insert on table "public"."pets" from "service_role";
-
-revoke references on table "public"."pets" from "service_role";
-
-revoke select on table "public"."pets" from "service_role";
-
-revoke trigger on table "public"."pets" from "service_role";
-
-revoke truncate on table "public"."pets" from "service_role";
-
-revoke update on table "public"."pets" from "service_role";
-
-revoke delete on table "public"."user_action" from "anon";
-
-revoke insert on table "public"."user_action" from "anon";
-
-revoke references on table "public"."user_action" from "anon";
-
-revoke select on table "public"."user_action" from "anon";
-
-revoke trigger on table "public"."user_action" from "anon";
-
-revoke truncate on table "public"."user_action" from "anon";
-
-revoke update on table "public"."user_action" from "anon";
-
-revoke delete on table "public"."user_action" from "authenticated";
-
-revoke insert on table "public"."user_action" from "authenticated";
-
-revoke references on table "public"."user_action" from "authenticated";
-
-revoke select on table "public"."user_action" from "authenticated";
-
-revoke trigger on table "public"."user_action" from "authenticated";
-
-revoke truncate on table "public"."user_action" from "authenticated";
-
-revoke update on table "public"."user_action" from "authenticated";
-
-revoke delete on table "public"."user_action" from "service_role";
-
-revoke insert on table "public"."user_action" from "service_role";
-
-revoke references on table "public"."user_action" from "service_role";
-
-revoke select on table "public"."user_action" from "service_role";
-
-revoke trigger on table "public"."user_action" from "service_role";
-
-revoke truncate on table "public"."user_action" from "service_role";
-
-revoke update on table "public"."user_action" from "service_role";
-
-alter table "public"."call_sessions" drop constraint "call_sessions_doctor_id_fkey1";
-
-alter table "public"."call_sessions" drop constraint "call_sessions_pet_id_fkey";
-
-alter table "public"."call_sessions" drop constraint "call_sessions_pet_owner_id_fkey";
-
-alter table "public"."doctors" drop constraint "doctor_user_id_fkey";
-
-alter table "public"."doctors" drop constraint "doctor_user_id_key";
-
-alter table "public"."pet_owners" drop constraint "pet_owner_user_id_fkey";
-
-alter table "public"."pet_owners" drop constraint "pet_owner_user_id_key";
-
-alter table "public"."pets" drop constraint "pets_owner_id_fkey1";
-
-alter table "public"."user_action" drop constraint "user_action_call_session_id_fkey";
-
-alter table "public"."user_action" drop constraint "user_action_doctor_id_fkey";
-
-alter table "public"."user_action" drop constraint "user_action_pet_owner_id_fkey";
-
-alter table "public"."user_action" drop constraint "user_action_user_id_fkey";
-
-drop function if exists "public"."create_call_session"("petId" uuid, "startTime" timestamp with time zone, "languageCode" session_language, "sessionDescription" text);
-
-drop function if exists "public"."debug_uid"();
-
-alter table "public"."call_sessions" drop constraint "session_pkey";
-
-alter table "public"."doctors" drop constraint "doctor_pkey";
-
-alter table "public"."pet_owners" drop constraint "pet_owner_pkey";
-
-alter table "public"."pets" drop constraint "pet_pkey";
-
-alter table "public"."user_action" drop constraint "user_action_pkey";
-
-drop index if exists "public"."doctor_pkey";
-
-drop index if exists "public"."doctor_user_id_key";
-
-drop index if exists "public"."pet_owner_pkey";
-
-drop index if exists "public"."pet_owner_user_id_key";
-
-drop index if exists "public"."pet_pkey";
-
-drop index if exists "public"."session_pkey";
-
-drop index if exists "public"."user_action_pkey";
-
-drop table "public"."call_sessions";
-
-drop table "public"."doctors";
-
-drop table "public"."pet_owners";
-
-drop table "public"."pets";
-
-drop table "public"."user_action";
 
 create table "public"."cash_register" (
     "id" uuid not null default gen_random_uuid(),
@@ -327,11 +21,24 @@ create table "public"."chat_messages" (
     "content" text not null,
     "user_id" uuid,
     "shop_id" uuid not null,
-    "image" text
+    "image" text,
+    "updated_at" timestamp with time zone,
+    "deleted_at" timestamp with time zone,
+    "reply_to" uuid
 );
 
 
 alter table "public"."chat_messages" enable row level security;
+
+create table "public"."chat_reports" (
+    "id" uuid not null default gen_random_uuid(),
+    "chat_message_id" uuid not null,
+    "user_id" uuid default auth.uid(),
+    "created_at" timestamp with time zone not null default now()
+);
+
+
+alter table "public"."chat_reports" enable row level security;
 
 create table "public"."cities" (
     "id" uuid not null default gen_random_uuid(),
@@ -536,17 +243,13 @@ create table "public"."user_action_logs" (
 
 alter table "public"."user_action_logs" enable row level security;
 
-drop type "public"."session_language";
-
-drop type "public"."session_status";
-
-drop type "public"."user_role";
-
 CREATE UNIQUE INDEX cash_register_pkey ON public.cash_register USING btree (id);
 
 CREATE INDEX cash_register_shop_id_idx ON public.cash_register USING btree (shop_id);
 
 CREATE UNIQUE INDEX chat_messages_pkey ON public.chat_messages USING btree (id);
+
+CREATE UNIQUE INDEX chat_reports_pkey ON public.chat_reports USING btree (id);
 
 CREATE UNIQUE INDEX cities_pkey ON public.cities USING btree (id);
 
@@ -596,6 +299,8 @@ alter table "public"."cash_register" add constraint "cash_register_pkey" PRIMARY
 
 alter table "public"."chat_messages" add constraint "chat_messages_pkey" PRIMARY KEY using index "chat_messages_pkey";
 
+alter table "public"."chat_reports" add constraint "chat_reports_pkey" PRIMARY KEY using index "chat_reports_pkey";
+
 alter table "public"."cities" add constraint "cities_pkey" PRIMARY KEY using index "cities_pkey";
 
 alter table "public"."contractors" add constraint "contractors_pkey" PRIMARY KEY using index "contractors_pkey";
@@ -626,9 +331,17 @@ alter table "public"."subscription_payments" add constraint "subscription_paymen
 
 alter table "public"."user_action_logs" add constraint "user_action_logs_pkey" PRIMARY KEY using index "user_action_logs_pkey";
 
+alter table "public"."chat_messages" add constraint "chat_messages_reply_to_fkey" FOREIGN KEY (reply_to) REFERENCES chat_messages(id) not valid;
+
+alter table "public"."chat_messages" validate constraint "chat_messages_reply_to_fkey";
+
 alter table "public"."chat_messages" add constraint "chat_messages_shop_id_fkey" FOREIGN KEY (shop_id) REFERENCES shops(id) ON DELETE CASCADE not valid;
 
 alter table "public"."chat_messages" validate constraint "chat_messages_shop_id_fkey";
+
+alter table "public"."chat_reports" add constraint "chat_reports_chat_message_id_fkey" FOREIGN KEY (chat_message_id) REFERENCES chat_messages(id) ON DELETE CASCADE not valid;
+
+alter table "public"."chat_reports" validate constraint "chat_reports_chat_message_id_fkey";
 
 alter table "public"."cities" add constraint "unique_external_id" UNIQUE using index "unique_external_id";
 
@@ -726,26 +439,6 @@ create or replace view "public"."bank_names_view" as  SELECT DISTINCT cash_regis
    FROM cash_register
   WHERE ((cash_register.bank_name IS NOT NULL) AND (TRIM(BOTH FROM cash_register.bank_name) <> ''::text))
   ORDER BY cash_register.bank_name;
-
-
-create or replace view "public"."blacklisted_debtors_by_city" as  SELECT d.id,
-    d.full_name,
-    d.iin,
-    d.phone,
-    d.address,
-    d.max_credit_amount,
-    d.work_place,
-    d.additional_info,
-    d.created_at,
-    d.updated_at,
-    d.shop_id,
-    d.blacklist,
-    d.balance,
-    d.is_overdue,
-    s.city
-   FROM (debtors d
-     JOIN shops s ON ((d.shop_id = s.id)))
-  WHERE (d.blacklist = true);
 
 
 create or replace view "public"."cash_register_ui_view" as  WITH bank_sums AS (
@@ -1011,21 +704,6 @@ END;
 $function$
 ;
 
-CREATE OR REPLACE FUNCTION public.sync_blacklist_with_overdue()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-begin
-  if new.is_overdue and (old.blacklist is distinct from true) then
-    new.blacklist := true;
-  elsif not new.is_overdue and (old.blacklist is distinct from false) then
-    new.blacklist := false;
-  end if;
-  return new;
-end;
-$function$
-;
-
 CREATE OR REPLACE FUNCTION public.update_debtor_balance()
  RETURNS trigger
  LANGUAGE plpgsql
@@ -1211,6 +889,48 @@ grant trigger on table "public"."chat_messages" to "service_role";
 grant truncate on table "public"."chat_messages" to "service_role";
 
 grant update on table "public"."chat_messages" to "service_role";
+
+grant delete on table "public"."chat_reports" to "anon";
+
+grant insert on table "public"."chat_reports" to "anon";
+
+grant references on table "public"."chat_reports" to "anon";
+
+grant select on table "public"."chat_reports" to "anon";
+
+grant trigger on table "public"."chat_reports" to "anon";
+
+grant truncate on table "public"."chat_reports" to "anon";
+
+grant update on table "public"."chat_reports" to "anon";
+
+grant delete on table "public"."chat_reports" to "authenticated";
+
+grant insert on table "public"."chat_reports" to "authenticated";
+
+grant references on table "public"."chat_reports" to "authenticated";
+
+grant select on table "public"."chat_reports" to "authenticated";
+
+grant trigger on table "public"."chat_reports" to "authenticated";
+
+grant truncate on table "public"."chat_reports" to "authenticated";
+
+grant update on table "public"."chat_reports" to "authenticated";
+
+grant delete on table "public"."chat_reports" to "service_role";
+
+grant insert on table "public"."chat_reports" to "service_role";
+
+grant references on table "public"."chat_reports" to "service_role";
+
+grant select on table "public"."chat_reports" to "service_role";
+
+grant trigger on table "public"."chat_reports" to "service_role";
+
+grant truncate on table "public"."chat_reports" to "service_role";
+
+grant update on table "public"."chat_reports" to "service_role";
 
 grant delete on table "public"."cities" to "anon";
 
@@ -1882,6 +1602,14 @@ using ((shop_id = ( SELECT profiles.shop_id
   WHERE (profiles.id = auth.uid()))));
 
 
+create policy "Allow delete own chat messages"
+on "public"."chat_messages"
+as permissive
+for delete
+to public
+using ((user_id = auth.uid()));
+
+
 create policy "Allow insert"
 on "public"."chat_messages"
 as permissive
@@ -1890,12 +1618,34 @@ to authenticated
 with check (true);
 
 
-create policy "Allow read"
+create policy "Allow read in city"
 on "public"."chat_messages"
 as permissive
 for select
 to public
-using (true);
+using ((shop_id IN ( SELECT shops.id
+   FROM shops
+  WHERE (shops.city = ( SELECT shops_1.city
+           FROM shops shops_1
+          WHERE (shops_1.id = ( SELECT profiles.shop_id
+                   FROM profiles
+                  WHERE (profiles.id = auth.uid()))))))));
+
+
+create policy "Allow update own chat messages"
+on "public"."chat_messages"
+as permissive
+for update
+to public
+using ((user_id = auth.uid()));
+
+
+create policy "Allow insert"
+on "public"."chat_reports"
+as permissive
+for insert
+to authenticated
+with check (true);
 
 
 create policy "Allow authenticated users to select"
@@ -2022,9 +1772,14 @@ on "public"."debtors"
 as permissive
 for select
 to public
-using ((shop_id = ( SELECT profiles.shop_id
+using (((shop_id = ( SELECT profiles.shop_id
    FROM profiles
-  WHERE (profiles.id = auth.uid()))));
+  WHERE (profiles.id = auth.uid()))) OR ((blacklist = true) AND (( SELECT shops.city
+   FROM shops
+  WHERE (shops.id = debtors.shop_id)) = ( SELECT shops.city
+   FROM (shops
+     JOIN profiles ON ((profiles.shop_id = shops.id)))
+  WHERE (profiles.id = auth.uid()))))));
 
 
 create policy "Admins can create employee sessions"
@@ -2408,8 +2163,6 @@ CREATE TRIGGER recalculate_balance_after_update AFTER UPDATE ON public.debtor_tr
 CREATE TRIGGER recalculate_balance_on_delete AFTER DELETE ON public.debtor_transactions FOR EACH ROW EXECUTE FUNCTION update_debtor_balance_after_delete();
 
 CREATE TRIGGER debtors_action_log AFTER INSERT OR DELETE OR UPDATE ON public.debtors FOR EACH ROW EXECUTE FUNCTION log_user_action();
-
-CREATE TRIGGER trg_sync_blacklist_with_overdue BEFORE INSERT OR UPDATE OF is_overdue ON public.debtors FOR EACH ROW EXECUTE FUNCTION sync_blacklist_with_overdue();
 
 CREATE TRIGGER log_employee_action_trigger AFTER INSERT OR DELETE OR UPDATE ON public.employees FOR EACH ROW EXECUTE FUNCTION log_employee_action();
 

@@ -406,6 +406,9 @@
       "form_label_amount": "Amount",
       "form_label_from": "Customer Name",
       "form_label_bank_name": "Bank Name",
+      "form_label_bank_search_placeholder": "Search banks...",
+      "form_label_bank_empty": "No banks found",
+      "form_label_bank_use": "Add",
       "form_label_description": "Description",
       "save_caption": "Add",
       "cancel_caption": "Cancel"

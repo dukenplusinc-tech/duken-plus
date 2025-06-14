@@ -406,6 +406,9 @@
       "form_label_amount": "Сумма",
       "form_label_from": "Имя клиента",
       "form_label_bank_name": "Название банка",
+      "form_label_bank_search_placeholder": "Поиск банков...",
+      "form_label_bank_empty": "Банки не найдены",
+      "form_label_bank_use": "Добавить",
       "form_label_description": "Описание",
       "save_caption": "Добавить",
       "cancel_caption": "Отмена"

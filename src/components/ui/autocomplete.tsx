@@ -262,7 +262,7 @@ export function Autocomplete({
 
   // Desktop popover
   return (
-    <div className={cn('space-y-2', className)}>
+    <div className={cn('space-y-2 ml-2', className)}>
       {label && (
         <label className="text-sm font-medium text-gray-700">{label}</label>
       )}

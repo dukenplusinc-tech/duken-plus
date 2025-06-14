@@ -406,6 +406,9 @@
       "form_label_amount": "Сома",
       "form_label_from": "Тапсырыс берушінің аты",
       "form_label_bank_name": "Банк атауы",
+      "form_label_bank_search_placeholder": "Банктерді іздеу...",
+      "form_label_bank_empty": "Банктер табылмады",
+      "form_label_bank_use": "Қосу",
       "form_label_description": "Сипаттама",
       "save_caption": "Қосу",
       "cancel_caption": "Бас тарту"

@@ -1,15 +1,15 @@
 'use client';
 
 import { Plus } from 'lucide-react';
-
-import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { useTranslations } from 'next-intl';
+
+import { DateFilterButton } from '@/lib/composite/filters/ui/date-filter-button';
+import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { useAddCashRegisterEntryForm } from '@/lib/entities/cash-desk/containers/add-cash-register-entry';
 import { CashEntriesTabs } from '@/lib/entities/cash-desk/containers/cash-entries-tabs';
 import { useCashDeskStat } from '@/lib/entities/cash-desk/hooks/useCashDeskStat';
 import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
 import { Button } from '@/components/ui/button';
-import { DateFilterButton } from '@/lib/composite/filters/ui/date-filter-button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Money } from '@/components/numbers/money';
 
@@ -43,9 +43,11 @@ export default function CashRegisterPage() {
 
         <Card className="mb-4">
           <CardContent className="p-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="text-sm text-muted-foreground">{t('total')}</div>
+            <div className="flex justify-between items-start sm:items-center flex-col sm:flex-row">
+              <div className="mb-2 sm:mb-0">
+                <div className="text-sm text-muted-foreground">
+                  {t('total')}
+                </div>
                 <Money className="text-3xl font-bold text-primary">
                   {stats.data?.total_amount}
                 </Money>
@@ -79,7 +81,7 @@ export default function CashRegisterPage() {
         {/* Bank Breakdown */}
         <Card className="mb-4">
           <CardContent className="p-4">
-            <h3 className="font-medium mb-2">По банкам:</h3>
+            <h3 className="font-medium mb-2">{t('break_down_by_banks')}:</h3>
             <div className="space-y-2">
               {stats.data?.banks
                 ?.filter(({ bank_name }) => bank_name)

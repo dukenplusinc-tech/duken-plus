@@ -390,7 +390,12 @@
       "cash": "Fill the cash register",
       "bank": "Bank transfer"
     },
+    "transactions": {
+      "added_by": "Added by",
+      "empty_list": "No transactions"
+    },
     "labels": {
+      "break_down_by_banks": "By banks",
       "cash": "Cash",
       "bank": "Bank",
       "transfer": "Transfer",

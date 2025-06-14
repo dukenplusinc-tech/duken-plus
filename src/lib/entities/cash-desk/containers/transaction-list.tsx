@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 import type { CashRegister as Transaction } from '@/lib/entities/cash-desk/schema';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +12,8 @@ interface TransactionListProps {
 export default function TransactionList({
   transactions,
 }: TransactionListProps) {
+  const t = useTranslations('cash_desk.transactions');
+
   // Group transactions by date
   const groupedTransactions: Record<string, Transaction[]> = {};
 
@@ -47,7 +50,7 @@ export default function TransactionList({
                 <div>
                   <div className="font-medium">{transaction.from}</div>
                   <div className="text-sm text-muted-foreground">
-                    Added by:{' '}
+                    {t('added_by')}:{' '}
                     <span className="font-bold">{transaction.added_by}</span>
                   </div>
                 </div>
@@ -58,9 +61,6 @@ export default function TransactionList({
                     </Badge>
                   )}
                   <Money className="font-bold mr-2">{transaction.amount}</Money>
-                  {/*<Button variant="ghost" size="icon" className="h-8 w-8">*/}
-                  {/*  <MoreVertical className="h-4 w-4" />*/}
-                  {/*</Button>*/}
                 </div>
               </div>
             ))}
@@ -70,7 +70,7 @@ export default function TransactionList({
 
       {transactions.length === 0 && (
         <div className="text-center py-8 text-muted-foreground">
-          Нет транзакций
+          {t('empty_list')}
         </div>
       )}
     </div>

@@ -390,7 +390,12 @@
       "cash": "Наличные",
       "bank": "Безнал"
     },
+    "transactions": {
+      "added_by": "Добавил",
+      "empty_list": "Нет транзакций"
+    },
     "labels": {
+      "break_down_by_banks": "По банкам",
       "cash": "Заполнить кассу",
       "bank": "Безналичные",
       "transfer": "Перевод",

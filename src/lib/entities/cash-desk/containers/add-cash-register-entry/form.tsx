@@ -2,10 +2,9 @@ import { FC, useCallback, useEffect, useRef } from 'react';
 import { IonInput, IonItem, IonLabel, IonList } from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
-import { useBankNames } from '@/lib/entities/cash-desk/hooks/useBankNames';
+import { BankSelect } from '@/lib/entities/cash-desk/containers/bank-select';
 import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
-import { Autocomplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
 
 import {
@@ -26,7 +25,6 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
   const dialog = useModalDialog();
 
   const { form, isProcessing, handleSubmit } = useAddCashRegisterEntry(props);
-  const { banks } = useBankNames();
 
   const input = useRef<HTMLIonInputElement>(null);
 
@@ -91,21 +89,13 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
 
         {isBankTransfer && (
           <>
-            <IonItem>
-              <Autocomplete
-                options={banks}
-                value={form.watch('bank_name') || ''}
-                disabled={isProcessing}
-                onValueChange={(value) =>
-                  form.setValue('bank_name', value!?.toLowerCase())
-                }
-                placeholder={t('form_label_bank_name')}
-                searchPlaceholder="Search banks..."
-                emptyMessage="No banks found."
-                allowCustomValue={true}
-                customValueMessage={(val) => `Use "${val}"`}
-              />
-            </IonItem>
+            <BankSelect
+              value={form.watch('bank_name')}
+              onChange={(value) =>
+                form.setValue('bank_name', value!?.toLowerCase())
+              }
+              disabled={isProcessing}
+            />
             {form.formState.errors.bank_name && (
               <IonLabel color="danger">
                 {form.formState.errors.bank_name.message}

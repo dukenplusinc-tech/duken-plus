@@ -377,7 +377,10 @@
     },
     "form": {
       "label_type": "Type",
-      "label_type_placeholder": "Choose or enter the type",
+      "label_type_placeholder": "Select or enter type",
+      "label_type_search_placeholder": "Start typing...",
+      "label_type_search_empty": "Empty...",
+      "label_type_search_add": "Add",
       "label_amount": "Amount",
       "label_date": "Date",
       "cancel": "Cancel",

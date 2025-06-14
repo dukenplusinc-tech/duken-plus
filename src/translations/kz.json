@@ -377,8 +377,11 @@
     },
     "form": {
       "label_type": "Түрі",
-      "label_type_placeholder": "Түрін таңдаңыз немесе енгізіңіз",
-      "label_amount": "Сомасы",
+      "label_type_placeholder": "Түрді таңдаңыз немесе енгізіңіз",
+      "label_type_search_placeholder": "Жазуды бастаңыз...",
+      "label_type_search_empty": "Бос...",
+      "label_type_search_add": "Қосу",
+      "label_amount": "Сома",
       "label_date": "Күні",
       "cancel": "Бас тарту",
       "submit": "Сақтау"

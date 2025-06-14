@@ -5,6 +5,7 @@ import { Loader } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useTotalExpenses } from '@/lib/entities/expenses/hooks/useTotalExpenses';
+import { Money } from '@/components/numbers/money';
 
 const ExpenseSummary: FC = () => {
   const t = useTranslations('expenses');
@@ -25,7 +26,7 @@ const ExpenseSummary: FC = () => {
 };
 
 export default function CompanyTab() {
-  const totalAmount = '567.500';
+  const totalAmount = 567500;
   const remainingCompanies = 2;
   const remainingAmount = '132.000';
 
@@ -40,7 +41,7 @@ export default function CompanyTab() {
           </div>
           <div className="flex justify-center items-center mt-2">
             <div className="flex-1 text-lg">На сумму</div>
-            <div className="flex-1 text-3xl font-bold">{totalAmount} тг</div>
+            <Money className="flex-1 text-3xl font-bold">{totalAmount}</Money>
           </div>
         </div>
 

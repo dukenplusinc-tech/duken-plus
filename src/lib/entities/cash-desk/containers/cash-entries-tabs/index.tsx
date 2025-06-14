@@ -4,26 +4,22 @@ import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 
 import CashEntriesTabContent from '@/lib/entities/cash-desk/containers/cash-entries-tabs/tab-content';
-import { useCashDeskEntries } from '@/lib/entities/cash-desk/hooks/useCashDeskEntries';
+import { useComplexCashDeskEntries } from '@/lib/entities/cash-desk/hooks/useComplexCashDeskEntries';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const CashEntriesTabs: FC = () => {
   const t = useTranslations('cash_desk.tabs');
   const {
-    data: all,
-    isLoading: loadingAll,
-    sentinelRef: sentinelAll,
-  } = useCashDeskEntries();
-  const {
-    data: cash,
-    isLoading: loadingCash,
-    sentinelRef: sentinelCash,
-  } = useCashDeskEntries('cash');
-  const {
-    data: bank,
-    isLoading: loadingBank,
-    sentinelRef: sentinelBank,
-  } = useCashDeskEntries('bank_transfer');
+    all,
+    loadingAll,
+    sentinelAll,
+    cash,
+    loadingCash,
+    sentinelCash,
+    bank,
+    loadingBank,
+    sentinelBank,
+  } = useComplexCashDeskEntries();
 
   return (
     <Tabs defaultValue="all" className="mb-4">

@@ -4,6 +4,7 @@ import { useForm } from '@/lib/composite/form/useForm';
 import { createCashRegisterEntry } from '@/lib/entities/cash-desk/actions/createCashRegisterEntry';
 import { useBankNames } from '@/lib/entities/cash-desk/hooks/useBankNames';
 import { useCashDeskStat } from '@/lib/entities/cash-desk/hooks/useCashDeskStat';
+import { useComplexCashDeskEntries } from '@/lib/entities/cash-desk/hooks/useComplexCashDeskEntries';
 import {
   CashRegisterPayload,
   CashRegisterType,
@@ -20,6 +21,7 @@ export function useAddCashRegisterEntry({
 }: DebtorAddCashRegisterEntryParams) {
   const { refresh: refreshStats } = useCashDeskStat();
   const { refresh: refreshBanks } = useBankNames();
+  const { refresh: refreshEntries } = useComplexCashDeskEntries();
 
   const defaultValues: CashRegisterPayload = useMemo(() => {
     return {
@@ -39,7 +41,7 @@ export function useAddCashRegisterEntry({
       values.added_by = added_by;
 
       await createCashRegisterEntry(values);
-      await Promise.all([refreshStats(), refreshBanks()]);
+      await Promise.all([refreshStats(), refreshBanks(), refreshEntries()]);
     },
     schema,
   });

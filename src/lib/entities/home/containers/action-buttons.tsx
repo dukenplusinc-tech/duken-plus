@@ -11,7 +11,7 @@ export default function ActionButtons() {
   return (
     <div className="px-2 mt-4 space-y-2">
       <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
-        <Plus size={28} className="mr-3" />{' '}
+        <Plus size={28} className="mr-3" />
         <span className="text-lg">Добавить фирму</span>
       </Button>
 
@@ -19,12 +19,12 @@ export default function ActionButtons() {
         className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto"
         onClick={expenseFormLauncher}
       >
-        <Plus size={28} className="mr-3" />{' '}
+        <Plus size={28} className="mr-3" />
         <span className="text-lg">Добавить расход</span>
       </Button>
 
       <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
-        <Calendar size={28} className="mr-3" />{' '}
+        <Calendar size={28} className="mr-3" />
         <span className="text-lg">Календарь</span>
       </Button>
     </div>

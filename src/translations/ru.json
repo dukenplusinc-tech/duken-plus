@@ -378,6 +378,9 @@
     "form": {
       "label_type": "Тип",
       "label_type_placeholder": "Выберите или введите тип",
+      "label_type_search_placeholder": "Начните писать...",
+      "label_type_search_empty": "Пусто...",
+      "label_type_search_add": "Добавить",
       "label_amount": "Сумма",
       "label_date": "Дата",
       "cancel": "Отмена",

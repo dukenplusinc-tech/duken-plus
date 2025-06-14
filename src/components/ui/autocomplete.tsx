@@ -66,6 +66,10 @@ interface AutocompleteProps {
   ) => React.ReactNode;
 }
 
+const defaultCustomValueMessage: AutocompleteProps['customValueMessage'] = (
+  val
+) => `Use "${val}"`;
+
 export function Autocomplete({
   value,
   onValueChange,
@@ -78,7 +82,7 @@ export function Autocomplete({
   searchPlaceholder = 'Search...',
   emptyMessage = 'No options found.',
   allowCustomValue = true,
-  customValueMessage = (val) => `Use "${val}"`,
+  customValueMessage: propsCustomValueMessage,
   filterFn,
   renderOption,
 }: AutocompleteProps) {
@@ -90,6 +94,9 @@ export function Autocomplete({
   useEffect(() => {
     setSearchValue(value);
   }, [value]);
+
+  const customValueMessage: AutocompleteProps['customValueMessage'] =
+    propsCustomValueMessage ?? defaultCustomValueMessage;
 
   // Default filter function
   const defaultFilterFn = (
@@ -206,17 +213,21 @@ export function Autocomplete({
                   <CommandList className="flex-1 px-4">
                     <CommandEmpty>
                       <div className="py-8 text-center">
-                        <p className="text-gray-500 mb-4">{emptyMessage}</p>
-                        {allowCustomValue && searchValue && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className="w-full"
-                            onClick={() => handleSelect(searchValue)}
-                          >
-                            {customValueMessage(searchValue)}
-                          </Button>
+                        {!(allowCustomValue && customValueMessage) && (
+                          <p className="text-gray-500 mb-4">{emptyMessage}</p>
                         )}
+                        {allowCustomValue &&
+                          searchValue &&
+                          customValueMessage && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="w-full"
+                              onClick={() => handleSelect(searchValue)}
+                            >
+                              {customValueMessage(searchValue)}
+                            </Button>
+                          )}
                       </div>
                     </CommandEmpty>
                     <CommandGroup>
@@ -300,10 +311,12 @@ export function Autocomplete({
               <CommandList>
                 <CommandEmpty>
                   <div className="p-2">
-                    <p className="text-sm text-muted-foreground">
-                      {emptyMessage}
-                    </p>
-                    {allowCustomValue && searchValue && (
+                    {!(allowCustomValue && customValueMessage) && (
+                      <p className="text-sm text-muted-foreground">
+                        {emptyMessage}
+                      </p>
+                    )}
+                    {allowCustomValue && searchValue && customValueMessage && (
                       <Button
                         type="button"
                         variant="ghost"

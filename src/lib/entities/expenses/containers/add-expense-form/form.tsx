@@ -10,8 +10,8 @@ import { useTranslations } from 'next-intl';
 
 import { useExpenseTypes } from '@/lib/entities/expenses/hooks/useExpenseTypes';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
+import { Autocomplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
-import { CombinedSearchableSelect } from '@/components/form/searchable-select';
 
 import { useExpenseForm } from './hooks';
 
@@ -33,17 +33,18 @@ export const ExpenseForm: FC<ExpenseFormProps> = ({ id }) => {
         <IonItem>
           <IonLabel position="stacked">{t('label_type')}</IonLabel>
 
-          <CombinedSearchableSelect
-            className="my-2 w-full"
-            options={types.map((value) => ({
-              value,
-              label: value,
-            }))}
+          <Autocomplete
+            className="my-4 w-full"
+            options={types}
+            value={form.watch('type')}
+            onValueChange={(value) => form.setValue('type', value)}
             placeholder={t('label_type_placeholder')}
-            label=""
-            onChange={(option) => {
-              form.setValue('type', option.inputValue || option.selected || '');
-            }}
+            searchPlaceholder={t('label_type_search_placeholder')}
+            emptyMessage={t('label_type_search_empty')}
+            allowCustomValue
+            customValueMessage={(val) =>
+              `${t('label_type_search_add')}: \"${val}\"`
+            }
           />
         </IonItem>
 

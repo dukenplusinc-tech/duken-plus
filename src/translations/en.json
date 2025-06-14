@@ -320,6 +320,7 @@
     "empty_text": "No transactions available",
     "form": {
       "create_title": "Add record",
+      "fill_in_cash": "Fill the cash register for today",
       "is_loan": "Loan",
       "form_label_amount": "Amount",
       "form_label_description": "Description",
@@ -386,7 +387,7 @@
   "cash_desk": {
     "tabs": {
       "all": "All",
-      "cash": "Cash",
+      "cash": "Fill the cash register",
       "bank": "Bank transfer"
     },
     "labels": {

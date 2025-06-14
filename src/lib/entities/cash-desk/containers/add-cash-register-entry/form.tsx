@@ -70,19 +70,23 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
           </IonLabel>
         )}
 
-        <IonItem>
-          <IonLabel position="stacked">{t('form_label_from')}</IonLabel>
-          <IonInput
-            value={form.watch('from')}
-            disabled={isProcessing}
-            onIonInput={(e) => form.setValue('from', e.detail.value!)}
-            placeholder={t('form_label_from')}
-          />
-        </IonItem>
-        {form.formState.errors.from && (
-          <IonLabel color="danger">
-            {form.formState.errors.from.message}
-          </IonLabel>
+        {type === CashRegisterType.BANK_TRANSFER && (
+          <>
+            <IonItem>
+              <IonLabel position="stacked">{t('form_label_from')}</IonLabel>
+              <IonInput
+                value={form.watch('from')}
+                disabled={isProcessing}
+                onIonInput={(e) => form.setValue('from', e.detail.value!)}
+                placeholder={t('form_label_from')}
+              />
+            </IonItem>
+            {form.formState.errors.from && (
+              <IonLabel color="danger">
+                {form.formState.errors.from.message}
+              </IonLabel>
+            )}
+          </>
         )}
 
         {isBankTransfer && (

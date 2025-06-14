@@ -22,24 +22,20 @@ export const BankSelect: FC<BankSelectProps> = ({
   const t = useTranslations('cash_desk.form');
 
   return (
-    <>
-      <IonItem>
-        <Autocomplete
-          options={banks}
-          value={value || ''}
-          disabled={disabled}
-          onValueChange={(value) => {
-            if (onChange) {
-              onChange(value);
-            }
-          }}
-          placeholder={t('form_label_bank_name')}
-          searchPlaceholder="Search banks..."
-          emptyMessage="No banks found."
-          allowCustomValue={true}
-          customValueMessage={(val) => `Use "${val}"`}
-        />
-      </IonItem>
-    </>
+    <IonItem className="p-2">
+      <Autocomplete
+        options={banks}
+        value={value || ''}
+        disabled={disabled}
+        onValueChange={(selectedValue) => {
+          onChange?.(selectedValue);
+        }}
+        placeholder={t('form_label_bank_name')}
+        searchPlaceholder="Search banks..."
+        emptyMessage="No banks found."
+        allowCustomValue
+        customValueMessage={(val) => `Use "${val}"`}
+      />
+    </IonItem>
   );
 };

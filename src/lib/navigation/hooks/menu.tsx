@@ -74,12 +74,12 @@ const sideMenuBottom: MenuItem[] = [
     icon: icons.personOutline,
     scope: RoleScope.users,
   },
-  {
-    title: 'label_users',
-    href: fromUrl.toUsers(),
-    icon: icons.personCircleSharp,
-    scope: RoleScope.users,
-  },
+  // {
+  //   title: 'label_users',
+  //   href: fromUrl.toUsers(),
+  //   icon: icons.personCircleSharp,
+  //   scope: RoleScope.users,
+  // },
   {
     title: 'label_settings',
     href: fromUrl.toSettings(),

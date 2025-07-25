@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import type SignatureCanvas from 'react-signature-canvas';
 
-const ReactSignatureCanvas = require('react-signature-canvas'); // <-- CJS require
+const ReactSignatureCanvas = require('react-signature-canvas').default;
 
 export type SignaturePadType = SignatureCanvas;
 

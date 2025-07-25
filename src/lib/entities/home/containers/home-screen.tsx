@@ -8,6 +8,7 @@ import ActionButtons from '@/lib/entities/home/containers/action-buttons';
 import CompanyTab from '@/lib/entities/home/containers/company-tab';
 import Consignment from '@/lib/entities/home/containers/consignment';
 import ExpenseSummary from '@/lib/entities/home/containers/expense-summary';
+import DebtorTab from '@/lib/entities/home/containers/tabs/debtor-tab';
 import { Button } from '@/components/ui/button';
 
 export const HomeScreen: FC = () => {
@@ -64,6 +65,8 @@ export const HomeScreen: FC = () => {
           <Consignment count={13} />
         </>
       )}
+
+      {activeTab === 'debtors' && <DebtorTab />}
     </>
   );
 };

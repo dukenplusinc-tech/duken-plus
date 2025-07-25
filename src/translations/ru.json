@@ -438,5 +438,25 @@
     "message_placeholder": "Сообщение...",
     "today": "сегодня",
     "you": "Вы"
+  },
+  "delivery_request": {
+    "dialog": {
+      "title": "Добавить заявку (от Фирмы)"
+    },
+    "summary": {
+      "today_label": "Общий расход на сегодня:",
+      "yesterday_label": "Расходы <br /> за вчера:",
+      "tomorrow_label": "Расходы <br /> на завтра:"
+    },
+    "form": {
+      "label_type": "Фирма",
+      "label_type_placeholder": "Выберите фирму из списка",
+      "label_type_search_empty": "Пусто...",
+      "label_type_search_add": "Добавить",
+      "label_amount": "Сумма",
+      "label_date": "Дата",
+      "cancel": "Отмена",
+      "submit": "Сохранить"
+    }
   }
 }

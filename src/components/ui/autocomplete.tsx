@@ -81,7 +81,7 @@ export function Autocomplete({
   className,
   searchPlaceholder = 'Search...',
   emptyMessage = 'No options found.',
-  allowCustomValue = true,
+  allowCustomValue = false,
   customValueMessage: propsCustomValueMessage,
   filterFn,
   renderOption,

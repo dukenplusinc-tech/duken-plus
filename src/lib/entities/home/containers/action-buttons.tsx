@@ -3,14 +3,19 @@
 import { Calendar, Plus } from 'lucide-react';
 
 import { useExpenseFormLauncher } from '@/lib/entities/expenses/containers/add-expense-form';
+import { useAddDeliveryReqLauncher } from '@/lib/entities/suppliers/containers/add-delivery-form';
 import { Button } from '@/components/ui/button';
 
 export default function ActionButtons() {
   const expenseFormLauncher = useExpenseFormLauncher();
+  const addDeliveryReqLauncher = useAddDeliveryReqLauncher();
 
   return (
     <div className="px-2 mt-4 space-y-2">
-      <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
+      <Button
+        className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto"
+        onClick={addDeliveryReqLauncher}
+      >
         <Plus size={28} className="mr-3" />
         <span className="text-lg">Добавить фирму</span>
       </Button>

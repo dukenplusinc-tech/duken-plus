@@ -1,7 +1,7 @@
 'use server';
 
+import { DeliveryFormValues } from '@/lib/entities/deliveries/schema';
 import { getShopId } from '@/lib/entities/shop/actions/getShopId';
-import { DeliveryFormValues } from '@/lib/entities/suppliers/schema';
 import { createClient } from '@/lib/supabase/server';
 import { Database } from '@/lib/supabase/types';
 

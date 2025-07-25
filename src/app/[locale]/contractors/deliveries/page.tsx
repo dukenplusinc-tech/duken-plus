@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { DeliveriesTable } from '@/lib/entities/suppliers/containers/deliveries-table';
+import { DeliveriesTable } from '@/lib/entities/deliveries/containers/deliveries-table';
 
 export const metadata: Metadata = {
   title: 'Deliveries',

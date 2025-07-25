@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { AddDeliveryForm } from '@/lib/entities/suppliers/containers/add-delivery-form/form';
+import { AddDeliveryForm } from '@/lib/entities/deliveries/containers/add-delivery-form/form';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 
 export function useAddDeliveryReqLauncher() {

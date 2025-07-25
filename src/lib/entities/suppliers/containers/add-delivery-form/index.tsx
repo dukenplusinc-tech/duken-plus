@@ -7,7 +7,7 @@ import { AddDeliveryForm } from '@/lib/entities/suppliers/containers/add-deliver
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 
 export function useAddDeliveryReqLauncher() {
-  const t = useTranslations('expenses');
+  const t = useTranslations('delivery_request');
 
   const dialog = useModalDialog();
 

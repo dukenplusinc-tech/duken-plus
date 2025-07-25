@@ -14,7 +14,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import {
   Popover,
   PopoverContent,
@@ -200,6 +200,7 @@ export function Autocomplete({
 
           <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogContent className="sm:max-w-full h-full max-h-full p-0 gap-0">
+              <DialogTitle className="hidden">autocomplete</DialogTitle>
               <div className="flex-1 flex flex-col">
                 <Command className="flex-1">
                   <div className="p-4">

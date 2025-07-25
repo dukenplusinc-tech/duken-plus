@@ -291,6 +291,66 @@ export type Database = {
         }
         Relationships: []
       }
+      deliveries: {
+        Row: {
+          accepted_date: string | null
+          amount_expected: number
+          amount_received: number | null
+          consignment_due_date: string | null
+          contractor_id: string
+          created_at: string | null
+          expected_date: string
+          id: string
+          is_consignement: boolean
+          shop_id: string
+          status: Database["public"]["Enums"]["delivery_status"]
+          updated_at: string | null
+        }
+        Insert: {
+          accepted_date?: string | null
+          amount_expected: number
+          amount_received?: number | null
+          consignment_due_date?: string | null
+          contractor_id: string
+          created_at?: string | null
+          expected_date: string
+          id?: string
+          is_consignement?: boolean
+          shop_id: string
+          status?: Database["public"]["Enums"]["delivery_status"]
+          updated_at?: string | null
+        }
+        Update: {
+          accepted_date?: string | null
+          amount_expected?: number
+          amount_received?: number | null
+          consignment_due_date?: string | null
+          contractor_id?: string
+          created_at?: string | null
+          expected_date?: string
+          id?: string
+          is_consignement?: boolean
+          shop_id?: string
+          status?: Database["public"]["Enums"]["delivery_status"]
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliveries_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       employee_sessions: {
         Row: {
           admin_id: string
@@ -762,6 +822,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      current_shop_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       distinct_expense_types: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -787,6 +851,7 @@ export type Database = {
       }
     }
     Enums: {
+      delivery_status: "pending" | "accepted" | "due"
       transaction_type: "cash" | "bank_transfer"
     }
     CompositeTypes: {
@@ -903,7 +968,9 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      delivery_status: ["pending", "accepted", "due"],
       transaction_type: ["cash", "bank_transfer"],
     },
   },
 } as const
+

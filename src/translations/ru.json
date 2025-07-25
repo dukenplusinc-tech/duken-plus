@@ -451,6 +451,7 @@
     "form": {
       "label_type": "Фирма",
       "label_type_placeholder": "Выберите фирму из списка",
+      "label_type_search_placeholder": "Начните писать...",
       "label_type_search_empty": "Пусто...",
       "label_type_search_add": "Добавить",
       "label_amount": "Сумма",

@@ -1,22 +1,23 @@
 'use client';
 
 import { useForm } from '@/lib/composite/form/useForm';
+import { createDelivery } from '@/lib/entities/suppliers/actions/createDelivery';
 import {
   deliveryFormSchema,
   DeliveryFormValues,
 } from '@/lib/entities/suppliers/schema';
 
 const defaultValues: DeliveryFormValues = {
-  amount: 0,
+  amount_expected: 0,
   contractor_id: null,
-  scheduled_at: null,
+  expected_date: null,
 };
 
 export function useAddDeliveryRequestForm() {
   return useForm<typeof deliveryFormSchema, DeliveryFormValues>({
     defaultValues,
     request: async (values) => {
-      // await createExpense(values);
+      await createDelivery(values);
     },
     schema: deliveryFormSchema,
   });

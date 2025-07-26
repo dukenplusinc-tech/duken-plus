@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,6 +12,7 @@ interface DayViewProps {
 
 export default function DayView({ currentDate }: DayViewProps) {
   const { data = [] } = useCalendarDeliveries(currentDate);
+  const t = useTranslations('calendar');
 
   const events = useMemo(() => {
     const dayISO = currentDate.toISOString().slice(0, 10);
@@ -18,12 +20,12 @@ export default function DayView({ currentDate }: DayViewProps) {
     return (data || [])
       .filter((item) => item.expected_date === dayISO)
       .map((item) => {
-        const time = item.expected_time ?? '10:00'; // fallback time
+        const time = item.expected_time ?? '10:00';
         const hour = parseInt(time.split(':')[0] || '10', 10);
 
         return {
           id: item.id,
-          title: item.contractors?.title || 'Без названия',
+          title: item.contractors?.title || t('no_title'),
           time,
           hour,
           duration: 60,
@@ -35,26 +37,19 @@ export default function DayView({ currentDate }: DayViewProps) {
                 : 'bg-green-200',
         };
       });
-  }, [data, currentDate]);
+  }, [data, currentDate, t]);
 
-  const hours = Array.from({ length: 12 }, (_, i) => i + 8); // 08:00 to 19:00
-  const dayNames = [
-    'Воскресенье',
-    'Понедельник',
-    'Вторник',
-    'Среда',
-    'Четверг',
-    'Пятница',
-    'Суббота',
-  ];
+  const hours = Array.from({ length: 12 }, (_, i) => i + 8);
+  const dayNames = t.raw('weekdays') as string[];
   const dayName = dayNames[currentDate.getDay()];
+
+  const monthName = currentDate.toLocaleDateString('ru-RU', { month: 'long' });
 
   return (
     <div className="h-full overflow-y-auto px-3">
       <div className="mb-4">
         <h2 className="text-lg font-medium text-center text-primary">
-          {dayName}, {currentDate.getDate()}{' '}
-          {currentDate.toLocaleDateString('ru-RU', { month: 'long' })}{' '}
+          {dayName}, {currentDate.getDate()} {monthName}{' '}
           {currentDate.getFullYear()}
         </h2>
       </div>

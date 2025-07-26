@@ -2,6 +2,7 @@
 
 import { FC, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,23 +12,11 @@ import DayView from './day-view';
 import MonthView from './month-view';
 
 export const CalendarDelivers: FC = () => {
+  const t = useTranslations('calendar');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<'day' | 'month'>('day');
 
-  const monthNames = [
-    'Январь',
-    'Февраль',
-    'Март',
-    'Апрель',
-    'Май',
-    'Июнь',
-    'Июль',
-    'Август',
-    'Сентябрь',
-    'Октябрь',
-    'Ноябрь',
-    'Декабрь',
-  ];
+  const monthNames = t.raw('months') as string[];
 
   const navigateDate = (direction: 'prev' | 'next') => {
     const newDate = new Date(currentDate);
@@ -82,8 +71,8 @@ export const CalendarDelivers: FC = () => {
             onValueChange={(value) => setView(value as 'day' | 'month')}
           >
             <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="day">День</TabsTrigger>
-              <TabsTrigger value="month">Месяц</TabsTrigger>
+              <TabsTrigger value="day">{t('day')}</TabsTrigger>
+              <TabsTrigger value="month">{t('month')}</TabsTrigger>
             </TabsList>
           </Tabs>
         </CardContent>

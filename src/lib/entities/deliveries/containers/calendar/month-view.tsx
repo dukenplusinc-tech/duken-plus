@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
 import { Card, CardContent } from '@/components/ui/card';
@@ -18,6 +19,7 @@ export default function MonthView({
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
+  const t = useTranslations('calendar');
   const { data = [] } = useCalendarDeliveries(currentDate);
 
   const deliveriesByDay = useMemo(() => {
@@ -39,26 +41,13 @@ export default function MonthView({
     return map;
   }, [data]);
 
-  const monthNames = [
-    'Январь',
-    'Февраль',
-    'Март',
-    'Апрель',
-    'Май',
-    'Июнь',
-    'Июль',
-    'Август',
-    'Сентябрь',
-    'Октябрь',
-    'Ноябрь',
-    'Декабрь',
-  ];
-  const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  const monthNames = t.raw('months') as string[];
+  const dayNames = t.raw('day_names') as string[];
 
-  const getDaysInMonth = (year: number, month: number) =>
-    new Date(year, month + 1, 0).getDate();
-  const getFirstDayOfMonth = (year: number, month: number) => {
-    const first = new Date(year, month, 1).getDay();
+  const getDaysInMonth = (y: number, m: number) =>
+    new Date(y, m + 1, 0).getDate();
+  const getFirstDayOfMonth = (y: number, m: number) => {
+    const first = new Date(y, m, 1).getDay();
     return first === 0 ? 6 : first - 1;
   };
 
@@ -67,13 +56,12 @@ export default function MonthView({
     const firstDay = getFirstDayOfMonth(year, month);
     const days = [];
 
-    // Pad empty cells before first
     for (let i = 0; i < firstDay; i++) {
       days.push(
         <div
           key={`empty-${i}`}
           className="h-12 flex items-center justify-center text-gray-300"
-        ></div>
+        />
       );
     }
 

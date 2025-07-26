@@ -462,5 +462,39 @@
     "message_placeholder": "Message...",
     "today": "today",
     "you": "You"
+  },
+  "delivery_request": {
+    "dialog": {
+      "title": "Add request (from Company)"
+    },
+    "summary": {
+      "today_label": "Total expense for today:",
+      "yesterday_label": "Expenses <br /> for yesterday:",
+      "tomorrow_label": "Expenses <br /> for tomorrow:"
+    },
+    "form": {
+      "label_type": "Company",
+      "label_type_placeholder": "Select a company from the list",
+      "label_type_search_placeholder": "Start typing...",
+      "label_type_search_empty": "Empty...",
+      "label_type_search_add": "Add",
+      "label_amount": "Amount",
+      "label_date": "Date",
+      "cancel": "Cancel",
+      "submit": "Save"
+    }
+  },
+  "delivery_accept": {
+    "dialog": {
+      "title": "Accept company"
+    },
+    "form": {
+      "label_type": "Company",
+      "label_amount": "Actual amount",
+      "label_is_consignement": "Consignment",
+      "label_consignment_date": "Consignment payment date",
+      "cancel": "Cancel",
+      "submit": "Save"
+    }
   }
 }

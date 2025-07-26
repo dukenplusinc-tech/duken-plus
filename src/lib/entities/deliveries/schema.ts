@@ -7,3 +7,16 @@ export const deliveryFormSchema = z.object({
 });
 
 export type DeliveryFormValues = z.infer<typeof deliveryFormSchema>;
+
+export const acceptDeliveryFormSchema = z.object({
+  amount_received: z.coerce.number().min(0.01),
+  is_consignement: z.boolean().default(false),
+  consignment_due_date: z.string().datetime().optional().nullable(),
+});
+
+acceptDeliveryFormSchema.refine(
+  (val) => !val.is_consignement || !!val.consignment_due_date,
+  { message: 'Дата консигнации обязательна', path: ['consignment_due_date'] }
+);
+
+export type AcceptDeliveryFormValues = z.infer<typeof acceptDeliveryFormSchema>;

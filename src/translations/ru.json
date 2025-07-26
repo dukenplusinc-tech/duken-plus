@@ -483,5 +483,18 @@
       "cancel": "Отмена",
       "submit": "Сохранить"
     }
+  },
+  "delivery_accept": {
+    "dialog": {
+      "title": "Принять фирму"
+    },
+    "form": {
+      "label_type": "Фирма",
+      "label_amount": "Фактическая сумма",
+      "label_is_consignement": "Консигнация",
+      "label_consignment_date": "Дата оплаты по консигнации",
+      "cancel": "Отмена",
+      "submit": "Сохранить"
+    }
   }
 }

@@ -1,10 +1,9 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { useDeleteDelivery } from '@/lib/entities/deliveries/hooks/useDeleteDelivery';
+import { DeliveryActions } from '@/lib/entities/deliveries/containers/deliveries-table/actions';
 import { useTodayDeliveriesList } from '@/lib/entities/deliveries/hooks/useTodayDeliveriesList';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { cn } from '@/lib/utils';
@@ -26,8 +25,6 @@ export const DeliveriesTable: FC = () => {
     isLoading,
     error,
   } = useTodayDeliveriesList(showOverdueOnly);
-
-  const deleteDialog = useDeleteDelivery();
 
   const isEmpty = !isLoading && data.length === 0;
   const totalAmount = data.reduce((sum, d) => sum + d.amount_expected, 0);
@@ -88,51 +85,30 @@ export const DeliveriesTable: FC = () => {
                 {index + 1}. {delivery.contractor_name}
                 {delivery.status == 'due' && (
                   <span className="mt-2 block text-sm">
-                    {t('row.planned_for')}{' '}
+                    {t('row.planned_for')}
                     <span className="font-bold">{delivery.expected_date}</span>
                   </span>
                 )}
               </div>
 
               <div className="p-4 border-r font-bold text-primary">
-                <Money>{delivery.amount_expected}</Money>
+                <Money
+                  className={cn(
+                    delivery.amount_received &&
+                      delivery.amount_received !== delivery.amount_expected &&
+                      'line-through'
+                  )}
+                >
+                  {delivery.amount_expected}
+                </Money>
+
+                {delivery.amount_received &&
+                  delivery.amount_received !== delivery.amount_expected && (
+                    <Money className="block">{delivery.amount_expected}</Money>
+                  )}
               </div>
 
-              <div className="p-4 flex items-center gap-2">
-                {delivery.status === 'accepted' ? (
-                  <div
-                    className="w-10 h-10 bg-success rounded flex items-center justify-center"
-                    title={t('row.accepted')}
-                  >
-                    <Check className="text-success-foreground" />
-                  </div>
-                ) : (
-                  <>
-                    <Button
-                      size="icon"
-                      variant="success"
-                      className="w-10 h-10"
-                      onClick={() => console.log(delivery.id)}
-                      title={t('actions.accept')}
-                    >
-                      <Check />
-                    </Button>
-
-                    {delivery.status === 'due' && (
-                      <Button
-                        size="icon"
-                        variant="destructive"
-                        className="w-10 h-10"
-                        disabled={deleteDialog.processing}
-                        onClick={() => deleteDialog.onDelete(delivery.id)}
-                        title={t('actions.delete')}
-                      >
-                        🗑️
-                      </Button>
-                    )}
-                  </>
-                )}
-              </div>
+              <DeliveryActions delivery={delivery} />
             </div>
           ))}
         </div>

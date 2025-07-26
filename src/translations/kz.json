@@ -462,5 +462,39 @@
     "message_placeholder": "Хабарлама...",
     "today": "бүгін",
     "you": "Сіз"
+  },
+  "delivery_request": {
+    "dialog": {
+      "title": "Өтінім қосу (Компаниядан)"
+    },
+    "summary": {
+      "today_label": "Бүгінгі жалпы шығын:",
+      "yesterday_label": "Кешегі <br /> шығындар:",
+      "tomorrow_label": "Ертеңгі <br /> шығындар:"
+    },
+    "form": {
+      "label_type": "Компания",
+      "label_type_placeholder": "Тізімнен компания таңдаңыз",
+      "label_type_search_placeholder": "Жазуды бастаңыз...",
+      "label_type_search_empty": "Бос...",
+      "label_type_search_add": "Қосу",
+      "label_amount": "Сома",
+      "label_date": "Күні",
+      "cancel": "Болдырмау",
+      "submit": "Сақтау"
+    }
+  },
+  "delivery_accept": {
+    "dialog": {
+      "title": "Компанияны қабылдау"
+    },
+    "form": {
+      "label_type": "Компания",
+      "label_amount": "Нақты сома",
+      "label_is_consignement": "Консигнация",
+      "label_consignment_date": "Консигнация төлем күні",
+      "cancel": "Болдырмау",
+      "submit": "Сақтау"
+    }
   }
 }

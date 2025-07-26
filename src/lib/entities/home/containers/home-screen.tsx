@@ -1,15 +1,9 @@
 'use client';
 
 import { FC, useState } from 'react';
-import Link from 'next/link';
-import { ClipboardList } from 'lucide-react';
 
-import ActionButtons from '@/lib/entities/home/containers/action-buttons';
-import CompanyTab from '@/lib/entities/home/containers/company-tab';
-import Consignment from '@/lib/entities/home/containers/consignment';
-import ExpenseSummary from '@/lib/entities/home/containers/expense-summary';
-import DebtorTab from '@/lib/entities/home/containers/tabs/debtor-tab';
-import { Button } from '@/components/ui/button';
+import { CompaniesTab } from '@/lib/entities/home/containers/tabs/companies-tab';
+import { DebtorTab } from '@/lib/entities/home/containers/tabs/debtor-tab';
 
 export const HomeScreen: FC = () => {
   const [activeTab, setActiveTab] = useState<'companies' | 'debtors'>(
@@ -42,30 +36,7 @@ export const HomeScreen: FC = () => {
         </button>
       </div>
 
-      {/* Content based on active tab */}
-      {activeTab === 'companies' && (
-        <>
-          <CompanyTab />
-          <ActionButtons />
-          <ExpenseSummary />
-
-          <div className="px-2 mt-4 space-y-2">
-            {/* Stats Button */}
-            <Button
-              className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto mt-2 mb-4"
-              asChild
-            >
-              <Link href="/stats">
-                <ClipboardList size={28} className="mr-3" />{' '}
-                <span className="text-lg">Статистика / отчеты</span>
-              </Link>
-            </Button>
-          </div>
-
-          <Consignment count={13} />
-        </>
-      )}
-
+      {activeTab === 'companies' && <CompaniesTab />}
       {activeTab === 'debtors' && <DebtorTab />}
     </>
   );

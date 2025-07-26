@@ -46,6 +46,10 @@ export function toDeliveries(): string {
   return `/contractors/deliveries`;
 }
 
+export function toConsignement(): string {
+  return `/contractors/consignement`;
+}
+
 export function toAddContractor(): string {
   return `/contractors/create`;
 }

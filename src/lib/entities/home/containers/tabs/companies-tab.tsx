@@ -40,7 +40,7 @@ export const CompaniesTab: FC = () => {
         </Button>
       </div>
 
-      <Consignment count={13} />
+      <Consignment />
     </>
   );
 };

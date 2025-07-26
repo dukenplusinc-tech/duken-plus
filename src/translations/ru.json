@@ -262,8 +262,32 @@
     }
   },
   "deliveries": {
-    "title": "Фирмы на сегодня",
-    "empty_text": "Пусто на сегодня"
+    "title": "Заявки от фирм",
+    "empty_text": "Нет данных по доставкам",
+    "filter": {
+      "show_overdue": "Показать только просроченные",
+      "show_all": "Показать все"
+    },
+    "header": {
+      "firms_total": "ФИРМ на сумму"
+    },
+    "footer": {
+      "remaining": "Осталось",
+      "firms_remaining": "ФИРМ на сумму"
+    },
+    "table": {
+      "name": "Название",
+      "amount": "Сумма",
+      "actions": "Действия"
+    },
+    "row": {
+      "accepted": "Уже принято",
+      "planned_for": "Запланировано на:"
+    },
+    "actions": {
+      "accept": "Принять",
+      "delete": "Удалить"
+    }
   },
   "debtors": {
     "title": "Должники",

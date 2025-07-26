@@ -261,6 +261,34 @@
       "by_title": "By Title"
     }
   },
+  "deliveries": {
+    "title": "Requests from companies",
+    "empty_text": "No delivery data",
+    "filter": {
+      "show_overdue": "Show only overdue",
+      "show_all": "Show all"
+    },
+    "header": {
+      "firms_total": "COMPANIES totaling"
+    },
+    "footer": {
+      "remaining": "Remaining",
+      "firms_remaining": "COMPANIES totaling"
+    },
+    "table": {
+      "name": "Name",
+      "amount": "Amount",
+      "actions": "Actions"
+    },
+    "row": {
+      "accepted": "Already accepted",
+      "planned_for": "Planned for:"
+    },
+    "actions": {
+      "accept": "Accept",
+      "delete": "Delete"
+    }
+  },
   "debtors": {
     "title": "Debtors",
     "title_edit": "Edit Debtor",

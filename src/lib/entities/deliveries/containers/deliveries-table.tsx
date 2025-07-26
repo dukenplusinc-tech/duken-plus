@@ -46,7 +46,7 @@ export const DeliveriesTable: FC = () => {
       <PageSubHeader className="mb-4">
         <>
           <span className="block mb-2">
-            <span>{data.length}</span> ФИРМ на сумму
+            <span>{data.length}</span> {t('header.firms_total')}
           </span>
           <Money>{totalAmount}</Money>
         </>
@@ -57,7 +57,7 @@ export const DeliveriesTable: FC = () => {
           onClick={() => setShowOverdueOnly((prev) => !prev)}
           className="text-sm"
         >
-          {showOverdueOnly ? 'Показать все' : 'Показать только просроченные'}
+          {showOverdueOnly ? t('filter.show_all') : t('filter.show_overdue')}
         </Button>
       </div>
 
@@ -68,9 +68,9 @@ export const DeliveriesTable: FC = () => {
         <div className="bg-white mt-4">
           {/* Table Header */}
           <div className="grid grid-cols-3 border-b font-bold bg-muted text-muted-foreground">
-            <div className="p-4 border-r">Название</div>
-            <div className="p-4 border-r">Сумма</div>
-            <div className="p-4">Действия</div>
+            <div className="p-4 border-r">{t('table.name')}</div>
+            <div className="p-4 border-r">{t('table.amount')}</div>
+            <div className="p-4">{t('table.actions')}</div>
           </div>
 
           {/* Table Rows */}
@@ -88,7 +88,7 @@ export const DeliveriesTable: FC = () => {
                 {index + 1}. {delivery.contractor_name}
                 {delivery.status == 'due' && (
                   <span className="mt-2 block text-sm">
-                    Запланировано на:{' '}
+                    {t('row.planned_for')}{' '}
                     <span className="font-bold">{delivery.expected_date}</span>
                   </span>
                 )}
@@ -102,7 +102,7 @@ export const DeliveriesTable: FC = () => {
                 {delivery.status === 'accepted' ? (
                   <div
                     className="w-10 h-10 bg-success rounded flex items-center justify-center"
-                    title="Уже принято"
+                    title={t('row.accepted')}
                   >
                     <Check className="text-success-foreground" />
                   </div>
@@ -113,7 +113,7 @@ export const DeliveriesTable: FC = () => {
                       variant="success"
                       className="w-10 h-10"
                       onClick={() => console.log(delivery.id)}
-                      title="Принять"
+                      title={t('actions.accept')}
                     >
                       <Check />
                     </Button>
@@ -125,7 +125,7 @@ export const DeliveriesTable: FC = () => {
                         className="w-10 h-10"
                         disabled={deleteDialog.processing}
                         onClick={() => deleteDialog.onDelete(delivery.id)}
-                        title="Удалить"
+                        title={t('actions.delete')}
                       >
                         🗑️
                       </Button>
@@ -138,12 +138,15 @@ export const DeliveriesTable: FC = () => {
         </div>
       )}
 
-      <div className="mt-4 pb-4 text-l text-center">
-        <span className="block mb-2">
-          Осталось <span>{remainingCount}</span> ФИРМ на сумму
-        </span>
-        <Money>{remainingAmount}</Money>
-      </div>
+      {remainingCount > 0 && (
+        <div className="mt-4 pb-4 text-l text-center">
+          <span className="block mb-2">
+            {t('footer.remaining')} <span>{remainingCount}</span>{' '}
+            {t('footer.firms_remaining')}
+          </span>
+          <Money>{remainingAmount}</Money>
+        </div>
+      )}
     </div>
   );
 };

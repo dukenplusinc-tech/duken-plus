@@ -109,7 +109,7 @@ export function toStatistics(): string {
 }
 
 export function toCalendar(): string {
-  return `/calendar`;
+  return `/contractors/deliveries/calendar`;
 }
 
 export function toSubscription(): string {

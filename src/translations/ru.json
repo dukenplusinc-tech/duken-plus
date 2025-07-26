@@ -543,5 +543,21 @@
     "consignment": {
       "title": "Консигнация"
     }
+  },
+  "statistics": {
+    "title": "Статистика",
+    "heading": "Статистика",
+    "period": {
+      "day": "День",
+      "week": "Неделя",
+      "month": "Месяц",
+      "year": "Год"
+    },
+    "summary": {
+      "loaned_out": "Выдано",
+      "repaid": "Возвращено",
+      "to_firms": "Фирмам",
+      "cash_registers": "Кассы"
+    }
   }
 }

@@ -1,10 +1,12 @@
 'use client';
 
+import Link from 'next/link';
 import { Calendar, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useAddDeliveryReqLauncher } from '@/lib/entities/deliveries/containers/add-delivery-form';
 import { useExpenseFormLauncher } from '@/lib/entities/expenses/containers/add-expense-form';
+import { fromUrl } from '@/lib/url';
 import { Button } from '@/components/ui/button';
 
 export default function ActionButtons() {
@@ -30,10 +32,12 @@ export default function ActionButtons() {
         <span className="text-lg">{t('add_expense')}</span>
       </Button>
 
-      <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
-        <Calendar size={28} className="mr-3" />
-        <span className="text-lg">{t('calendar')}</span>
-      </Button>
+      <Link href={fromUrl.toCalendar()}>
+        <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
+          <Calendar size={28} className="mr-3" />
+          <span className="text-lg">{t('calendar')}</span>
+        </Button>
+      </Link>
     </div>
   );
 }

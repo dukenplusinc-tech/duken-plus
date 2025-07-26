@@ -108,6 +108,10 @@ export function toStatistics(): string {
   return `/statistics`;
 }
 
+export function toCalendar(): string {
+  return `/calendar`;
+}
+
 export function toSubscription(): string {
   return `/subscription`;
 }

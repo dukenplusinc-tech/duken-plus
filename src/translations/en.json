@@ -543,5 +543,21 @@
     "consignment": {
       "title": "Consignment"
     }
+  },
+  "statistics": {
+    "title": "Statistics",
+    "heading": "Statistics",
+    "period": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "year": "Year"
+    },
+    "summary": {
+      "loaned_out": "Loaned out",
+      "repaid": "Repaid",
+      "to_firms": "To companies",
+      "cash_registers": "Cash registers"
+    }
   }
 }

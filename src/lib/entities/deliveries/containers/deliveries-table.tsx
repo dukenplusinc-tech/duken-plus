@@ -12,19 +12,10 @@ import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
 import { Money } from '@/components/numbers/money';
 
-interface Company {
-  id: number;
-  name: string;
-  amount: string;
-  accepted: boolean;
-}
-
 export const DeliveriesTable: FC = () => {
   const t = useTranslations('deliveries');
 
   useActivateBackButton();
-
-  const toggleAccepted = (id: number) => {};
 
   const { data = [], isLoading, error } = useTodayDeliveriesList();
 

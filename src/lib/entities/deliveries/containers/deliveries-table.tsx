@@ -101,6 +101,14 @@ export const DeliveriesTable: FC = () => {
           ))}
         </div>
       )}
+
+      <div className="mt-4 pb-4 text-l text-center">
+        <span className="block mb-2">
+          Осталось <span>4</span> ФИРМ на сумму
+        </span>
+
+        <Money>{45435333}</Money>
+      </div>
     </div>
   );
 };

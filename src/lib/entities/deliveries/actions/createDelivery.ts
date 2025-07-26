@@ -8,7 +8,7 @@ import { Database } from '@/lib/supabase/types';
 export async function createDelivery(
   values: Pick<
     DeliveryFormValues,
-    'contractor_id' | 'expected_date' | 'amount_expected'
+    'contractor_id' | 'expected_date' | 'amount_expected' | 'expected_time'
   >
 ) {
   const supabase = createClient();
@@ -20,6 +20,7 @@ export async function createDelivery(
   const payload: Database['public']['Tables']['deliveries']['Insert'] = {
     ...values,
     expected_date: values.expected_date!,
+    expected_time: values.expected_time!,
     contractor_id: String(values.contractor_id),
     amount_expected: Number(values.amount_expected),
     status: 'pending',

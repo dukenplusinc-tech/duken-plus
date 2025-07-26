@@ -480,6 +480,7 @@
       "label_type_search_add": "Add",
       "label_amount": "Amount",
       "label_date": "Date",
+      "label_time": "Time",
       "cancel": "Cancel",
       "submit": "Save"
     }

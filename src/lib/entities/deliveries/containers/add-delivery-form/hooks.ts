@@ -11,6 +11,7 @@ const defaultValues: DeliveryFormValues = {
   amount_expected: 0,
   contractor_id: null,
   expected_date: null,
+  expected_time: null,
 };
 
 export function useAddDeliveryRequestForm() {

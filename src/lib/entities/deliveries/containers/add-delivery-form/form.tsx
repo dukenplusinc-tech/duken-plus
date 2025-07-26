@@ -68,6 +68,20 @@ export const AddDeliveryForm: FC = () => {
           </div>
         </IonItem>
 
+        <IonItem className="no-ripple">
+          <IonLabel position="stacked">{t('label_time')}</IonLabel>
+          <div className="py-4 mx-auto">
+            <IonDatetime
+              presentation="time"
+              value={form.watch('expected_time') ?? '10:00'}
+              onIonChange={(e) =>
+                form.setValue('expected_time', e.detail.value! as string)
+              }
+              disabled={isProcessing}
+            />
+          </div>
+        </IonItem>
+
         <div className="mt-6 flex justify-between">
           <Button variant="link" onClick={handleClose}>
             {t('cancel')}

@@ -480,6 +480,7 @@
       "label_type_search_add": "Добавить",
       "label_amount": "Сумма",
       "label_date": "Дата",
+      "label_time": "Время доставки",
       "cancel": "Отмена",
       "submit": "Сохранить"
     }

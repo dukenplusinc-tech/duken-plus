@@ -32,7 +32,7 @@ export default function ActionButtons() {
         <span className="text-lg">{t('add_expense')}</span>
       </Button>
 
-      <Link href={fromUrl.toCalendar()}>
+      <Link href={fromUrl.toCalendar()} className="block">
         <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
           <Calendar size={28} className="mr-3" />
           <span className="text-lg">{t('calendar')}</span>

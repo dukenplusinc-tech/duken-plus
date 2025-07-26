@@ -1,5 +1,8 @@
 'use client';
 
+import { useMemo } from 'react';
+
+import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface MonthViewProps {
@@ -15,6 +18,27 @@ export default function MonthView({
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
+  const { data = [] } = useCalendarDeliveries(currentDate);
+
+  const deliveriesByDay = useMemo(() => {
+    const map = new Map<
+      string,
+      { due?: boolean; pending?: boolean; consignment?: boolean }
+    >();
+
+    (data || []).forEach((d) => {
+      const date = d.expected_date;
+      if (!date) return;
+      const flags = map.get(date) ?? {};
+      if (d.status === 'due') flags.due = true;
+      if (d.status === 'pending') flags.pending = true;
+      if (d.is_consignement) flags.consignment = true;
+      map.set(date, flags);
+    });
+
+    return map;
+  }, [data]);
+
   const monthNames = [
     'Январь',
     'Февраль',
@@ -29,16 +53,13 @@ export default function MonthView({
     'Ноябрь',
     'Декабрь',
   ];
-
   const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
-  const getDaysInMonth = (year: number, month: number) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-
+  const getDaysInMonth = (year: number, month: number) =>
+    new Date(year, month + 1, 0).getDate();
   const getFirstDayOfMonth = (year: number, month: number) => {
-    const firstDay = new Date(year, month, 1).getDay();
-    return firstDay === 0 ? 6 : firstDay - 1; // Convert Sunday (0) to 6, Monday (1) to 0, etc.
+    const first = new Date(year, month, 1).getDay();
+    return first === 0 ? 6 : first - 1;
   };
 
   const renderCalendar = () => {
@@ -46,40 +67,52 @@ export default function MonthView({
     const firstDay = getFirstDayOfMonth(year, month);
     const days = [];
 
-    // Add empty cells for days before the first day of the month
+    // Pad empty cells before first
     for (let i = 0; i < firstDay; i++) {
       days.push(
         <div
           key={`empty-${i}`}
           className="h-12 flex items-center justify-center text-gray-300"
-        >
-          {getDaysInMonth(year, month - 1) - firstDay + i + 1}
-        </div>
+        ></div>
       );
     }
 
-    // Add days of the month
     for (let i = 1; i <= daysInMonth; i++) {
+      const fullDate = new Date(year, month, i).toISOString().slice(0, 10);
+      const info = deliveriesByDay.get(fullDate);
       const isToday =
-        today.getDate() === i &&
+        today.getFullYear() === year &&
         today.getMonth() === month &&
-        today.getFullYear() === year;
+        today.getDate() === i;
       const isSelected =
-        currentDate.getDate() === i &&
+        currentDate.getFullYear() === year &&
         currentDate.getMonth() === month &&
-        currentDate.getFullYear() === year;
+        currentDate.getDate() === i;
+
+      const hasAny = info?.due || info?.pending || info?.consignment;
 
       days.push(
         <div
           key={i}
           onClick={() => onDateSelect(new Date(year, month, i))}
-          className={`h-12 flex items-center justify-center cursor-pointer rounded-md transition-colors
+          className={`h-12 flex flex-col items-center justify-center cursor-pointer rounded-md transition-colors relative
             ${isSelected ? 'bg-primary text-primary-foreground font-bold' : ''}
             ${isToday && !isSelected ? 'bg-red-100 text-red-600 font-bold' : ''}
             ${!isToday && !isSelected ? 'hover:bg-gray-100' : ''}
           `}
         >
-          {i}
+          <span>{i}</span>
+          {hasAny && (
+            <div className="absolute bottom-1 flex gap-1">
+              {info?.due && <div className="w-2 h-2 rounded-full bg-red-500" />}
+              {info?.pending && (
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+              )}
+              {info?.consignment && (
+                <div className="w-2 h-2 rounded-full bg-yellow-500" />
+              )}
+            </div>
+          )}
         </div>
       );
     }
@@ -90,14 +123,12 @@ export default function MonthView({
   return (
     <div className="h-full overflow-y-auto px-3">
       <div className="space-y-6">
-        {/* Current Month */}
         <Card>
           <CardContent className="p-4">
             <h3 className="text-lg font-bold text-primary mb-4 text-center">
               {monthNames[month]}
             </h3>
 
-            {/* Day Headers */}
             <div className="grid grid-cols-7 gap-1 mb-2">
               {dayNames.map((day) => (
                 <div
@@ -109,7 +140,6 @@ export default function MonthView({
               ))}
             </div>
 
-            {/* Calendar Grid */}
             <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
           </CardContent>
         </Card>

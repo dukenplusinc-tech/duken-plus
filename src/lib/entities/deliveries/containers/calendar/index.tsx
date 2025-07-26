@@ -6,8 +6,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import DayView from '@/components/calendar/day-view';
-import MonthView from '@/components/calendar/month-view';
+
+import DayView from './day-view';
+import MonthView from './month-view';
 
 export const CalendarDelivers: FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());

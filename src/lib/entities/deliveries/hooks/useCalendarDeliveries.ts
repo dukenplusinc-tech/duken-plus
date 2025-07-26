@@ -5,17 +5,28 @@ import { Database } from '@/lib/supabase/types';
 
 const supabase = createClient();
 
+type Delivery = Database['public']['Tables']['deliveries']['Row'];
+type Contractor = Database['public']['Tables']['contractors']['Row'];
+
+export type DeliveryWithContractor = Omit<Delivery, 'contractor_id'> & {
+  contractor_id: string;
+  contractors: Pick<Contractor, 'title'> | null;
+};
+
 export function useCalendarDeliveries(date: Date) {
-  const month = date.getMonth(); // 0-indexed
   const year = date.getFullYear();
+  const month = date.getMonth(); // 0-based
 
   const startDate = new Date(year, month, 1).toISOString().slice(0, 10);
   const endDate = new Date(year, month + 1, 0).toISOString().slice(0, 10);
 
-  return useQuery<Database['public']['Tables']['deliveries']['Row']>(
+  return useQuery<DeliveryWithContractor[]>(
+    // @ts-ignore
     supabase
       .from('deliveries')
-      .select('*')
+      .select(
+        'id, expected_date, expected_time, status, is_consignement, amount_expected, contractor_id, contractors ( title )'
+      )
       .or('status.eq.pending,status.eq.due,is_consignement.eq.true')
       .gte('expected_date', startDate)
       .lte('expected_date', endDate),

@@ -510,5 +510,38 @@
       "acceptCaption": "Yes",
       "cancelCaption": "No"
     }
+  },
+  "home": {
+    "tabs": {
+      "companies": "Companies",
+      "debtors": "Debtors"
+    },
+    "debtors": {
+      "title": "Debtors",
+      "negative": "In debt",
+      "positive": "Returns",
+      "button": "Debtors"
+    },
+    "companies": {
+      "button_stats": "Statistics / Reports",
+      "button_deliveries_today": "Today's Companies",
+      "today_label": "For today",
+      "companies": "COMPANIES",
+      "amount_label": "Total amount",
+      "remaining_label": "Remaining: {count} companies for the amount of"
+    },
+    "expenses": {
+      "summary": {
+        "today_label": "Total expenses for today:"
+      }
+    },
+    "actions": {
+      "add_firm": "Add Company",
+      "add_expense": "Add Expense",
+      "calendar": "Calendar"
+    },
+    "consignment": {
+      "title": "Consignment"
+    }
   }
 }

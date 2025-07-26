@@ -3,6 +3,7 @@
 import { FC, ReactNode } from 'react';
 import Link from 'next/link';
 import { FileWarning, Loader } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useDebtorStats } from '@/lib/entities/debtors/hooks/useDebtorStats';
 import { toDebtors } from '@/lib/url/generator';
@@ -10,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Money } from '@/components/numbers/money';
 
 export const DebtorTab: FC = () => {
+  const t = useTranslations('home.debtors');
   const { data, isLoading } = useDebtorStats();
 
   const renderStat = (label: string, value: ReactNode) => (
@@ -27,7 +29,7 @@ export const DebtorTab: FC = () => {
         {/* Summary Block */}
         <div className="bg-primary p-4 mb-2">
           <div className="flex justify-center items-center">
-            <div className="flex-1 text-lg">Должников</div>
+            <div className="flex-1 text-lg">{t('title')}</div>
             <div className="flex-1 text-3xl font-bold">
               {isLoading ? (
                 <Loader className="h-4 w-4 animate-spin" />
@@ -39,24 +41,23 @@ export const DebtorTab: FC = () => {
         </div>
 
         {renderStat(
-          'В минусе',
+          t('negative'),
           <Money>{data?.total_negative_balance ?? 0}</Money>
         )}
         {renderStat(
-          'Возвратов',
+          t('positive'),
           <Money>{data?.total_positive_balance ?? 0}</Money>
         )}
       </div>
 
       <div className="px-2 mt-4 space-y-2">
-        {/* Stats Button */}
         <Button
           className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto mt-2 mb-4"
           asChild
         >
           <Link href={toDebtors()}>
             <FileWarning size={28} className="mr-3" />
-            <span className="text-lg">Должники</span>
+            <span className="text-lg">{t('button')}</span>
           </Link>
         </Button>
       </div>

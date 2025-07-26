@@ -1,12 +1,14 @@
 'use client';
 
 import { Calendar, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useAddDeliveryReqLauncher } from '@/lib/entities/deliveries/containers/add-delivery-form';
 import { useExpenseFormLauncher } from '@/lib/entities/expenses/containers/add-expense-form';
 import { Button } from '@/components/ui/button';
 
 export default function ActionButtons() {
+  const t = useTranslations('home.actions');
   const expenseFormLauncher = useExpenseFormLauncher();
   const addDeliveryReqLauncher = useAddDeliveryReqLauncher();
 
@@ -17,7 +19,7 @@ export default function ActionButtons() {
         onClick={addDeliveryReqLauncher}
       >
         <Plus size={28} className="mr-3" />
-        <span className="text-lg">Добавить фирму</span>
+        <span className="text-lg">{t('add_firm')}</span>
       </Button>
 
       <Button
@@ -25,12 +27,12 @@ export default function ActionButtons() {
         onClick={expenseFormLauncher}
       >
         <Plus size={28} className="mr-3" />
-        <span className="text-lg">Добавить расход</span>
+        <span className="text-lg">{t('add_expense')}</span>
       </Button>
 
       <Button className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto">
         <Calendar size={28} className="mr-3" />
-        <span className="text-lg">Календарь</span>
+        <span className="text-lg">{t('calendar')}</span>
       </Button>
     </div>
   );

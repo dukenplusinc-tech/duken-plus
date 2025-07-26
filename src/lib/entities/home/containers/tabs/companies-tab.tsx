@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { ClipboardList, NotebookPen } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import ActionButtons from '@/lib/entities/home/containers/action-buttons';
 import CompanyTab from '@/lib/entities/home/containers/company-tab';
@@ -12,6 +13,8 @@ import { fromUrl } from '@/lib/url';
 import { Button } from '@/components/ui/button';
 
 export const CompaniesTab: FC = () => {
+  const t = useTranslations('home.companies');
+
   return (
     <>
       <CompanyTab />
@@ -24,8 +27,8 @@ export const CompaniesTab: FC = () => {
           asChild
         >
           <Link href="/stats">
-            <ClipboardList size={28} className="mr-3" />{' '}
-            <span className="text-lg">Статистика / отчеты</span>
+            <ClipboardList size={28} className="mr-3" />
+            <span className="text-lg">{t('button_stats')}</span>
           </Link>
         </Button>
 
@@ -35,7 +38,7 @@ export const CompaniesTab: FC = () => {
         >
           <Link href={fromUrl.toDeliveries()}>
             <NotebookPen size={28} className="mr-3" />
-            <span className="text-lg">Фирмы на сегодня</span>
+            <span className="text-lg">{t('button_deliveries_today')}</span>
           </Link>
         </Button>
       </div>

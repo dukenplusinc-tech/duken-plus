@@ -1,11 +1,13 @@
 'use client';
 
 import { FC, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { CompaniesTab } from '@/lib/entities/home/containers/tabs/companies-tab';
 import { DebtorTab } from '@/lib/entities/home/containers/tabs/debtor-tab';
 
 export const HomeScreen: FC = () => {
+  const t = useTranslations('home.tabs');
   const [activeTab, setActiveTab] = useState<'companies' | 'debtors'>(
     'companies'
   );
@@ -22,7 +24,7 @@ export const HomeScreen: FC = () => {
           }`}
           onClick={() => setActiveTab('companies')}
         >
-          Фирмы
+          {t('companies')}
         </button>
         <button
           className={`flex-1 py-3 text-xl font-bold ${
@@ -32,7 +34,7 @@ export const HomeScreen: FC = () => {
           }`}
           onClick={() => setActiveTab('debtors')}
         >
-          Должники
+          {t('debtors')}
         </button>
       </div>
 

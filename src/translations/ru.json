@@ -510,5 +510,38 @@
       "acceptCaption": "Да",
       "cancelCaption": "Нет"
     }
+  },
+  "home": {
+    "tabs": {
+      "companies": "Фирмы",
+      "debtors": "Должники"
+    },
+    "debtors": {
+      "title": "Должников",
+      "negative": "В минусе",
+      "positive": "Возвратов",
+      "button": "Должники"
+    },
+    "companies": {
+      "button_stats": "Статистика / отчеты",
+      "button_deliveries_today": "Фирмы на сегодня",
+      "today_label": "На сегодня",
+      "companies": "ФИРМ",
+      "amount_label": "На сумму",
+      "remaining_label": "Осталось: {count} фирмы на сумму"
+    },
+    "expenses": {
+      "summary": {
+        "today_label": "Общий расход на сегодня:"
+      }
+    },
+    "actions": {
+      "add_firm": "Добавить фирму",
+      "add_expense": "Добавить расход",
+      "calendar": "Календарь"
+    },
+    "consignment": {
+      "title": "Консигнация"
+    }
   }
 }

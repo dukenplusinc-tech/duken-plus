@@ -510,5 +510,38 @@
       "acceptCaption": "Иә",
       "cancelCaption": "Жоқ"
     }
+  },
+  "home": {
+    "tabs": {
+      "companies": "Фирмалар",
+      "debtors": "Қарыздар"
+    },
+    "debtors": {
+      "title": "Қарыздар",
+      "negative": "Теріс сальдо",
+      "positive": "Қайтарымдар",
+      "button": "Қарыздар"
+    },
+    "companies": {
+      "button_stats": "Статистика / есептер",
+      "button_deliveries_today": "Бүгінгі фирмалар",
+      "today_label": "Бүгінге",
+      "companies": "ФИРМАЛАР",
+      "amount_label": "Сома бойынша",
+      "remaining_label": "Қалғаны: {count} фирма, жалпы сома"
+    },
+    "expenses": {
+      "summary": {
+        "today_label": "Бүгінгі жалпы шығын:"
+      }
+    },
+    "actions": {
+      "add_firm": "Фирма қосу",
+      "add_expense": "Шығын қосу",
+      "calendar": "Күнтізбе"
+    },
+    "consignment": {
+      "title": "Консигнация"
+    }
   }
 }

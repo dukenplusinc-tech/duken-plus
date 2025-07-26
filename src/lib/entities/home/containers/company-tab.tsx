@@ -8,16 +8,16 @@ import { useTodayDeliveries } from '@/lib/entities/deliveries/hooks/useTodayDeli
 import { useTotalExpenses } from '@/lib/entities/expenses/hooks/useTotalExpenses';
 import { Money } from '@/components/numbers/money';
 
-const ExpenseSummary: FC = () => {
-  const t = useTranslations('expenses');
+export const ExpenseSummary: FC = () => {
+  const t = useTranslations('expenses.summary');
   const { totalToday, loading } = useTotalExpenses();
 
   return (
     <div className="bg-primary text-white p-3 border-t border-primary-foreground/20">
       <div className="text-center">
-        {t('summary.today_label')} &nbsp;
+        {t('today_label')}&nbsp;
         {loading ? (
-          <Loader className="h-4 w-4 animate-spin" />
+          <Loader className="h-4 w-4 animate-spin inline-block" />
         ) : (
           `${totalToday} тг`
         )}
@@ -27,6 +27,7 @@ const ExpenseSummary: FC = () => {
 };
 
 export default function CompanyTab() {
+  const t = useTranslations('home.companies');
   const { count, totalExpected, remainingCompanies, remainingAmount, loading } =
     useTodayDeliveries();
 
@@ -43,19 +44,22 @@ export default function CompanyTab() {
       <>
         <div className="bg-primary p-4 mb-2">
           <div className="flex justify-center items-center">
-            <div className="flex-1 text-lg">На сегодня</div>
-            <div className="flex-1 text-3xl font-bold">{count} ФИРМ</div>
+            <div className="flex-1 text-lg">{t('today_label')}</div>
+            <div className="flex-1 text-3xl font-bold">
+              {count} {t('companies')}
+            </div>
           </div>
           <div className="flex justify-center items-center mt-2">
-            <div className="flex-1 text-lg">На сумму</div>
+            <div className="flex-1 text-lg">{t('amount_label')}</div>
             <Money className="flex-1 text-3xl font-bold">{totalExpected}</Money>
           </div>
         </div>
 
-        {/* Remaining Companies */}
         <div className="bg-primary mb-2 text-white p-3 border-t border-primary-foreground/20">
           <div className="text-center">
-            Осталось: {remainingCompanies} фирмы на сумму{' '}
+            {t('remaining_label', {
+              count: remainingCompanies,
+            })}{' '}
             <Money>{remainingAmount}</Money>
           </div>
         </div>
@@ -64,13 +68,9 @@ export default function CompanyTab() {
   };
 
   return (
-    <div className="mt-2">
-      {/* Summary Banner */}
-      <div className="text-white">
-        {renderSummary()}
-
-        <ExpenseSummary />
-      </div>
+    <div className="mt-2 text-white">
+      {renderSummary()}
+      <ExpenseSummary />
     </div>
   );
 }

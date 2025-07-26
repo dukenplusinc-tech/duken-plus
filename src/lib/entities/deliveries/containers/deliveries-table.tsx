@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { useDeleteDelivery } from '@/lib/entities/deliveries/hooks/useDeleteDelivery';
 import { useTodayDeliveriesList } from '@/lib/entities/deliveries/hooks/useTodayDeliveriesList';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { cn } from '@/lib/utils';
@@ -25,6 +26,8 @@ export const DeliveriesTable: FC = () => {
     isLoading,
     error,
   } = useTodayDeliveriesList(showOverdueOnly);
+
+  const deleteDialog = useDeleteDelivery();
 
   const isEmpty = !isLoading && data.length === 0;
   const totalAmount = data.reduce((sum, d) => sum + d.amount_expected, 0);
@@ -120,7 +123,8 @@ export const DeliveriesTable: FC = () => {
                         size="icon"
                         variant="destructive"
                         className="w-10 h-10"
-                        onClick={() => console.log(delivery.id)}
+                        disabled={deleteDialog.processing}
+                        onClick={() => deleteDialog.onDelete(delivery.id)}
                         title="Удалить"
                       >
                         🗑️

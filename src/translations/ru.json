@@ -502,6 +502,8 @@
     "empty_text": "Нет данных по доставкам",
     "label_accepted": "принято",
     "caption_accept": "Принять",
+    "paid": "оплачено",
+    "mark_as_paid_caption": "Отметить как оплачено",
     "mark_as_paid": {
       "title": "Отметить оплаченым",
       "description": "Доставка уже оплачена?",

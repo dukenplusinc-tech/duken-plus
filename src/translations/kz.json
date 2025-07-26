@@ -496,5 +496,19 @@
       "cancel": "Болдырмау",
       "submit": "Сақтау"
     }
+  },
+  "consignment": {
+    "title": "Консигнациялар",
+    "empty_text": "Жеткізу туралы деректер жоқ",
+    "label_accepted": "қабылданды",
+    "caption_accept": "Қабылдау",
+    "paid": "төленді",
+    "mark_as_paid_caption": "Төленді деп белгілеу",
+    "mark_as_paid": {
+      "title": "Төленді деп белгілеу",
+      "description": "Жеткізу төленді ме?",
+      "acceptCaption": "Иә",
+      "cancelCaption": "Жоқ"
+    }
   }
 }

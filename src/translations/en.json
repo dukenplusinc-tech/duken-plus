@@ -496,5 +496,19 @@
       "cancel": "Cancel",
       "submit": "Save"
     }
+  },
+  "consignment": {
+    "title": "Consignments",
+    "empty_text": "No delivery data",
+    "label_accepted": "accepted",
+    "caption_accept": "Accept",
+    "paid": "paid",
+    "mark_as_paid_caption": "Mark as Paid",
+    "mark_as_paid": {
+      "title": "Mark as Paid",
+      "description": "Is the delivery already paid?",
+      "acceptCaption": "Yes",
+      "cancelCaption": "No"
+    }
   }
 }

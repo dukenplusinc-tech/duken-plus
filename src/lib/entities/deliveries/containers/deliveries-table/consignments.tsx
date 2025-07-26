@@ -50,7 +50,7 @@ export const ConsignmentTable: FC = () => {
               </Money>
               {delivery.consignment_status === 'closed' ? (
                 <div className="text-success text-sm flex items-center gap-1 justify-end">
-                  <Check size={14} /> оплачено
+                  <Check size={14} /> {t('paid')}
                 </div>
               ) : (
                 delivery.consignment_status === 'open' && (
@@ -60,7 +60,7 @@ export const ConsignmentTable: FC = () => {
                     disabled={markAsPaid.processing}
                     onClick={() => markAsPaid.onAction(delivery.id)}
                   >
-                    Отметить как оплачено
+                    {t('mark_as_paid_caption')}
                   </Button>
                 )
               )}

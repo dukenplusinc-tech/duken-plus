@@ -10,6 +10,8 @@ export type DeliveryItem = {
   status: 'pending' | 'accepted' | 'due';
   expected_date: string;
   contractor_name: string;
+  consignment_status: 'open' | 'closed' | null;
+  consignment_due_date: string | null;
 };
 
 export const useTodayDeliveriesList = (showOverdueOnly = false) => {
@@ -23,6 +25,7 @@ export const useTodayDeliveriesList = (showOverdueOnly = false) => {
         amount_expected,
         amount_received,
         status,
+        consignment_status,
         expected_date,
         contractors ( title )
       `);

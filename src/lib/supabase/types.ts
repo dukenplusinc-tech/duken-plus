@@ -297,6 +297,7 @@ export type Database = {
           amount_expected: number
           amount_received: number | null
           consignment_due_date: string | null
+          consignment_status: string | null
           contractor_id: string
           created_at: string | null
           expected_date: string
@@ -311,6 +312,7 @@ export type Database = {
           amount_expected: number
           amount_received?: number | null
           consignment_due_date?: string | null
+          consignment_status?: string | null
           contractor_id: string
           created_at?: string | null
           expected_date: string
@@ -325,6 +327,7 @@ export type Database = {
           amount_expected?: number
           amount_received?: number | null
           consignment_due_date?: string | null
+          consignment_status?: string | null
           contractor_id?: string
           created_at?: string | null
           expected_date?: string
@@ -831,6 +834,10 @@ export type Database = {
         Returns: {
           type: string
         }[]
+      }
+      mark_overdue_deliveries: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       recalculate_is_overdue: {
         Args: { debtor_id: string }

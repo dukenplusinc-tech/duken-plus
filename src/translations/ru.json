@@ -496,5 +496,17 @@
       "cancel": "Отмена",
       "submit": "Сохранить"
     }
+  },
+  "consignment": {
+    "title": "Консигнации",
+    "empty_text": "Нет данных по доставкам",
+    "label_accepted": "принято",
+    "caption_accept": "Принять",
+    "mark_as_paid": {
+      "title": "Отметить оплаченым",
+      "description": "Доставка уже оплачена?",
+      "acceptCaption": "Да",
+      "cancelCaption": "Нет"
+    }
   }
 }

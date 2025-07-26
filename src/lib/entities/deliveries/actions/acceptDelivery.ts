@@ -18,6 +18,7 @@ export async function acceptDelivery(
     accepted_date: 'now()',
     amount_received: Number(values.amount_received),
     is_consignement: values.is_consignement ?? false,
+    consignment_status: values.is_consignement ? 'open' : null,
     consignment_due_date: values.is_consignement
       ? values.consignment_due_date || null
       : null,

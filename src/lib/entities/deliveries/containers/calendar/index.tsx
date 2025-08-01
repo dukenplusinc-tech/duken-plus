@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,8 +14,11 @@ import MonthView from './month-view';
 
 export const CalendarDelivers: FC = () => {
   const t = useTranslations('calendar');
+
+  useActivateBackButton();
+
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [view, setView] = useState<'day' | 'month'>('day');
+  const [view, setView] = useState<'day' | 'month'>('month');
 
   const monthNames = t.raw('months') as string[];
 

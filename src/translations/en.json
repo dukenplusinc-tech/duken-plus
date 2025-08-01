@@ -565,6 +565,7 @@
     "day": "Day",
     "month": "Month",
     "no_title": "No title",
+    "empty_text": "No delivery data",
     "months": [
       "January",
       "February",

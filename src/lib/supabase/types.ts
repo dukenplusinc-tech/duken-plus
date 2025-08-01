@@ -301,7 +301,6 @@ export type Database = {
           contractor_id: string
           created_at: string | null
           expected_date: string
-          expected_time: string | null
           id: string
           is_consignement: boolean
           shop_id: string
@@ -317,7 +316,6 @@ export type Database = {
           contractor_id: string
           created_at?: string | null
           expected_date: string
-          expected_time?: string | null
           id?: string
           is_consignement?: boolean
           shop_id: string
@@ -333,7 +331,6 @@ export type Database = {
           contractor_id?: string
           created_at?: string | null
           expected_date?: string
-          expected_time?: string | null
           id?: string
           is_consignement?: boolean
           shop_id?: string

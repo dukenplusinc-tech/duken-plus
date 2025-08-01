@@ -10,6 +10,7 @@ type Contractor = Database['public']['Tables']['contractors']['Row'];
 
 export type DeliveryWithContractor = Omit<Delivery, 'contractor_id'> & {
   contractor_id: string;
+  created_at: string;
   contractors: Pick<Contractor, 'title'> | null;
 };
 
@@ -25,11 +26,12 @@ export function useCalendarDeliveries(date: Date) {
     supabase
       .from('deliveries')
       .select(
-        'id, expected_date, expected_time, status, is_consignement, amount_expected, contractor_id, contractors ( title )'
+        'id, expected_date, status, is_consignement, amount_expected, contractor_id, contractors ( title ), created_at'
       )
       .or('status.eq.pending,status.eq.due,is_consignement.eq.true')
       .gte('expected_date', startDate)
-      .lte('expected_date', endDate),
+      .lte('expected_date', endDate)
+      .order('created_at', { ascending: true }),
     {
       revalidateOnFocus: false,
     }

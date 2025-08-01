@@ -19,30 +19,24 @@ export default function DayView({ currentDate }: DayViewProps) {
 
     return (data || [])
       .filter((item) => item.expected_date === dayISO)
-      .map((item) => {
-        const time = item.expected_time ?? '10:00';
-        const hour = parseInt(time.split(':')[0] || '10', 10);
-
-        return {
-          id: item.id,
-          title: item.contractors?.title || t('no_title'),
-          time,
-          hour,
-          duration: 60,
-          color:
-            item.status === 'due'
-              ? 'bg-red-200'
-              : item.is_consignement
-                ? 'bg-yellow-200'
-                : 'bg-green-200',
-        };
-      });
+      .sort(
+        (a, b) =>
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      )
+      .map((item) => ({
+        id: item.id,
+        title: item.contractors?.title || t('no_title'),
+        color:
+          item.status === 'due'
+            ? 'bg-red-200'
+            : item.is_consignement
+              ? 'bg-yellow-200'
+              : 'bg-green-200',
+      }));
   }, [data, currentDate, t]);
 
-  const hours = Array.from({ length: 12 }, (_, i) => i + 8);
   const dayNames = t.raw('weekdays') as string[];
   const dayName = dayNames[currentDate.getDay()];
-
   const monthName = currentDate.toLocaleDateString('ru-RU', { month: 'long' });
 
   return (
@@ -54,37 +48,21 @@ export default function DayView({ currentDate }: DayViewProps) {
         </h2>
       </div>
 
-      <div className="space-y-1">
-        {hours.map((hour) => {
-          const hourEvents = events.filter((e) => e.hour === hour);
-
-          return (
-            <div key={hour} className="flex">
-              <div className="w-16 flex-shrink-0 text-right pr-3 py-2">
-                <span className="text-sm text-muted-foreground">{hour}:00</span>
-              </div>
-              <div className="flex-1 min-h-[60px] border-l border-gray-200 pl-3 relative">
-                {hourEvents.length > 0 ? (
-                  hourEvents.map((event) => (
-                    <Card
-                      key={event.id}
-                      className={`${event.color} border-l-4 border-l-primary mb-2`}
-                    >
-                      <CardContent className="p-3">
-                        <div className="font-medium text-sm">{event.title}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {event.time}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                ) : (
-                  <div className="h-full border-b border-gray-100"></div>
-                )}
-              </div>
-            </div>
-          );
-        })}
+      <div className="space-y-2">
+        {events.length === 0 ? (
+          <p className="text-muted-foreground text-center">{t('empty_text')}</p>
+        ) : (
+          events.map((event) => (
+            <Card
+              key={event.id}
+              className={`${event.color} border-l-4 border-l-primary`}
+            >
+              <CardContent className="p-3">
+                <div className="font-medium text-sm">{event.title}</div>
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

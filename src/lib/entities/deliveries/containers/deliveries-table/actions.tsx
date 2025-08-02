@@ -28,17 +28,32 @@ export const DeliveryActions: FC<{ delivery: DeliveryItem }> = ({
         </div>
       ) : (
         <>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="w-10 h-10"
-            onClick={() => acceptDelivery(delivery)}
-            title={t('actions.accept')}
-          >
-            <Square />
-          </Button>
+          {delivery.status === 'pending' && (
+            <Button
+              size="icon"
+              variant="ghost"
+              className="w-10 h-10"
+              onClick={() => acceptDelivery(delivery)}
+              title={t('actions.accept')}
+            >
+              <Square />
+            </Button>
+          )}
 
           {delivery.status === 'due' && (
+            <Button
+              size="icon"
+              variant="destructive"
+              className="w-10 h-10"
+              disabled={deleteDialog.processing}
+              onClick={() => deleteDialog.onDelete(delivery.id)}
+              title={t('actions.delete')}
+            >
+              🗑️
+            </Button>
+          )}
+
+          {delivery.status === 'canceled' && (
             <Button
               size="icon"
               variant="destructive"

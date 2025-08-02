@@ -78,7 +78,8 @@ export const DeliveriesTable: FC = () => {
                 'grid grid-cols-3 border-b transition-colors',
                 delivery.status === 'accepted' && 'bg-green-100',
                 delivery.status === 'pending' && 'bg-green-50',
-                delivery.status === 'due' && 'bg-red-100'
+                delivery.status === 'due' && 'bg-red-100',
+                delivery.status === 'canceled' && 'bg-red-100'
               )}
             >
               <div className="p-4 border-r">
@@ -87,6 +88,11 @@ export const DeliveriesTable: FC = () => {
                   <span className="mt-2 block text-sm">
                     {t('row.planned_for')}
                     <span className="font-bold">{delivery.expected_date}</span>
+                  </span>
+                )}
+                {delivery.status == 'canceled' && (
+                  <span className="mt-2 block font-bold text-md">
+                    {t('row.declined')}
                   </span>
                 )}
               </div>

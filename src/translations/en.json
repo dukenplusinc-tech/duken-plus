@@ -282,7 +282,8 @@
     },
     "row": {
       "accepted": "Already accepted",
-      "planned_for": "Planned for:"
+      "planned_for": "Planned for:",
+      "declined": "Declined"
     },
     "actions": {
       "accept": "Accept",
@@ -496,6 +497,7 @@
       "label_consignment_date": "Consignment payment date",
       "label_reschedule": "Reschedule date",
       "label_new_expected_date": "New expected delivery date",
+      "decline": "Decline",
       "cancel": "Cancel",
       "submit": "Save"
     }

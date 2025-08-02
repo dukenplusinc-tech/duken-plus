@@ -858,7 +858,7 @@ export type Database = {
       }
     }
     Enums: {
-      delivery_status: "pending" | "accepted" | "due"
+      delivery_status: "pending" | "accepted" | "due" | "canceled"
       transaction_type: "cash" | "bank_transfer"
     }
     CompositeTypes: {
@@ -975,7 +975,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      delivery_status: ["pending", "accepted", "due"],
+      delivery_status: ["pending", "accepted", "due", "canceled"],
       transaction_type: ["cash", "bank_transfer"],
     },
   },

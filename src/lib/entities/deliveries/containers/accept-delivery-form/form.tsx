@@ -14,7 +14,7 @@ import { useTranslations } from 'next-intl';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { Button } from '@/components/ui/button';
 
-import { useAcceptDeliveryForm } from './hooks';
+import { useAcceptDeliveryForm, useDeclineDelivery } from './hooks';
 
 export const AcceptDeliveryForm: FC<{
   id: string;
@@ -24,12 +24,21 @@ export const AcceptDeliveryForm: FC<{
   const t = useTranslations('delivery_accept.form');
 
   const dialog = useModalDialog();
-  const { form, isProcessing, handleSubmit } = useAcceptDeliveryForm({
+
+  const {
+    form,
+    isProcessing: isFormProcessing,
+    handleSubmit,
+  } = useAcceptDeliveryForm({
     id,
     defaultAmount,
   });
 
+  const declineDelivery = useDeclineDelivery(id);
+
   const handleClose = useCallback(() => dialog.close(), [dialog]);
+
+  const isProcessing = isFormProcessing || declineDelivery.processing;
 
   return (
     <IonList>
@@ -113,13 +122,26 @@ export const AcceptDeliveryForm: FC<{
           </IonItem>
         )}
 
-        <div className="mt-6 flex justify-between">
+        <div className="mt-6 flex justify-between flex-wrap gap-2">
           <Button variant="link" onClick={handleClose}>
             {t('cancel')}
           </Button>
-          <Button type="submit" loading={isProcessing}>
-            {t('submit')}
-          </Button>
+
+          <div className="flex gap-2 ml-auto">
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={declineDelivery.onAction}
+              disabled={isProcessing}
+              className="text-destructive"
+            >
+              {t('decline')}
+            </Button>
+
+            <Button type="submit" loading={isProcessing}>
+              {t('submit')}
+            </Button>
+          </div>
         </div>
       </form>
     </IonList>

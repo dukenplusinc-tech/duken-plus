@@ -282,7 +282,8 @@
     },
     "row": {
       "accepted": "Уже принято",
-      "planned_for": "Запланировано на:"
+      "planned_for": "Запланировано на:",
+      "declined": "Отказ"
     },
     "actions": {
       "accept": "Принять",
@@ -496,6 +497,7 @@
       "label_consignment_date": "Дата оплаты по консигнации",
       "label_reschedule": "Перенести дату",
       "label_new_expected_date": "Новая дата доставки",
+      "decline": "Отклонить",
       "cancel": "Отмена",
       "submit": "Сохранить"
     }

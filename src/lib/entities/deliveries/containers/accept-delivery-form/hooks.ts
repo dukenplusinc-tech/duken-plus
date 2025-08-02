@@ -1,13 +1,24 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { mutate } from 'swr';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { acceptDelivery } from '@/lib/entities/deliveries/actions/acceptDelivery';
+import { cancelDelivery } from '@/lib/entities/deliveries/actions/cancelDelivery';
 import {
   acceptDeliveryFormSchema,
   AcceptDeliveryFormValues,
 } from '@/lib/entities/deliveries/schema';
+import { useConfirmAction } from '@/lib/primitives/dialog/confirm/confirm';
+import { useModalDialog } from '@/lib/primitives/modal/hooks';
+
+async function refresh() {
+  await Promise.all([
+    mutate(['todayDeliveriesList', false]),
+    mutate(['todayDeliveriesList', true]),
+  ]);
+}
 
 export function useAcceptDeliveryForm({
   id,
@@ -28,8 +39,27 @@ export function useAcceptDeliveryForm({
     request: async (values) => {
       await acceptDelivery(id, values);
 
-      await mutate(['todayDeliveriesList', false]);
-      await mutate(['todayDeliveriesList', true]);
+      await refresh();
     },
   });
 }
+
+export const useDeclineDelivery = (id: string) => {
+  const t = useTranslations('delivery_accept.form');
+
+  const dialog = useModalDialog();
+
+  return useConfirmAction({
+    title: 'Отменить доставку?',
+    description: `Фирма доставила не тот товар или он испорченный?\nНе хотите принимать товар?`,
+    acceptCaption: 'Отменить доставку',
+    cancelCaption: 'Нет, все впорядке',
+    onConfirm: async () => {
+      await cancelDelivery(id);
+
+      await refresh();
+
+      dialog.close();
+    },
+  });
+};

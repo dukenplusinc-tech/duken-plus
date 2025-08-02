@@ -282,7 +282,8 @@
     },
     "row": {
       "accepted": "Қабылданған",
-      "planned_for": "Жоспарланған күні:"
+      "planned_for": "Жоспарланған күні:",
+      "declined": "Бас тарту"
     },
     "actions": {
       "accept": "Қабылдау",
@@ -496,6 +497,7 @@
       "label_consignment_date": "Консигнация төлем күні",
       "label_reschedule": "Күнді өзгерту",
       "label_new_expected_date": "Жаңа күтілетін жеткізу күні",
+      "decline": "Бас тарту",
       "cancel": "Болдырмау",
       "submit": "Сақтау"
     }

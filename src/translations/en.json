@@ -399,6 +399,13 @@
     "dialog": {
       "title": "Add Expense"
     },
+    "info": {
+      "title": "Expense Information",
+      "expenses_title": "Expenses",
+      "deliveries_title": "Deliveries",
+      "total": "Total",
+      "empty": "No data for the selected date"
+    },
     "summary": {
       "today_label": "Total expenses for today:",
       "yesterday_label": "Expenses <br /> for yesterday:",

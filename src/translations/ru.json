@@ -399,6 +399,13 @@
     "dialog": {
       "title": "Добавить расход"
     },
+    "info": {
+      "title": "Информация по расходам",
+      "expenses_title": "Расходы",
+      "deliveries_title": "Поставки",
+      "total": "Итого",
+      "empty": "Нет данных за выбранную дату"
+    },
     "summary": {
       "today_label": "Общий расход на сегодня:",
       "yesterday_label": "Расходы <br /> за вчера:",

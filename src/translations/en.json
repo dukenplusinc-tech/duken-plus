@@ -494,6 +494,8 @@
       "label_amount": "Actual amount",
       "label_is_consignement": "Consignment",
       "label_consignment_date": "Consignment payment date",
+      "label_reschedule": "Reschedule date",
+      "label_new_expected_date": "New expected delivery date",
       "cancel": "Cancel",
       "submit": "Save"
     }

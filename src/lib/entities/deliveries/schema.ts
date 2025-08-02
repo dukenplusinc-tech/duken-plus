@@ -12,6 +12,9 @@ export const acceptDeliveryFormSchema = z.object({
   amount_received: z.coerce.number().min(0.01),
   is_consignement: z.boolean().default(false),
   consignment_due_date: z.string().optional().nullable(),
+
+  reschedule: z.boolean().default(false),
+  reschedule_expected_date: z.string().optional().nullable(),
 });
 
 acceptDeliveryFormSchema.refine(

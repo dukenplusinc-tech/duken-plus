@@ -21,6 +21,8 @@ export function useAcceptDeliveryForm({
       amount_received: defaultAmount,
       is_consignement: false,
       consignment_due_date: null,
+      reschedule: false,
+      reschedule_expected_date: null,
     },
     schema: acceptDeliveryFormSchema,
     request: async (values) => {

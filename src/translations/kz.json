@@ -494,6 +494,8 @@
       "label_amount": "Нақты сома",
       "label_is_consignement": "Консигнация",
       "label_consignment_date": "Консигнация төлем күні",
+      "label_reschedule": "Күнді өзгерту",
+      "label_new_expected_date": "Жаңа күтілетін жеткізу күні",
       "cancel": "Болдырмау",
       "submit": "Сақтау"
     }

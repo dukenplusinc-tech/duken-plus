@@ -83,6 +83,36 @@ export const AcceptDeliveryForm: FC<{
           </IonItem>
         )}
 
+        <IonItem lines="none">
+          <IonLabel>{t('label_reschedule')}</IonLabel>
+          <IonToggle
+            checked={form.watch('reschedule')}
+            onIonChange={(e) => form.setValue('reschedule', e.detail.checked)}
+            disabled={isProcessing}
+          />
+        </IonItem>
+
+        {form.watch('reschedule') && (
+          <IonItem className="no-ripple">
+            <IonLabel position="stacked">
+              {t('label_new_expected_date')}
+            </IonLabel>
+            <div className="py-4 mx-auto">
+              <IonDatetime
+                presentation="date"
+                value={form.watch('reschedule_expected_date') ?? undefined}
+                onIonChange={(e) =>
+                  form.setValue(
+                    'reschedule_expected_date',
+                    e.detail.value! as string
+                  )
+                }
+                disabled={isProcessing}
+              />
+            </div>
+          </IonItem>
+        )}
+
         <div className="mt-6 flex justify-between">
           <Button variant="link" onClick={handleClose}>
             {t('cancel')}

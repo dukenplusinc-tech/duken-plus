@@ -18,7 +18,7 @@ const fetchTotal = async (date: string) => {
       .from('deliveries')
       .select('amount_expected, status')
       .eq('expected_date', date)
-      .in('status', ['pending', 'accepted'])
+      .in('status', ['accepted'])
       .neq('status', 'canceled'),
   ]);
 

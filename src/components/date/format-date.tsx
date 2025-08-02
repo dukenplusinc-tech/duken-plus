@@ -16,3 +16,9 @@ export const FormatDate: FC<FormatDateProps> = ({
 
   return <span {...props}>{formatted}</span>;
 };
+
+export const DisplayDateFormated: FC<Omit<FormatDateProps, 'format'>> = ({
+  ...props
+}) => {
+  return <FormatDate {...props} format="PP" />;
+};

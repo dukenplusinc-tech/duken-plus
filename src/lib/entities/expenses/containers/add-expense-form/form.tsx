@@ -1,17 +1,12 @@
 import { FC, useCallback } from 'react';
-import {
-  IonDatetime,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
-} from '@ionic/react';
+import { IonInput, IonItem, IonLabel, IonList } from '@ionic/react';
 import { useTranslations } from 'next-intl';
 
 import { useExpenseTypes } from '@/lib/entities/expenses/hooks/useExpenseTypes';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { Autocomplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
+import { DisplayDateFormated } from '@/components/date/format-date';
 
 import { useExpenseForm } from './hooks';
 
@@ -62,15 +57,8 @@ export const ExpenseForm: FC<ExpenseFormProps> = ({ id }) => {
 
         <IonItem className="no-ripple">
           <IonLabel position="stacked">{t('label_date')}</IonLabel>
-          <div className="py-4 mx-auto">
-            <IonDatetime
-              presentation="date"
-              value={form.watch('date')}
-              onIonChange={(e) =>
-                form.setValue('date', e.detail.value! as string)
-              }
-              disabled={isProcessing}
-            />
+          <div className="pt-2 pb-4 mx-auto">
+            <DisplayDateFormated>{form.watch('date')}</DisplayDateFormated>
           </div>
         </IonItem>
 

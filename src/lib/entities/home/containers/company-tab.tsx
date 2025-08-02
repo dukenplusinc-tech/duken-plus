@@ -46,7 +46,7 @@ export default function CompanyTab() {
           <div className="flex justify-center items-center">
             <div className="flex-1 text-lg">{t('today_label')}</div>
             <div className="flex-1 text-3xl font-bold">
-              {count} {t('companies')}
+              {t('companies', { count })}
             </div>
           </div>
           <div className="flex justify-center items-center mt-2">
@@ -57,9 +57,7 @@ export default function CompanyTab() {
 
         <div className="bg-primary mb-2 text-white p-3 border-t border-primary-foreground/20">
           <div className="text-center">
-            {t('remaining_label', {
-              count: remainingCompanies,
-            })}{' '}
+            {t('remaining_label', { count: remainingCompanies })}{' '}
             <Money>{remainingAmount}</Money>
           </div>
         </div>

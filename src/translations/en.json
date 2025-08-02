@@ -536,11 +536,11 @@
     },
     "companies": {
       "button_stats": "Statistics / Reports",
-      "button_deliveries_today": "Today's Companies",
-      "today_label": "For today",
-      "companies": "COMPANIES",
-      "amount_label": "Total amount",
-      "remaining_label": "Remaining: {count} companies for the amount of"
+      "button_deliveries_today": "Companies for Today",
+      "today_label": "Today",
+      "companies": "{count} {count, plural, one {COMPANY} other {COMPANIES}}",
+      "amount_label": "Amount",
+      "remaining_label": "Remaining: {count} {count, plural, one {company} other {companies}} for a total of"
     },
     "expenses": {
       "summary": {

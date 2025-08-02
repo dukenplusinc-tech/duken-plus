@@ -538,9 +538,9 @@
       "button_stats": "Статистика / отчеты",
       "button_deliveries_today": "Фирмы на сегодня",
       "today_label": "На сегодня",
-      "companies": "ФИРМ",
+      "companies": "{count} {count, plural, one {ФИРМА} few {ФИРМЫ} many {ФИРМ} other {ФИРМ}}",
       "amount_label": "На сумму",
-      "remaining_label": "Осталось: {count} фирмы на сумму"
+      "remaining_label": "Осталось: {count} {count, plural, one {фирма} few {фирмы} many {фирм} other {фирм}} на сумму"
     },
     "expenses": {
       "summary": {

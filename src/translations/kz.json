@@ -536,11 +536,11 @@
     },
     "companies": {
       "button_stats": "Статистика / есептер",
-      "button_deliveries_today": "Бүгінгі фирмалар",
-      "today_label": "Бүгінге",
-      "companies": "ФИРМАЛАР",
+      "button_deliveries_today": "Бүгінгі компаниялар",
+      "today_label": "Бүгін",
+      "companies": "{count} {count, plural, one {КОМПАНИЯ} other {КОМПАНИЯЛАР}}",
       "amount_label": "Сома бойынша",
-      "remaining_label": "Қалғаны: {count} фирма, жалпы сома"
+      "remaining_label": "Қалған: {count} {count, plural, one {компания} other {компаниялар}} жалпы сомасы бойынша"
     },
     "expenses": {
       "summary": {

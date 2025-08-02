@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { useConsignmentDeliveriesList } from '@/lib/entities/deliveries/hooks/useConsignmentDeliveriesList';
 import { useMarkAsPaidConsigment } from '@/lib/entities/deliveries/hooks/useMarkAsPaidConsigment';
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -14,6 +15,8 @@ import { FormatDate } from '@/components/date/format-date';
 import { Money } from '@/components/numbers/money';
 
 export const ConsignmentTable: FC = () => {
+  useActivateBackButton();
+
   const t = useTranslations('consignment');
 
   const { data = [], isLoading, error } = useConsignmentDeliveriesList();

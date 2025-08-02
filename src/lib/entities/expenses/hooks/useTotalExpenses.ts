@@ -4,72 +4,71 @@ import useSWR, { mutate } from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
 
-// Function to fetch expenses for a given date
-const fetchExpenses = async (date: string) => {
+const fetchTotal = async (date: string) => {
   const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from('expenses')
-    .select('amount, date')
-    .gte('date', date) // Filter records based on date
-    .lt('date', date + ' 23:59:59'); // Ensure we're capturing the full day range
+  const [expensesRes, deliveriesRes] = await Promise.all([
+    supabase
+      .from('expenses')
+      .select('amount')
+      .gte('date', date)
+      .lt('date', date + 'T23:59:59'),
 
-  if (error) {
-    console.error('Error fetching expenses:', error);
-    return 0;
-  }
+    supabase
+      .from('deliveries')
+      .select('amount_expected, status')
+      .eq('expected_date', date)
+      .in('status', ['pending', 'accepted'])
+      .neq('status', 'canceled'),
+  ]);
 
-  return (
-    data?.reduce(
-      (acc: number, expense: { amount: number }) => acc + expense.amount,
-      0
-    ) || 0
+  const expenses = expensesRes.data || [];
+  const deliveries = deliveriesRes.data || [];
+
+  const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
+
+  const totalDeliveries = deliveries.reduce(
+    (sum, d) => sum + (d.amount_expected || 0),
+    0
   );
+
+  return totalExpenses + totalDeliveries;
 };
 
 export const useTotalExpenses = () => {
-  // Fetch total expenses for yesterday, today, and tomorrow using SWR
-  const { data: totalYesterday, error: errorYesterday } = useSWR(
+  const formatDate = (offsetDays: number) =>
+    format(
+      new Date(Date.now() + offsetDays * 24 * 60 * 60 * 1000),
+      'yyyy-MM-dd'
+    );
+
+  const { data: totalYesterday } = useSWR(
     'totalYesterday',
-    async () => {
-      const yesterday = format(
-        new Date(Date.now() - 24 * 60 * 60 * 1000),
-        'yyyy-MM-dd'
-      ); // Get yesterday's date
-      return fetchExpenses(yesterday);
-    },
-    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 } // Adjusted deduplication
+    () => fetchTotal(formatDate(-1)),
+    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 }
   );
 
-  const { data: totalToday, error: errorToday } = useSWR(
+  const { data: totalToday } = useSWR(
     'totalToday',
-    async () => {
-      const today = format(new Date(), 'yyyy-MM-dd'); // Get today's date
-      return fetchExpenses(today);
-    },
-    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 } // Adjusted deduplication
+    () => fetchTotal(formatDate(0)),
+    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 }
   );
 
-  const { data: totalTomorrow, error: errorTomorrow } = useSWR(
+  const { data: totalTomorrow } = useSWR(
     'totalTomorrow',
-    async () => {
-      const tomorrow = format(
-        new Date(Date.now() + 24 * 60 * 60 * 1000),
-        'yyyy-MM-dd'
-      ); // Get tomorrow's date
-      return fetchExpenses(tomorrow);
-    },
-    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 } // Adjusted deduplication
+    () => fetchTotal(formatDate(1)),
+    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 }
   );
 
   const [loading, setLoading] = useState(false);
 
-  // Function to revalidate expenses manually after adding or updating
   const refresh = async () => {
     setLoading(true);
-    await mutate('totalYesterday'); // Trigger revalidation for yesterday's expenses
-    await mutate('totalToday'); // Trigger revalidation for today's expenses
-    await mutate('totalTomorrow'); // Trigger revalidation for tomorrow's expenses
+    await Promise.all([
+      mutate('totalYesterday'),
+      mutate('totalToday'),
+      mutate('totalTomorrow'),
+    ]);
     setLoading(false);
   };
 
@@ -77,9 +76,6 @@ export const useTotalExpenses = () => {
     totalYesterday: totalYesterday || 0,
     totalToday: totalToday || 0,
     totalTomorrow: totalTomorrow || 0,
-    errorYesterday,
-    errorToday: errorToday,
-    errorTomorrow,
     loading,
     refresh,
   };

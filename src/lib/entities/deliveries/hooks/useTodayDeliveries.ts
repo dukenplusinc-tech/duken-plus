@@ -8,12 +8,12 @@ const fetchDeliveryStats = async () => {
   const supabase = createClient();
   const today = format(new Date(), 'yyyy-MM-dd');
 
-  // Fetch all PENDING deliveries
+  // Get deliveries with status = pending OR accepted, from today onwards
   const { data, error } = await supabase
     .from('deliveries')
-    .select('expected_date, amount_expected')
-    .eq('status', 'pending')
-    .gte('expected_date', today); // filter today and future
+    .select('expected_date, amount_expected, contractor_id, status')
+    .in('status', ['pending', 'accepted'])
+    .gte('expected_date', today);
 
   if (error) {
     console.error('Error fetching deliveries:', error);
@@ -25,8 +25,8 @@ const fetchDeliveryStats = async () => {
     };
   }
 
-  const todayDeliveries = data.filter((d) => d.expected_date === today);
-  const futureDeliveries = data.filter((d) => d.expected_date > today);
+  const todayDeliveries = [...data];
+  const futurePending = data.filter((d) => d.status === 'pending');
 
   const count = todayDeliveries.length;
   const totalExpected = todayDeliveries.reduce(
@@ -34,8 +34,10 @@ const fetchDeliveryStats = async () => {
     0
   );
 
-  const remainingCompanies = futureDeliveries.length;
-  const remainingAmount = futureDeliveries.reduce(
+  const remainingCompanies = new Set(futurePending.map((d) => d.contractor_id))
+    .size;
+
+  const remainingAmount = futurePending.reduce(
     (acc, d) => acc + Number(d.amount_expected ?? 0),
     0
   );

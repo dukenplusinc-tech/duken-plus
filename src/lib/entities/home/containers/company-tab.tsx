@@ -19,7 +19,7 @@ export const ExpenseSummary: FC = () => {
         {loading ? (
           <Loader className="h-4 w-4 animate-spin inline-block" />
         ) : (
-          `${totalToday} тг`
+          <Money>{totalToday}</Money>
         )}
       </div>
     </div>

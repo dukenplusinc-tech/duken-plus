@@ -7,7 +7,7 @@ export type DeliveryItem = {
   contractor_id: string;
   amount_expected: number;
   amount_received: number | null;
-  status: 'pending' | 'accepted' | 'due';
+  status: 'pending' | 'accepted' | 'due' | 'canceled';
   expected_date: string;
   contractor_name: string;
   consignment_status: 'open' | 'closed' | null;

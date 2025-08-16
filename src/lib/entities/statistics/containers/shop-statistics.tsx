@@ -8,6 +8,7 @@ import {
   CheckCheck,
   PackageSearch,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   Bar,
   BarChart,
@@ -24,25 +25,36 @@ import { Card, CardContent } from '@/components/ui/card';
 function pct(v: number) {
   return `${Math.round((v || 0) * 100)}%`;
 }
+
 function fmtMoney(n: number) {
-  return new Intl.NumberFormat(undefined, {
+  return new Intl.NumberFormat('ru-KZ', {
     style: 'currency',
-    currency: 'EUR',
+    currency: 'KZT',
     maximumFractionDigits: 0,
   }).format(n || 0);
 }
 
 export function StatsPage() {
+  const t = useTranslations('statistics');
+  const tStatus = useTranslations('statistics.delivery.status'); // for statuses in legends/tables
   const [period, setPeriod] = useState<Period>('month');
-  const { stats, isLoading, error, from, to } = useShopStats(period);
+  const { stats, isLoading, error, from, to, statusTKey } =
+    useShopStats(period);
+
+  const periodLabels: Record<Period, string> = {
+    day: t('period.day'),
+    week: t('period.week'),
+    month: t('period.month'),
+    year: t('period.year'),
+  };
 
   return (
     <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold">Статистика магазина</h1>
+        <h1 className="text-2xl font-semibold">{t('title')}</h1>
         <p className="text-sm text-muted-foreground">
-          Период: <span className="font-medium">{from}</span> —{' '}
+          {t('period.label')} <span className="font-medium">{from}</span> —{' '}
           <span className="font-medium">{to}</span>
         </p>
       </div>
@@ -52,22 +64,23 @@ export function StatsPage() {
         {(['day', 'week', 'month', 'year'] as const).map((p) => (
           <button
             key={p}
-            className={`py-2 rounded-md text-sm border ${period === p ? 'bg-primary text-primary-foreground border-primary' : 'bg-background text-primary border-border'}`}
+            className={`py-2 rounded-md text-sm border ${
+              period === p
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-background text-primary border-border'
+            }`}
             onClick={() => setPeriod(p)}
+            aria-pressed={period === p}
           >
-            {p === 'day'
-              ? 'День'
-              : p === 'week'
-                ? 'Неделя'
-                : p === 'month'
-                  ? 'Месяц'
-                  : 'Год'}
+            {periodLabels[p]}
           </button>
         ))}
       </div>
 
       {error && (
-        <div className="text-sm text-red-600">Ошибка загрузки: {error}</div>
+        <div className="text-sm text-red-600">
+          {t('error.load_failed')}: {error}
+        </div>
       )}
 
       {/* KPI row: deliveries & consignments */}
@@ -77,13 +90,14 @@ export function StatsPage() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs text-muted-foreground">
-                  Поставки (всего)
+                  {t('kpi.deliveries_total')}
                 </p>
                 <p className="text-xl font-semibold">
                   {isLoading ? '…' : (stats?.deliveries.total ?? 0)}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Принято: {isLoading ? '…' : (stats?.deliveries.accepted ?? 0)}
+                  {t('kpi.accepted')}:{' '}
+                  {isLoading ? '…' : (stats?.deliveries.accepted ?? 0)}
                 </p>
               </div>
               <div className="rounded-full p-2 bg-blue-500/10">
@@ -97,12 +111,14 @@ export function StatsPage() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs text-muted-foreground">% приёмки</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('kpi.acceptance_rate')}
+                </p>
                 <p className="text-xl font-semibold">
                   {isLoading ? '…' : pct(stats?.deliveries.acceptanceRate ?? 0)}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  он-тайм:{' '}
+                  {t('kpi.on_time')}:{' '}
                   {isLoading ? '…' : pct(stats?.deliveries.onTimeRate ?? 0)}
                 </p>
               </div>
@@ -118,7 +134,7 @@ export function StatsPage() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-xs text-muted-foreground">
-                  К приёмке / Просрочено
+                  {t('kpi.to_accept_overdue')}
                 </p>
                 <p className="text-xl font-semibold">
                   {isLoading
@@ -126,7 +142,7 @@ export function StatsPage() {
                     : `${stats?.deliveries.pending ?? 0} / ${stats?.deliveries.due ?? 0}`}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Отменено:{' '}
+                  {t('kpi.canceled')}:{' '}
                   {isLoading ? '…' : (stats?.deliveries.canceled ?? 0)}
                 </p>
               </div>
@@ -141,7 +157,9 @@ export function StatsPage() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs text-muted-foreground">Консигнации</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('kpi.consignments')}
+                </p>
                 <p className="text-xl font-semibold">
                   {isLoading
                     ? '…'
@@ -165,18 +183,23 @@ export function StatsPage() {
       <Card>
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">Требует внимания</p>
+            <p className="text-sm text-muted-foreground">
+              {t('attention.title')}
+            </p>
             <span className="text-xs text-muted-foreground">
-              {isLoading ? '' : (stats?.attention.length ?? 0)} элементов
+              {isLoading ? '' : (stats?.attention.length ?? 0)}{' '}
+              {t('attention.items_suffix')}
             </span>
           </div>
           <div className="mt-3 space-y-2">
             {isLoading && (
-              <div className="text-sm text-muted-foreground">Загрузка…</div>
+              <div className="text-sm text-muted-foreground">
+                {t('loading')}
+              </div>
             )}
             {!isLoading && (stats?.attention.length ?? 0) === 0 && (
               <div className="text-sm text-muted-foreground">
-                Всё хорошо. Срочных задач нет.
+                {t('attention.empty')}
               </div>
             )}
             {!isLoading &&
@@ -186,16 +209,16 @@ export function StatsPage() {
                   className="flex items-start justify-between border rounded-md p-2"
                 >
                   <div className="space-y-0.5">
-                    <p className="text-sm font-medium">
-                      {a.type === 'delivery_due_today' &&
-                        'Поставка к приёмке сегодня'}
-                      {a.type === 'delivery_overdue' && 'Просроченная поставка'}
-                      {a.type === 'consignment_overdue' &&
-                        'Просроченная консигнация'}
-                    </p>
-                    {a.subtitle && (
+                    <p className="text-sm font-medium">{t(a.title_tkey)}</p>
+                    {a.subtitle_tkey && (
                       <p className="text-xs text-muted-foreground">
-                        {a.subtitle}
+                        {t(a.subtitle_tkey, {
+                          // nested translate for status labels if present
+                          status:
+                            a.subtitle_params?.status &&
+                            t(a.subtitle_params.status as string),
+                          date: a.subtitle_params?.date,
+                        })}
                       </p>
                     )}
                   </div>
@@ -211,10 +234,11 @@ export function StatsPage() {
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm text-muted-foreground">
-              Просроченные поставки
+              {t('overdue.title')}
             </p>
             <span className="text-xs text-muted-foreground">
-              {isLoading ? '' : (stats?.overdueDeliveries?.length ?? 0)} шт.
+              {isLoading ? '' : (stats?.overdueDeliveries?.length ?? 0)}{' '}
+              {t('overdue.count_suffix')}
             </span>
           </div>
 
@@ -222,24 +246,24 @@ export function StatsPage() {
             <table className="min-w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
-                  <th className="text-left p-2">Компания</th>
-                  <th className="text-left p-2">Ожидалась</th>
-                  <th className="text-left p-2">Дней просрочки</th>
-                  <th className="text-left p-2">Статус</th>
-                  <th className="text-left p-2">Сумма (ожид./получ.)</th>
+                  <th className="text-left p-2">{t('table.company')}</th>
+                  <th className="text-left p-2">{t('table.expected')}</th>
+                  <th className="text-left p-2">{t('table.days_overdue')}</th>
+                  <th className="text-left p-2">{t('table.status')}</th>
+                  <th className="text-left p-2">{t('table.amounts')}</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td className="p-2" colSpan={5}>
-                      Загрузка…
+                      {t('loading')}
                     </td>
                   </tr>
                 ) : (stats?.overdueDeliveries?.length ?? 0) === 0 ? (
                   <tr>
                     <td className="p-2 text-muted-foreground" colSpan={5}>
-                      Просроченных поставок нет
+                      {t('overdue.empty')}
                     </td>
                   </tr>
                 ) : (
@@ -248,9 +272,7 @@ export function StatsPage() {
                       <td className="p-2">{d.contractor_title}</td>
                       <td className="p-2">{d.expected_date}</td>
                       <td className="p-2">{d.days_overdue}</td>
-                      <td className="p-2">
-                        {d.status === 'due' ? 'due' : 'pending'}
-                      </td>
+                      <td className="p-2">{tStatus(d.status)}</td>
                       <td className="p-2">
                         {fmtMoney(d.amount_expected)} /{' '}
                         {fmtMoney(d.amount_received)}
@@ -267,10 +289,14 @@ export function StatsPage() {
       {/* Trend chart */}
       <Card>
         <CardContent className="p-4">
-          <p className="text-sm text-muted-foreground mb-2">Поставки по дням</p>
+          <p className="text-sm text-muted-foreground mb-2">
+            {t('trend.title')}
+          </p>
           <div className="h-56">
             {isLoading ? (
-              <div className="text-sm text-muted-foreground">Загрузка…</div>
+              <div className="text-sm text-muted-foreground">
+                {t('loading')}
+              </div>
             ) : (stats?.trend.length ?? 0) ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={stats!.trend}>
@@ -278,15 +304,27 @@ export function StatsPage() {
                   <YAxis fontSize={12} />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="accepted" stackId="a" />
-                  <Bar dataKey="pending" stackId="a" />
-                  <Bar dataKey="due" stackId="a" />
-                  <Bar dataKey="canceled" stackId="a" />
+                  <Bar
+                    dataKey="accepted"
+                    stackId="a"
+                    name={t(statusTKey.accepted)}
+                  />
+                  <Bar
+                    dataKey="pending"
+                    stackId="a"
+                    name={t(statusTKey.pending)}
+                  />
+                  <Bar dataKey="due" stackId="a" name={t(statusTKey.due)} />
+                  <Bar
+                    dataKey="canceled"
+                    stackId="a"
+                    name={t(statusTKey.canceled)}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
               <div className="text-sm text-muted-foreground">
-                Нет данных за выбранный период
+                {t('trend.empty')}
               </div>
             )}
           </div>
@@ -298,7 +336,7 @@ export function StatsPage() {
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm text-muted-foreground">
-              Разбивка по компаниям
+              {t('companies.title')}
             </p>
             <Building className="h-4 w-4 text-muted-foreground" />
           </div>
@@ -306,20 +344,24 @@ export function StatsPage() {
             <table className="min-w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
-                  <th className="text-left p-2">Компания</th>
-                  <th className="text-left p-2">Всего</th>
-                  <th className="text-left p-2">Принято</th>
-                  <th className="text-left p-2">% приёмки</th>
-                  <th className="text-left p-2">Консиг. откр./проср.</th>
-                  <th className="text-left p-2">Суммы (ожид./получ.)</th>
-                  <th className="text-left p-2">Последняя поставка</th>
+                  <th className="text-left p-2">{t('table.company')}</th>
+                  <th className="text-left p-2">{t('table.total')}</th>
+                  <th className="text-left p-2">{t('table.accepted')}</th>
+                  <th className="text-left p-2">
+                    {t('table.acceptance_rate')}
+                  </th>
+                  <th className="text-left p-2">
+                    {t('table.consignments_open_overdue')}
+                  </th>
+                  <th className="text-left p-2">{t('table.amounts')}</th>
+                  <th className="text-left p-2">{t('table.last_delivery')}</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
                     <td className="p-2" colSpan={7}>
-                      Загрузка…
+                      {t('loading')}
                     </td>
                   </tr>
                 ) : (

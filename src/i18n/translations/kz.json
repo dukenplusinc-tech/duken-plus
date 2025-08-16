@@ -556,22 +556,6 @@
       "title": "Консигнация"
     }
   },
-  "statistics": {
-    "title": "Статистика",
-    "heading": "Статистика",
-    "period": {
-      "day": "Күн",
-      "week": "Апта",
-      "month": "Ай",
-      "year": "Жыл"
-    },
-    "summary": {
-      "loaned_out": "Берілді",
-      "repaid": "Қайтарылды",
-      "to_firms": "Фирмаларға",
-      "cash_registers": "Кассалар"
-    }
-  },
   "calendar": {
     "day": "Күн",
     "month": "Ай",
@@ -609,5 +593,77 @@
       "Жұма",
       "Сенбі"
     ]
+  },
+  "statistics": {
+    "title": "Дүкен статистикасы",
+    "period": {
+      "label": "Период:",
+      "day": "Күн",
+      "week": "Апта",
+      "month": "Ай",
+      "year": "Жыл"
+    },
+    "error": {
+      "load_failed": "Жүктеу қатесі"
+    },
+    "kpi": {
+      "deliveries_total": "Жеткізулер (барлығы)",
+      "accepted": "Қабылданды",
+      "acceptance_rate": "Қабылдау %",
+      "on_time": "Уақтылы",
+      "to_accept_overdue": "Қабылдауға / Артта",
+      "canceled": "Бас тартылды",
+      "consignments": "Консигнациялар"
+    },
+    "attention": {
+      "title": "Назар аудару қажет",
+      "items_suffix": "элемент",
+      "empty": "Барлығы жақсы. Шұғыл тапсырма жоқ.",
+      "delivery_due_today": {
+        "title": "Бүгінгі жеткізу",
+        "subtitle": "Статус: {status}"
+      },
+      "delivery_overdue": {
+        "title": "Кешіктірілген жеткізу",
+        "subtitle": "Күтілді: {date}"
+      },
+      "consignment_overdue": {
+        "title": "Кешіктірілген консигнация",
+        "subtitle": "Мерзімі: {date}"
+      }
+    },
+    "overdue": {
+      "title": "Кешіктірілген жеткізулер",
+      "count_suffix": "дб.",
+      "empty": "Кешіктірілген жеткізу жоқ"
+    },
+    "trend": {
+      "title": "Күнделікті жеткізу",
+      "empty": "Таңдалған кезең бойынша дерек жоқ"
+    },
+    "companies": {
+      "title": "Компаниялар бойынша"
+    },
+    "table": {
+      "company": "Компания",
+      "expected": "Күтілді",
+      "days_overdue": "Күн кешіккен",
+      "status": "Статус",
+      "amounts": "Сома (күтіл./алған)",
+      "total": "Барлығы",
+      "accepted": "Қабылданды",
+      "acceptance_rate": "Қабылдау %",
+      "consignments_open_overdue": "Консиг. ашық/кеш.",
+      "last_delivery": "Соңғы жеткізу"
+    },
+    "loading": "Жүктелуде…",
+    "delivery": {
+      "status": {
+        "pending": "Қабылдауға",
+        "accepted": "Қабылданды",
+        "due": "Кешіккен",
+        "canceled": "Бас тартылды"
+      }
+    }
   }
 }

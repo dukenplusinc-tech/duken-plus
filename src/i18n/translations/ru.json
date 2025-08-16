@@ -556,22 +556,6 @@
       "title": "Консигнация"
     }
   },
-  "statistics": {
-    "title": "Статистика",
-    "heading": "Статистика",
-    "period": {
-      "day": "День",
-      "week": "Неделя",
-      "month": "Месяц",
-      "year": "Год"
-    },
-    "summary": {
-      "loaned_out": "Выдано",
-      "repaid": "Возвращено",
-      "to_firms": "Фирмам",
-      "cash_registers": "Кассы"
-    }
-  },
   "calendar": {
     "day": "День",
     "month": "Месяц",
@@ -609,5 +593,77 @@
       "Пятница",
       "Суббота"
     ]
+  },
+  "statistics": {
+    "title": "Статистика магазина",
+    "period": {
+      "label": "Период:",
+      "day": "День",
+      "week": "Неделя",
+      "month": "Месяц",
+      "year": "Год"
+    },
+    "error": {
+      "load_failed": "Ошибка загрузки"
+    },
+    "kpi": {
+      "deliveries_total": "Поставки (всего)",
+      "accepted": "Принято",
+      "acceptance_rate": "% приёмки",
+      "on_time": "Он-тайм",
+      "to_accept_overdue": "К приёмке / Просрочено",
+      "canceled": "Отменено",
+      "consignments": "Консигнации"
+    },
+    "attention": {
+      "title": "Требует внимания",
+      "items_suffix": "элементов",
+      "empty": "Всё хорошо. Срочных задач нет.",
+      "delivery_due_today": {
+        "title": "Поставка к приёмке сегодня",
+        "subtitle": "Статус: {status}"
+      },
+      "delivery_overdue": {
+        "title": "Просроченная поставка",
+        "subtitle": "Ожидалась: {date}"
+      },
+      "consignment_overdue": {
+        "title": "Просроченная консигнация",
+        "subtitle": "Срок: {date}"
+      }
+    },
+    "overdue": {
+      "title": "Просроченные поставки",
+      "count_suffix": "шт.",
+      "empty": "Просроченных поставок нет"
+    },
+    "trend": {
+      "title": "Поставки по дням",
+      "empty": "Нет данных за выбранный период"
+    },
+    "companies": {
+      "title": "Разбивка по компаниям"
+    },
+    "table": {
+      "company": "Компания",
+      "expected": "Ожидалась",
+      "days_overdue": "Дней просрочки",
+      "status": "Статус",
+      "amounts": "Сумма (ожид./получ.)",
+      "total": "Всего",
+      "accepted": "Принято",
+      "acceptance_rate": "% приёмки",
+      "consignments_open_overdue": "Консиг. откр./проср.",
+      "last_delivery": "Последняя поставка"
+    },
+    "loading": "Загрузка…",
+    "delivery": {
+      "status": {
+        "pending": "К приёмке",
+        "accepted": "Принято",
+        "due": "Просрочено",
+        "canceled": "Отменено"
+      }
+    }
   }
 }

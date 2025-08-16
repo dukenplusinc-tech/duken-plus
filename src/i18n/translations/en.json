@@ -556,22 +556,6 @@
       "title": "Consignment"
     }
   },
-  "statistics": {
-    "title": "Statistics",
-    "heading": "Statistics",
-    "period": {
-      "day": "Day",
-      "week": "Week",
-      "month": "Month",
-      "year": "Year"
-    },
-    "summary": {
-      "loaned_out": "Loaned out",
-      "repaid": "Repaid",
-      "to_firms": "To companies",
-      "cash_registers": "Cash registers"
-    }
-  },
   "calendar": {
     "day": "Day",
     "month": "Month",
@@ -609,5 +593,77 @@
       "Friday",
       "Saturday"
     ]
+  },
+  "statistics": {
+    "title": "Store statistics",
+    "period": {
+      "label": "Period:",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "year": "Year"
+    },
+    "error": {
+      "load_failed": "Loading error"
+    },
+    "kpi": {
+      "deliveries_total": "Deliveries (total)",
+      "accepted": "Accepted",
+      "acceptance_rate": "Acceptance rate",
+      "on_time": "On-time",
+      "to_accept_overdue": "To accept / Overdue",
+      "canceled": "Canceled",
+      "consignments": "Consignments"
+    },
+    "attention": {
+      "title": "Requires attention",
+      "items_suffix": "items",
+      "empty": "All good. No urgent tasks.",
+      "delivery_due_today": {
+        "title": "Delivery due today",
+        "subtitle": "Status: {status}"
+      },
+      "delivery_overdue": {
+        "title": "Overdue delivery",
+        "subtitle": "Expected: {date}"
+      },
+      "consignment_overdue": {
+        "title": "Overdue consignment",
+        "subtitle": "Due: {date}"
+      }
+    },
+    "overdue": {
+      "title": "Overdue deliveries",
+      "count_suffix": "pcs.",
+      "empty": "No overdue deliveries"
+    },
+    "trend": {
+      "title": "Deliveries by day",
+      "empty": "No data for selected period"
+    },
+    "companies": {
+      "title": "Company breakdown"
+    },
+    "table": {
+      "company": "Company",
+      "expected": "Expected",
+      "days_overdue": "Days overdue",
+      "status": "Status",
+      "amounts": "Amount (exp./rec.)",
+      "total": "Total",
+      "accepted": "Accepted",
+      "acceptance_rate": "Acceptance rate",
+      "consignments_open_overdue": "Consig. open/ovrd.",
+      "last_delivery": "Last delivery"
+    },
+    "loading": "Loading…",
+    "delivery": {
+      "status": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "due": "Overdue",
+        "canceled": "Canceled"
+      }
+    }
   }
 }

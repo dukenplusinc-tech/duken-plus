@@ -1,10 +1,19 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+
+import { supabase } from '@/lib/supabase/client';
 
 export type Period = 'day' | 'week' | 'month' | 'year';
 export type DeliveryStatus = 'pending' | 'accepted' | 'due' | 'canceled';
+
+// Reuse these tKeys in charts/legends/etc.
+export const STATUS_TKEY: Record<DeliveryStatus, string> = {
+  pending: 'delivery.status.pending',
+  accepted: 'delivery.status.accepted',
+  due: 'delivery.status.due',
+  canceled: 'delivery.status.canceled',
+};
 
 export interface DeliveriesSummary {
   total: number;
@@ -41,11 +50,15 @@ export interface CompanyRow {
   last_delivery_date: string | null;
 }
 
+// Text fields now return translation keys (and optional params) instead of raw RU strings
 export interface AttentionItem {
   id: string;
   type: 'delivery_due_today' | 'delivery_overdue' | 'consignment_overdue';
-  title: string;
-  subtitle?: string;
+  // i18n keys:
+  title_tkey: string; // e.g. 'attention.delivery_due_today.title'
+  subtitle_tkey?: string; // e.g. 'attention.delivery_overdue.subtitle'
+  subtitle_params?: Record<string, string | number>;
+  // original data (dates/ids) still provided for your UI logic:
   expected_date?: string | null;
   consignment_due_date?: string | null;
   contractor_id?: string | null;
@@ -67,7 +80,7 @@ export interface ShopStats {
   trend: TrendDay[];
   companies: CompanyRow[];
   attention: AttentionItem[];
-  overdueDeliveries: OverdueDelivery[]; // ⬅️ новое поле
+  overdueDeliveries: OverdueDelivery[];
 }
 
 type DeliveryRow = {
@@ -76,34 +89,45 @@ type DeliveryRow = {
   status: DeliveryStatus;
   is_consignement: boolean;
   consignment_status: 'open' | 'closed' | null;
-  consignment_due_date: string | null;
-  expected_date: string;
-  accepted_date: string | null;
+  consignment_due_date: string | null; // date string or null
+  expected_date: string; // date string (YYYY-MM-DD or YYYY-MM-DDTHH:mm)
+  accepted_date: string | null; // date string or null
   amount_expected: number | null;
   amount_received: number | null;
 };
 
 type ContractorRow = { id: string; title: string };
 
+// ---------- date helpers (local, date-only safe) ----------
 function startOfDay(d: Date) {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
+
 function toISODate(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
 }
+
+function addDaysISO(iso: string, days: number) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const nd = new Date(y, m - 1, d + days);
+  return toISODate(nd);
+}
+
 function getRange(period: Period) {
-  const to = startOfDay(new Date());
+  const to = startOfDay(new Date()); // today (local)
   const from = new Date(to);
-  if (period === 'day') from.setDate(from.getDate() - 0);
+  if (period === 'day') from.setDate(from.getDate());
   if (period === 'week') from.setDate(from.getDate() - 6);
   if (period === 'month') from.setMonth(from.getMonth() - 1);
   if (period === 'year') from.setFullYear(from.getFullYear() - 1);
   return { from: toISODate(from), to: toISODate(to) };
 }
+
 function isBeforeOrEqualISO(aISO: string, bISO: string) {
+  // lexicographic compare works for YYYY-MM-DD strings
   return aISO <= bISO;
 }
 
@@ -111,8 +135,10 @@ export function useShopStats(period: Period) {
   const [data, setData] = useState<ShopStats | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tick, setTick] = useState(0); // drives refetch
 
   const { from, to } = useMemo(() => getRange(period), [period]);
+  const toExclusive = useMemo(() => addDaysISO(to, 1), [to]); // [from, to+1)
 
   useEffect(() => {
     let cancelled = false;
@@ -121,19 +147,15 @@ export function useShopStats(period: Period) {
       setLoading(true);
       setError(null);
 
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      );
-
-      // 1) Deliveries за период
+      // IMPORTANT: closed-open range avoids boundary issues on date columns
       const { data: deliveries, error: dErr } = await supabase
         .from('deliveries')
         .select(
           'id,contractor_id,status,is_consignement,consignment_status,consignment_due_date,expected_date,accepted_date,amount_expected,amount_received'
         )
         .gte('expected_date', from)
-        .lte('expected_date', to);
+        .lt('expected_date', toExclusive)
+        .order('expected_date', { ascending: true });
 
       if (dErr) {
         if (!cancelled) {
@@ -145,7 +167,7 @@ export function useShopStats(period: Period) {
 
       const rows = (deliveries ?? []) as DeliveryRow[];
 
-      // 2) Агрегации + тренд
+      // ---------- Aggregations ----------
       const byDay = new Map<string, TrendDay>();
       let total = 0,
         accepted = 0,
@@ -158,15 +180,15 @@ export function useShopStats(period: Period) {
       let amountExpected = 0,
         amountReceived = 0;
 
-      const todayISO = toISODate(startOfDay(new Date()));
+      const todayISO = to; // date-only (same as range 'to' day)
 
-      // просрочки (для отдельного блока)
       const overdueList: OverdueDelivery[] = [];
 
       rows.forEach((r) => {
         const day = r.expected_date?.slice(0, 10);
         if (!day) return;
 
+        // trend count
         const d = byDay.get(day) ?? {
           day,
           accepted: 0,
@@ -177,13 +199,14 @@ export function useShopStats(period: Period) {
         d[r.status] += 1;
         byDay.set(day, d);
 
+        // totals
         total += 1;
         if (r.status === 'accepted') accepted += 1;
         if (r.status === 'pending') pending += 1;
         if (r.status === 'due') due += 1;
         if (r.status === 'canceled') canceled += 1;
 
-        // On-time acceptance
+        // on-time acceptance
         if (r.status === 'accepted' && r.accepted_date && r.expected_date) {
           if (
             isBeforeOrEqualISO(
@@ -195,22 +218,20 @@ export function useShopStats(period: Period) {
           }
         }
 
-        // Consignments
+        // consignments
         if (r.is_consignement && r.consignment_status === 'open') {
           consignmentsOpen += 1;
-          if (
-            r.consignment_due_date &&
-            r.consignment_due_date.slice(0, 10) < todayISO
-          ) {
+          const dueISO = r.consignment_due_date?.slice(0, 10);
+          if (dueISO && dueISO < todayISO) {
             consignmentsOverdue += 1;
           }
         }
 
-        // Amounts
+        // amounts
         amountExpected += Number(r.amount_expected ?? 0);
         amountReceived += Number(r.amount_received ?? 0);
 
-        // Overdue deliveries list
+        // overdue deliveries list
         const expISO = r.expected_date?.slice(0, 10);
         if (expISO) {
           const isOverdue =
@@ -225,7 +246,7 @@ export function useShopStats(period: Period) {
             overdueList.push({
               id: r.id,
               contractor_id: r.contractor_id ?? null,
-              contractor_title: '—', // заполним после запроса компаний
+              contractor_title: '—', // filled after company fetch
               expected_date: expISO,
               days_overdue: days,
               status: r.status === 'due' ? 'due' : 'pending',
@@ -242,7 +263,7 @@ export function useShopStats(period: Period) {
         a.day < b.day ? -1 : 1
       );
 
-      // 3) Разбивка по компаниям
+      // ---------- Companies split ----------
       const byCompany = new Map<string, CompanyRow>();
       rows.forEach((r) => {
         const key = r.contractor_id ?? 'unknown';
@@ -264,10 +285,8 @@ export function useShopStats(period: Period) {
 
         if (r.is_consignement && r.consignment_status === 'open') {
           row.consignments_open += 1;
-          if (
-            r.consignment_due_date &&
-            r.consignment_due_date.slice(0, 10) < todayISO
-          ) {
+          const dueISO = r.consignment_due_date?.slice(0, 10);
+          if (dueISO && dueISO < todayISO) {
             row.consignments_overdue += 1;
           }
         }
@@ -283,7 +302,7 @@ export function useShopStats(period: Period) {
         byCompany.set(key, row);
       });
 
-      // 4) Подтягиваем названия компаний и заполняем acceptanceRate + overdueList titles
+      // ---------- Fetch company titles + finalize rates and overdue titles ----------
       const companyIds = Array.from(byCompany.keys()).filter(
         (id) => id !== 'unknown'
       );
@@ -310,7 +329,6 @@ export function useShopStats(period: Period) {
               : '—';
           });
         } else {
-          // fallback без названий
           byCompany.forEach((row) => {
             row.contractor_title = row.contractor_title || '—';
             row.acceptanceRate = row.total_deliveries
@@ -326,6 +344,58 @@ export function useShopStats(period: Period) {
             : 0;
         });
       }
+
+      // ---------- Build attention with tKeys ----------
+      const attention = rows.reduce<AttentionItem[]>((acc, r) => {
+        const exp = r.expected_date?.slice(0, 10);
+        const dueDate = r.consignment_due_date?.slice(0, 10);
+
+        if (r.status === 'pending' && exp === todayISO) {
+          acc.push({
+            id: r.id,
+            type: 'delivery_due_today',
+            title_tkey: 'attention.delivery_due_today.title',
+            subtitle_tkey: 'attention.delivery_due_today.subtitle', // e.g. "status: {status}"
+            subtitle_params: { status: STATUS_TKEY[r.status] }, // consumer will t() this again
+            expected_date: exp,
+            contractor_id: r.contractor_id ?? null,
+          });
+        }
+
+        if (
+          r.status === 'due' ||
+          (r.status === 'pending' && exp && exp < todayISO)
+        ) {
+          acc.push({
+            id: r.id,
+            type: 'delivery_overdue',
+            title_tkey: 'attention.delivery_overdue.title',
+            subtitle_tkey: 'attention.delivery_overdue.subtitle', // e.g. "expected: {date}"
+            subtitle_params: { date: exp ?? '' },
+            expected_date: exp,
+            contractor_id: r.contractor_id ?? null,
+          });
+        }
+
+        if (
+          r.is_consignement &&
+          r.consignment_status === 'open' &&
+          dueDate &&
+          dueDate < todayISO
+        ) {
+          acc.push({
+            id: r.id,
+            type: 'consignment_overdue',
+            title_tkey: 'attention.consignment_overdue.title',
+            subtitle_tkey: 'attention.consignment_overdue.subtitle', // e.g. "due: {date}"
+            subtitle_params: { date: dueDate },
+            consignment_due_date: dueDate,
+            contractor_id: r.contractor_id ?? null,
+          });
+        }
+
+        return acc;
+      }, []);
 
       if (!cancelled) {
         setData({
@@ -346,49 +416,7 @@ export function useShopStats(period: Period) {
           companies: Array.from(byCompany.values()).sort(
             (a, b) => b.total_deliveries - a.total_deliveries
           ),
-          attention: rows.reduce<AttentionItem[]>((acc, r) => {
-            const exp = r.expected_date?.slice(0, 10);
-            const dueDate = r.consignment_due_date?.slice(0, 10);
-            if (r.status === 'pending' && exp === todayISO) {
-              acc.push({
-                id: r.id,
-                type: 'delivery_due_today',
-                title: 'Поставка к приёмке сегодня',
-                subtitle: 'Статус: pending',
-                expected_date: exp,
-                contractor_id: r.contractor_id ?? null,
-              });
-            }
-            if (
-              r.status === 'due' ||
-              (r.status === 'pending' && exp && exp < todayISO)
-            ) {
-              acc.push({
-                id: r.id,
-                type: 'delivery_overdue',
-                title: 'Просроченная поставка',
-                subtitle: `Ожидалась: ${exp}`,
-                expected_date: exp,
-                contractor_id: r.contractor_id ?? null,
-              });
-            }
-            if (
-              r.is_consignement &&
-              r.consignment_status === 'open' &&
-              dueDate &&
-              dueDate < todayISO
-            ) {
-              acc.push({
-                id: r.id,
-                type: 'consignment_overdue',
-                title: 'Просроченная консигнация',
-                subtitle: `Срок: ${dueDate}`,
-                consignment_due_date: dueDate,
-                contractor_id: r.contractor_id ?? null,
-              });
-            }
-            return acc;
-          }, []),
+          attention,
           overdueDeliveries: overdueList.sort(
             (a, b) => b.days_overdue - a.days_overdue
           ),
@@ -400,7 +428,7 @@ export function useShopStats(period: Period) {
     return () => {
       cancelled = true;
     };
-  }, [from, to]);
+  }, [from, toExclusive, tick, to]);
 
   return {
     stats: data,
@@ -408,6 +436,8 @@ export function useShopStats(period: Period) {
     error,
     from,
     to,
-    refresh: () => setLoading((x) => !x),
+    refresh: () => setTick((n) => n + 1),
+    // expose status tKeys for chart legends/labels
+    statusTKey: STATUS_TKEY,
   };
 }

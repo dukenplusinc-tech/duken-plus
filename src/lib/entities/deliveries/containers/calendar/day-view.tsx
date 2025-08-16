@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
+import { ymdLocal } from '@/lib/entities/deliveries/containers/calendar/time-utils';
 import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -15,14 +16,25 @@ export default function DayView({ currentDate }: DayViewProps) {
   const t = useTranslations('calendar');
 
   const events = useMemo(() => {
-    const dayISO = currentDate.toISOString().slice(0, 10);
+    // Local YYYY-MM-DD for the current date
+    const dayKey = ymdLocal(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
 
     return (data || [])
-      .filter((item) => item.expected_date === dayISO)
-      .sort(
-        (a, b) =>
-          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-      )
+      .filter((item) => {
+        if (!item.expected_date) return false;
+        // normalize to first 10 chars → "YYYY-MM-DD"
+        const key = item.expected_date.slice(0, 10);
+        return key === dayKey;
+      })
+      .sort((a, b) => {
+        const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return ta - tb;
+      })
       .map((item) => ({
         id: item.id,
         title: item.contractors?.title || t('no_title'),
@@ -36,7 +48,10 @@ export default function DayView({ currentDate }: DayViewProps) {
   }, [data, currentDate, t]);
 
   const dayNames = t.raw('weekdays') as string[];
-  const dayName = dayNames[currentDate.getDay()];
+  const jsDay = currentDate.getDay(); // 0 = Sunday … 6 = Saturday
+  // If your `weekdays` starts with Monday, shift:
+  const dayName = dayNames[(jsDay + 6) % 7];
+
   const monthName = currentDate.toLocaleDateString('ru-RU', { month: 'long' });
 
   return (

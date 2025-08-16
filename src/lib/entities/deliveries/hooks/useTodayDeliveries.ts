@@ -13,7 +13,7 @@ const fetchDeliveryStats = async () => {
     .from('deliveries')
     .select('expected_date, amount_expected, contractor_id, status')
     .in('status', ['pending', 'accepted'])
-    .gte('expected_date', today);
+    .eq('expected_date', today);
 
   if (error) {
     console.error('Error fetching deliveries:', error);

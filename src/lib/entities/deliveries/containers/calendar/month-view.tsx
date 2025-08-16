@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
+import { ymdLocal } from '@/lib/entities/deliveries/containers/calendar/time-utils';
 import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -22,6 +23,7 @@ export default function MonthView({
   const t = useTranslations('calendar');
   const { data = [] } = useCalendarDeliveries(currentDate);
 
+  // map by normalized date-only strings
   const deliveriesByDay = useMemo(() => {
     const map = new Map<
       string,
@@ -29,13 +31,19 @@ export default function MonthView({
     >();
 
     (data || []).forEach((d) => {
-      const date = d.expected_date;
-      if (!date) return;
-      const flags = map.get(date) ?? {};
+      console.log({ exp: d.expected_date, type: typeof d.expected_date });
+
+      if (!d.expected_date) return;
+
+      // ensure 'YYYY-MM-DD'
+      const dateStr = d.expected_date.slice(0, 10);
+
+      const flags = map.get(dateStr) ?? {};
       if (d.status === 'due') flags.due = true;
       if (d.status === 'pending') flags.pending = true;
-      if (d.is_consignement) flags.consignment = true;
-      map.set(date, flags);
+      if ((d as any).is_consignment || (d as any).is_consignement)
+        flags.consignment = true; // handle typo
+      map.set(dateStr, flags);
     });
 
     return map;
@@ -66,7 +74,7 @@ export default function MonthView({
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const fullDate = new Date(year, month, i).toISOString().slice(0, 10);
+      const fullDate = ymdLocal(year, month, i);
       const info = deliveriesByDay.get(fullDate);
       const isToday =
         today.getFullYear() === year &&

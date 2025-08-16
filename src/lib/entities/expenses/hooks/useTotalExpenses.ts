@@ -16,10 +16,9 @@ const fetchTotal = async (date: string) => {
 
     supabase
       .from('deliveries')
-      .select('amount_expected, status')
-      .eq('expected_date', date)
-      .in('status', ['accepted'])
-      .neq('status', 'canceled'),
+      .select('*, contractors ( title )')
+      .in('status', ['pending', 'accepted'])
+      .eq('expected_date', date),
   ]);
 
   const expenses = expensesRes.data || [];

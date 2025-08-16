@@ -20,6 +20,7 @@ import {
 } from 'recharts';
 
 import { Period, useShopStats } from '@/lib/entities/statistics/hooks/useStats';
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Card, CardContent } from '@/components/ui/card';
 
 function pct(v: number) {
@@ -42,6 +43,8 @@ const CHART_COLORS = {
 };
 
 export function StatsPage() {
+  useActivateBackButton();
+
   const t = useTranslations('statistics');
   const tStatus = useTranslations('statistics.delivery.status'); // for statuses in legends/tables
   const [period, setPeriod] = useState<Period>('month');

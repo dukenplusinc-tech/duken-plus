@@ -34,6 +34,13 @@ function fmtMoney(n: number) {
   }).format(n || 0);
 }
 
+const CHART_COLORS = {
+  accepted: '#10b981', // emerald-500 (brighter, positive)
+  pending: '#f59e0b', // amber-500 (attention)
+  due: '#dc2626', // red-600 (strong urgency)
+  canceled: '#6b7280', // gray-500 (neutral/disabled)
+};
+
 export function StatsPage() {
   const t = useTranslations('statistics');
   const tStatus = useTranslations('statistics.delivery.status'); // for statuses in legends/tables
@@ -246,11 +253,21 @@ export function StatsPage() {
             <table className="min-w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
-                  <th className="text-left p-2">{t('table.company')}</th>
-                  <th className="text-left p-2">{t('table.expected')}</th>
-                  <th className="text-left p-2">{t('table.days_overdue')}</th>
-                  <th className="text-left p-2">{t('table.status')}</th>
-                  <th className="text-left p-2">{t('table.amounts')}</th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.company')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.expected')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.days_overdue')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.status')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.amounts')}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -307,17 +324,25 @@ export function StatsPage() {
                   <Bar
                     dataKey="accepted"
                     stackId="a"
+                    fill={CHART_COLORS.accepted}
                     name={t(statusTKey.accepted)}
                   />
                   <Bar
                     dataKey="pending"
                     stackId="a"
+                    fill={CHART_COLORS.pending}
                     name={t(statusTKey.pending)}
                   />
-                  <Bar dataKey="due" stackId="a" name={t(statusTKey.due)} />
+                  <Bar
+                    dataKey="due"
+                    stackId="a"
+                    fill={CHART_COLORS.due}
+                    name={t(statusTKey.due)}
+                  />
                   <Bar
                     dataKey="canceled"
                     stackId="a"
+                    fill={CHART_COLORS.canceled}
                     name={t(statusTKey.canceled)}
                   />
                 </BarChart>
@@ -344,17 +369,27 @@ export function StatsPage() {
             <table className="min-w-full text-sm">
               <thead className="bg-muted/40">
                 <tr>
-                  <th className="text-left p-2">{t('table.company')}</th>
-                  <th className="text-left p-2">{t('table.total')}</th>
-                  <th className="text-left p-2">{t('table.accepted')}</th>
-                  <th className="text-left p-2">
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.company')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.total')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.accepted')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
                     {t('table.acceptance_rate')}
                   </th>
-                  <th className="text-left p-2">
+                  <th className="whitespace-nowrap text-left p-2">
                     {t('table.consignments_open_overdue')}
                   </th>
-                  <th className="text-left p-2">{t('table.amounts')}</th>
-                  <th className="text-left p-2">{t('table.last_delivery')}</th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.amounts')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.last_delivery')}
+                  </th>
                 </tr>
               </thead>
               <tbody>

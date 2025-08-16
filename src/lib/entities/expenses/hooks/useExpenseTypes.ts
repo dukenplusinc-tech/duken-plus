@@ -1,4 +1,5 @@
-import useSWR from 'swr';
+import { useCallback } from 'react';
+import useSWR, { mutate } from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
 
@@ -19,9 +20,14 @@ export const useExpenseTypes = () => {
     revalidateOnFocus: false,
   });
 
+  const refresh = useCallback(() => {
+    return mutate('expense-types');
+  }, []);
+
   return {
     types: data || [],
     error,
     isLoading,
+    refresh,
   };
 };

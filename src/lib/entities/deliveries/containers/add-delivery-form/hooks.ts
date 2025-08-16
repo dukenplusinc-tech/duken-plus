@@ -6,6 +6,7 @@ import {
   deliveryFormSchema,
   DeliveryFormValues,
 } from '@/lib/entities/deliveries/schema';
+import { useRefreshHomeData } from '@/lib/entities/home/hooks/useRefreshHomeData';
 
 const defaultValues: DeliveryFormValues = {
   amount_expected: 0,
@@ -14,10 +15,14 @@ const defaultValues: DeliveryFormValues = {
 };
 
 export function useAddDeliveryRequestForm() {
+  const refresh = useRefreshHomeData();
+
   return useForm<typeof deliveryFormSchema, DeliveryFormValues>({
     defaultValues,
     request: async (values) => {
       await createDelivery(values);
+
+      await refresh();
     },
     schema: deliveryFormSchema,
   });

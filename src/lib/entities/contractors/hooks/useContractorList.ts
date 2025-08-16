@@ -1,4 +1,5 @@
-import useSWR from 'swr';
+import { useCallback } from 'react';
+import useSWR, { mutate } from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
 import type { AutocompleteOption } from '@/components/ui/autocomplete';
@@ -27,9 +28,14 @@ export const useContractorList = () => {
     revalidateOnFocus: false,
   });
 
+  const refresh = useCallback(async () => {
+    return mutate('expense-types');
+  }, []);
+
   return {
     data: data || [],
     error,
     isLoading,
+    refresh,
   };
 };

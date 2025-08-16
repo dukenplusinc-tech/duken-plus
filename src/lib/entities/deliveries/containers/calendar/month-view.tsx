@@ -31,8 +31,6 @@ export default function MonthView({
     >();
 
     (data || []).forEach((d) => {
-      console.log({ exp: d.expected_date, type: typeof d.expected_date });
-
       if (!d.expected_date) return;
 
       // ensure 'YYYY-MM-DD'

@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -24,25 +24,18 @@ import {
 // Hook to detect mobile
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-
-    return () => window.removeEventListener('resize', checkIsMobile);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
   }, []);
-
   return isMobile;
 }
 
 export interface AutocompleteOption {
   value: string;
   label: string;
-
   [key: string]: any;
 }
 
@@ -70,6 +63,18 @@ const defaultCustomValueMessage: AutocompleteProps['customValueMessage'] = (
   val
 ) => `Use "${val}"`;
 
+// -- helpers ---------------------------------------------------------
+
+function asOption(opt: string | AutocompleteOption): AutocompleteOption {
+  return typeof opt === 'string' ? { value: opt, label: opt } : opt;
+}
+function getOptionValue(opt: string | AutocompleteOption) {
+  return asOption(opt).value;
+}
+function getOptionLabel(opt: string | AutocompleteOption) {
+  return asOption(opt).label;
+}
+
 export function Autocomplete({
   value,
   onValueChange,
@@ -87,69 +92,76 @@ export function Autocomplete({
   renderOption,
 }: AutocompleteProps) {
   const [open, setOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState(value);
+  const [searchValue, setSearchValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    setSearchValue(value);
-  }, [value]);
+  const normalized = useMemo(() => options.map(asOption), [options]);
 
-  const customValueMessage: AutocompleteProps['customValueMessage'] =
+  // Find the currently selected option (by value/uuid)
+  const selectedOption = useMemo(
+    () => normalized.find((o) => o.value === value) || null,
+    [normalized, value]
+  );
+  const selectedLabel = selectedOption?.label ?? '';
+
+  // Keep the visible text in sync with the selected label
+  useEffect(() => {
+    if (!open) setSearchValue(selectedLabel);
+  }, [selectedLabel, open]);
+
+  const customValueMessage =
     propsCustomValueMessage ?? defaultCustomValueMessage;
 
-  // Default filter function
   const defaultFilterFn = (
     option: string | AutocompleteOption,
     search: string
   ): boolean => {
-    const searchLower = search.toLowerCase();
-    if (typeof option === 'string') {
-      return option.toLowerCase().includes(searchLower);
-    }
+    const o = asOption(option);
+    const q = (search || '').toLowerCase();
     return (
-      option.label.toLowerCase().includes(searchLower) ||
-      option.value.toLowerCase().includes(searchLower)
+      o.label.toLowerCase().includes(q) || o.value.toLowerCase().includes(q)
     );
   };
 
-  const filteredOptions = options.filter((option) =>
-    (filterFn || defaultFilterFn)(option, searchValue)
+  const filteredOptions = useMemo(
+    () =>
+      normalized.filter((o) => (filterFn || defaultFilterFn)(o, searchValue)),
+    [normalized, filterFn, searchValue]
   );
 
-  // Get display value for an option
-  const getOptionValue = (option: string | AutocompleteOption): string => {
-    return typeof option === 'string' ? option : option.value;
-  };
-
-  // Get display label for an option
-  const getOptionLabel = (option: string | AutocompleteOption): string => {
-    return typeof option === 'string' ? option : option.label;
-  };
-
-  const handleSelect = (selectedOption: string | AutocompleteOption) => {
-    const optionValue = getOptionValue(selectedOption);
-    setSearchValue(optionValue);
-    onValueChange(optionValue);
+  const handleSelect = (opt: string | AutocompleteOption) => {
+    const o = asOption(opt);
+    setSearchValue(o.label); // show label
+    onValueChange(o.value); // store value (uuid)
     setOpen(false);
   };
 
   const handleInputChange = (newValue: string) => {
-    setSearchValue(newValue);
-    onValueChange(newValue);
+    setSearchValue(newValue); // typing should NOT change parent value
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setOpen(false);
+      // Optional: pick the first filtered item on Enter
+      if (filteredOptions.length) {
+        handleSelect(filteredOptions[0]);
+      } else if (allowCustomValue && searchValue) {
+        handleSelect({ value: searchValue, label: searchValue });
+      } else {
+        setOpen(false);
+      }
     }
   };
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
-    if (newOpen && isMobile) {
-      setSearchValue(value);
+    if (newOpen) {
+      // when opening, start with the current label so it can be edited
+      setSearchValue(selectedLabel);
+      // focus the input in the popover/dialog on next tick
+      setTimeout(() => inputRef.current?.focus(), 0);
     }
   };
 
@@ -177,7 +189,7 @@ export function Autocomplete({
     </>
   );
 
-  // Mobile full-screen dialog
+  // --------------------- Mobile full-screen dialog ---------------------
   if (isMobile) {
     return (
       <div className={cn('space-y-2 w-full', className)}>
@@ -192,8 +204,10 @@ export function Autocomplete({
             className="w-full justify-between h-12 bg-white border border-gray-300 hover:border-gray-400 font-normal"
             disabled={disabled}
           >
-            <span className={cn('text-left', !value && 'text-gray-500')}>
-              {value || placeholder}
+            <span
+              className={cn('text-left', !selectedLabel && 'text-gray-500')}
+            >
+              {selectedLabel || placeholder}
             </span>
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -224,7 +238,12 @@ export function Autocomplete({
                               type="button"
                               variant="outline"
                               className="w-full"
-                              onClick={() => handleSelect(searchValue)}
+                              onClick={() =>
+                                handleSelect({
+                                  value: searchValue,
+                                  label: searchValue,
+                                })
+                              }
                             >
                               {customValueMessage(searchValue)}
                             </Button>
@@ -232,13 +251,12 @@ export function Autocomplete({
                       </div>
                     </CommandEmpty>
                     <CommandGroup>
-                      {filteredOptions.map((option, index) => {
-                        const optionValue = getOptionValue(option);
-                        const isSelected = value === optionValue;
+                      {filteredOptions.map((option) => {
+                        const isSelected = value === option.value;
                         return (
                           <CommandItem
-                            key={`${optionValue}-${index}`}
-                            value={optionValue}
+                            key={option.value}
+                            value={`${option.label} ${option.value}`}
                             onSelect={() => handleSelect(option)}
                             className="py-4 text-base cursor-pointer"
                           >
@@ -272,7 +290,7 @@ export function Autocomplete({
     );
   }
 
-  // Desktop popover
+  // --------------------------- Desktop popover ---------------------------
   return (
     <div className={cn('space-y-2 ml-2', className)}>
       {label && (
@@ -292,7 +310,7 @@ export function Autocomplete({
               <input
                 ref={inputRef}
                 type="text"
-                value={searchValue}
+                value={open ? searchValue : selectedLabel} // <-- show label when closed
                 onChange={(e) => handleInputChange(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
@@ -322,7 +340,12 @@ export function Autocomplete({
                         type="button"
                         variant="ghost"
                         className="w-full mt-2 justify-start"
-                        onClick={() => handleSelect(searchValue)}
+                        onClick={() =>
+                          handleSelect({
+                            value: searchValue,
+                            label: searchValue,
+                          })
+                        }
                       >
                         {customValueMessage(searchValue)}
                       </Button>
@@ -330,13 +353,12 @@ export function Autocomplete({
                   </div>
                 </CommandEmpty>
                 <CommandGroup>
-                  {filteredOptions.map((option, index) => {
-                    const optionValue = getOptionValue(option);
-                    const isSelected = value === optionValue;
+                  {filteredOptions.map((option) => {
+                    const isSelected = value === option.value;
                     return (
                       <CommandItem
-                        key={`${optionValue}-${index}`}
-                        value={optionValue}
+                        key={option.value}
+                        value={`${option.label} ${option.value}`}
                         onSelect={() => handleSelect(option)}
                       >
                         {renderOption

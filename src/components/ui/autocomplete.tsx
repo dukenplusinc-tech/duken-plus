@@ -63,8 +63,7 @@ const defaultCustomValueMessage: AutocompleteProps['customValueMessage'] = (
   val
 ) => `Use "${val}"`;
 
-// -- helpers ---------------------------------------------------------
-
+// helpers
 function asOption(opt: string | AutocompleteOption): AutocompleteOption {
   return typeof opt === 'string' ? { value: opt, label: opt } : opt;
 }
@@ -98,14 +97,14 @@ export function Autocomplete({
 
   const normalized = useMemo(() => options.map(asOption), [options]);
 
-  // Find the currently selected option (by value/uuid)
   const selectedOption = useMemo(
     () => normalized.find((o) => o.value === value) || null,
     [normalized, value]
   );
-  const selectedLabel = selectedOption?.label ?? '';
+  // fallback to raw value for custom entries
+  const selectedLabel =
+    selectedOption?.label ?? (allowCustomValue ? value : '');
 
-  // Keep the visible text in sync with the selected label
   useEffect(() => {
     if (!open) setSearchValue(selectedLabel);
   }, [selectedLabel, open]);
@@ -132,23 +131,24 @@ export function Autocomplete({
 
   const handleSelect = (opt: string | AutocompleteOption) => {
     const o = asOption(opt);
-    setSearchValue(o.label); // show label
-    onValueChange(o.value); // store value (uuid)
+    setSearchValue(o.label);
+    onValueChange(o.value);
     setOpen(false);
   };
 
   const handleInputChange = (newValue: string) => {
-    setSearchValue(newValue); // typing should NOT change parent value
+    setSearchValue(newValue);
+    if (!open) setOpen(true);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      // Optional: pick the first filtered item on Enter
       if (filteredOptions.length) {
         handleSelect(filteredOptions[0]);
-      } else if (allowCustomValue && searchValue) {
-        handleSelect({ value: searchValue, label: searchValue });
+      } else if (allowCustomValue && searchValue.trim()) {
+        const v = searchValue.trim();
+        handleSelect({ value: v, label: v });
       } else {
         setOpen(false);
       }
@@ -158,9 +158,7 @@ export function Autocomplete({
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
     if (newOpen) {
-      // when opening, start with the current label so it can be edited
       setSearchValue(selectedLabel);
-      // focus the input in the popover/dialog on next tick
       setTimeout(() => inputRef.current?.focus(), 0);
     }
   };
@@ -238,12 +236,11 @@ export function Autocomplete({
                               type="button"
                               variant="outline"
                               className="w-full"
-                              onClick={() =>
-                                handleSelect({
-                                  value: searchValue,
-                                  label: searchValue,
-                                })
-                              }
+                              onClick={() => {
+                                const v = searchValue.trim();
+                                if (!v) return;
+                                handleSelect({ value: v, label: v });
+                              }}
                             >
                               {customValueMessage(searchValue)}
                             </Button>
@@ -290,36 +287,52 @@ export function Autocomplete({
     );
   }
 
-  // --------------------------- Desktop popover ---------------------------
+  // --------------------------- Desktop popover (input is the trigger) ---------------------------
   return (
     <div className={cn('space-y-2 ml-2', className)}>
       {label && (
         <label className="text-sm font-medium text-gray-700">{label}</label>
       )}
+
       <div className="relative">
         <Popover open={open} onOpenChange={handleOpenChange}>
+          {/* Make the input the trigger to avoid button keyboard activation (Space/Enter) */}
           <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="outline"
+            <input
+              ref={inputRef}
+              type="text"
+              value={open ? searchValue : selectedLabel}
+              onChange={(e) => handleInputChange(e.target.value)}
+              onFocus={() => setOpen(true)}
+              onKeyDown={handleKeyDown}
+              placeholder={placeholder}
+              className={cn(
+                'w-full h-12 rounded-md border border-gray-300 bg-white px-3 pr-8',
+                'outline-none focus-visible:ring-2 focus-visible:ring-primary/30',
+                disabled && 'opacity-50 cursor-not-allowed'
+              )}
+              disabled={disabled}
               role="combobox"
               aria-expanded={open}
-              className="w-full justify-between h-12 bg-white border border-gray-300 hover:border-gray-400 font-normal"
-              disabled={disabled}
-            >
-              <input
-                ref={inputRef}
-                type="text"
-                value={open ? searchValue : selectedLabel} // <-- show label when closed
-                onChange={(e) => handleInputChange(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={placeholder}
-                className="flex-1 bg-transparent outline-none text-left"
-                disabled={disabled}
-              />
-              <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
+              aria-autocomplete="list"
+              aria-controls="autocomplete-listbox"
+            />
           </PopoverTrigger>
+
+          {/* Chevron toggle that doesn't steal focus from the input */}
+          <button
+            type="button"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-muted/50"
+            onMouseDown={(e) => {
+              e.preventDefault(); // keep input focused
+              if (!disabled) setOpen((o) => !o);
+            }}
+            aria-label="Toggle"
+            disabled={disabled}
+          >
+            <ChevronDown className="h-4 w-4 opacity-60" />
+          </button>
+
           <PopoverContent className="w-full p-0" align="start">
             <Command>
               <CommandInput
@@ -327,7 +340,7 @@ export function Autocomplete({
                 value={searchValue}
                 onValueChange={handleInputChange}
               />
-              <CommandList>
+              <CommandList id="autocomplete-listbox">
                 <CommandEmpty>
                   <div className="p-2">
                     {!(allowCustomValue && customValueMessage) && (
@@ -340,12 +353,11 @@ export function Autocomplete({
                         type="button"
                         variant="ghost"
                         className="w-full mt-2 justify-start"
-                        onClick={() =>
-                          handleSelect({
-                            value: searchValue,
-                            label: searchValue,
-                          })
-                        }
+                        onClick={() => {
+                          const v = searchValue.trim();
+                          if (!v) return;
+                          handleSelect({ value: v, label: v });
+                        }}
                       >
                         {customValueMessage(searchValue)}
                       </Button>
@@ -361,9 +373,19 @@ export function Autocomplete({
                         value={`${option.label} ${option.value}`}
                         onSelect={() => handleSelect(option)}
                       >
-                        {renderOption
-                          ? renderOption(option, isSelected)
-                          : renderDefaultOption(option, isSelected)}
+                        {renderOption ? (
+                          renderOption(option, isSelected)
+                        ) : (
+                          <>
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                isSelected ? 'opacity-100' : 'opacity-0'
+                              )}
+                            />
+                            {getOptionLabel(option)}
+                          </>
+                        )}
                       </CommandItem>
                     );
                   })}

@@ -2,7 +2,7 @@
 
 import useSWR from 'swr';
 
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 interface SubscriptionPayment {
   id: string;
@@ -25,7 +25,7 @@ export interface SubscriptionInfo extends SubscriptionPayment {
 const fetchSubscriptionData = async (
   shopId: string
 ): Promise<SubscriptionPayment[]> => {
-  const { data, error } = await supabase
+  const { data, error } = await createClient()
     .from('subscription_payments')
     .select('*')
     .eq('shop_id', shopId)

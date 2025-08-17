@@ -1,39 +1,44 @@
 import { cookies } from 'next/headers';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database } from '@/lib/supabase/types';
 
-export const createClient = (cookieStore?: ReturnType<typeof cookies>) => {
-  // set default cookies store
-  const store = cookieStore || cookies();
+declare global {
+  // avoid re-creation during dev HMR
+  // eslint-disable-next-line no-var
+  // noinspection JSUnusedGlobalSymbols
+  var __supabaseServer__: SupabaseClient<Database> | undefined;
+}
 
-  return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return store.get(name)?.value;
+export function createClient(): SupabaseClient<Database> {
+  if (!global.__supabaseServer__) {
+    global.__supabaseServer__ = createServerClient<Database>(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_KEY!, // server-only secret
+      {
+        cookies: {
+          get(name: string) {
+            // gets the store for the *current* request
+            return cookies().get(name)?.value;
+          },
+          set(name: string, value: string, options: CookieOptions) {
+            try {
+              cookies().set({ name, value, ...options });
+            } catch {
+              // called from a Server Component (no mutable cookies) — ignore
+            }
+          },
+          remove(name: string, options: CookieOptions) {
+            try {
+              cookies().set({ name, value: '', ...options });
+            } catch {
+              // called from a Server Component — ignore
+            }
+          },
         },
-        set(name: string, value: string, options: CookieOptions) {
-          try {
-            store.set({ name, value, ...options });
-          } catch (error) {
-            // The `set` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-          }
-        },
-        remove(name: string, options: CookieOptions) {
-          try {
-            store.set({ name, value: '', ...options });
-          } catch (error) {
-            // The `delete` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-          }
-        },
-      },
-    }
-  );
-};
+      }
+    );
+  }
+  return global.__supabaseServer__;
+}

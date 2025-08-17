@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 export type Period = 'day' | 'week' | 'month' | 'year';
 export type DeliveryStatus = 'pending' | 'accepted' | 'due' | 'canceled';
@@ -144,6 +144,8 @@ export function useShopStats(period: Period) {
     let cancelled = false;
 
     (async () => {
+      const supabase = createClient();
+
       setLoading(true);
       setError(null);
 

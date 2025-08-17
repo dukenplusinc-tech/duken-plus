@@ -4,3 +4,9 @@ export function ymdLocal(y: number, m: number, d: number) {
   const dd = String(d).padStart(2, '0');
   return `${y}-${mm}-${dd}`;
 }
+
+export function todayISO(): string {
+  const [dateValue] = new Date().toISOString().split('T');
+
+  return dateValue;
+}

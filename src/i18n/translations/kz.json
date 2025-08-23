@@ -644,16 +644,26 @@
     "companies": {
       "title": "Компаниялар бойынша"
     },
+    "expenses": {
+      "total_label": "Кезеңдегі шығындар",
+      "types_count": "{count, plural, =0 {түрлері: 0} one {түрі: #} few {түрі: #} many {түрі: #} other {түрі: #}}",
+      "by_type_title": "Шығындар түрлері бойынша",
+      "empty": "Таңдалған кезеңге шығындар жоқ",
+      "avg_per_day_label": "Күндік орташа шығын",
+      "period_days": "{count, plural, one {# күн} few {# күн} many {# күн} other {# күн}}"
+    },
     "table": {
+      "type": "Түрі",
+      "count": "Саны",
       "company": "Компания",
-      "expected": "Күтілді",
-      "days_overdue": "Күн кешіккен",
-      "status": "Статус",
-      "amounts": "Сома (күтіл./алған)",
+      "expected": "Күтілген",
+      "days_overdue": "Кешіккен күндер",
+      "status": "Күйі",
+      "amounts": "Сома (күтіл./алын.)",
       "total": "Барлығы",
       "accepted": "Қабылданды",
       "acceptance_rate": "Қабылдау %",
-      "consignments_open_overdue": "Консиг. ашық/кеш.",
+      "consignments_open_overdue": "Консиг. ашық/кешіккен",
       "last_delivery": "Соңғы жеткізу"
     },
     "loading": "Жүктелуде…",

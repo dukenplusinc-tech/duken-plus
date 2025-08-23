@@ -50,6 +50,22 @@ export interface CompanyRow {
   last_delivery_date: string | null;
 }
 
+// Expenses
+export interface ExpensesByType {
+  type: string;
+  total: number;
+  count: number;
+}
+export interface ExpensesDay {
+  day: string; // YYYY-MM-DD
+  total: number;
+}
+export interface ExpensesStats {
+  total: number;
+  byType: ExpensesByType[];
+  daily: ExpensesDay[];
+}
+
 // Text fields now return translation keys (and optional params) instead of raw RU strings
 export interface AttentionItem {
   id: string;
@@ -58,7 +74,7 @@ export interface AttentionItem {
   title_tkey: string; // e.g. 'attention.delivery_due_today.title'
   subtitle_tkey?: string; // e.g. 'attention.delivery_overdue.subtitle'
   subtitle_params?: Record<string, string | number>;
-  // original data (dates/ids) still provided for your UI logic:
+  // raw data
   expected_date?: string | null;
   consignment_due_date?: string | null;
   contractor_id?: string | null;
@@ -81,6 +97,7 @@ export interface ShopStats {
   companies: CompanyRow[];
   attention: AttentionItem[];
   overdueDeliveries: OverdueDelivery[];
+  expenses: ExpensesStats;
 }
 
 type DeliveryRow = {
@@ -89,33 +106,31 @@ type DeliveryRow = {
   status: DeliveryStatus;
   is_consignement: boolean;
   consignment_status: 'open' | 'closed' | null;
-  consignment_due_date: string | null; // date string or null
-  expected_date: string; // date string (YYYY-MM-DD or YYYY-MM-DDTHH:mm)
-  accepted_date: string | null; // date string or null
+  consignment_due_date: string | null;
+  expected_date: string;
+  accepted_date: string | null;
   amount_expected: number | null;
   amount_received: number | null;
 };
 
 type ContractorRow = { id: string; title: string };
+type ExpenseRow = { type: string; amount: number; date: string };
 
-// ---------- date helpers (local, date-only safe) ----------
+// ---------- date helpers ----------
 function startOfDay(d: Date) {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
-
 function toISODate(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
 }
-
 function addDaysISO(iso: string, days: number) {
   const [y, m, d] = iso.split('-').map(Number);
   const nd = new Date(y, m - 1, d + days);
   return toISODate(nd);
 }
-
 function getRange(period: Period) {
   const to = startOfDay(new Date()); // today (local)
   const from = new Date(to);
@@ -125,9 +140,7 @@ function getRange(period: Period) {
   if (period === 'year') from.setFullYear(from.getFullYear() - 1);
   return { from: toISODate(from), to: toISODate(to) };
 }
-
 function isBeforeOrEqualISO(aISO: string, bISO: string) {
-  // lexicographic compare works for YYYY-MM-DD strings
   return aISO <= bISO;
 }
 
@@ -149,7 +162,7 @@ export function useShopStats(period: Period) {
       setLoading(true);
       setError(null);
 
-      // IMPORTANT: closed-open range avoids boundary issues on date columns
+      // ---------- Deliveries ----------
       const { data: deliveries, error: dErr } = await supabase
         .from('deliveries')
         .select(
@@ -347,6 +360,52 @@ export function useShopStats(period: Period) {
         });
       }
 
+      // ---------- Expenses ----------
+      const { data: expenses, error: eErr } = await supabase
+        .from('expenses')
+        .select('type,amount,date')
+        .gte('date', from) // inclusive from
+        .lt('date', toExclusive); // exclusive to+1
+
+      if (eErr) {
+        if (!cancelled) {
+          setError(eErr.message);
+          setLoading(false);
+        }
+        return;
+      }
+
+      const expRows = (expenses ?? []) as ExpenseRow[];
+      const byType = new Map<string, { total: number; count: number }>();
+      const byDayExp = new Map<string, number>();
+      let expensesTotal = 0;
+
+      expRows.forEach((r) => {
+        const amt = Number(r.amount ?? 0);
+        expensesTotal += amt;
+
+        const t = (r.type ?? '—').trim() || '—';
+        const tAgg = byType.get(t) ?? { total: 0, count: 0 };
+        tAgg.total += amt;
+        tAgg.count += 1;
+        byType.set(t, tAgg);
+
+        const day = r.date?.slice(0, 10);
+        if (day) {
+          byDayExp.set(day, (byDayExp.get(day) ?? 0) + amt);
+        }
+      });
+
+      const expensesStats: ExpensesStats = {
+        total: expensesTotal,
+        byType: Array.from(byType.entries())
+          .map(([type, v]) => ({ type, total: v.total, count: v.count }))
+          .sort((a, b) => b.total - a.total),
+        daily: Array.from(byDayExp.entries())
+          .map(([day, total]) => ({ day, total }))
+          .sort((a, b) => (a.day < b.day ? -1 : 1)),
+      };
+
       // ---------- Build attention with tKeys ----------
       const attention = rows.reduce<AttentionItem[]>((acc, r) => {
         const exp = r.expected_date?.slice(0, 10);
@@ -357,8 +416,8 @@ export function useShopStats(period: Period) {
             id: r.id,
             type: 'delivery_due_today',
             title_tkey: 'attention.delivery_due_today.title',
-            subtitle_tkey: 'attention.delivery_due_today.subtitle', // e.g. "status: {status}"
-            subtitle_params: { status: STATUS_TKEY[r.status] }, // consumer will t() this again
+            subtitle_tkey: 'attention.delivery_due_today.subtitle',
+            subtitle_params: { status: STATUS_TKEY[r.status] },
             expected_date: exp,
             contractor_id: r.contractor_id ?? null,
           });
@@ -372,7 +431,7 @@ export function useShopStats(period: Period) {
             id: r.id,
             type: 'delivery_overdue',
             title_tkey: 'attention.delivery_overdue.title',
-            subtitle_tkey: 'attention.delivery_overdue.subtitle', // e.g. "expected: {date}"
+            subtitle_tkey: 'attention.delivery_overdue.subtitle',
             subtitle_params: { date: exp ?? '' },
             expected_date: exp,
             contractor_id: r.contractor_id ?? null,
@@ -389,7 +448,7 @@ export function useShopStats(period: Period) {
             id: r.id,
             type: 'consignment_overdue',
             title_tkey: 'attention.consignment_overdue.title',
-            subtitle_tkey: 'attention.consignment_overdue.subtitle', // e.g. "due: {date}"
+            subtitle_tkey: 'attention.consignment_overdue.subtitle',
             subtitle_params: { date: dueDate },
             consignment_due_date: dueDate,
             contractor_id: r.contractor_id ?? null,
@@ -422,6 +481,7 @@ export function useShopStats(period: Period) {
           overdueDeliveries: overdueList.sort(
             (a, b) => b.days_overdue - a.days_overdue
           ),
+          expenses: expensesStats, // ⬅️
         });
         setLoading(false);
       }

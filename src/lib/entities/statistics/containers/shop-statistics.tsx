@@ -5,8 +5,10 @@ import {
   AlertTriangle,
   BarChart3,
   Building,
+  CalendarDays,
   CheckCheck,
   PackageSearch,
+  Wallet,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
@@ -36,17 +38,17 @@ function fmtMoney(n: number) {
 }
 
 const CHART_COLORS = {
-  accepted: '#10b981', // emerald-500 (brighter, positive)
-  pending: '#f59e0b', // amber-500 (attention)
-  due: '#dc2626', // red-600 (strong urgency)
-  canceled: '#6b7280', // gray-500 (neutral/disabled)
+  accepted: '#10b981',
+  pending: '#f59e0b',
+  due: '#dc2626',
+  canceled: '#6b7280',
 };
 
 export function StatsPage() {
   useActivateBackButton();
 
   const t = useTranslations('statistics');
-  const tStatus = useTranslations('statistics.delivery.status'); // for statuses in legends/tables
+  const tStatus = useTranslations('statistics.delivery.status');
   const [period, setPeriod] = useState<Period>('month');
   const { stats, isLoading, error, from, to, statusTKey } =
     useShopStats(period);
@@ -57,6 +59,12 @@ export function StatsPage() {
     month: t('period.month'),
     year: t('period.year'),
   };
+
+  const daysInPeriod = Math.max(
+    1,
+    Math.floor((Date.parse(to) - Date.parse(from)) / 86_400_000) + 1
+  );
+  const avgExpensesPerDay = (stats?.expenses.total ?? 0) / daysInPeriod;
 
   return (
     <div className="space-y-4">
@@ -93,8 +101,9 @@ export function StatsPage() {
         </div>
       )}
 
-      {/* KPI row: deliveries & consignments */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {/* KPI row: deliveries & consignments & expenses */}
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+        {/* Deliveries total */}
         <Card className="border-l-4 border-l-blue-500">
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-3">
@@ -117,6 +126,7 @@ export function StatsPage() {
           </CardContent>
         </Card>
 
+        {/* Acceptance */}
         <Card className="border-l-4 border-l-emerald-500">
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-3">
@@ -139,6 +149,7 @@ export function StatsPage() {
           </CardContent>
         </Card>
 
+        {/* To accept / overdue */}
         <Card className="border-l-4 border-l-amber-500">
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-3">
@@ -163,6 +174,7 @@ export function StatsPage() {
           </CardContent>
         </Card>
 
+        {/* Consignments */}
         <Card className="border-l-4 border-l-purple-500">
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-3">
@@ -183,6 +195,52 @@ export function StatsPage() {
               </div>
               <div className="rounded-full p-2 bg-purple-500/10">
                 <PackageSearch className="h-5 w-5 text-purple-500" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Expenses total */}
+        <Card className="border-l-4 border-l-sky-500">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs text-muted-foreground">
+                  {t('expenses.total_label')}
+                </p>
+                <p className="text-xl font-semibold">
+                  {isLoading ? '…' : fmtMoney(stats?.expenses.total ?? 0)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {t('expenses.types_count', {
+                    count: isLoading ? 0 : (stats?.expenses.byType.length ?? 0),
+                  })}
+                </p>
+              </div>
+              <div className="rounded-full p-2 bg-sky-500/10">
+                <Wallet className="h-5 w-5 text-sky-500" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Avg expenses per day */}
+        <Card className="border-l-4 border-l-slate-500">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs text-muted-foreground">
+                  {t('expenses.avg_per_day_label')}
+                </p>
+                <p className="text-xl font-semibold">
+                  {isLoading ? '…' : fmtMoney(avgExpensesPerDay)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {t('expenses.period_days', { count: daysInPeriod })}
+                </p>
+              </div>
+              <div className="rounded-full p-2 bg-slate-500/10">
+                <CalendarDays className="h-5 w-5 text-slate-500" />
               </div>
             </div>
           </CardContent>
@@ -223,7 +281,6 @@ export function StatsPage() {
                     {a.subtitle_tkey && (
                       <p className="text-xs text-muted-foreground">
                         {t(a.subtitle_tkey, {
-                          // nested translate for status labels if present
                           status:
                             a.subtitle_params?.status &&
                             t(a.subtitle_params.status as string),
@@ -355,6 +412,57 @@ export function StatsPage() {
                 {t('trend.empty')}
               </div>
             )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Expenses by type */}
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-muted-foreground">
+              {t('expenses.by_type_title')}
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead className="bg-muted/40">
+                <tr>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.type')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.count')}
+                  </th>
+                  <th className="whitespace-nowrap text-left p-2">
+                    {t('table.total')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading ? (
+                  <tr>
+                    <td className="p-2" colSpan={3}>
+                      {t('loading')}
+                    </td>
+                  </tr>
+                ) : (stats?.expenses.byType.length ?? 0) === 0 ? (
+                  <tr>
+                    <td className="p-2 text-muted-foreground" colSpan={3}>
+                      {t('expenses.empty')}
+                    </td>
+                  </tr>
+                ) : (
+                  stats!.expenses.byType.map((row) => (
+                    <tr key={row.type} className="border-b">
+                      <td className="p-2">{row.type}</td>
+                      <td className="p-2">{row.count}</td>
+                      <td className="p-2">{fmtMoney(row.total)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

@@ -644,7 +644,17 @@
     "companies": {
       "title": "Company breakdown"
     },
+    "expenses": {
+      "total_label": "Expenses for the period",
+      "types_count": "{count, plural, =0 {types: 0} one {type: #} few {types: #} many {types: #} other {types: #}}",
+      "by_type_title": "Expenses by type",
+      "empty": "No expenses for the selected period",
+      "avg_per_day_label": "Average daily expenses",
+      "period_days": "{count, plural, one {# day} few {# days} many {# days} other {# days}}"
+    },
     "table": {
+      "type": "Type",
+      "count": "Count",
       "company": "Company",
       "expected": "Expected",
       "days_overdue": "Days overdue",
@@ -652,8 +662,8 @@
       "amounts": "Amount (exp./rec.)",
       "total": "Total",
       "accepted": "Accepted",
-      "acceptance_rate": "Acceptance rate",
-      "consignments_open_overdue": "Consig. open/ovrd.",
+      "acceptance_rate": "Acceptance %",
+      "consignments_open_overdue": "Consign. open/overdue",
       "last_delivery": "Last delivery"
     },
     "loading": "Loading…",

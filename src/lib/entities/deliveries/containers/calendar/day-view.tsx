@@ -13,6 +13,7 @@ interface DayViewProps {
 
 export default function DayView({ currentDate }: DayViewProps) {
   const { data = [] } = useCalendarDeliveries(currentDate);
+
   const t = useTranslations('calendar');
 
   const events = useMemo(() => {
@@ -33,18 +34,28 @@ export default function DayView({ currentDate }: DayViewProps) {
       .sort((a, b) => {
         const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
         const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+
         return ta - tb;
       })
-      .map((item) => ({
-        id: item.id,
-        title: item.contractors?.title || t('no_title'),
-        color:
-          item.status === 'due'
-            ? 'bg-red-200'
-            : item.is_consignement
-              ? 'bg-yellow-200'
-              : 'bg-green-200',
-      }));
+      .map((item) => {
+        let color = '';
+
+        if (item.status === 'due') {
+          color = 'bg-red-200';
+        } else if (item.is_consignement) {
+          color = 'bg-yellow-200';
+        } else if (item.status === 'accepted') {
+          color = 'bg-orange-200';
+        } else {
+          color = 'bg-green-200';
+        }
+
+        return {
+          id: item.id,
+          title: item.contractors?.title || t('no_title'),
+          color,
+        };
+      });
   }, [data, currentDate, t]);
 
   const dayNames = t.raw('weekdays') as string[];

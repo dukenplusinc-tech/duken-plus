@@ -28,7 +28,9 @@ export function useCalendarDeliveries(date: Date) {
       .select(
         'id, expected_date, status, is_consignement, amount_expected, contractor_id, contractors ( title ), created_at'
       )
-      .or('status.eq.pending,status.eq.due,is_consignement.eq.true')
+      .or(
+        'status.eq.pending,status.eq.accepted,status.eq.due,is_consignement.eq.true'
+      )
       .gte('expected_date', startDate)
       .lte('expected_date', endDate)
       .order('created_at', { ascending: true }),

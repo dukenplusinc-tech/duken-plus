@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { ymdLocal } from '@/lib/entities/deliveries/containers/calendar/time-utils';
 import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
 import { Card, CardContent } from '@/components/ui/card';
+import { Money } from '@/components/numbers/money';
 
 interface DayViewProps {
   currentDate: Date;
@@ -38,7 +39,7 @@ export default function DayView({ currentDate }: DayViewProps) {
         return ta - tb;
       })
       .map((item) => {
-        let color = '';
+        let color = 'bg-green-200';
 
         if (item.status === 'due') {
           color = 'bg-red-200';
@@ -46,14 +47,13 @@ export default function DayView({ currentDate }: DayViewProps) {
           color = 'bg-yellow-200';
         } else if (item.status === 'accepted') {
           color = 'bg-orange-200';
-        } else {
-          color = 'bg-green-200';
         }
 
         return {
           id: item.id,
           title: item.contractors?.title || t('no_title'),
           color,
+          amount: item.amount_received || item.amount_expected,
         };
       });
   }, [data, currentDate, t]);
@@ -83,8 +83,11 @@ export default function DayView({ currentDate }: DayViewProps) {
               key={event.id}
               className={`${event.color} border-l-4 border-l-primary`}
             >
-              <CardContent className="p-3">
+              <CardContent className="flex flex-row justify-between p-3">
                 <div className="font-medium text-sm">{event.title}</div>
+                <div className="font-medium text-sm">
+                  <Money>{event.amount}</Money>
+                </div>
               </CardContent>
             </Card>
           ))

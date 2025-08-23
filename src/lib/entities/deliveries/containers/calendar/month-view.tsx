@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { ymdLocal } from '@/lib/entities/deliveries/containers/calendar/time-utils';
-import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
+import { useCalendarEvents } from '@/lib/entities/deliveries/hooks/useCalendarEvents';
+import { useSafeTranslations } from '@/lib/hooks/use-safe-translations';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface MonthViewProps {
@@ -16,36 +16,14 @@ export default function MonthView({
   currentDate,
   onDateSelect,
 }: MonthViewProps) {
+  const t = useTranslations('calendar');
+  const { safe } = useSafeTranslations('statistics.delivery');
+
   const today = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  const t = useTranslations('calendar');
-  const { data = [] } = useCalendarDeliveries(currentDate);
-
-  // map by normalized date-only strings
-  const deliveriesByDay = useMemo(() => {
-    const map = new Map<
-      string,
-      { due?: boolean; pending?: boolean; consignment?: boolean }
-    >();
-
-    (data || []).forEach((d) => {
-      if (!d.expected_date) return;
-
-      // ensure 'YYYY-MM-DD'
-      const dateStr = d.expected_date.slice(0, 10);
-
-      const flags = map.get(dateStr) ?? {};
-      if (d.status === 'due') flags.due = true;
-      if (d.status === 'pending') flags.pending = true;
-      if ((d as any).is_consignment || (d as any).is_consignement)
-        flags.consignment = true; // handle typo
-      map.set(dateStr, flags);
-    });
-
-    return map;
-  }, [data]);
+  const { flagsByDay } = useCalendarEvents(currentDate);
 
   const monthNames = t.raw('months') as string[];
   const dayNames = t.raw('day_names') as string[];
@@ -60,7 +38,7 @@ export default function MonthView({
   const renderCalendar = () => {
     const daysInMonth = getDaysInMonth(year, month);
     const firstDay = getFirstDayOfMonth(year, month);
-    const days = [];
+    const days: JSX.Element[] = [];
 
     for (let i = 0; i < firstDay; i++) {
       days.push(
@@ -73,7 +51,7 @@ export default function MonthView({
 
     for (let i = 1; i <= daysInMonth; i++) {
       const fullDate = ymdLocal(year, month, i);
-      const info = deliveriesByDay.get(fullDate);
+      const info = flagsByDay.get(fullDate);
       const isToday =
         today.getFullYear() === year &&
         today.getMonth() === month &&
@@ -83,7 +61,12 @@ export default function MonthView({
         currentDate.getMonth() === month &&
         currentDate.getDate() === i;
 
-      const hasAny = info?.due || info?.pending || info?.consignment;
+      const hasAny =
+        info?.due ||
+        info?.pending ||
+        info?.accepted ||
+        info?.consignment ||
+        info?.hasExpense;
 
       days.push(
         <div
@@ -98,12 +81,37 @@ export default function MonthView({
           <span>{i}</span>
           {hasAny && (
             <div className="absolute bottom-1 flex gap-1">
-              {info?.due && <div className="w-2 h-2 rounded-full bg-red-500" />}
+              {/* delivery states */}
+              {info?.due && (
+                <div
+                  className="w-2 h-2 rounded-full bg-red-500"
+                  title={safe('status.due')}
+                />
+              )}
               {info?.pending && (
-                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <div
+                  className="w-2 h-2 rounded-full bg-green-500"
+                  title={safe('status.pending')}
+                />
+              )}
+              {info?.accepted && (
+                <div
+                  className="w-2 h-2 rounded-full bg-orange-500"
+                  title={safe('status.accepted')}
+                />
               )}
               {info?.consignment && (
-                <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                <div
+                  className="w-2 h-2 rounded-full bg-yellow-500"
+                  title={t('consignment')}
+                />
+              )}
+              {/* expenses */}
+              {info?.hasExpense && (
+                <div
+                  className="w-2 h-2 rounded-full bg-blue-600"
+                  title={t('expense')}
+                />
               )}
             </div>
           )}

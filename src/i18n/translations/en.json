@@ -592,7 +592,9 @@
       "Thursday",
       "Friday",
       "Saturday"
-    ]
+    ],
+    "consignment": "Consignment",
+    "expense": "Expenses"
   },
   "statistics": {
     "title": "Store statistics",

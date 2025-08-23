@@ -5,6 +5,12 @@ export function ymdLocal(y: number, m: number, d: number) {
   return `${y}-${mm}-${dd}`;
 }
 
+export function toYDM(date: string): string {
+  const [dateValue] = new Date(date).toISOString().split('T');
+
+  return dateValue;
+}
+
 export function todayISO(): string {
   const [dateValue] = new Date().toISOString().split('T');
 

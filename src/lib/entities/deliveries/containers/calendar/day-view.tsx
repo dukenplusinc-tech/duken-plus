@@ -3,8 +3,8 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { ymdLocal } from '@/lib/entities/deliveries/containers/calendar/time-utils';
-import { useCalendarDeliveries } from '@/lib/entities/deliveries/hooks/useCalendarDeliveries';
+import { useCalendarEvents } from '@/lib/entities/deliveries/hooks/useCalendarEvents';
+import { useSafeTranslations } from '@/lib/hooks/use-safe-translations';
 import { Card, CardContent } from '@/components/ui/card';
 import { Money } from '@/components/numbers/money';
 
@@ -13,55 +13,47 @@ interface DayViewProps {
 }
 
 export default function DayView({ currentDate }: DayViewProps) {
-  const { data = [] } = useCalendarDeliveries(currentDate);
-
   const t = useTranslations('calendar');
+  const { safe } = useSafeTranslations('statistics.delivery');
 
-  const events = useMemo(() => {
-    // Local YYYY-MM-DD for the current date
-    const dayKey = ymdLocal(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
+  const { eventsForDay } = useCalendarEvents(currentDate);
 
-    return (data || [])
-      .filter((item) => {
-        if (!item.expected_date) return false;
-        // normalize to first 10 chars → "YYYY-MM-DD"
-        const key = item.expected_date.slice(0, 10);
-        return key === dayKey;
-      })
-      .sort((a, b) => {
-        const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
-        const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
-
-        return ta - tb;
-      })
-      .map((item) => {
-        let color = 'bg-green-200';
-
-        if (item.status === 'due') {
-          color = 'bg-red-200';
-        } else if (item.is_consignement) {
-          color = 'bg-yellow-200';
-        } else if (item.status === 'accepted') {
-          color = 'bg-orange-200';
-        }
-
+  // Color logic per event kind / status
+  const items = useMemo(() => {
+    return eventsForDay.map((ev) => {
+      if (ev.kind === 'expense') {
         return {
-          id: item.id,
-          title: item.contractors?.title || t('no_title'),
-          color,
-          amount: item.amount_received || item.amount_expected,
+          key: `exp-${ev.id}`,
+          title: ev.title || t('no_title'),
+          subtitle: t('expense'), // add key "expense" to your calendar messages
+          color: 'bg-blue-200',
+          amount: -Math.abs(ev.amount ?? 0), // show as negative if you wish
         };
-      });
-  }, [data, currentDate, t]);
+      }
+      // delivery
+      let color = 'bg-green-200';
+      if (ev.status === 'due') color = 'bg-red-200';
+      else if (ev.isConsignment) color = 'bg-yellow-200';
+      else if (ev.status === 'accepted') color = 'bg-orange-200';
 
-  const dayNames = t.raw('weekdays') as string[];
-  const jsDay = currentDate.getDay(); // 0 = Sunday … 6 = Saturday
-  // If your `weekdays` starts with Monday, shift:
-  const dayName = dayNames[(jsDay + 6) % 7];
+      // Optional localization map: add keys calendar.status.pending/accepted/due/canceled
+      const statusText = safe('status.' + ev.status) ?? ev.status;
+
+      return {
+        key: `del-${ev.id}`,
+        title: ev.title || t('no_title'),
+        subtitle: statusText,
+        color,
+        amount: ev.amount ?? null,
+      };
+    });
+  }, [eventsForDay, safe, t]);
+
+  const dayName = useMemo(() => {
+    const dayNames = t.raw('weekdays') as string[];
+    const jsDay = currentDate.getDay(); // 0..6
+    return dayNames[(jsDay + 6) % 7]; // shift if your array starts Monday
+  }, [currentDate, t]);
 
   const monthName = currentDate.toLocaleDateString('ru-RU', { month: 'long' });
 
@@ -75,19 +67,29 @@ export default function DayView({ currentDate }: DayViewProps) {
       </div>
 
       <div className="space-y-2">
-        {events.length === 0 ? (
+        {items.length === 0 ? (
           <p className="text-muted-foreground text-center">{t('empty_text')}</p>
         ) : (
-          events.map((event) => (
+          items.map((ev) => (
             <Card
-              key={event.id}
-              className={`${event.color} border-l-4 border-l-primary`}
+              key={ev.key}
+              className={`${ev.color} border-l-4 border-l-primary`}
             >
-              <CardContent className="flex flex-row justify-between p-3">
-                <div className="font-medium text-sm">{event.title}</div>
-                <div className="font-medium text-sm">
-                  <Money>{event.amount}</Money>
+              <CardContent className="p-3">
+                <div className="flex items-center justify-between">
+                  <div className="font-medium text-sm">{ev.title}</div>
+                  {ev.amount !== null && (
+                    <div className="font-medium text-sm">
+                      <Money>{ev.amount}</Money>
+                    </div>
+                  )}
                 </div>
+                {/* status / subtitle */}
+                {ev.subtitle && (
+                  <div className="mt-1 text-xs text-muted-foreground leading-none">
+                    {ev.subtitle}
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))

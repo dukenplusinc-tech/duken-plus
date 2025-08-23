@@ -27,7 +27,10 @@ export const DeliveriesTable: FC = () => {
   } = useTodayDeliveriesList(showOverdueOnly);
 
   const isEmpty = !isLoading && data.length === 0;
-  const totalAmount = data.reduce((sum, d) => sum + d.amount_expected, 0);
+  const totalAmount = data.reduce(
+    (sum, d) => sum + (d.amount_received || d.amount_expected),
+    0
+  );
 
   const pending = data.filter((d) => d.status === 'pending');
   const remainingCount = pending.length;
@@ -110,7 +113,9 @@ export const DeliveriesTable: FC = () => {
 
                 {delivery.amount_received &&
                   delivery.amount_received !== delivery.amount_expected && (
-                    <Money className="block">{delivery.amount_expected}</Money>
+                    <Money className="block">
+                      {delivery.amount_received || delivery.amount_expected}
+                    </Money>
                   )}
               </div>
 

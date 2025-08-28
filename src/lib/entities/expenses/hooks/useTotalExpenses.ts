@@ -27,7 +27,7 @@ const fetchTotal = async (date: string) => {
   const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
   const totalDeliveries = deliveries.reduce(
-    (sum, d) => sum + (d.amount_expected || 0),
+    (sum, d) => sum + (d.amount_received || d.amount_expected || 0),
     0
   );
 

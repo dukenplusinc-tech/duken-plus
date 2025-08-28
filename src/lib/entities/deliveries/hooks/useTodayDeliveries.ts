@@ -11,7 +11,9 @@ const fetchDeliveryStats = async () => {
   // Get deliveries with status = pending OR accepted, from today onwards
   const { data, error } = await supabase
     .from('deliveries')
-    .select('expected_date, amount_expected, contractor_id, status')
+    .select(
+      'expected_date, amount_expected, amount_received, contractor_id, status'
+    )
     .in('status', ['pending', 'accepted'])
     .eq('expected_date', today);
 
@@ -30,7 +32,7 @@ const fetchDeliveryStats = async () => {
 
   const count = todayDeliveries.length;
   const totalExpected = todayDeliveries.reduce(
-    (acc, d) => acc + Number(d.amount_expected ?? 0),
+    (acc, d) => acc + Number((d.amount_received || d.amount_expected) ?? 0),
     0
   );
 
@@ -38,7 +40,7 @@ const fetchDeliveryStats = async () => {
     .size;
 
   const remainingAmount = futurePending.reduce(
-    (acc, d) => acc + Number(d.amount_expected ?? 0),
+    (acc, d) => acc + Number((d.amount_received || d.amount_expected) ?? 0),
     0
   );
 

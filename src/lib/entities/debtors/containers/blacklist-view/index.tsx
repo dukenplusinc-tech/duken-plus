@@ -25,10 +25,14 @@ export const BlacklistView: FC = () => {
   );
 
   return (
-    <div className="flex flex-col h-full">
-      <PageHeader className="mb-4">{t('black_list.page.title')}</PageHeader>
+    <div className="flex min-h-screen flex-col">
+      {/* Header */}
+      <PageHeader className="mb-2 px-3 sm:px-4 text-center sm:text-left">
+        {t('black_list.page.title')}
+      </PageHeader>
 
-      <div className="mb-4">
+      {/* Filters (sticky on mobile for easy access) */}
+      <div className="sticky top-0 z-10 bg-background/90 backdrop-blur px-3 sm:px-4 py-2 border-b">
         <SearchBar
           shop
           searchByField="full_name"
@@ -38,23 +42,27 @@ export const BlacklistView: FC = () => {
         />
       </div>
 
-      {error && <ErrorScreen error={error} />}
+      {/* Body */}
+      <div className="flex-1 px-3 sm:px-4 py-3">
+        {error && <ErrorScreen error={error} />}
 
-      {!isLoading && data.length === 0 && (
-        <EmptyScreen>{t('empty_text')}</EmptyScreen>
-      )}
+        {!isLoading && data.length === 0 && (
+          <EmptyScreen>{t('empty_text')}</EmptyScreen>
+        )}
 
-      <div className="grid grid-cols-3 gap-6">
-        {data.map((debtor) => (
-          <DebtorCard key={debtor.id} debtor={debtor} />
-        ))}
-      </div>
-
-      {isLoading && (
-        <div className="flex justify-center p-8">
-          <IonSpinner name="dots" />
+        {/* Responsive grid: 1 col on phones, 2 on small tablets, 3+ on larger */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+          {data.map((debtor) => (
+            <DebtorCard key={debtor.id} debtor={debtor} />
+          ))}
         </div>
-      )}
+
+        {isLoading && (
+          <div className="flex justify-center p-8">
+            <IonSpinner name="dots" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

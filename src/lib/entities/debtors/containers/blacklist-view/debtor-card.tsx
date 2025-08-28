@@ -1,60 +1,75 @@
-import Link from 'next/link';
-import { LoaderCircle as Spinner, User } from 'lucide-react';
+import { FileWarning, LoaderCircle as Spinner, User } from 'lucide-react';
 
 import { useEntityImage } from '@/lib/composite/files/hooks/useEntityImage';
 import { UploadEntities } from '@/lib/composite/uploads/types';
 import type { Debtor } from '@/lib/entities/debtors/schema';
-import * as fromUrl from '@/lib/url/generator';
-import { useShopID } from '@/lib/entities/shop/hooks/useShop';
+import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface DebtorCardProps {
   debtor: Debtor;
+  className?: string;
 }
 
-export function DebtorCard({ debtor }: DebtorCardProps) {
-  const { id, iin, full_name, shop_id } = debtor;
-
-  const currentShopId = useShopID();
-  const allowEdit = currentShopId === shop_id;
+export function DebtorCard({ debtor, className }: DebtorCardProps) {
+  const { id, iin, full_name } = debtor;
 
   const { imageUrl, loading } = useEntityImage({
     id,
     entity: UploadEntities.DebtorPhoto,
   });
 
-  const card = (
-    <div className="flex flex-col items-center p-4 border-2 border-primary rounded-md aspect-[1/1.2] max-w-[250px]">
-        <div className="w-24 h-24 mb-4">
-          <Avatar className="w-full h-full border-2 border-primary rounded-md">
-            {loading ? (
-              <div className="flex justify-center items-center w-full">
-                <Spinner className="w-14 h-14 text-primary animate-spin" />
-              </div>
-            ) : (
-              <>
-                <AvatarImage
-                  src={imageUrl!}
-                  alt={full_name}
-                  className="object-cover rounded-md"
-                />
-                <AvatarFallback className="rounded-md bg-white">
-                  <User className="w-14 h-14 text-primary" />
-                </AvatarFallback>
-              </>
-            )}
-          </Avatar>
+  const Inner = (
+    <div
+      className={cn(
+        // layout
+        'h-full w-full rounded-2xl p-3 sm:p-4',
+        'flex flex-col items-center justify-between',
+        // visuals
+        'bg-card shadow-sm ring-1 ring-muted',
+        'hover:shadow-md hover:ring-primary/30 transition-all',
+        className
+      )}
+    >
+      {/* Photo */}
+      <div className="relative w-full">
+        <div className="mx-auto aspect-[4/3] w-full overflow-hidden rounded-xl bg-muted/60">
+          {/* Loading shimmer */}
+          {loading && (
+            <div className="flex h-full w-full items-center justify-center">
+              <Spinner className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          )}
+
+          {/* Avatar / Photo */}
+          {!loading && (
+            <Avatar className="h-full w-full rounded-none">
+              <AvatarImage
+                src={imageUrl ?? undefined}
+                alt={full_name}
+                className="h-full w-full object-cover"
+              />
+              <AvatarFallback className="h-full w-full rounded-none bg-background/60">
+                <User className="mx-auto h-12 w-12 text-muted-foreground" />
+              </AvatarFallback>
+            </Avatar>
+          )}
         </div>
-        <div className="text-center">
-          <p className="font-medium text-lg text-primary mb-1">{full_name}</p>
-          <p className="text-primary text-md">{iin}</p>
+
+        <div className="absolute right-2 top-2 rounded-full bg-background/80 p-1.5 ring-1 ring-muted">
+          <FileWarning className="h-4 w-4 text-muted-foreground" />
         </div>
       </div>
+
+      {/* Text */}
+      <div className="mt-3 w-full text-center">
+        <p className="mb-0.5 line-clamp-1 truncate text-base font-semibold text-foreground">
+          {full_name}
+        </p>
+        <p className="font-mono text-sm text-muted-foreground">{iin}</p>
+      </div>
+    </div>
   );
 
-  return allowEdit ? (
-    <Link href={fromUrl.toDebtorEdit(debtor.id)}>{card}</Link>
-  ) : (
-    card
-  );
+  return <div className="h-full">{Inner}</div>;
 }

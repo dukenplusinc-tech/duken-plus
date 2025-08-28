@@ -435,6 +435,7 @@
     },
     "labels": {
       "break_down_by_banks": "By banks",
+      "closing_shift_notice": "Fill this out when closing today’s shift",
       "cash": "Cash",
       "bank": "Bank",
       "transfer": "Transfer",

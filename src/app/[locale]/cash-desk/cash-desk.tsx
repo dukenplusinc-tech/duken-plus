@@ -101,6 +101,13 @@ export default function CashRegisterPage() {
           </CardContent>
         </Card>
 
+        {/* Closing Shift Notice */}
+        <div className="mb-3 rounded-xl bg-yellow-50 border border-yellow-200 p-2">
+          <p className="text-center text-base font-semibold text-yellow-800">
+            {t('closing_shift_notice')}
+          </p>
+        </div>
+
         {/* Search and Filters */}
         <div className="flex gap-2 mb-4">
           <SearchBar searchByField="from" sortBy="date" />

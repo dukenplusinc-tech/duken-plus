@@ -45,7 +45,11 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
             }
             value={debtor.iin}
           />
-          <InfoRow label={t('debtors.form_label_phone')} value={debtor.phone} />
+          <InfoRow
+            phone
+            label={t('debtors.form_label_phone')}
+            value={debtor.phone}
+          />
           <InfoRow
             label={t('debtors.form_label_address')}
             value={debtor.address}
@@ -163,16 +167,14 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
         onClick: handleChangeBlackList.onAction,
         disabled: handleChangeBlackList.processing,
       },
-      ...(
-        canEdit
-          ? ([
-              {
-                label: t('datatable.actions.edit_caption'),
-                onClick: handleEdit,
-              },
-            ] as DropDownButtonOption[])
-          : []
-      ),
+      ...(canEdit
+        ? ([
+            {
+              label: t('datatable.actions.edit_caption'),
+              onClick: handleEdit,
+            },
+          ] as DropDownButtonOption[])
+        : []),
       {
         label: t('datatable.actions.delete_cation'),
         onClick: handleRemove.onDelete,

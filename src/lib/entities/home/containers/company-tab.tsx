@@ -10,7 +10,7 @@ import { Money } from '@/components/numbers/money';
 
 export const ExpenseSummary: FC = () => {
   const t = useTranslations('expenses.summary');
-  const { totalToday, loading } = useTotalExpenses();
+  const { spentTodayAccepted, loading } = useTotalExpenses();
 
   return (
     <div className="bg-primary text-white p-3 border-t border-primary-foreground/20">
@@ -19,7 +19,7 @@ export const ExpenseSummary: FC = () => {
         {loading ? (
           <Loader className="h-4 w-4 animate-spin inline-block" />
         ) : (
-          <Money>{totalToday}</Money>
+          <Money>{spentTodayAccepted}</Money>
         )}
       </div>
     </div>

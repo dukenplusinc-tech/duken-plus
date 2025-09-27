@@ -27,11 +27,29 @@ const fetchTotal = async (date: string) => {
   const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
   const totalDeliveries = deliveries.reduce(
-    (sum, d) => sum + (d.amount_received || d.amount_expected || 0),
+    (sum, d) => sum + (d.amount_received ?? d.amount_expected ?? 0),
     0
   );
 
   return totalExpenses + totalDeliveries;
+};
+
+// NEW: accepted-only sum for a given date
+const fetchAcceptedOnlySum = async (date: string) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('deliveries')
+    .select('amount_expected, amount_received, status')
+    .eq('status', 'accepted')
+    .eq('expected_date', date);
+
+  if (error || !data) return 0;
+
+  return data.reduce(
+    (sum, d) => sum + Number(d.amount_received ?? d.amount_expected ?? 0),
+    0
+  );
 };
 
 export const useTotalExpenses = () => {
@@ -59,6 +77,13 @@ export const useTotalExpenses = () => {
     { revalidateOnFocus: false, dedupingInterval: 60 * 1000 }
   );
 
+  // NEW: money spent today on ACCEPTED deliveries (amount_received fallback to amount_expected)
+  const { data: spentTodayAccepted } = useSWR(
+    'spentTodayAccepted',
+    () => fetchAcceptedOnlySum(formatDate(0)),
+    { revalidateOnFocus: false, dedupingInterval: 60 * 1000 }
+  );
+
   const [loading, setLoading] = useState(false);
 
   const refresh = async () => {
@@ -67,6 +92,7 @@ export const useTotalExpenses = () => {
       mutate('totalYesterday'),
       mutate('totalToday'),
       mutate('totalTomorrow'),
+      mutate('spentTodayAccepted'), // ensure the new field refreshes too
     ]);
     setLoading(false);
   };
@@ -75,6 +101,7 @@ export const useTotalExpenses = () => {
     totalYesterday: totalYesterday || 0,
     totalToday: totalToday || 0,
     totalTomorrow: totalTomorrow || 0,
+    spentTodayAccepted: spentTodayAccepted || 0,
     loading,
     refresh,
   };

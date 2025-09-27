@@ -362,7 +362,8 @@
       "form_label_description": "Description",
       "cancel_caption": "Cancel",
       "minus_caption": "Minus",
-      "plus_caption": "Plus"
+      "plus_caption": "Plus",
+      "will_be": "Will be:"
     },
     "captions_by": "by: "
   },

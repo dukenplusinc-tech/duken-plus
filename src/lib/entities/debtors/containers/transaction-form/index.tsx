@@ -25,14 +25,19 @@ export function useTransactionForm({ id, debtor_id }: TransactionFormProps) {
   }
 
   return useCallback(
-    (balance?: number) =>
+    (balance?: number, prefillForm = false) =>
       dialog.launch({
         dialog: true,
         autoClose: false,
         footer: false,
         title,
         render: (
-          <TransactionForm id={id} debtor_id={debtor_id} balance={balance} />
+          <TransactionForm
+            id={id}
+            prefillForm={prefillForm}
+            debtor_id={debtor_id}
+            balance={balance}
+          />
         ),
       }),
     [debtor_id, dialog, id, title]

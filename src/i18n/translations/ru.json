@@ -362,7 +362,8 @@
       "form_label_description": "Описание",
       "cancel_caption": "Отмена",
       "minus_caption": "Минус",
-      "plus_caption": "Плюс"
+      "plus_caption": "Плюс",
+      "will_be": "Будет:"
     },
     "captions_by": "от: "
   },

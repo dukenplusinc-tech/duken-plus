@@ -6,6 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 interface MoneyProps {
   children: number | null | undefined;
   className?: string;
+  emptyLabel?: string;
 }
 
 const formatMoney = (amount: number): string => {
@@ -25,7 +26,7 @@ const formatFullAmount = (amount: number): string => {
   }).format(amount);
 };
 
-export function Money({ children, className }: MoneyProps) {
+export function Money({ children, emptyLabel, className }: MoneyProps) {
   const { toast } = useToast();
 
   const handleClick = () => {
@@ -41,7 +42,7 @@ export function Money({ children, className }: MoneyProps) {
   };
 
   if (!children) {
-    return <span>---</span>;
+    return <span>{emptyLabel || '---'}</span>;
   }
 
   return (

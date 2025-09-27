@@ -143,12 +143,12 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
       ...([
         debtor.balance < 0 && {
           label: t('debtors.dot_menu.repay_the_full_amount_caption'),
-          onClick: () => handleAddTransactionRecord(debtor.balance),
+          onClick: () => handleAddTransactionRecord(debtor.balance, true),
         },
       ].filter(Boolean) as never as DropDownButtonOption[]),
       {
         label: t('debtors.dot_menu.add_transaction_record'),
-        onClick: handleAddTransactionRecord,
+        onClick: () => handleAddTransactionRecord(debtor.balance),
       },
       {
         label: t('debtors.dot_menu.view_info_caption'),

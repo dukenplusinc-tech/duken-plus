@@ -298,7 +298,7 @@
     "search_empty": "Ничего не найдено...",
     "edit_btn": "Редактировать",
     "form_label_full_name": "Полное имя",
-    "form_label_iin": "Идентификационный номер",
+    "form_label_iin": "ИИН",
     "form_label_phone": "Телефон",
     "form_label_address": "Адрес",
     "form_label_max_amount": "Максимальная сумма",

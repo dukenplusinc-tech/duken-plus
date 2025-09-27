@@ -6,6 +6,7 @@ import { IonButton, IonList, IonSpinner } from '@ionic/react';
 import { HistoryIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { useFiltersCtx } from '@/lib/composite/filters/context';
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { DebtorItem } from '@/lib/entities/debtors/containers/debtors-table/item';
 import { OverdueWarning } from '@/lib/entities/debtors/containers/overdue-warning';
@@ -29,6 +30,17 @@ export const DebtorsTable: FC = () => {
     ],
     [t]
   );
+
+  const { applied } = useFiltersCtx();
+
+  const emptyMessage = useMemo(() => {
+    const isSearch = applied.find(
+      (value) =>
+        value.key === 'full_name' && value?.search && value.search.length > 0
+    );
+
+    return isSearch ? 'search_empty' : 'empty_text';
+  }, [applied]);
 
   return (
     <div className="flex flex-col h-full">
@@ -68,7 +80,7 @@ export const DebtorsTable: FC = () => {
       {error && <ErrorScreen error={error} />}
 
       {!isLoading && data.length === 0 && (
-        <EmptyScreen>{t('empty_text')}</EmptyScreen>
+        <EmptyScreen>{t(emptyMessage)}</EmptyScreen>
       )}
 
       <IonList>

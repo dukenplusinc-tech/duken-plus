@@ -295,6 +295,7 @@
     "title_edit": "Берешекті өңдеу",
     "title_add": "Жаңа берешек қосу",
     "empty_text": "Берешектер жоқ. Қосу үшін + басыңыз",
+    "search_empty": "Ештеңе табылмады...",
     "edit_btn": "Өңдеу",
     "form_label_full_name": "Толық аты-жөні",
     "form_label_iin": "ЖСН",

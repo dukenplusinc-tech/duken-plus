@@ -16,6 +16,7 @@ export const useDebtorStats = () => {
     `,
     {
       sort: [],
+      allowedFilters: [],
     }
   );
 

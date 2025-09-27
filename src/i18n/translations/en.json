@@ -295,6 +295,7 @@
     "title_edit": "Edit Debtor",
     "title_add": "Add New Debtor",
     "empty_text": "No debtors available. Press the + to add something",
+    "search_empty": "Nothing found...",
     "edit_btn": "Edit",
     "form_label_full_name": "Full Name",
     "form_label_iin": "ID number",

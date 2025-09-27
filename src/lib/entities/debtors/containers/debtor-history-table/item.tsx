@@ -41,6 +41,9 @@ export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
         <div>
           {transaction_date && new Date(transaction_date).toLocaleDateString()}
         </div>
+        <div>
+          {transaction_date && new Date(transaction_date).toLocaleTimeString()}
+        </div>
       </div>
       <IonLabel>
         <div className="text-black">

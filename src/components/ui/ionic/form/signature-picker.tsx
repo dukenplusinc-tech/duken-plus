@@ -36,7 +36,7 @@ export const SignaturePicker: FC<SignaturePickerProps> = ({
   const openModal = useCallback(() => {
     dialog.launch({
       dialog: true,
-      title: 'upload.signature.modal_title',
+      title: t('modal_title'),
       onAccept: () => {
         if (!canvasRef.current) {
           return;
@@ -55,7 +55,7 @@ export const SignaturePicker: FC<SignaturePickerProps> = ({
       },
       render: <SignaturePad ref={canvasRef} />,
     });
-  }, [dialog, onDrawCaptured]);
+  }, [t, dialog, onDrawCaptured]);
 
   return (
     <IonItem>

@@ -1,4 +1,5 @@
 import { FC, useCallback, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { safeInvoke } from '@/lib/primitives/async/safe-invoke';
 import {
@@ -23,6 +24,8 @@ export interface RenderDialogProps extends LaunchParams {
 }
 
 export const RenderDialog: FC<RenderDialogProps> = (props) => {
+  const t = useTranslations('alert.delete');
+
   const {
     title,
     description,
@@ -50,12 +53,9 @@ export const RenderDialog: FC<RenderDialogProps> = (props) => {
     <AlertDialog open>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {title || 'Are you absolutely sure?'}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{title || t('title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            {description ||
-              `This action cannot be undone. This will permanently remove your data from our servers.`}
+            {description || t('description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

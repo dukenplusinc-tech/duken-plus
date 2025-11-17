@@ -27,7 +27,7 @@ export default function DayView({ currentDate }: DayViewProps) {
           title: ev.title || t('no_title'),
           subtitle: t('expense'), // add key "expense" to your calendar messages
           color: 'bg-blue-200',
-          amount: -Math.abs(ev.amount ?? 0), // show as negative if you wish
+          amount: ev.amount ?? 0,
         };
       }
       // delivery
@@ -49,6 +49,12 @@ export default function DayView({ currentDate }: DayViewProps) {
     });
   }, [eventsForDay, safe, t]);
 
+  const totalAmount = useMemo(() => {
+    return items.reduce((acc, item) => {
+      return acc + (typeof item.amount === 'number' ? item.amount : 0);
+    }, 0);
+  }, [items]);
+
   const dayName = useMemo(() => {
     const dayNames = t.raw('weekdays') as string[];
     const jsDay = currentDate.getDay(); // 0..6
@@ -59,7 +65,7 @@ export default function DayView({ currentDate }: DayViewProps) {
 
   return (
     <div className="h-full overflow-y-auto px-3">
-      <div className="mb-4">
+      <div className="mt-2 mb-4">
         <h2 className="text-lg font-medium text-center text-primary">
           {dayName}, {currentDate.getDate()} {monthName}{' '}
           {currentDate.getFullYear()}
@@ -94,6 +100,11 @@ export default function DayView({ currentDate }: DayViewProps) {
             </Card>
           ))
         )}
+      </div>
+
+      <div className="mt-8 rounded-md border bg-muted/40 p-3 flex items-center justify-between text-sm font-medium">
+        <span>{t('total_label')}</span>
+        <Money>{totalAmount}</Money>
       </div>
     </div>
   );

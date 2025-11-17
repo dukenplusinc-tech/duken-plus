@@ -603,7 +603,8 @@
       "Суббота"
     ],
     "consignment": "Консигнация",
-    "expense": "Расходы"
+    "expense": "Расходы",
+    "total_label": "Итого"
   },
   "statistics": {
     "title": "Статистика магазина",

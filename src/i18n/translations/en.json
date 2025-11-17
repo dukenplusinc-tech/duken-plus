@@ -603,7 +603,8 @@
       "Saturday"
     ],
     "consignment": "Consignment",
-    "expense": "Expenses"
+    "expense": "Expenses",
+    "total_label": "Total amount"
   },
   "statistics": {
     "title": "Store statistics",

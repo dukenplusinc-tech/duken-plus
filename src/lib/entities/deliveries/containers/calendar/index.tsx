@@ -75,8 +75,8 @@ export const CalendarDelivers: FC = () => {
             onValueChange={(value) => setView(value as 'day' | 'month')}
           >
             <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="day">{t('day')}</TabsTrigger>
               <TabsTrigger value="month">{t('month')}</TabsTrigger>
+              <TabsTrigger value="day">{t('day')}</TabsTrigger>
             </TabsList>
           </Tabs>
         </CardContent>

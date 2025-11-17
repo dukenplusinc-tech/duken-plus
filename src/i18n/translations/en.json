@@ -291,6 +291,17 @@
       "planned_for": "Planned for:",
       "declined": "Declined"
     },
+    "overdue": {
+      "header": "{count} overdue requests",
+      "summary": "{count} companies owe overdue deliveries",
+      "planned_for": "Was scheduled for:",
+      "days": "{count} days overdue",
+      "table": {
+        "name": "Name",
+        "amount": "Amount",
+        "actions": "Actions"
+      }
+    },
     "actions": {
       "accept": "Accept",
       "delete": "Delete"

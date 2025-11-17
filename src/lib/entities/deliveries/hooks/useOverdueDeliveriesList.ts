@@ -1,24 +1,13 @@
 import useSWR from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
+import type { DeliveryItem } from '@/lib/entities/deliveries/hooks/useTodayDeliveriesList';
 
-export type DeliveryItem = {
-  id: string;
-  contractor_id: string;
-  amount_expected: number;
-  amount_received: number | null;
-  status: 'pending' | 'accepted' | 'due' | 'canceled';
-  expected_date: string;
-  contractor_name: string;
-  consignment_status: 'open' | 'closed' | null;
-  consignment_due_date: string | null;
-};
-
-export const useTodayDeliveriesList = () => {
+export const useOverdueDeliveriesList = () => {
   const supabase = createClient();
   const today = new Date().toISOString().slice(0, 10);
 
-  return useSWR(['todayDeliveriesList'], async () => {
+  return useSWR(['overdueDeliveriesList'], async () => {
     const query = supabase
       .from('deliveries')
       .select(`
@@ -31,13 +20,14 @@ export const useTodayDeliveriesList = () => {
         expected_date,
         contractors ( title )
       `)
-      .eq('expected_date', today)
-      .order('expected_date', { ascending: false });
+      .in('status', ['due', 'pending'])
+      .lt('expected_date', today)
+      .order('expected_date', { ascending: true });
 
     const { data, error } = await query;
 
     if (error) {
-      console.error('Error loading deliveries:', error);
+      console.error('Error loading overdue deliveries:', error);
       return [];
     }
 
@@ -52,3 +42,4 @@ export const useTodayDeliveriesList = () => {
     })) as DeliveryItem[];
   });
 };
+

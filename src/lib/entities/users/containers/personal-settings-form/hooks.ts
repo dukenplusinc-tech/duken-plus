@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import { Locale } from '@/config/languages';
 import { useForm } from '@/lib/composite/form/useForm';
 import { updatePersonal } from '@/lib/entities/users/actions/updatePersonal';
@@ -14,6 +16,7 @@ const defaultValues: PersonalPayload = {
 };
 
 export function usePersonalForm() {
+  const t = useTranslations('validation.success');
   const uid = useUserId();
 
   const changeLocale = useChangeLocale();
@@ -27,5 +30,9 @@ export function usePersonalForm() {
       changeLocale(values.language as Locale);
     },
     schema: personalPayload,
+    successMessage: {
+      title: t('personal_settings_saved_title'),
+      description: t('personal_settings_saved_description'),
+    },
   });
 }

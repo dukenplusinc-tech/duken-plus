@@ -16,6 +16,10 @@ interface FormOptions<T, R> {
   setDefaultValues?: (key: string, value: any) => void;
   request: (values: R) => Promise<any>;
   fetcher?: QueryByIdResult<R>;
+  successMessage?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 export function useForm<S extends z.ZodTypeAny, R>({
@@ -24,6 +28,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
   request,
   fetcher,
   setDefaultValues,
+  successMessage,
 }: FormOptions<S, R>) {
   const t = useTranslations('validation');
 
@@ -53,9 +58,14 @@ export function useForm<S extends z.ZodTypeAny, R>({
           await fetcher.mutate(result);
         }
 
+        const isUpdate = Boolean(fetcher?.data);
+        const title = successMessage?.title || (isUpdate ? t('success.saved_title') : t('success.added_title'));
+        const description = successMessage?.description || (isUpdate ? t('success.saved_description') : t('success.added_description'));
+
         toast({
-          title: t('success.title'),
-          description: t('success.description'),
+          variant: 'success',
+          title,
+          description,
         });
 
         dialog.close();
@@ -83,7 +93,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
 
       setIsProcessing(false);
     },
-    [dialog, fetcher, request, t]
+    [dialog, fetcher, request, t, successMessage]
   );
 
   const setDefaultValuesFn = useMemo(() => {

@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { createNote } from '@/lib/entities/notes/actions/createNote';
@@ -15,6 +16,7 @@ const defaultValues = {
 
 export function useNoteForm(id?: string) {
   const router = useRouter();
+  const t = useTranslations('validation.success');
 
   const { refresh } = useNotes();
   const noteById = useNoteById(id);
@@ -34,5 +36,9 @@ export function useNoteForm(id?: string) {
       router.push(fromUrl.toNotes());
     },
     schema: notePayloadSchema,
+    successMessage: {
+      title: id ? t('saved_title') : t('note_added_title'),
+      description: id ? t('saved_description') : t('note_added_description'),
+    },
   });
 }

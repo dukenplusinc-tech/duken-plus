@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { createCashRegisterEntry } from '@/lib/entities/cash-desk/actions/createCashRegisterEntry';
@@ -19,6 +20,7 @@ export interface DebtorAddCashRegisterEntryParams {
 export function useAddCashRegisterEntry({
   type,
 }: DebtorAddCashRegisterEntryParams) {
+  const t = useTranslations('validation.success');
   const { refresh: refreshStats } = useCashDeskStat();
   const { refresh: refreshBanks } = useBankNames();
   const { refresh: refreshEntries } = useComplexCashDeskEntries();
@@ -44,5 +46,9 @@ export function useAddCashRegisterEntry({
       await Promise.all([refreshStats(), refreshBanks(), refreshEntries()]);
     },
     schema,
+    successMessage: {
+      title: t('cash_entry_added_title'),
+      description: t('cash_entry_added_description'),
+    },
   });
 }

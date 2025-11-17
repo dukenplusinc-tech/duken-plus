@@ -25,14 +25,15 @@ export interface RenderDialogProps extends LaunchParams {
 
 export const RenderDialog: FC<RenderDialogProps> = (props) => {
   const t = useTranslations('alert.delete');
+  const tDialog = useTranslations('dialog');
 
   const {
     title,
     description,
     onCancel,
     onAction,
-    cancelCaption = 'Cancel',
-    actionCaption = 'Continue',
+    cancelCaption,
+    actionCaption,
   } = props;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -60,10 +61,10 @@ export const RenderDialog: FC<RenderDialogProps> = (props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isLoading} onClick={handleCancel}>
-            {cancelCaption}
+            {cancelCaption || tDialog('cancel')}
           </AlertDialogCancel>
           <AlertDialogAction disabled={isLoading} onClick={handleAction}>
-            {actionCaption}
+            {actionCaption || tDialog('accept')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

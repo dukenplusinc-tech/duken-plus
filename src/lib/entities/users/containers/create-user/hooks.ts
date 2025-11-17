@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { inviteUser } from '@/lib/entities/users/actions/inviteUser';
@@ -7,6 +8,7 @@ import * as fromUrl from '@/lib/url/generator';
 
 export function useUserForm(id?: string) {
   const router = useRouter();
+  const t = useTranslations('validation.success');
 
   return useForm<typeof inviteUserSchema, InviteUser>({
     defaultValues: {
@@ -24,5 +26,9 @@ export function useUserForm(id?: string) {
       }
     },
     schema: inviteUserSchema,
+    successMessage: {
+      title: t('user_invited_title'),
+      description: t('user_invited_description'),
+    },
   });
 }

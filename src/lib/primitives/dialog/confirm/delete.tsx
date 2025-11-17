@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
+import { toast } from '@/components/ui/use-toast';
 import { useDialogCtx } from '@/lib/primitives/dialog/context';
 
 type Handler = (ids?: string[]) => Promise<void>;
@@ -10,6 +12,7 @@ interface ConfirmDeleteParams {
 
 export const useConfirmDelete = ({ onConfirm }: ConfirmDeleteParams) => {
   const dialog = useDialogCtx();
+  const t = useTranslations('validation.success');
 
   const [processing, setProcessing] = useState(false);
 
@@ -17,14 +20,28 @@ export const useConfirmDelete = ({ onConfirm }: ConfirmDeleteParams) => {
     (...args: any[]) => {
       setProcessing(true);
 
+      const wrappedOnConfirm = async (ids?: string[]) => {
+        try {
+          await onConfirm(ids);
+          toast({
+            variant: 'success',
+            title: t('deleted_title'),
+            description: t('deleted_description'),
+          });
+        } catch (error) {
+          // Error will be handled by safeInvoke in the dialog provider
+          throw error;
+        }
+      };
+
       dialog.launch({
-        onAction: onConfirm.bind(null, ...args),
+        onAction: wrappedOnConfirm.bind(null, ...args),
         onModalClosed: () => {
           setProcessing(false);
         },
       });
     },
-    [dialog, onConfirm]
+    [dialog, onConfirm, t]
   );
 
   return useMemo(

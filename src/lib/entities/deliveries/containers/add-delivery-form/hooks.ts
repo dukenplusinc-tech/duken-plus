@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { useForm } from '@/lib/composite/form/useForm';
 import { createDelivery } from '@/lib/entities/deliveries/actions/createDelivery';
 import { todayISO } from '@/lib/entities/deliveries/containers/calendar/time-utils';
@@ -16,6 +18,7 @@ const defaultValues: DeliveryFormValues = {
 };
 
 export function useAddDeliveryRequestForm() {
+  const t = useTranslations('validation.success');
   const refresh = useRefreshHomeData();
 
   return useForm<typeof deliveryFormSchema, DeliveryFormValues>({
@@ -26,5 +29,9 @@ export function useAddDeliveryRequestForm() {
       await refresh();
     },
     schema: deliveryFormSchema,
+    successMessage: {
+      title: t('delivery_added_title'),
+      description: t('delivery_added_description'),
+    },
   });
 }

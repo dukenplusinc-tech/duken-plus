@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { useUploadContext } from '@/lib/composite/uploads/manager';
@@ -25,6 +26,7 @@ const defaultValues: DebtorPayload = {
 
 export function useDebtorForm(id?: string) {
   const router = useRouter();
+  const t = useTranslations('validation.success');
 
   const fetcher = useDebtorById(id);
 
@@ -49,5 +51,9 @@ export function useDebtorForm(id?: string) {
       router.push(fromUrl.toDebtors());
     },
     schema: debtorPayloadSchema,
+    successMessage: {
+      title: id ? t('saved_title') : t('added_title'),
+      description: id ? t('saved_description') : t('added_description'),
+    },
   });
 }

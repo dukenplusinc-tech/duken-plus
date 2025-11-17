@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import { useForm } from '@/lib/composite/form/useForm';
 import { updateShop } from '@/lib/entities/shop/actions/update';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
@@ -11,6 +13,8 @@ const defaultValues = {
 };
 
 export function useShopForm() {
+  const t = useTranslations('validation.success');
+
   return useForm<typeof shopPayloadSchema, ShopPayload>({
     defaultValues,
     fetcher: useShop(),
@@ -18,5 +22,9 @@ export function useShopForm() {
       await updateShop(values);
     },
     schema: shopPayloadSchema,
+    successMessage: {
+      title: t('shop_saved_title'),
+      description: t('shop_saved_description'),
+    },
   });
 }

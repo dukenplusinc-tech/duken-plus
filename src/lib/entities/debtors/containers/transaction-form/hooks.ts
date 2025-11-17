@@ -52,6 +52,8 @@ export function useDebtorTransactionForm({
 
   const added_by = useAddedBy();
 
+  const tSuccess = useTranslations('validation.success');
+
   return useForm<typeof debtorTransactionSchema, DebtorTransactionPayload>({
     defaultValues,
     fetcher,
@@ -83,5 +85,9 @@ export function useDebtorTransactionForm({
       await refresh();
     },
     schema: debtorTransactionSchema,
+    successMessage: {
+      title: id ? tSuccess('saved_title') : tSuccess('transaction_added_title'),
+      description: id ? tSuccess('saved_description') : tSuccess('transaction_added_description'),
+    },
   });
 }

@@ -40,12 +40,8 @@ export const DialogProvider: FC<PropsWithChildren> = ({ children }) => {
           <RenderDialog
             title={params?.title}
             description={params?.description}
-            actionCaption={
-              params?.actionCaption || state?.actionCaption || 'Continue'
-            }
-            cancelCaption={
-              params?.cancelCaption || state?.cancelCaption || 'Cancel'
-            }
+            actionCaption={params?.actionCaption || state?.actionCaption}
+            cancelCaption={params?.cancelCaption || state?.cancelCaption}
             onCancel={handleCancel}
             onAction={handleAction}
           />

@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { useUploadContext } from '@/lib/composite/uploads/manager';
@@ -23,6 +24,7 @@ const defaultValues: ContractorPayload = {
 
 export function useContractorForm(id?: string) {
   const router = useRouter();
+  const t = useTranslations('validation.success');
 
   const fetcher = useContractorById(id);
 
@@ -47,5 +49,9 @@ export function useContractorForm(id?: string) {
       router.push(fromUrl.toContractors());
     },
     schema: contractorPayloadSchema,
+    successMessage: {
+      title: id ? t('saved_title') : t('added_title'),
+      description: id ? t('saved_description') : t('added_description'),
+    },
   });
 }

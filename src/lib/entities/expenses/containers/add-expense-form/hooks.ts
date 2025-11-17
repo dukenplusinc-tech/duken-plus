@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { useForm } from '@/lib/composite/form/useForm';
 import { createExpense } from '@/lib/entities/expenses/actions/createExpense';
 import { updateExpense } from '@/lib/entities/expenses/actions/updateExpense';
@@ -18,6 +20,7 @@ const defaultValues: ExpensePayload = {
 };
 
 export function useExpenseForm({ id }: ExpenseFormParams) {
+  const t = useTranslations('validation.success');
   const fetcher = useExpenseById(id);
   const refresh = useRefreshHomeData();
 
@@ -34,5 +37,9 @@ export function useExpenseForm({ id }: ExpenseFormParams) {
       await refresh();
     },
     schema: expenseSchema,
+    successMessage: {
+      title: id ? t('saved_title') : t('expense_added_title'),
+      description: id ? t('saved_description') : t('expense_added_description'),
+    },
   });
 }

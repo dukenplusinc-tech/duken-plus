@@ -4,6 +4,7 @@ import useSWR, { mutate } from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
 
+// --- total including expenses + deliveries ---
 const fetchTotal = async (date: string) => {
   const supabase = createClient();
 
@@ -11,8 +12,9 @@ const fetchTotal = async (date: string) => {
     supabase
       .from('expenses')
       .select('amount')
-      .gte('date', date)
-      .lt('date', date + 'T23:59:59'),
+      // FIX: timezone-proof daily filter
+      .filter('date', 'gte', `${date} 00:00:00`)
+      .filter('date', 'lte', `${date} 23:59:59.999`),
 
     supabase
       .from('deliveries')
@@ -27,14 +29,14 @@ const fetchTotal = async (date: string) => {
   const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
   const totalDeliveries = deliveries.reduce(
-    (sum, d) => sum + (d.amount_received ?? d.amount_expected ?? 0),
+    (sum, d) => sum + Number(d.amount_received ?? d.amount_expected ?? 0),
     0
   );
 
   return totalExpenses + totalDeliveries;
 };
 
-// NEW: accepted-only sum for a given date
+// --- accepted deliveries only ---
 const fetchAcceptedOnlySum = async (date: string) => {
   const supabase = createClient();
 
@@ -77,7 +79,6 @@ export const useTotalExpenses = () => {
     { revalidateOnFocus: false, dedupingInterval: 60 * 1000 }
   );
 
-  // NEW: money spent today on ACCEPTED deliveries (amount_received fallback to amount_expected)
   const { data: spentTodayAccepted } = useSWR(
     'spentTodayAccepted',
     () => fetchAcceptedOnlySum(formatDate(0)),
@@ -92,7 +93,7 @@ export const useTotalExpenses = () => {
       mutate('totalYesterday'),
       mutate('totalToday'),
       mutate('totalTomorrow'),
-      mutate('spentTodayAccepted'), // ensure the new field refreshes too
+      mutate('spentTodayAccepted'),
     ]);
     setLoading(false);
   };

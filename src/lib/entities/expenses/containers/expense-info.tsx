@@ -12,7 +12,9 @@ interface ExpenseInfoProps {
 }
 
 export const ExpenseInfo: FC<ExpenseInfoProps> = ({ date }) => {
+  const tRoot = useTranslations();
   const t = useTranslations('expenses.info');
+
   const supabase = createClient();
 
   const { data: expensesData = [] } = useQuery(
@@ -37,14 +39,22 @@ export const ExpenseInfo: FC<ExpenseInfoProps> = ({ date }) => {
 
   const deliveries = useMemo(() => deliveriesData || [], [deliveriesData]);
 
+  // ✔ Only accepted deliveries count toward total
+  const acceptedDeliveries = useMemo(
+    () => deliveries.filter((d) => d.status === 'accepted'),
+    [deliveries]
+  );
+
   const total = useMemo(() => {
     const expenseSum = expenses.reduce((acc, e) => acc + (e.amount || 0), 0);
-    const deliverySum = deliveries.reduce(
-      (acc, d) => acc + (d.amount_expected || 0),
+
+    const deliverySum = acceptedDeliveries.reduce(
+      (acc, d) => acc + Number(d.amount_received ?? d.amount_expected ?? 0),
       0
     );
+
     return expenseSum + deliverySum;
-  }, [expenses, deliveries]);
+  }, [expenses, acceptedDeliveries]);
 
   const hasExpenses = expenses.length > 0;
   const hasDeliveries = deliveries.length > 0;
@@ -66,8 +76,25 @@ export const ExpenseInfo: FC<ExpenseInfoProps> = ({ date }) => {
                 key={d.id}
                 className="flex justify-between text-sm bg-muted p-2 rounded"
               >
-                <span>{d.contractors?.title ?? '—'}</span>
-                <Money>{d.amount_expected}</Money>
+                <span
+                  className={
+                    d.status === 'pending'
+                      ? 'text-destructive font-semibold'
+                      : ''
+                  }
+                >
+                  {d.contractors?.title ?? '—'}
+                  {d.status === 'pending' &&
+                    ` (${tRoot('statistics.delivery.status.pending')})`}
+                </span>
+
+                <Money
+                  className={
+                    d.status === 'pending' ? 'text-destructive font-bold' : ''
+                  }
+                >
+                  {d.amount_expected}
+                </Money>
               </li>
             ))}
           </ul>

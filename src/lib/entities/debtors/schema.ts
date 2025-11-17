@@ -22,6 +22,7 @@ export type Debtor = z.infer<typeof debtorSchema>;
 
 export interface DebtorStats {
   shop_id: string;
+  total_debtors: number;
   overdue_debtors: number;
   total_positive_balance: number;
   total_negative_balance: number;

@@ -10,6 +10,7 @@ export const useDebtorStats = () => {
     'debtor_statistics',
     `
       shop_id,
+      total_debtors,
       overdue_debtors,
       total_positive_balance,
       total_negative_balance

@@ -540,7 +540,7 @@
     "debtors": {
       "title": "Должников",
       "negative": "В минусе",
-      "positive": "Возвратов",
+      "positive": "В плюсе",
       "button": "Должники"
     },
     "companies": {

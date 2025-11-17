@@ -34,19 +34,23 @@ export const DebtorTab: FC = () => {
               {isLoading ? (
                 <Loader className="h-4 w-4 animate-spin" />
               ) : (
-                (data?.overdue_debtors ?? 0)
+                (data?.total_debtors ?? 0)
               )}
             </div>
           </div>
         </div>
 
         {renderStat(
-          t('negative'),
-          <Money>{data?.total_negative_balance ?? 0}</Money>
+          t('positive'),
+          <Money className="text-[#90C088]">
+            {data?.total_positive_balance ?? 0}
+          </Money>
         )}
         {renderStat(
-          t('positive'),
-          <Money>{data?.total_positive_balance ?? 0}</Money>
+          t('negative'),
+          <Money className="text-[#FF8989]">
+            {data?.total_negative_balance ?? 0}
+          </Money>
         )}
       </div>
 

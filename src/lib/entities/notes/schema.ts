@@ -11,7 +11,7 @@ export const noteSchema = z.object({
 export type Note = z.infer<typeof noteSchema>;
 
 export const notePayloadSchema = z.object({
-  title: z.string(),
+  title: z.string().min(3),
   content: z.string(),
 });
 

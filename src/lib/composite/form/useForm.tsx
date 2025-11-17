@@ -5,11 +5,11 @@ import { useForm as useFormHook } from 'react-hook-form';
 import * as z from 'zod';
 
 import { FormValidationError } from '@/lib/composite/form/errors';
-import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { useFormLoading } from '@/lib/primitives/loading/hooks';
+import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { QueryByIdResult } from '@/lib/supabase/useQueryById';
-import { toast } from '@/components/ui/use-toast';
 import { setupZodTranslations } from '@/lib/zod/translated-schema';
+import { toast } from '@/components/ui/use-toast';
 
 interface FormOptions<T, R> {
   schema: T;
@@ -32,7 +32,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
   successMessage,
 }: FormOptions<S, R>) {
   const t = useTranslations('validation');
-  const tZod = useTranslations('zod');
+  const tZod = useTranslations();
 
   // Setup Zod translations
   useEffect(() => {
@@ -72,8 +72,14 @@ export function useForm<S extends z.ZodTypeAny, R>({
         }
 
         const isUpdate = Boolean(fetcher?.data);
-        const title = successMessage?.title || (isUpdate ? t('success.saved_title') : t('success.added_title'));
-        const description = successMessage?.description || (isUpdate ? t('success.saved_description') : t('success.added_description'));
+        const title =
+          successMessage?.title ||
+          (isUpdate ? t('success.saved_title') : t('success.added_title'));
+        const description =
+          successMessage?.description ||
+          (isUpdate
+            ? t('success.saved_description')
+            : t('success.added_description'));
 
         toast({
           variant: 'success',

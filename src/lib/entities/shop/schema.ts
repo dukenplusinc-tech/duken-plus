@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export interface Shop {
   id: string;
+  code?: number;
   title: string;
 }
 
@@ -10,6 +11,7 @@ export const shopPayloadSchema = z.object({
   title: z.string(),
   address: z.string(),
   city: z.string(),
+  code: z.number().optional(),
 });
 
 export type ShopPayload = z.infer<typeof shopPayloadSchema>;

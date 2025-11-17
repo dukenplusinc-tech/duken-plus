@@ -23,7 +23,8 @@ export const useShop = () => {
       id,
       title,
       address,
-      city
+      city,
+      code
       `,
     {
       schema,

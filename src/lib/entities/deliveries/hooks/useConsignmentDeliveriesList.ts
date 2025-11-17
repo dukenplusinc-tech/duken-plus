@@ -26,7 +26,7 @@ export const useConsignmentDeliveriesList = () => {
       )
       .eq('is_consignement', true)
       .not('consignment_due_date', 'is', null)
-      .order('consignment_due_date', { ascending: true });
+      .order('consignment_due_date', { ascending: false });
 
     if (error) {
       console.error('Failed to load consignment deliveries:', error);

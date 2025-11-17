@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+
 import { useLoading } from './context';
 
 /**
@@ -13,6 +14,10 @@ export function useFormLoading(isProcessing: boolean) {
   useEffect(() => {
     setLoading(isProcessing);
   }, [isProcessing, setLoading]);
+
+  useEffect(() => {
+    return () => setLoading(false);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 }
 
 /**
@@ -23,4 +28,3 @@ export function useLoadingControl() {
   const { startLoading, stopLoading } = useLoading();
   return { startLoading, stopLoading };
 }
-

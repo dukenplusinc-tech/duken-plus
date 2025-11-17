@@ -46,6 +46,7 @@ export const AddDeliveryForm: FC = () => {
           <IonLabel position="stacked">{t('label_amount')}</IonLabel>
           <IonInput
             type="number"
+            min={0}
             value={form.watch('amount_expected')}
             onIonInput={(e) =>
               form.setValue('amount_expected', parseFloat(e.detail.value!))

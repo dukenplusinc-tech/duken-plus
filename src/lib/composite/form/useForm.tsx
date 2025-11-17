@@ -9,6 +9,7 @@ import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { useFormLoading } from '@/lib/primitives/loading/hooks';
 import { QueryByIdResult } from '@/lib/supabase/useQueryById';
 import { toast } from '@/components/ui/use-toast';
+import { setupZodTranslations } from '@/lib/zod/translated-schema';
 
 interface FormOptions<T, R> {
   schema: T;
@@ -31,6 +32,18 @@ export function useForm<S extends z.ZodTypeAny, R>({
   successMessage,
 }: FormOptions<S, R>) {
   const t = useTranslations('validation');
+  const tZod = useTranslations('zod');
+
+  // Setup Zod translations
+  useEffect(() => {
+    setupZodTranslations((key: string, params?: Record<string, any>) => {
+      try {
+        return tZod(key, params);
+      } catch {
+        return key;
+      }
+    });
+  }, [tZod]);
 
   const dialog = useModalDialog();
 

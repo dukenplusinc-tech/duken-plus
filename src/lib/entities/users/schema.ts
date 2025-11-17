@@ -48,7 +48,7 @@ export const securityPayload = z
     password_confirm: z.string().nullable().optional(),
   })
   .refine((data) => data.password === data.password_confirm, {
-    message: "Passwords don't match",
+    message: 'zod.custom.password_mismatch',
     path: ['password_confirm'],
   });
 

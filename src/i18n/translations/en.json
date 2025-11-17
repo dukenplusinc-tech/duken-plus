@@ -44,6 +44,44 @@
       }
     }
   },
+  "zod": {
+    "invalid_type": {
+      "required": "Required",
+      "invalid": "Expected {expected}, received {received}"
+    },
+    "string": {
+      "email": "Invalid email address",
+      "url": "Invalid URL",
+      "uuid": "Invalid UUID",
+      "invalid": "Invalid string",
+      "min": "String must contain at least {min} character(s)",
+      "max": "String must contain at most {max} character(s)",
+      "exact": "String must contain exactly {length} character(s)"
+    },
+    "number": {
+      "positive": "Number must be positive",
+      "min": "Number must be greater than or equal to {min}",
+      "max": "Number must be less than or equal to {max}",
+      "exact": "Number must be exactly {value}",
+      "int": "Number must be an integer",
+      "required": "Number is required"
+    },
+    "array": {
+      "min": "Array must contain at least {min} element(s)",
+      "max": "Array must contain at most {max} element(s)",
+      "exact": "Array must contain exactly {length} element(s)"
+    },
+    "enum": {
+      "invalid": "Invalid enum value. Expected one of: {options}"
+    },
+    "too_small": "Value is too small. Minimum: {minimum}",
+    "too_big": "Value is too big. Maximum: {maximum}",
+    "custom": {
+      "default": "Invalid value",
+      "password_mismatch": "Passwords don't match",
+      "consignment_date_required": "Consignment date is required"
+    }
+  },
   "date": "dd.MM.yyyy, EEEE",
   "currency": {
     "tenge": "tenge"

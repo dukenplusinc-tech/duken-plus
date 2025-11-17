@@ -2,7 +2,8 @@
 
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { IonButton } from '@ionic/react';
+import { IonButton, IonIcon } from '@ionic/react';
+import { location } from 'ionicons/icons';
 import { ArrowUp, Camera, MoreVertical, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -127,8 +128,22 @@ export function ChatRoom() {
       <PageHeader
         className="mb-4"
         right={
-          shop?.title ? (
-            <IonButton color="success">{shop?.title}</IonButton>
+          shop ? (
+            <div className="flex items-center gap-2 pr-2">
+              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-xl">
+                <IonIcon icon={location} className="h-4 w-4 text-white" />
+
+                <div className="flex flex-col leading-tight">
+                  <span className="text-white font-semibold text-xs uppercase tracking-wide">
+                    {shop.city}
+                  </span>
+
+                  <span className="text-white/80 text-[10px] uppercase tracking-wide">
+                    {shop.title}
+                  </span>
+                </div>
+              </div>
+            </div>
           ) : null
         }
       >

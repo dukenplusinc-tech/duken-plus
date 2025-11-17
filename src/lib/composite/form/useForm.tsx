@@ -6,6 +6,7 @@ import * as z from 'zod';
 
 import { FormValidationError } from '@/lib/composite/form/errors';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
+import { useFormLoading } from '@/lib/primitives/loading/hooks';
 import { QueryByIdResult } from '@/lib/supabase/useQueryById';
 import { toast } from '@/components/ui/use-toast';
 
@@ -117,14 +118,18 @@ export function useForm<S extends z.ZodTypeAny, R>({
   }, [fetcher, formState, setDefaultValuesFn, setValue]);
 
   const isUpdating = Boolean(fetcher?.isLoading || fetcher?.isValidating);
+  const totalProcessing = isProcessing || isUpdating;
+
+  // Automatically show/hide global loading overlay when form is processing
+  useFormLoading(totalProcessing);
 
   return useMemo(() => {
     return {
       form,
       result,
       data: fetcher?.data,
-      isProcessing: isProcessing || isUpdating,
+      isProcessing: totalProcessing,
       handleSubmit: form.handleSubmit(onSubmit),
     };
-  }, [fetcher?.data, form, isProcessing, isUpdating, onSubmit, result]);
+  }, [fetcher?.data, form, totalProcessing, onSubmit, result]);
 }

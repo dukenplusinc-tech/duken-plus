@@ -64,9 +64,14 @@ export const AcceptDeliveryForm: FC<{
           <IonLabel>{t('label_is_consignement')}</IonLabel>
           <IonToggle
             checked={form.watch('is_consignement')}
-            onIonChange={(e) =>
-              form.setValue('is_consignement', e.detail.checked)
-            }
+            onIonChange={(e) => {
+              const val = e.detail.checked;
+              form.setValue('is_consignement', val);
+              // invert
+              if (val) {
+                form.setValue('reschedule', false);
+              }
+            }}
             disabled={isProcessing}
           />
         </IonItem>
@@ -96,7 +101,11 @@ export const AcceptDeliveryForm: FC<{
           <IonLabel>{t('label_reschedule')}</IonLabel>
           <IonToggle
             checked={form.watch('reschedule')}
-            onIonChange={(e) => form.setValue('reschedule', e.detail.checked)}
+            onIonChange={(e) => {
+              const val = e.detail.checked;
+              form.setValue('reschedule', val);
+              if (val) form.setValue('is_consignement', false); // invert
+            }}
             disabled={isProcessing}
           />
         </IonItem>

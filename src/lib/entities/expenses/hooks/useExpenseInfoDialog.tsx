@@ -28,6 +28,11 @@ export function useExpenseInfoDialog() {
     openModal(date);
   }, [openModal]);
 
+  const openToday = useCallback(() => {
+    const date = format(new Date(), 'yyyy-MM-dd');
+    openModal(date);
+  }, [openModal]);
+
   const openTomorrow = useCallback(() => {
     const date = format(addDays(new Date(), 1), 'yyyy-MM-dd');
     openModal(date);
@@ -35,6 +40,7 @@ export function useExpenseInfoDialog() {
 
   return {
     openYesterday,
+    openToday,
     openTomorrow,
   };
 }

@@ -36,22 +36,36 @@ const fetchTotal = async (date: string) => {
   return totalExpenses + totalDeliveries;
 };
 
-// --- accepted deliveries only ---
+// --- accepted deliveries + expenses ---
 const fetchAcceptedOnlySum = async (date: string) => {
   const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from('deliveries')
-    .select('amount_expected, amount_received, status')
-    .eq('status', 'accepted')
-    .eq('expected_date', date);
+  const [expensesRes, deliveriesRes] = await Promise.all([
+    supabase
+      .from('expenses')
+      .select('amount')
+      // FIX: timezone-proof daily filter
+      .filter('date', 'gte', `${date} 00:00:00`)
+      .filter('date', 'lte', `${date} 23:59:59.999`),
 
-  if (error || !data) return 0;
+    supabase
+      .from('deliveries')
+      .select('amount_expected, amount_received, status')
+      .eq('status', 'accepted')
+      .eq('expected_date', date),
+  ]);
 
-  return data.reduce(
+  const expenses = expensesRes.data || [];
+  const deliveries = deliveriesRes.data || [];
+
+  const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
+
+  const totalDeliveries = deliveries.reduce(
     (sum, d) => sum + Number(d.amount_received ?? d.amount_expected ?? 0),
     0
   );
+
+  return totalExpenses + totalDeliveries;
 };
 
 export const useTotalExpenses = () => {

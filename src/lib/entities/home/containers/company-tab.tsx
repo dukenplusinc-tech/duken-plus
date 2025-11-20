@@ -5,15 +5,20 @@ import { Loader } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useTodayDeliveries } from '@/lib/entities/deliveries/hooks/useTodayDeliveries';
+import { useExpenseInfoDialog } from '@/lib/entities/expenses/hooks/useExpenseInfoDialog';
 import { useTotalExpenses } from '@/lib/entities/expenses/hooks/useTotalExpenses';
 import { Money } from '@/components/numbers/money';
 
 export const ExpenseSummary: FC = () => {
   const t = useTranslations('expenses.summary');
   const { spentTodayAccepted, loading } = useTotalExpenses();
+  const infoDialog = useExpenseInfoDialog();
 
   return (
-    <div className="bg-primary text-white p-3 border-t border-primary-foreground/20">
+    <div
+      className="bg-primary text-white p-3 border-t border-primary-foreground/20 cursor-pointer hover:bg-primary/90 transition-colors"
+      onClick={infoDialog.openToday}
+    >
       <div className="text-center">
         {t('today_label')}&nbsp;
         {loading ? (

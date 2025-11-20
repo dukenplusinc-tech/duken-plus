@@ -308,7 +308,15 @@
     "title_edit": "Edit Note",
     "title_add": "Create Note",
     "empty_text": "No Notes available. Press the + to add something",
-    "edit_btn": "Edit"
+    "edit_btn": "Edit",
+    "form": {
+      "label_title": "Title",
+      "placeholder_title": "Enter note title",
+      "label_content": "Content",
+      "placeholder_content": "Feel free to type your note...",
+      "save": "Save",
+      "create": "Create"
+    }
   },
   "contractors": {
     "title": "Contractors",

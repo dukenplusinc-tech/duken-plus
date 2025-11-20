@@ -308,7 +308,15 @@
     "title_edit": "Жазбаны өңдеу",
     "title_add": "Жазба жасау",
     "empty_text": "Жазбалар жоқ. Қосу үшін + басыңыз",
-    "edit_btn": "Өңдеу"
+    "edit_btn": "Өңдеу",
+    "form": {
+      "label_title": "Тақырып",
+      "placeholder_title": "Жазба тақырыбын енгізіңіз",
+      "label_content": "Мазмұны",
+      "placeholder_content": "Жазбаңызды еркін теріңіз...",
+      "save": "Сақтау",
+      "create": "Жасау"
+    }
   },
   "contractors": {
     "title": "Мердігерлер",

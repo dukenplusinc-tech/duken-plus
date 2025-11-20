@@ -10,10 +10,12 @@ import {
   IonSpinner,
   IonTextarea,
 } from '@ionic/react';
+import { useTranslations } from 'next-intl';
 
 import { useNoteForm } from './hooks';
 
 export const NoteForm: FC<{ id?: string }> = ({ id }) => {
+  const t = useTranslations('notes.form');
   const { form, isProcessing, handleSubmit } = useNoteForm(id);
 
   return (
@@ -21,12 +23,12 @@ export const NoteForm: FC<{ id?: string }> = ({ id }) => {
       <form onSubmit={handleSubmit}>
         {/* Title Field */}
         <IonItem>
-          <IonLabel position="stacked">Title</IonLabel>
+          <IonLabel position="stacked">{t('label_title')}</IonLabel>
           <IonInput
             value={form.watch('title')}
             disabled={isProcessing}
             onIonInput={(e) => form.setValue('title', e.detail.value!)} // Update form state
-            placeholder="Title"
+            placeholder={t('placeholder_title')}
           />
         </IonItem>
         {form.formState.errors.title && (
@@ -37,11 +39,11 @@ export const NoteForm: FC<{ id?: string }> = ({ id }) => {
 
         {/* Content Field */}
         <IonItem>
-          <IonLabel position="stacked">Content</IonLabel>
+          <IonLabel position="stacked">{t('label_content')}</IonLabel>
           <IonTextarea
             value={form.watch('content')}
             onIonInput={(e) => form.setValue('content', e.detail.value!)} // Update form state
-            placeholder="Feel free to type your note..."
+            placeholder={t('placeholder_content')}
             rows={15}
             autoGrow
             disabled={isProcessing}
@@ -61,7 +63,7 @@ export const NoteForm: FC<{ id?: string }> = ({ id }) => {
           type="submit"
           disabled={isProcessing}
         >
-          {isProcessing ? <IonSpinner name="dots" /> : id ? 'Save' : 'Create'}
+          {isProcessing ? <IonSpinner name="dots" /> : id ? t('save') : t('create')}
         </IonButton>
       </form>
     </IonList>

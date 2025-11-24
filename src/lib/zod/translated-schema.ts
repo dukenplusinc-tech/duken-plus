@@ -9,8 +9,6 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
   return (issue, ctx) => {
     let message: string;
 
-    console.log(...issue.path, issue);
-
     switch (issue.code) {
       case z.ZodIssueCode.invalid_type:
         if (issue.received === 'undefined') {
@@ -45,7 +43,6 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
       case z.ZodIssueCode.too_small:
         // Check if there's a custom message that's a translation key
         if (issue.message && issue.message.startsWith('zod.')) {
-          console.log('Has custom message starting with zod:', issue.message);
           try {
             message = t(issue.message);
           } catch {
@@ -54,18 +51,13 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
         } else if (issue.type === 'string') {
           // Check for specific debtor form fields
           const path = (issue as any).path?.[0];
-          console.log('String validation - path:', path, 'minimum:', issue.minimum);
           if (path === 'full_name' && issue.minimum === 1) {
-            console.log('Using custom translation for full_name');
             message = t('zod.custom.debtor_full_name_required');
           } else if (path === 'address' && issue.minimum === 1) {
-            console.log('Using custom translation for address');
             message = t('zod.custom.debtor_address_required');
           } else if (path === 'phone' && issue.minimum === 1) {
-            console.log('Using custom translation for phone');
             message = t('zod.custom.debtor_phone_invalid');
           } else {
-            console.log('Using default string translation');
             message =
               issue.exact === true
                 ? t('zod.string.exact', { length: issue.minimum })
@@ -138,10 +130,8 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
             : undefined);
 
         if (keyToTranslate) {
-          console.log('Translating key:', keyToTranslate);
           try {
             const translated = t(keyToTranslate);
-            console.log('Translated to:', translated);
             if (translated === keyToTranslate) {
               console.warn('Translation returned the key itself, using default');
               message = t('zod.custom.default');

@@ -33,18 +33,33 @@ export enum TransactionType {
   loan = 'loan',
 }
 
-export const debtorPayloadSchema = z.object({
-  full_name: z.string().min(1),
-  iin: z.string().length(12),
-  phone: z.string().min(1),
-  address: z.string().min(1),
-  balance: z.number(),
-  max_credit_amount: z.number(),
-  work_place: z.string().nullable(),
-  additional_info: z.string().nullable(),
-  blacklist: z.boolean().optional(),
-  shop_id: z.string(),
-});
+export const debtorPayloadSchema = z
+  .object({
+    full_name: z.string().min(1),
+    iin: z.string().length(12),
+    phone: z.string().min(1),
+    address: z.string().min(1),
+    balance: z.number(),
+    max_credit_amount: z.number().min(1000),
+    work_place: z.string().nullable(),
+    additional_info: z.string().nullable(),
+    blacklist: z.boolean().optional(),
+    shop_id: z.string(),
+  })
+  .refine((data) => /^\d{12}$/.test(data.iin), {
+    path: ['iin'],
+    params: { i18nKey: 'zod.custom.debtor_iin_invalid' },
+  })
+  .refine(
+    (data) =>
+      /^(\+?7|8)?[\s\-]?\(?7\d{2}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/.test(
+        data.phone
+      ),
+    {
+      path: ['phone'],
+      params: { i18nKey: 'zod.custom.debtor_phone_invalid' },
+    }
+  );
 
 export type DebtorPayload = z.infer<typeof debtorPayloadSchema>;
 

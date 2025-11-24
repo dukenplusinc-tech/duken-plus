@@ -48,8 +48,8 @@ export const securityPayload = z
     password_confirm: z.string().nullable().optional(),
   })
   .refine((data) => data.password === data.password_confirm, {
-    message: 'zod.custom.password_mismatch',
     path: ['password_confirm'],
+    params: { i18nKey: 'zod.custom.password_mismatch' },
   });
 
 export type SecurityPayload = z.infer<typeof securityPayload>;

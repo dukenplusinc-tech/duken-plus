@@ -8,7 +8,7 @@ import { FormValidationError } from '@/lib/composite/form/errors';
 import { useFormLoading } from '@/lib/primitives/loading/hooks';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { QueryByIdResult } from '@/lib/supabase/useQueryById';
-import { setupZodTranslations } from '@/lib/zod/translated-schema';
+import { createZodErrorMap, setupZodTranslations } from '@/lib/zod/translated-schema';
 import { toast } from '@/components/ui/use-toast';
 
 interface FormOptions<T, R> {
@@ -34,16 +34,22 @@ export function useForm<S extends z.ZodTypeAny, R>({
   const t = useTranslations('validation');
   const tZod = useTranslations();
 
-  // Setup Zod translations
-  useEffect(() => {
-    setupZodTranslations((key: string, params?: Record<string, any>) => {
+  // Create translation function
+  const translateFn = useCallback(
+    (key: string, params?: Record<string, any>) => {
       try {
         return tZod(key, params);
       } catch {
         return key;
       }
-    });
-  }, [tZod]);
+    },
+    [tZod]
+  );
+
+  // Setup Zod translations globally
+  useEffect(() => {
+    setupZodTranslations(translateFn);
+  }, [translateFn]);
 
   const dialog = useModalDialog();
 
@@ -53,7 +59,9 @@ export function useForm<S extends z.ZodTypeAny, R>({
   const [result, setResult] = useState(undefined);
 
   const form = useFormHook<z.infer<S>>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema, {
+      errorMap: createZodErrorMap(translateFn),
+    }),
     defaultValues: defaultValues as never,
   });
 

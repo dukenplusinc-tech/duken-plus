@@ -79,7 +79,12 @@
     "custom": {
       "default": "Жарамсыз мән",
       "password_mismatch": "Құпия сөздер сәйкес келмейді",
-      "consignment_date_required": "Консигнация күні міндетті"
+      "consignment_date_required": "Консигнация күні міндетті",
+      "debtor_full_name_required": "Толық аты-жөні міндетті",
+      "debtor_iin_invalid": "ЖСН дәл рөлде 12 сандан тұруы керек",
+      "debtor_phone_invalid": "Жарамсыз телефон нөмірі",
+      "debtor_address_required": "Мекенжай міндетті",
+      "debtor_max_credit_min": "Минималды сома 1000"
     }
   },
   "date": "dd.MM.yyyy, EEEE",

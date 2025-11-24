@@ -19,7 +19,10 @@ export const acceptDeliveryFormSchema = z.object({
 
 acceptDeliveryFormSchema.refine(
   (val) => !val.is_consignement || !!val.consignment_due_date,
-  { message: 'zod.custom.consignment_date_required', path: ['consignment_due_date'] }
+  {
+    path: ['consignment_due_date'],
+    params: { i18nKey: 'zod.custom.consignment_date_required' },
+  }
 );
 
 export type AcceptDeliveryFormValues = z.infer<typeof acceptDeliveryFormSchema>;

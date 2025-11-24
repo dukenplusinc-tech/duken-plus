@@ -9,6 +9,8 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
   return (issue, ctx) => {
     let message: string;
 
+    console.log(...issue.path, issue);
+
     switch (issue.code) {
       case z.ZodIssueCode.invalid_type:
         if (issue.received === 'undefined') {
@@ -22,7 +24,14 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
         break;
 
       case z.ZodIssueCode.invalid_string:
-        if (issue.validation === 'email') {
+        // Check if there's a custom message that's a translation key
+        if (issue.message && issue.message.startsWith('zod.')) {
+          try {
+            message = t(issue.message);
+          } catch {
+            message = t('zod.string.invalid');
+          }
+        } else if (issue.validation === 'email') {
           message = t('zod.string.email');
         } else if (issue.validation === 'url') {
           message = t('zod.string.url');
@@ -34,16 +43,45 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
         break;
 
       case z.ZodIssueCode.too_small:
-        if (issue.type === 'string') {
-          message =
-            issue.exact === true
-              ? t('zod.string.exact', { length: issue.minimum })
-              : t('zod.string.min', { min: issue.minimum });
+        // Check if there's a custom message that's a translation key
+        if (issue.message && issue.message.startsWith('zod.')) {
+          console.log('Has custom message starting with zod:', issue.message);
+          try {
+            message = t(issue.message);
+          } catch {
+            message = t('zod.too_small', { minimum: issue.minimum });
+          }
+        } else if (issue.type === 'string') {
+          // Check for specific debtor form fields
+          const path = (issue as any).path?.[0];
+          console.log('String validation - path:', path, 'minimum:', issue.minimum);
+          if (path === 'full_name' && issue.minimum === 1) {
+            console.log('Using custom translation for full_name');
+            message = t('zod.custom.debtor_full_name_required');
+          } else if (path === 'address' && issue.minimum === 1) {
+            console.log('Using custom translation for address');
+            message = t('zod.custom.debtor_address_required');
+          } else if (path === 'phone' && issue.minimum === 1) {
+            console.log('Using custom translation for phone');
+            message = t('zod.custom.debtor_phone_invalid');
+          } else {
+            console.log('Using default string translation');
+            message =
+              issue.exact === true
+                ? t('zod.string.exact', { length: issue.minimum })
+                : t('zod.string.min', { min: issue.minimum });
+          }
         } else if (issue.type === 'number') {
-          message =
-            issue.exact === true
-              ? t('zod.number.exact', { value: issue.minimum })
-              : t('zod.number.min', { min: issue.minimum });
+          // Check for max_credit_amount field
+          const path = (issue as any).path?.[0];
+          if (path === 'max_credit_amount' && issue.minimum === 1000) {
+            message = t('zod.custom.debtor_max_credit_min');
+          } else {
+            message =
+              issue.exact === true
+                ? t('zod.number.exact', { value: issue.minimum })
+                : t('zod.number.min', { min: issue.minimum });
+          }
         } else if (issue.type === 'array') {
           message =
             issue.exact === true
@@ -81,24 +119,45 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
         });
         break;
 
-      case z.ZodIssueCode.custom:
-        // If message is a translation key (starts with 'zod.'), try to translate it
-        if (issue.message && issue.message.startsWith('zod.custom.')) {
+      case z.ZodIssueCode.custom: {
+        console.log('Custom issue:', {
+          message: issue.message,
+          path: (issue as any).path,
+          params: (issue as any).params,
+        });
+
+        const paramsKey =
+          typeof (issue as any).params?.i18nKey === 'string'
+            ? ((issue as any).params.i18nKey as string)
+            : undefined;
+
+        const keyToTranslate =
+          paramsKey ||
+          (issue.message && issue.message.startsWith('zod.')
+            ? issue.message
+            : undefined);
+
+        if (keyToTranslate) {
+          console.log('Translating key:', keyToTranslate);
           try {
-            message = t(issue.message);
-          } catch {
-            message = t('zod.custom.default');
-          }
-        } else if (issue.message && issue.message.startsWith('zod.')) {
-          try {
-            message = t(issue.message);
-          } catch {
+            const translated = t(keyToTranslate);
+            console.log('Translated to:', translated);
+            if (translated === keyToTranslate) {
+              console.warn('Translation returned the key itself, using default');
+              message = t('zod.custom.default');
+            } else {
+              message = translated;
+            }
+          } catch (error) {
+            console.error('Translation failed:', error);
             message = t('zod.custom.default');
           }
         } else {
+          console.log('Using message as-is or default:', issue.message);
           message = issue.message || t('zod.custom.default');
         }
         break;
+      }
 
       default:
         message = ctx.defaultError;

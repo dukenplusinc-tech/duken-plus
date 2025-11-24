@@ -44,8 +44,6 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
         <IonItem>
           <IonLabel position="stacked">{t('form_label_iin')}</IonLabel>
           <IonInput
-            minlength={12}
-            maxlength={12}
             value={form.watch('iin')}
             disabled={isProcessing}
             onIonInput={(e) => form.setValue('iin', e.detail.value!)}
@@ -92,7 +90,6 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonLabel position="stacked">{t('form_label_max_amount')}</IonLabel>
           <IonInput
             type="number"
-            min="1000"
             step="100"
             value={form.watch('max_credit_amount')}
             disabled={isProcessing}

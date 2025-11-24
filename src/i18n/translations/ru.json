@@ -79,7 +79,12 @@
     "custom": {
       "default": "Неверное значение",
       "password_mismatch": "Пароли не совпадают",
-      "consignment_date_required": "Дата консигнации обязательна"
+      "consignment_date_required": "Дата консигнации обязательна",
+      "debtor_full_name_required": "Полное имя обязательно",
+      "debtor_iin_invalid": "ИИН должен состоять ровно из 12 цифр",
+      "debtor_phone_invalid": "Неверный номер телефона",
+      "debtor_address_required": "Адрес обязателен",
+      "debtor_max_credit_min": "Минимальная сумма 1000"
     }
   },
   "date": "dd.MM.yyyy, EEEE",

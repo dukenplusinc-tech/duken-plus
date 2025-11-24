@@ -79,7 +79,12 @@
     "custom": {
       "default": "Invalid value",
       "password_mismatch": "Passwords don't match",
-      "consignment_date_required": "Consignment date is required"
+      "consignment_date_required": "Consignment date is required",
+      "debtor_full_name_required": "Full name is required",
+      "debtor_iin_invalid": "IIN must be exactly 12 digits",
+      "debtor_phone_invalid": "Invalid phone number",
+      "debtor_address_required": "Address is required",
+      "debtor_max_credit_min": "Minimum amount is 1000"
     }
   },
   "date": "dd.MM.yyyy, EEEE",

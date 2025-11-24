@@ -112,12 +112,6 @@ export function createZodErrorMap(t: TranslationFunction): ZodErrorMap {
         break;
 
       case z.ZodIssueCode.custom: {
-        console.log('Custom issue:', {
-          message: issue.message,
-          path: (issue as any).path,
-          params: (issue as any).params,
-        });
-
         const paramsKey =
           typeof (issue as any).params?.i18nKey === 'string'
             ? ((issue as any).params.i18nKey as string)

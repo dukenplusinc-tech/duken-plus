@@ -18,6 +18,7 @@ export type Database = {
           date: string | null
           from: string | null
           id: string
+          shift_id: string | null
           shop_id: string
           type: Database["public"]["Enums"]["transaction_type"]
         }
@@ -29,6 +30,7 @@ export type Database = {
           date?: string | null
           from?: string | null
           id?: string
+          shift_id?: string | null
           shop_id: string
           type: Database["public"]["Enums"]["transaction_type"]
         }
@@ -40,10 +42,113 @@ export type Database = {
           date?: string | null
           from?: string | null
           id?: string
+          shift_id?: string | null
           shop_id?: string
           type?: Database["public"]["Enums"]["transaction_type"]
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "cash_register_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "cash_shift_dashboard"
+            referencedColumns: ["shift_id"]
+          },
+          {
+            foreignKeyName: "cash_register_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "cash_shifts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cash_shifts: {
+        Row: {
+          closed_at: string | null
+          closed_by: string | null
+          closes_at: string
+          closing_banks: Json | null
+          closing_cash: number | null
+          created_at: string
+          id: string
+          opened_at: string
+          opened_by: string | null
+          shift_date: string
+          shift_number: number
+          shop_id: string
+          status: Database["public"]["Enums"]["cash_shift_status"]
+          updated_at: string
+        }
+        Insert: {
+          closed_at?: string | null
+          closed_by?: string | null
+          closes_at?: string
+          closing_banks?: Json | null
+          closing_cash?: number | null
+          created_at?: string
+          id?: string
+          opened_at?: string
+          opened_by?: string | null
+          shift_date: string
+          shift_number: number
+          shop_id: string
+          status?: Database["public"]["Enums"]["cash_shift_status"]
+          updated_at?: string
+        }
+        Update: {
+          closed_at?: string | null
+          closed_by?: string | null
+          closes_at?: string
+          closing_banks?: Json | null
+          closing_cash?: number | null
+          created_at?: string
+          id?: string
+          opened_at?: string
+          opened_by?: string | null
+          shift_date?: string
+          shift_number?: number
+          shop_id?: string
+          status?: Database["public"]["Enums"]["cash_shift_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cash_shifts_closed_by_fkey"
+            columns: ["closed_by"]
+            isOneToOne: false
+            referencedRelation: "extended_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cash_shifts_closed_by_fkey"
+            columns: ["closed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cash_shifts_opened_by_fkey"
+            columns: ["opened_by"]
+            isOneToOne: false
+            referencedRelation: "extended_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cash_shifts_opened_by_fkey"
+            columns: ["opened_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cash_shifts_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       chat_messages: {
         Row: {
@@ -657,18 +762,21 @@ export type Database = {
         Row: {
           address: string
           city: string
+          code: number
           id: string
           title: string
         }
         Insert: {
           address?: string
           city?: string
+          code?: number
           id?: string
           title: string
         }
         Update: {
           address?: string
           city?: string
+          code?: number
           id?: string
           title?: string
         }
@@ -780,6 +888,30 @@ export type Database = {
         }
         Relationships: []
       }
+      cash_shift_dashboard: {
+        Row: {
+          bank_total: number | null
+          cash_total: number | null
+          closed_at: string | null
+          closes_at: string | null
+          closing_banks: Json | null
+          closing_cash: number | null
+          opened_at: string | null
+          shift_id: string | null
+          shift_number: number | null
+          shop_id: string | null
+          status: Database["public"]["Enums"]["cash_shift_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cash_shifts_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       debtor_statistics: {
         Row: {
           overdue_debtors: number | null
@@ -822,9 +954,56 @@ export type Database = {
       }
     }
     Functions: {
+      add_shift_cash_register: {
+        Args: {
+          p_amount: number
+          p_bank_name: string
+          p_from: string
+          p_type: Database["public"]["Enums"]["transaction_type"]
+        }
+        Returns: {
+          added_by: string | null
+          amount: number
+          bank_name: string | null
+          created_at: string | null
+          date: string | null
+          from: string | null
+          id: string
+          shift_id: string | null
+          shop_id: string
+          type: Database["public"]["Enums"]["transaction_type"]
+        }
+      }
+      attach_entry_to_shift: {
+        Args: { entry_id: string }
+        Returns: undefined
+      }
+      auto_close_cash_shifts: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       clean_old_logs: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      close_cash_shift: {
+        Args: { p_cash_amount: number; p_comment?: Json; p_shift_id: string }
+        Returns: {
+          closed_at: string | null
+          closed_by: string | null
+          closes_at: string
+          closing_banks: Json | null
+          closing_cash: number | null
+          created_at: string
+          id: string
+          opened_at: string
+          opened_by: string | null
+          shift_date: string
+          shift_number: number
+          shop_id: string
+          status: Database["public"]["Enums"]["cash_shift_status"]
+          updated_at: string
+        }
       }
       current_shop_id: {
         Args: Record<PropertyKey, never>
@@ -835,6 +1014,25 @@ export type Database = {
         Returns: {
           type: string
         }[]
+      }
+      get_or_create_open_shift: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          closed_at: string | null
+          closed_by: string | null
+          closes_at: string
+          closing_banks: Json | null
+          closing_cash: number | null
+          created_at: string
+          id: string
+          opened_at: string
+          opened_by: string | null
+          shift_date: string
+          shift_number: number
+          shop_id: string
+          status: Database["public"]["Enums"]["cash_shift_status"]
+          updated_at: string
+        }
       }
       mark_overdue_deliveries: {
         Args: Record<PropertyKey, never>
@@ -859,6 +1057,7 @@ export type Database = {
       }
     }
     Enums: {
+      cash_shift_status: "open" | "closed" | "auto_closed"
       delivery_status: "pending" | "accepted" | "due" | "canceled"
       transaction_type: "cash" | "bank_transfer"
     }
@@ -988,6 +1187,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      cash_shift_status: ["open", "closed", "auto_closed"],
       delivery_status: ["pending", "accepted", "due", "canceled"],
       transaction_type: ["cash", "bank_transfer"],
     },

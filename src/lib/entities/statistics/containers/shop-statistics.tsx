@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import {
   AlertTriangle,
+  ArrowRight,
   BarChart3,
   Building,
   CalendarDays,
@@ -21,20 +22,15 @@ import {
   YAxis,
 } from 'recharts';
 
+import { Money } from '@/components/numbers/money';
 import { Period, useShopStats } from '@/lib/entities/statistics/hooks/useStats';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useRouter } from '@/lib/i18n';
 
 function pct(v: number) {
   return `${Math.round((v || 0) * 100)}%`;
-}
-
-function fmtMoney(n: number) {
-  return new Intl.NumberFormat('ru-KZ', {
-    style: 'currency',
-    currency: 'KZT',
-    maximumFractionDigits: 0,
-  }).format(n || 0);
 }
 
 const CHART_COLORS = {
@@ -44,11 +40,20 @@ const CHART_COLORS = {
   canceled: '#6b7280',
 };
 
+function renderMoney(value: number | null | undefined, className?: string) {
+  return (
+    <Money interactive={false} format="full" className={className}>
+      {value ?? 0}
+    </Money>
+  );
+}
+
 export function StatsPage() {
   useActivateBackButton();
 
   const t = useTranslations('statistics');
   const tStatus = useTranslations('statistics.delivery.status');
+  const router = useRouter();
   const [period, setPeriod] = useState<Period>('month');
   const { stats, isLoading, error, from, to, statusTKey } =
     useShopStats(period);
@@ -69,12 +74,23 @@ export function StatsPage() {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold">{t('title')}</h1>
-        <p className="text-sm text-muted-foreground">
-          {t('period.label')} <span className="font-medium">{from}</span> —{' '}
-          <span className="font-medium">{to}</span>
-        </p>
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">{t('title')}</h1>
+          <p className="text-sm text-muted-foreground">
+            {t('period.label')} <span className="font-medium">{from}</span> —{' '}
+            <span className="font-medium">{to}</span>
+          </p>
+        </div>
+        <Button
+          variant="success"
+          size="lg"
+          className="w-full md:w-auto h-12 rounded-2xl px-6 text-base font-semibold gap-2 shadow-lg"
+          onClick={() => router.push('/statistics/days')}
+        >
+          {t('by_day.button')}
+          <ArrowRight className="h-4 w-4" />
+        </Button>
       </div>
 
       {/* Period selector */}
@@ -187,11 +203,17 @@ export function StatsPage() {
                     ? '…'
                     : `${stats?.deliveries.consignmentsOpen ?? 0} / ${stats?.deliveries.consignmentsOverdue ?? 0}`}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  {isLoading
-                    ? '…'
-                    : `${fmtMoney(stats?.deliveries.amountExpected ?? 0)} / ${fmtMoney(stats?.deliveries.amountReceived ?? 0)}`}
-                </p>
+                <div className="text-xs text-muted-foreground flex flex-wrap items-center gap-1">
+                  {isLoading ? (
+                    '…'
+                  ) : (
+                    <>
+                      {renderMoney(stats?.deliveries.amountExpected ?? 0)}
+                      <span>/</span>
+                      {renderMoney(stats?.deliveries.amountReceived ?? 0)}
+                    </>
+                  )}
+                </div>
               </div>
               <div className="rounded-full p-2 bg-purple-500/10">
                 <PackageSearch className="h-5 w-5 text-purple-500" />
@@ -208,9 +230,9 @@ export function StatsPage() {
                 <p className="text-xs text-muted-foreground">
                   {t('expenses.total_label')}
                 </p>
-                <p className="text-xl font-semibold">
-                  {isLoading ? '…' : fmtMoney(stats?.expenses.total ?? 0)}
-                </p>
+                <div className="text-xl font-semibold">
+                  {isLoading ? '…' : renderMoney(stats?.expenses.total, 'text-xl')}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   {t('expenses.types_count', {
                     count: isLoading ? 0 : (stats?.expenses.byType.length ?? 0),
@@ -232,9 +254,9 @@ export function StatsPage() {
                 <p className="text-xs text-muted-foreground">
                   {t('expenses.avg_per_day_label')}
                 </p>
-                <p className="text-xl font-semibold">
-                  {isLoading ? '…' : fmtMoney(avgExpensesPerDay)}
-                </p>
+                <div className="text-xl font-semibold">
+                  {isLoading ? '…' : renderMoney(avgExpensesPerDay, 'text-xl')}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   {t('expenses.period_days', { count: daysInPeriod })}
                 </p>
@@ -351,8 +373,11 @@ export function StatsPage() {
                       <td className="p-2">{d.days_overdue}</td>
                       <td className="p-2">{tStatus(d.status)}</td>
                       <td className="p-2">
-                        {fmtMoney(d.amount_expected)} /{' '}
-                        {fmtMoney(d.amount_received)}
+                        <div className="flex items-center gap-1">
+                          {renderMoney(d.amount_expected, 'text-sm')}
+                          <span>/</span>
+                          {renderMoney(d.amount_received, 'text-sm')}
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -457,7 +482,9 @@ export function StatsPage() {
                     <tr key={row.type} className="border-b">
                       <td className="p-2">{row.type}</td>
                       <td className="p-2">{row.count}</td>
-                      <td className="p-2">{fmtMoney(row.total)}</td>
+                      <td className="p-2">
+                        {renderMoney(row.total, 'text-sm font-medium')}
+                      </td>
                     </tr>
                   ))
                 )}
@@ -521,8 +548,17 @@ export function StatsPage() {
                         {r.consignments_open}/{r.consignments_overdue}
                       </td>
                       <td className="p-2">
-                        {fmtMoney(r.amount_expected_total)} /{' '}
-                        {fmtMoney(r.amount_received_total)}
+                        <div className="flex items-center gap-1">
+                          {renderMoney(
+                            r.amount_expected_total,
+                            'text-sm font-medium'
+                          )}
+                          <span>/</span>
+                          {renderMoney(
+                            r.amount_received_total,
+                            'text-sm font-medium'
+                          )}
+                        </div>
                       </td>
                       <td className="p-2">{r.last_delivery_date ?? '—'}</td>
                     </tr>

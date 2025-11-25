@@ -91,6 +91,9 @@
   "currency": {
     "tenge": "теңге"
   },
+  "money": {
+    "toast_title": "Толық сома"
+  },
   "user_nav": {
     "authenticated": "аутентификацияланған",
     "settings_label": "Параметрлер",

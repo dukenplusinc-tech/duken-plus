@@ -91,6 +91,9 @@
   "currency": {
     "tenge": "тенге"
   },
+  "money": {
+    "toast_title": "Полная сумма"
+  },
   "user_nav": {
     "authenticated": "аутентифицирован",
     "settings_label": "Настройки",
@@ -767,6 +770,51 @@
       "last_delivery": "Последняя поставка"
     },
     "loading": "Загрузка…",
+    "by_day": {
+      "button": "По дням",
+      "title": "Статистика по дням",
+      "range": "Период: {from} — {to}",
+      "navigation": {
+        "prev": "Пред. месяц",
+        "next": "След. месяц"
+      },
+      "month_total": "Общие расходы за месяц",
+      "month_deliveries": "Сумма поставок за месяц",
+      "error_prefix": "Ошибка загрузки:",
+      "days_list": {
+        "title": "Дни месяца",
+        "empty": "Нет данных за выбранный месяц",
+        "deliveries": "{count, plural, one {# поставка} few {# поставки} many {# поставок} other {# поставок}}",
+        "expenses": "Расходы"
+      },
+      "loading": "Загрузка…",
+      "details_placeholder": "Выберите день, чтобы увидеть детали",
+      "selected_day": {
+        "label": "Выбранный день"
+      },
+      "sections": {
+        "accepted": "Принятые фирмы",
+        "expenses": "Расходы",
+        "consignments": "Оплата по консигнации",
+        "notAccepted": "Не принятые фирмы"
+      },
+      "empty": {
+        "accepted": "Нет принятых фирм за этот день",
+        "expenses": "Расходов нет",
+        "consignments": "Нет консигнаций",
+        "notAccepted": "Все фирмы приняты"
+      },
+      "totals": {
+        "accepted": "Общее",
+        "expenses": "Общее"
+      },
+      "labels": {
+        "accepted_date": "Дата принятия",
+        "overdue": "Просрочка",
+        "amount": "Сумма",
+        "days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дней}}"
+      }
+    },
     "delivery": {
       "status": {
         "pending": "К приёмке",

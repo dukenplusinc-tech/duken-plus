@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -28,6 +30,7 @@ const formatFullAmount = (amount: number): string => {
 
 export function Money({ children, emptyLabel, className }: MoneyProps) {
   const { toast } = useToast();
+  const t = useTranslations('money');
 
   const handleClick = () => {
     if (!children) {
@@ -35,8 +38,8 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
     }
 
     toast({
-      title: 'Полная сумма',
-      description: `${formatFullAmount(children)} тг`,
+      title: t('toast_title'),
+      description: `${formatFullAmount(children)} ₸`,
       duration: 3000,
     });
   };
@@ -53,7 +56,7 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
         'font-semibold text-left transition-all duration-200 hover:scale-105 active:scale-95'
       )}
     >
-      {formatMoney(children)} тг
+      {formatMoney(children)} ₸
     </button>
   );
 }

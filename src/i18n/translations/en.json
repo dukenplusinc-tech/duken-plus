@@ -91,6 +91,9 @@
   "currency": {
     "tenge": "tenge"
   },
+  "money": {
+    "toast_title": "Full amount"
+  },
   "user_nav": {
     "authenticated": "authenticated",
     "settings_label": "Settings",
@@ -767,6 +770,51 @@
       "last_delivery": "Last delivery"
     },
     "loading": "Loading…",
+    "by_day": {
+      "button": "By day",
+      "title": "Daily statistics",
+      "range": "Range: {from} — {to}",
+      "navigation": {
+        "prev": "Prev month",
+        "next": "Next month"
+      },
+      "month_total": "Monthly expenses",
+      "month_deliveries": "Monthly delivery amount",
+      "error_prefix": "Failed to load:",
+      "days_list": {
+        "title": "Days of the month",
+        "empty": "No data for this month",
+        "deliveries": "{count, plural, one {# delivery} other {# deliveries}}",
+        "expenses": "Expenses"
+      },
+      "loading": "Loading…",
+      "details_placeholder": "Select a day to see the breakdown",
+      "selected_day": {
+        "label": "Selected day"
+      },
+      "sections": {
+        "accepted": "Accepted companies",
+        "expenses": "Expenses",
+        "consignments": "Consignment payments",
+        "notAccepted": "Pending companies"
+      },
+      "empty": {
+        "accepted": "No accepted companies on this day",
+        "expenses": "No expenses",
+        "consignments": "No consignments",
+        "notAccepted": "No pending companies"
+      },
+      "totals": {
+        "accepted": "Total",
+        "expenses": "Total"
+      },
+      "labels": {
+        "accepted_date": "Acceptance date",
+        "overdue": "Overdue",
+        "amount": "Amount",
+        "days": "{count, plural, one {# day} other {# days}}"
+      }
+    },
     "delivery": {
       "status": {
         "pending": "Pending",

@@ -24,7 +24,8 @@ export const useShop = () => {
       title,
       address,
       city,
-      code
+      code,
+      created_at
       `,
     {
       schema,

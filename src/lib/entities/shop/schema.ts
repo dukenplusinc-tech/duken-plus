@@ -12,6 +12,7 @@ export const shopPayloadSchema = z.object({
   address: z.string(),
   city: z.string(),
   code: z.number().optional(),
+  created_at: z.string().optional(),
 });
 
 export type ShopPayload = z.infer<typeof shopPayloadSchema>;

@@ -1,7 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
-import { usePathname, useSearchParams, useRouter as useNextRouter } from 'next/navigation';
+import { useCallback, useEffect, useRef } from 'react';
+import {
+  useRouter as useNextRouter,
+  usePathname,
+  useSearchParams,
+} from 'next/navigation';
+
 import { useLoading } from './context';
 
 export function NavigationListener() {
@@ -49,7 +54,7 @@ export function NavigationListener() {
       // Only start loading if navigation will actually change the route
       if (willNavigate(href)) {
         startLoading();
-        
+
         // Set a timeout to stop loading if navigation doesn't complete
         // This handles errors and same-page navigation attempts
         if (pendingNavigationTimeoutRef.current) {
@@ -126,13 +131,22 @@ export function NavigationListener() {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
+
+      const is3DotsButton =
+        target.classList.contains('button-small') &&
+        target.classList.contains('button-has-icon-only') &&
+        target.classList.contains('button-clear');
+
+      if (is3DotsButton) {
+        return;
+      }
+
       // Check if clicked element or its parent is a link
       const link = target.closest('a[href]') as HTMLAnchorElement;
-      
+
       if (link) {
         const href = link.getAttribute('href');
-        
+
         // Only intercept internal navigation links
         // Check for relative paths, not external URLs or special protocols
         const isInternalLink =
@@ -162,7 +176,7 @@ export function NavigationListener() {
           // Only start loading if navigation will actually change the route
           if (currentPath !== targetPath) {
             startLoading();
-            
+
             // Set a timeout to stop loading if navigation doesn't complete
             // This handles errors and prevents stuck loaders
             if (pendingNavigationTimeoutRef.current) {
@@ -178,7 +192,7 @@ export function NavigationListener() {
 
     // Use capture phase to catch clicks early
     document.addEventListener('click', handleClick, true);
-    
+
     return () => {
       document.removeEventListener('click', handleClick, true);
     };
@@ -196,7 +210,8 @@ export function NavigationListener() {
 
     // Check if pathname or search params changed
     const pathnameChanged = prevPathname.current !== pathname;
-    const searchParamsChanged = prevSearchParams.current !== searchParams?.toString();
+    const searchParamsChanged =
+      prevSearchParams.current !== searchParams?.toString();
 
     if (pathnameChanged || searchParamsChanged) {
       // Clear any pending timeout since navigation completed
@@ -242,4 +257,3 @@ export function NavigationListener() {
 
   return null;
 }
-

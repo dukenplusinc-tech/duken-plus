@@ -7,7 +7,8 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
-import { DayBreakdown, useDailyStats } from '@/lib/entities/statistics/hooks/useDailyStats';
+import { useDailyStats } from '@/lib/entities/statistics/hooks/useDailyStats';
+import type { DayBreakdown } from '@/lib/entities/statistics/types';
 
 function startOfMonth(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), 1);

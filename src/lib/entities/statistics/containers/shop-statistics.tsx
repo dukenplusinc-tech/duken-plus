@@ -28,6 +28,7 @@ import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useRouter } from '@/lib/i18n';
+import { toStatisticsDays } from '@/lib/url/generator';
 
 function pct(v: number) {
   return `${Math.round((v || 0) * 100)}%`;
@@ -84,12 +85,11 @@ export function StatsPage() {
         </div>
         <Button
           variant="success"
-          size="lg"
-          className="w-full md:w-auto h-12 rounded-2xl px-6 text-base font-semibold gap-2 shadow-lg"
-          onClick={() => router.push('/statistics/days')}
+          className="w-full h-12 rounded-xl px-6 text-base font-semibold gap-2 flex items-center justify-center"
+          onClick={() => router.push(toStatisticsDays())}
         >
-          {t('by_day.button')}
-          <ArrowRight className="h-4 w-4" />
+          <span>{t('by_day.button')}</span>
+          <ArrowRight className="h-5 w-5 flex-shrink-0" />
         </Button>
       </div>
 

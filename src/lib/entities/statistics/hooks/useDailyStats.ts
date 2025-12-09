@@ -4,81 +4,18 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useFiltersCtx } from '@/lib/composite/filters/context';
 import { createClient } from '@/lib/supabase/client';
+import type {
+  DailyDelivery,
+  DailyExpense,
+  DayBreakdown,
+  DailyStatsResult,
+  DeliveryRow,
+  ExpenseRow,
+  ContractorRow,
+} from '@/lib/entities/statistics/types';
+import { getMonthRange, toISODate } from '@/lib/entities/statistics/utils/date';
 
-type DeliveryStatus = 'pending' | 'accepted' | 'due' | 'canceled';
-
-interface DeliveryRow {
-  id: string;
-  contractor_id: string | null;
-  status: DeliveryStatus;
-  is_consignement: boolean;
-  consignment_status: 'open' | 'closed' | null;
-  consignment_due_date: string | null;
-  expected_date: string;
-  accepted_date: string | null;
-  amount_expected: number | null;
-  amount_received: number | null;
-}
-
-interface ExpenseRow {
-  id: string;
-  type: string | null;
-  amount: number | null;
-  date: string;
-}
-
-interface ContractorRow {
-  id: string;
-  title: string;
-}
-
-export interface DailyDelivery extends DeliveryRow {
-  contractor_title: string;
-}
-
-export interface DailyExpense {
-  id: string;
-  type: string;
-  amount: number;
-  date: string;
-}
-
-export interface DayBreakdown {
-  date: string;
-  expensesTotal: number;
-  deliveriesAmountTotal: number;
-  deliveriesCount: number;
-  accepted: DailyDelivery[];
-  others: DailyDelivery[];
-  consignments: DailyDelivery[];
-  expenses: DailyExpense[];
-}
-
-export interface DailyStatsResult {
-  days: DayBreakdown[];
-  totals: {
-    expenses: number;
-    deliveriesAmount: number;
-  };
-}
-
-function toISODate(date: Date) {
-  const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-function getMonthRange(anchor: Date) {
-  const start = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
-  const endExclusive = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 1);
-
-  return {
-    from: toISODate(start),
-    to: toISODate(new Date(endExclusive.getTime() - 1)),
-    toExclusive: toISODate(endExclusive),
-  };
-}
+export { type DailyDelivery, type DailyExpense, type DayBreakdown } from '../types';
 
 export function useDailyStats(monthAnchor: Date) {
   const [{ days, totals }, setData] = useState<DailyStatsResult>({

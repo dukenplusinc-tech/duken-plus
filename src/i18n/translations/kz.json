@@ -764,12 +764,68 @@
       "status": "Күйі",
       "amounts": "Сома (күтіл./алын.)",
       "total": "Барлығы",
-      "accepted": "Қабылданды",
-      "acceptance_rate": "Қабылдау %",
-      "consignments_open_overdue": "Консиг. ашық/кешіккен",
       "last_delivery": "Соңғы жеткізу"
     },
     "loading": "Жүктелуде…",
+    "by_day": {
+      "button": "Күндер бойынша",
+      "title": "Күндер бойынша статистика",
+      "range": "Кезең: {from} — {to}",
+      "navigation": {
+        "prev": "Алдыңғы ай",
+        "next": "Келесі ай"
+      },
+      "month_total": "Айдың жалпы шығыны",
+      "month_deliveries": "Айдың жеткізу сомасы",
+      "error_prefix": "Жүктеу қатесі:",
+      "days_list": {
+        "title": "Айдың күндері",
+        "empty": "Таңдалған айға деректер жоқ",
+        "deliveries": "{count, plural, one {# жеткізу} other {# жеткізу}}",
+        "expenses": "Шығындар"
+      },
+      "loading": "Жүктелуде…",
+      "details_placeholder": "Толық ақпаратты көру үшін күнді таңдаңыз",
+      "selected_day": {
+        "label": "Таңдалған күн"
+      },
+      "sections": {
+        "accepted": "Қабылданған фирмалар",
+        "expenses": "Шығындар",
+        "consignments": "Консигнация бойынша төлем",
+        "notAccepted": "Қабылданбаған фирмалар"
+      },
+      "empty": {
+        "accepted": "Бұл күнге қабылданған фирмалар жоқ",
+        "expenses": "Шығындар жоқ",
+        "consignments": "Консигнациялар жоқ",
+        "notAccepted": "Барлық фирмалар қабылданды"
+      },
+      "totals": {
+        "label": "Жалпы"
+      },
+      "labels": {
+        "accepted_date": "Қабылдау күні",
+        "overdue": "Кешіккен",
+        "amount": "Сома",
+        "days": "{count, plural, one {# күн} other {# күн}}",
+        "name": "Атауы",
+        "reason": "Себебі",
+        "supplier": "Жеткізуші",
+        "date": "Күні",
+        "total_expenses": "Жалпы шығындар сомасы"
+      },
+      "sort": {
+        "by_date": "Күні бойынша",
+        "by_amount": "Сомасы бойынша"
+      },
+      "consignment": {
+        "label": "Консигнация {amount} тг {date} дейін",
+        "until": "дейін"
+      },
+      "currency": "тг",
+      "select_day": "Күнді таңдаңыз"
+    },
     "delivery": {
       "status": {
         "pending": "Қабылдауға",

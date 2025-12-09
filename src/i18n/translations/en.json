@@ -799,21 +799,35 @@
         "notAccepted": "Pending companies"
       },
       "empty": {
-        "accepted": "No accepted companies on this day",
+        "accepted": "No accepted companies for this day",
         "expenses": "No expenses",
         "consignments": "No consignments",
-        "notAccepted": "No pending companies"
+        "notAccepted": "All companies accepted"
       },
       "totals": {
-        "accepted": "Total",
-        "expenses": "Total"
+        "label": "Total"
       },
       "labels": {
         "accepted_date": "Acceptance date",
         "overdue": "Overdue",
         "amount": "Amount",
-        "days": "{count, plural, one {# day} other {# days}}"
-      }
+        "days": "{count, plural, one {# day} other {# days}}",
+        "name": "Name",
+        "reason": "Reason",
+        "supplier": "Supplier",
+        "date": "Date",
+        "total_expenses": "Total expenses"
+      },
+      "sort": {
+        "by_date": "By date",
+        "by_amount": "By amount"
+      },
+      "consignment": {
+        "label": "Consignment {amount} tenge until {date}",
+        "until": "until"
+      },
+      "currency": "tenge",
+      "select_day": "Select a day"
     },
     "delivery": {
       "status": {

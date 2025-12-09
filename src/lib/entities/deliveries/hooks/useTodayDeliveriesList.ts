@@ -14,9 +14,16 @@ export type DeliveryItem = {
   consignment_due_date: string | null;
 };
 
+function toLocalISODate(date: Date): string {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export const useTodayDeliveriesList = () => {
   const supabase = createClient();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = toLocalISODate(new Date());
 
   return useSWR(['todayDeliveriesList'], async () => {
     const query = supabase

@@ -108,6 +108,14 @@ export function toStatistics(): string {
   return `/statistics`;
 }
 
+export function toStatisticsDays(): string {
+  return `/statistics/days`;
+}
+
+export function toStatisticsDay(date: string): string {
+  return `/statistics/days/${date}`;
+}
+
 export function toCalendar(): string {
   return `/contractors/deliveries/calendar`;
 }

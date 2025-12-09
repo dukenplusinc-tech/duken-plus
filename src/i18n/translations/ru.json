@@ -805,22 +805,39 @@
         "notAccepted": "Все фирмы приняты"
       },
       "totals": {
-        "accepted": "Общее",
-        "expenses": "Общее"
+        "label": "Общее"
       },
       "labels": {
         "accepted_date": "Дата принятия",
         "overdue": "Просрочка",
         "amount": "Сумма",
-        "days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дней}}"
-      }
+        "days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дней}}",
+        "name": "Наименование",
+        "reason": "Причина",
+        "supplier": "Поставщик",
+        "date": "Дата",
+        "total_expenses": "Общая сумма расходов"
+      },
+      "sort": {
+        "by_date": "По дате",
+        "by_amount": "По сумме"
+      },
+      "consignment": {
+        "label": "Консигнация {amount} тг до {date}",
+        "until": "до"
+      },
+      "currency": "тг",
+      "select_day": "Выберите день"
     },
     "delivery": {
       "status": {
         "pending": "К приёмке",
         "accepted": "Принято",
         "due": "Просрочено",
-        "canceled": "Отменено"
+        "canceled": "Отменено",
+        "rescheduled": "Перенос даты",
+        "declined": "Отклонение",
+        "no_action": "Без действия"
       }
     }
   }

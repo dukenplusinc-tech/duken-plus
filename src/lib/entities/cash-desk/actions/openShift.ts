@@ -8,7 +8,7 @@ type CashShift = Database['public']['Tables']['cash_shifts']['Row'];
 export async function openShift(openedByName: string | null): Promise<CashShift> {
   const supabase = createClient();
 
-  const { data, error } = await supabase.rpc('get_or_create_open_shift', {
+  const { data, error } = await (supabase.rpc as any)('get_or_create_open_shift', {
     p_opened_by_name: openedByName,
   });
 

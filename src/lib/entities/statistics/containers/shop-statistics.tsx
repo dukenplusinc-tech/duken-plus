@@ -43,7 +43,7 @@ const CHART_COLORS = {
 
 function renderMoney(value: number | null | undefined, className?: string) {
   return (
-    <Money interactive={false} format="full" className={className}>
+    <Money className={className}>
       {value ?? 0}
     </Money>
   );

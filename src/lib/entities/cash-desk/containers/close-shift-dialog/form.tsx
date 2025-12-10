@@ -63,7 +63,7 @@ export function CloseShiftDialogForm({
       });
 
     return totals;
-  }, [transactions, shiftId]);
+  }, [transactions]);
 
   const totalBankAmount = useMemo(() => {
     return bankTotals.kaspi + bankTotals.halyk + bankTotals.other;

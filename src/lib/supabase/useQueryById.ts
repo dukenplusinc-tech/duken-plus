@@ -10,7 +10,7 @@ import { withFilters } from '@/lib/supabase/filters';
 import { withSorting } from '@/lib/supabase/sorting';
 
 interface Options {
-  schema?: z.ZodObject<any>;
+  schema?: z.ZodTypeAny;
   filters?: ActiveFilter[];
   sort?: SortingState | undefined;
 }

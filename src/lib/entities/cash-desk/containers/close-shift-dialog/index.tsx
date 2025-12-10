@@ -25,7 +25,7 @@ export function useCloseShiftDialog() {
       return;
     }
 
-    const shiftId = currentShift.id || currentShift.shift_id || '';
+    const shiftId = currentShift.shift_id || '';
     if (!shiftId) {
       return;
     }

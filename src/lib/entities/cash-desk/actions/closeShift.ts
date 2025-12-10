@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import type { Database } from '@/lib/supabase/types';
+import type { Database, Json } from '@/lib/supabase/types';
 
 type CashShift = Database['public']['Tables']['cash_shifts']['Row'];
 
@@ -17,6 +17,11 @@ export async function closeShift(
     p_cash_amount: cashAmount,
     p_closed_by_name: closedByName,
     p_comment: {},
+  } as {
+    p_shift_id: string;
+    p_cash_amount: number;
+    p_closed_by_name?: string | null;
+    p_comment?: Json;
   });
 
   if (error) {

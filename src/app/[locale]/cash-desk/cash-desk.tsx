@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, X, Filter } from 'lucide-react';
+import { Plus, X, ArrowUpDown } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import type { DateRange } from 'react-day-picker';
@@ -9,14 +9,13 @@ import type { DateRange } from 'react-day-picker';
 import { toShiftDetail } from '@/lib/url/generator';
 
 import { useAddCashRegisterEntryForm } from '@/lib/entities/cash-desk/containers/add-cash-register-entry';
-import { AddTransferModal } from '@/lib/entities/cash-desk/containers/add-transfer-modal';
-import { CloseShiftDialog } from '@/lib/entities/cash-desk/containers/close-shift-dialog';
+import { useAddTransferModal } from '@/lib/entities/cash-desk/containers/add-transfer-modal';
+import { useCloseShiftDialog } from '@/lib/entities/cash-desk/containers/close-shift-dialog';
 import { ShiftDateFilterButton } from '@/lib/entities/cash-desk/containers/shift-date-filter-button';
 import { useCurrentShift } from '@/lib/entities/cash-desk/hooks/useCurrentShift';
 import { useShiftHistory } from '@/lib/entities/cash-desk/hooks/useShiftHistory';
-import { useAddTransferModal } from '@/lib/entities/cash-desk/hooks/useAddTransferModal';
-import { useCloseShiftDialog } from '@/lib/entities/cash-desk/hooks/useCloseShiftDialog';
 import { openShift } from '@/lib/entities/cash-desk/actions/openShift';
+import { useAddedBy } from '@/lib/entities/debtors/hooks/useAddedBy';
 import { ShiftCountdown } from '@/lib/entities/cash-desk/containers/shift-countdown';
 import { ShiftHistoryList } from '@/lib/entities/cash-desk/containers/shift-history-list';
 import { Button } from '@/components/ui/button';
@@ -33,16 +32,18 @@ export default function CashRegisterPage() {
   const router = useRouter();
   const tShifts = useTranslations('cash_desk.shifts');
   const handleAddTransaction = useAddCashRegisterEntryForm();
-  const transferModal = useAddTransferModal();
-  const closeShiftDialog = useCloseShiftDialog();
+  const openTransferModal = useAddTransferModal();
+  const openCloseShiftDialog = useCloseShiftDialog();
   const { data: currentShift, isLoading: isLoadingShift, refresh: refreshShift } = useCurrentShift();
   const [currentPage, setCurrentPage] = useState(1);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [sortAscending, setSortAscending] = useState(false);
   const { data: historyData, isLoading: isLoadingHistory, refresh: refreshHistory } = useShiftHistory(currentPage, 30, dateRange);
+  const addedBy = useAddedBy();
 
   const handleOpenShift = async () => {
     try {
-      await openShift();
+      await openShift(addedBy);
       refreshShift();
       refreshHistory();
     } catch (error) {
@@ -81,14 +82,14 @@ export default function CashRegisterPage() {
                 <div className="flex gap-2 mb-2">
                   <Button
                     className="bg-green-600 hover:bg-green-700 text-white h-16 flex-[2] text-base font-semibold"
-                    onClick={transferModal.openModal}
+                    onClick={() => openTransferModal()}
                   >
                     <Plus className="mr-2 h-6 w-6" /> {tShifts('add_transfer')}
                   </Button>
                   <Button
                     variant="destructive"
                     className="h-16 flex-1 flex flex-col items-center justify-center gap-1 text-base font-semibold"
-                    onClick={closeShiftDialog.openDialog}
+                    onClick={openCloseShiftDialog}
                   >
                     <X className="h-6 w-6" />
                     <span className="text-xs leading-tight">{tShifts('close_shift')}</span>
@@ -123,11 +124,15 @@ export default function CashRegisterPage() {
                 }}
               />
               <Button
-                variant="default"
+                variant={sortAscending ? 'default' : 'outline'}
                 size="icon"
-                className="bg-primary hover:bg-primary/90 h-[38px] w-[38px]"
+                onClick={() => setSortAscending((prev) => !prev)}
+                className={sortAscending 
+                  ? 'bg-primary hover:bg-primary/90 aspect-square h-[38px] w-[38px]'
+                  : 'border-2 border-primary/30 aspect-square h-[38px] w-[38px]'
+                }
               >
-                <Filter className="h-4 w-4" />
+                <ArrowUpDown className="h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -138,7 +143,11 @@ export default function CashRegisterPage() {
             ) : historyData?.shifts && historyData.shifts.length > 0 ? (
               <>
                 <ShiftHistoryList
-                  shifts={historyData.shifts}
+                  shifts={[...historyData.shifts].sort((a, b) => {
+                    const dateA = new Date(a.opened_at).getTime();
+                    const dateB = new Date(b.opened_at).getTime();
+                    return sortAscending ? dateA - dateB : dateB - dateA;
+                  })}
                   onShiftClick={handleShiftClick}
                 />
                 
@@ -207,23 +216,6 @@ export default function CashRegisterPage() {
           </div>
         </div>
 
-        {/* Add Transfer Modal */}
-        <AddTransferModal
-          open={transferModal.open}
-          onOpenChange={(open) => transferModal.closeModal(open)}
-          type={transferModal.type}
-          onSuccess={transferModal.handleSuccess}
-        />
-
-        {/* Close Shift Dialog */}
-        {closeShiftDialog.isShiftOpen && (
-          <CloseShiftDialog
-            open={closeShiftDialog.open}
-            onOpenChange={(open) => closeShiftDialog.closeDialog(open)}
-            shiftId={closeShiftDialog.shiftId}
-            onSuccess={closeShiftDialog.handleSuccess}
-          />
-        )}
       </div>
     </main>
   );

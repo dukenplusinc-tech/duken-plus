@@ -21,17 +21,37 @@ interface ShiftHistoryItem extends CashShiftDashboard {
 export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?: DateRange) => {
   const supabase = createClient();
 
+  // Helper to format date in local timezone as YYYY-MM-DD
+  const formatLocalDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // Helper to get start of day in local timezone as UTC ISO string
+  const getStartOfDayUTC = (date: Date): string => {
+    const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
+    return localDate.toISOString();
+  };
+
+  // Helper to get end of day in local timezone as UTC ISO string
+  const getEndOfDayUTC = (date: Date): string => {
+    const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
+    return localDate.toISOString();
+  };
+
   const fetcher = async () => {
     const offset = (page - 1) * limit;
 
     // Check if the selected date range includes today
     let isTodayInRange = false;
     if (dateRange?.from) {
-      const today = new Date().toISOString().split('T')[0];
-      const startDate = dateRange.from.toISOString().split('T')[0];
+      const today = formatLocalDate(new Date());
+      const startDate = formatLocalDate(dateRange.from);
       const endDateOnly = dateRange.to 
-        ? dateRange.to.toISOString().split('T')[0]
-        : dateRange.from.toISOString().split('T')[0];
+        ? formatLocalDate(dateRange.to)
+        : formatLocalDate(dateRange.from);
       isTodayInRange = startDate <= today && today <= endDateOnly;
     }
 
@@ -42,10 +62,10 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
       // If today is in range, we need to include:
       // 1. All open shifts (regardless of opened_at date)
       // 2. Shifts opened in the date range (including closed ones)
-      const startDate = dateRange.from.toISOString().split('T')[0];
+      const startDate = getStartOfDayUTC(dateRange.from);
       const endDate = dateRange.to 
-        ? dateRange.to.toISOString().split('T')[0] + ' 23:59:59'
-        : dateRange.from.toISOString().split('T')[0] + ' 23:59:59';
+        ? getEndOfDayUTC(dateRange.to)
+        : getEndOfDayUTC(dateRange.from);
 
       // Get all open shifts
       const { data: openShifts, error: openError } = await supabase
@@ -123,10 +143,10 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
       count = shiftMap.size;
     } else if (dateRange?.from) {
       // If today is not in range, just filter by opened_at
-      const startDate = dateRange.from.toISOString().split('T')[0];
+      const startDate = getStartOfDayUTC(dateRange.from);
       const endDate = dateRange.to 
-        ? dateRange.to.toISOString().split('T')[0] + ' 23:59:59'
-        : dateRange.from.toISOString().split('T')[0] + ' 23:59:59';
+        ? getEndOfDayUTC(dateRange.to)
+        : getEndOfDayUTC(dateRange.from);
 
       const { data: dateShifts, error: dateError, count: dateCount } = await supabase
         .from('cash_shift_dashboard')
@@ -227,7 +247,7 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
   };
 
   const dateKey = dateRange?.from 
-    ? `${dateRange.from.toISOString()}-${dateRange.to?.toISOString() || ''}` 
+    ? `${formatLocalDate(dateRange.from)}-${dateRange.to ? formatLocalDate(dateRange.to) : ''}` 
     : 'no-date';
 
   const { data, error, isLoading, mutate } = useSWR(

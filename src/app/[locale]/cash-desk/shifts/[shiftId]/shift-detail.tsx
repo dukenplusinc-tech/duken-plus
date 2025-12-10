@@ -51,7 +51,10 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
   );
 
   // Get shift user info from cash_shifts table
-  const { data: shiftUserData } = useQuery<Array<{ opened_by: string | null; closed_by: string | null }>>(
+  const { data: shiftUserData } = useQuery<Array<{
+    opened_by: string | null;
+    closed_by: string | null;
+  }>>(
     'cash_shifts',
     'opened_by, closed_by',
     {
@@ -66,6 +69,9 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
 
   const shift = shiftData?.[0];
   const shiftUser = shiftUserData?.[0];
+  
+  const openedByName = shiftUser?.opened_by || null;
+  const closedByName = shiftUser?.closed_by || null;
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -136,18 +142,18 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
               <div className="text-sm text-muted-foreground space-y-1">
                 <div>
                   {t('opened')}: {formatDateTime(shift.opened_at || '')}
-                  {shiftUser?.opened_by && (
+                  {openedByName && (
                     <span className="ml-2 text-xs">
-                      ({t('opened_by') || 'Opened by'}: {shiftUser.opened_by})
+                      ({t('opened_by') || 'Opened by'}: {openedByName})
                     </span>
                   )}
                 </div>
                 {shift.closed_at && (
                   <div>
                     {t('closed')}: {formatDateTime(shift.closed_at)}
-                    {shiftUser?.closed_by && (
+                    {closedByName && (
                       <span className="ml-2 text-xs">
-                        ({t('closed_by') || 'Closed by'}: {shiftUser.closed_by})
+                        ({t('closed_by') || 'Closed by'}: {closedByName})
                       </span>
                     )}
                   </div>
@@ -191,8 +197,8 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
           <h2 className="text-lg font-semibold mb-2">{t('transactions')}</h2>
           {isLoadingTransactions ? (
             <div className="text-center py-4">{t('loading_transactions')}</div>
-          ) : transactions?.data && transactions.data.length > 0 ? (
-            <TransactionList transactions={transactions.data} />
+          ) : transactions && transactions.length > 0 ? (
+            <TransactionList transactions={transactions} />
           ) : (
             <div className="text-center py-8 text-muted-foreground">
               {t('no_transactions')}

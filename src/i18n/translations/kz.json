@@ -551,6 +551,50 @@
       "form_label_description": "Сипаттама",
       "save_caption": "Қосу",
       "cancel_caption": "Бас тарту"
+    },
+    "shifts": {
+      "title": "Ауысымды басқару",
+      "shift_closed": "Ауысым жабылған",
+      "shift_open": "Ауысым №{number} ашық",
+      "until_closing": "жабуға дейін {time}",
+      "open_shift": "Ауысымды ашу",
+      "close_shift": "Ауысымды жабу",
+      "add_transfer": "аударым",
+      "statistics": "Статистика",
+      "shift_number": "№ ауысым",
+      "date_and_time": "Күні мен уақыты",
+      "opened": "Ашылды",
+      "closed": "Жабылды",
+      "amount": "Сома",
+      "bank_transfer": "БН",
+      "cash": "Қ",
+      "at": "сағ",
+      "opened_by": "Ашты",
+      "closed_by": "Жапты",
+      "close_shift_dialog": {
+        "title": "Ауысымды жабу",
+        "cash_flow_label": "Қолма-қол ақша ағыны (ағымдағы ауысым)",
+        "cash_amount_label": "Кассадағы қолма-қол ақша сомасы:",
+        "cash_amount_placeholder": "Дұрыс соманы енгізіңіз",
+        "by_banks_label": "Банктер бойынша:",
+        "total_bank_transfer_label": "Безналичный жалпы сома:",
+        "error": "Ауысымды жабу кезінде қате",
+        "submit": "Ауысымды жабу",
+        "cancel": "Бас тарту"
+      },
+      "add_transfer_modal": {
+        "title": "Аударым қосу",
+        "additional_label": "Қосымша:",
+        "additional_placeholder": "Қосымша ақпарат енгізіңіз"
+      },
+      "loading": "Жүктелуде...",
+      "loading_history": "Тарихы жүктелуде...",
+      "loading_transactions": "Транзакциялар жүктелуде...",
+      "no_shifts_data": "Ауысым деректері жоқ",
+      "no_transactions": "Транзакциялар жоқ",
+      "shift_not_found": "Ауысым табылмады",
+      "transactions": "Транзакциялар",
+      "error_opening_shift": "Ауысымды ашу кезінде қате"
     }
   },
   "chat": {

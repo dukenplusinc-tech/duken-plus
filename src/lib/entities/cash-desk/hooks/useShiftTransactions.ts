@@ -1,35 +1,24 @@
+'use client';
+
 import { useMemo } from 'react';
 
 import { ActiveFilter } from '@/lib/composite/filters/context';
 import { CashRegister } from '@/lib/entities/cash-desk/schema';
 import { useInfiniteQuery } from '@/lib/supabase/useInfiniteQuery';
-import { useCurrentShift } from '@/lib/entities/cash-desk/hooks/useCurrentShift';
 
-export const useCashDeskEntries = (
-  type: CashRegister['type'] | null = null
-) => {
-  const { data: currentShift } = useCurrentShift();
-  const shiftId = currentShift?.shift_id || null;
-
+export const useShiftTransactions = (shiftId: string | null) => {
   const filters: ActiveFilter[] = useMemo(() => {
-    const result: ActiveFilter[] = [];
+    if (!shiftId) {
+      return [];
+    }
 
-    if (shiftId) {
-      result.push({
+    return [
+      {
         key: 'shift_id',
         eq: shiftId,
-      });
-    }
-
-    if (type) {
-      result.push({
-        key: 'type',
-        eq: type,
-      });
-    }
-
-    return result;
-  }, [type, shiftId]);
+      },
+    ];
+  }, [shiftId]);
 
   return useInfiniteQuery<CashRegister>({
     table: 'cash_register',
@@ -46,3 +35,4 @@ export const useCashDeskEntries = (
     filters,
   });
 };
+

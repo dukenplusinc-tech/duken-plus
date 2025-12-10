@@ -12,13 +12,22 @@ interface MoneyProps {
 }
 
 const formatMoney = (amount: number): string => {
-  if (amount >= 1000000) {
-    return `${(amount / 1000000).toFixed(1)}M`;
+  if (amount == null || isNaN(amount)) {
+    return '---';
   }
-  if (amount >= 1000) {
-    return `${(amount / 1000).toFixed(1)}K`;
+
+  const numAmount = typeof amount === 'number' ? amount : parseFloat(String(amount));
+  if (isNaN(numAmount)) {
+    return '---';
   }
-  return amount.toFixed(2);
+
+  if (numAmount >= 1000000) {
+    return `${(numAmount / 1000000).toFixed(1)}M`;
+  }
+  if (numAmount >= 1000) {
+    return `${(numAmount / 1000).toFixed(1)}K`;
+  }
+  return numAmount.toFixed(2);
 };
 
 const formatFullAmount = (amount: number): string => {
@@ -33,18 +42,28 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
   const t = useTranslations('money');
 
   const handleClick = () => {
-    if (!children) {
+    if (children == null || isNaN(Number(children))) {
+      return;
+    }
+
+    const numAmount = typeof children === 'number' ? children : parseFloat(String(children));
+    if (isNaN(numAmount)) {
       return;
     }
 
     toast({
       title: t('toast_title'),
-      description: `${formatFullAmount(children)} ₸`,
+      description: `${formatFullAmount(numAmount)} ₸`,
       duration: 3000,
     });
   };
 
-  if (!children) {
+  if (children == null || isNaN(Number(children))) {
+    return <span>{emptyLabel || '---'}</span>;
+  }
+
+  const numAmount = typeof children === 'number' ? children : parseFloat(String(children));
+  if (isNaN(numAmount)) {
     return <span>{emptyLabel || '---'}</span>;
   }
 
@@ -56,7 +75,7 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
         'font-semibold text-left transition-all duration-200 hover:scale-105 active:scale-95'
       )}
     >
-      {formatMoney(children)} ₸
+      {formatMoney(numAmount)} ₸
     </button>
   );
 }

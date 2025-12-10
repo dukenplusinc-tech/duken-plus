@@ -551,6 +551,50 @@
       "form_label_description": "Description",
       "save_caption": "Add",
       "cancel_caption": "Cancel"
+    },
+    "shifts": {
+      "title": "Shift Management",
+      "shift_closed": "Shift closed",
+      "shift_open": "Shift #{number} is open",
+      "until_closing": "until closing {time}",
+      "open_shift": "Open shift",
+      "close_shift": "Close shift",
+      "add_transfer": "transfer",
+      "statistics": "Statistics",
+      "shift_number": "Shift No.",
+      "date_and_time": "Date and time",
+      "opened": "Opened",
+      "closed": "Closed",
+      "amount": "Amount",
+      "bank_transfer": "BN",
+      "cash": "C",
+      "at": "at",
+      "opened_by": "Opened by",
+      "closed_by": "Closed by",
+      "close_shift_dialog": {
+        "title": "Close shift",
+        "cash_flow_label": "Cash Flow (Current Shift)",
+        "cash_amount_label": "Cash amount at the cash register:",
+        "cash_amount_placeholder": "Enter a valid amount",
+        "by_banks_label": "By banks:",
+        "total_bank_transfer_label": "Total cashless amount:",
+        "error": "Error closing shift",
+        "submit": "Close shift",
+        "cancel": "Cancel"
+      },
+      "add_transfer_modal": {
+        "title": "Add transfer",
+        "additional_label": "Additionally:",
+        "additional_placeholder": "Enter additional information"
+      },
+      "loading": "Loading...",
+      "loading_history": "Loading history...",
+      "loading_transactions": "Loading transactions...",
+      "no_shifts_data": "No shift data",
+      "no_transactions": "No transactions",
+      "shift_not_found": "Shift not found",
+      "transactions": "Transactions",
+      "error_opening_shift": "Error opening shift"
     }
   },
   "chat": {

@@ -1,120 +1,229 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, X, Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import type { DateRange } from 'react-day-picker';
 
-import { DateFilterButton } from '@/lib/composite/filters/ui/date-filter-button';
-import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
+import { toShiftDetail } from '@/lib/url/generator';
+
 import { useAddCashRegisterEntryForm } from '@/lib/entities/cash-desk/containers/add-cash-register-entry';
-import { CashEntriesTabs } from '@/lib/entities/cash-desk/containers/cash-entries-tabs';
-import { useCashDeskStat } from '@/lib/entities/cash-desk/hooks/useCashDeskStat';
-import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
+import { AddTransferModal } from '@/lib/entities/cash-desk/containers/add-transfer-modal';
+import { CloseShiftDialog } from '@/lib/entities/cash-desk/containers/close-shift-dialog';
+import { ShiftDateFilterButton } from '@/lib/entities/cash-desk/containers/shift-date-filter-button';
+import { useCurrentShift } from '@/lib/entities/cash-desk/hooks/useCurrentShift';
+import { useShiftHistory } from '@/lib/entities/cash-desk/hooks/useShiftHistory';
+import { useAddTransferModal } from '@/lib/entities/cash-desk/hooks/useAddTransferModal';
+import { useCloseShiftDialog } from '@/lib/entities/cash-desk/hooks/useCloseShiftDialog';
+import { openShift } from '@/lib/entities/cash-desk/actions/openShift';
+import { ShiftCountdown } from '@/lib/entities/cash-desk/containers/shift-countdown';
+import { ShiftHistoryList } from '@/lib/entities/cash-desk/containers/shift-history-list';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Money } from '@/components/numbers/money';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 export default function CashRegisterPage() {
-  const t = useTranslations('cash_desk.labels');
-  const stats = useCashDeskStat();
+  const router = useRouter();
+  const tShifts = useTranslations('cash_desk.shifts');
   const handleAddTransaction = useAddCashRegisterEntryForm();
+  const transferModal = useAddTransferModal();
+  const closeShiftDialog = useCloseShiftDialog();
+  const { data: currentShift, isLoading: isLoadingShift, refresh: refreshShift } = useCurrentShift();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const { data: historyData, isLoading: isLoadingHistory, refresh: refreshHistory } = useShiftHistory(currentPage, 30, dateRange);
+
+  const handleOpenShift = async () => {
+    try {
+      await openShift();
+      refreshShift();
+      refreshHistory();
+    } catch (error) {
+      console.error('Failed to open shift:', error);
+      alert(error instanceof Error ? error.message : tShifts('error_opening_shift'));
+    }
+  };
+
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleShiftClick = (shift: { shift_id: string | null }) => {
+    if (shift.shift_id) {
+      router.push(toShiftDetail(shift.shift_id));
+    }
+  };
+
+  const isShiftOpen = currentShift && currentShift.status === 'open';
 
   return (
     <main className="flex min-h-screen flex-col">
-      {/* Summary Cards */}
       <div className="p-2">
-        <div className="grid grid-cols-2 gap-2 mb-2">
-          <Card className="bg-primary text-primary-foreground">
-            <CardContent className="p-4">
-              <div className="text-sm opacity-80">{t('cash')}</div>
-              <Money className="text-2xl font-bold">
-                {stats.data?.cash_total}
-              </Money>
-            </CardContent>
-          </Card>
-          <Card className="bg-primary text-primary-foreground">
-            <CardContent className="p-4">
-              <div className="text-sm opacity-80">{t('bank')}</div>
-              <Money className="text-2xl font-bold">
-                {stats.data?.bank_total}
-              </Money>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card className="mb-4">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start sm:items-center flex-col sm:flex-row">
-              <div className="mb-2 sm:mb-0">
-                <div className="text-sm text-muted-foreground">
-                  {t('total')}
-                </div>
-                <Money className="text-3xl font-bold text-primary">
-                  {stats.data?.total_amount}
-                </Money>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  className="border-2 border-primary"
-                  onClick={() =>
-                    handleAddTransaction({ type: CashRegisterType.CASH })
-                  }
-                >
-                  {t('cash')}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-2 border-primary"
-                  onClick={() =>
-                    handleAddTransaction({
-                      type: CashRegisterType.BANK_TRANSFER,
-                    })
-                  }
-                >
-                  <Plus className="mr-1 h-4 w-4" /> {t('transfer')}
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Bank Breakdown */}
-        <Card className="mb-4">
-          <CardContent className="p-4">
-            <h3 className="font-medium mb-2">{t('break_down_by_banks')}:</h3>
-            <div className="space-y-2">
-              {stats.data?.banks
-                ?.filter(({ bank_name }) => bank_name)
-                ?.map((bank) => (
-                  <div
-                    key={bank.bank_name}
-                    className="flex justify-between items-center"
-                  >
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                      <span>{bank.bank_name}</span>
-                    </div>
-                    <Money className="font-medium">{bank.amount}</Money>
+        {/* Current Shift Status */}
+        {!isLoadingShift && (
+          <div className="mb-4">
+            {isShiftOpen ? (
+              <div>
+                <div className="mb-2">
+                  <div className="text-lg font-semibold text-red-600 mb-1">
+                    {tShifts('shift_open', { number: currentShift.shift_number })}
                   </div>
-                ))}
+                  <ShiftCountdown closesAt={currentShift.closes_at} />
+                </div>
+                <div className="flex gap-2 mb-2">
+                  <Button
+                    className="bg-green-600 hover:bg-green-700 text-white h-16 flex-[2] text-base font-semibold"
+                    onClick={transferModal.openModal}
+                  >
+                    <Plus className="mr-2 h-6 w-6" /> {tShifts('add_transfer')}
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    className="h-16 flex-1 flex flex-col items-center justify-center gap-1 text-base font-semibold"
+                    onClick={closeShiftDialog.openDialog}
+                  >
+                    <X className="h-6 w-6" />
+                    <span className="text-xs leading-tight">{tShifts('close_shift')}</span>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="text-lg font-semibold text-red-600 mb-4">
+                  {tShifts('shift_closed')}
+                </div>
+                <Button
+                  className="bg-green-600 hover:bg-green-700 text-white w-full"
+                  onClick={handleOpenShift}
+                >
+                  {tShifts('open_shift')}
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Statistics Section */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-semibold">{tShifts('statistics')}</h2>
+            <div className="flex gap-2">
+              <ShiftDateFilterButton
+                onDateChange={(range) => {
+                  setDateRange(range);
+                  setCurrentPage(1); // Reset to first page when date filter changes
+                }}
+              />
+              <Button
+                variant="default"
+                size="icon"
+                className="bg-primary hover:bg-primary/90 h-[38px] w-[38px]"
+              >
+                <Filter className="h-4 w-4" />
+              </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Closing Shift Notice */}
-        <div className="mb-3 rounded-xl bg-yellow-50 border border-yellow-200 p-2">
-          <p className="text-center text-base font-semibold text-yellow-800">
-            {t('closing_shift_notice')}
-          </p>
+          <div className="mb-4">
+            {isLoadingHistory ? (
+              <div className="text-center py-4">{tShifts('loading_history')}</div>
+            ) : historyData?.shifts && historyData.shifts.length > 0 ? (
+              <>
+                <ShiftHistoryList
+                  shifts={historyData.shifts}
+                  onShiftClick={handleShiftClick}
+                />
+                
+                {/* Pagination */}
+                {historyData.totalPages > 1 && (
+                  <div className="mt-4">
+                    <Pagination>
+                      <PaginationContent>
+                        <PaginationItem>
+                          <PaginationPrevious
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (currentPage > 1) {
+                                handlePageChange(currentPage - 1);
+                              }
+                            }}
+                            className={
+                              currentPage === 1
+                                ? 'pointer-events-none opacity-50'
+                                : 'cursor-pointer'
+                            }
+                          />
+                        </PaginationItem>
+                        {Array.from({ length: historyData.totalPages }, (_, i) => i + 1).map((page) => (
+                          <PaginationItem key={page}>
+                            <PaginationLink
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handlePageChange(page);
+                              }}
+                              isActive={currentPage === page}
+                              className="cursor-pointer"
+                            >
+                              {page}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))}
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (currentPage < historyData.totalPages) {
+                                handlePageChange(currentPage + 1);
+                              }
+                            }}
+                            className={
+                              currentPage === historyData.totalPages
+                                ? 'pointer-events-none opacity-50'
+                                : 'cursor-pointer'
+                            }
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                    </Pagination>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-4 text-muted-foreground">
+                {tShifts('no_shifts_data')}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Search and Filters */}
-        <div className="flex gap-2 mb-4">
-          <SearchBar searchByField="from" sortBy="date" />
-          <DateFilterButton />
-        </div>
+        {/* Add Transfer Modal */}
+        <AddTransferModal
+          open={transferModal.open}
+          onOpenChange={(open) => transferModal.closeModal(open)}
+          type={transferModal.type}
+          onSuccess={transferModal.handleSuccess}
+        />
 
-        <CashEntriesTabs />
+        {/* Close Shift Dialog */}
+        {closeShiftDialog.isShiftOpen && (
+          <CloseShiftDialog
+            open={closeShiftDialog.open}
+            onOpenChange={(open) => closeShiftDialog.closeDialog(open)}
+            shiftId={closeShiftDialog.shiftId}
+            onSuccess={closeShiftDialog.handleSuccess}
+          />
+        )}
       </div>
     </main>
   );

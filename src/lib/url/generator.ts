@@ -84,6 +84,10 @@ export function toCashDesk(): string {
   return `/cash-desk`;
 }
 
+export function toShiftDetail(shiftId: string): string {
+  return `/cash-desk/shifts/${shiftId}`;
+}
+
 export function toNotes(): string {
   return `/notes`;
 }

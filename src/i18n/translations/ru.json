@@ -551,6 +551,50 @@
       "form_label_description": "Описание",
       "save_caption": "Добавить",
       "cancel_caption": "Отмена"
+    },
+    "shifts": {
+      "title": "Управление сменами",
+      "shift_closed": "Смена закрыта",
+      "shift_open": "Смена №{number} открыта",
+      "until_closing": "до закрытия {time}",
+      "open_shift": "Открыть смену",
+      "close_shift": "Закрыть смену",
+      "add_transfer": "перевод",
+      "statistics": "Статистика",
+      "shift_number": "№ смены",
+      "date_and_time": "Дата и время",
+      "opened": "Открытие",
+      "closed": "Закрытие",
+      "amount": "Сумма",
+      "bank_transfer": "БН",
+      "cash": "Н",
+      "at": "в",
+      "opened_by": "Открыл",
+      "closed_by": "Закрыл",
+      "close_shift_dialog": {
+        "title": "Закрыть смену",
+        "cash_flow_label": "Движение наличных (текущая смена)",
+        "cash_amount_label": "Сумма наличных на кассе:",
+        "cash_amount_placeholder": "Введите корректную сумму",
+        "by_banks_label": "По банкам:",
+        "total_bank_transfer_label": "Общая сумма безналичных:",
+        "error": "Ошибка при закрытии смены",
+        "submit": "Закрыть смену",
+        "cancel": "Отмена"
+      },
+      "add_transfer_modal": {
+        "title": "Добавить перевод",
+        "additional_label": "Дополнительно:",
+        "additional_placeholder": "Введите дополнительную информацию"
+      },
+      "loading": "Загрузка...",
+      "loading_history": "Загрузка истории...",
+      "loading_transactions": "Загрузка транзакций...",
+      "no_shifts_data": "Нет данных по сменам",
+      "no_transactions": "Нет транзакций",
+      "shift_not_found": "Смена не найдена",
+      "transactions": "Транзакции",
+      "error_opening_shift": "Ошибка при открытии смены"
     }
   },
   "chat": {

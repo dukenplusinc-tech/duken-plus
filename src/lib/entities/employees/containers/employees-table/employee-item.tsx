@@ -14,7 +14,7 @@ import { ellipsisVertical } from 'ionicons/icons';
 import { useTranslations } from 'next-intl';
 
 import type { Employee } from '@/lib/entities/employees/schema';
-import { useDeleteUser } from '@/lib/entities/users/hooks/useDeleteUser';
+import { useDeleteEmployee } from '@/lib/entities/employees/hooks/useDeleteEmployee';
 import * as fromUrl from '@/lib/url/generator';
 import {
   DropdownButton,
@@ -29,7 +29,7 @@ interface EmployeeItemProps {
 function useDotMenu(id: string): DropDownButtonOption[] {
   const t = useTranslations('datatable.actions');
 
-  const handleRemove = useDeleteUser(id);
+  const handleRemove = useDeleteEmployee(id);
   const router = useRouter();
 
   return useMemo(

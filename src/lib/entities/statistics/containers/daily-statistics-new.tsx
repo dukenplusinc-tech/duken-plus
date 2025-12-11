@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { FiltersProvider } from '@/lib/composite/filters/provider';
+import { useFiltersCtx } from '@/lib/composite/filters/context';
 import { SortButton } from '@/lib/composite/filters/ui/sort-button';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { useDailyStats } from '@/lib/entities/statistics/hooks/useDailyStats';
@@ -13,26 +14,24 @@ import type { DayBreakdown } from '@/lib/entities/statistics/types';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { PageHeader } from '@/components/ui/page/header';
 import { Money } from '@/components/numbers/money';
+import { startOfMonth, getAllDaysInMonth, formatDayLabel } from '@/lib/entities/statistics/utils/date';
 
 // ============================================================================
 // Utility Functions
 // ============================================================================
 
-function startOfMonth(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), 1);
-}
-
 function addMonths(date: Date, months: number) {
   return new Date(date.getFullYear(), date.getMonth() + months, 1);
 }
 
-function formatDayLabel(value: string) {
-  const date = new Date(value);
-  return date.toLocaleDateString('ru-RU', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  });
+function isToday(dateISO: string): boolean {
+  const today = new Date();
+  const date = new Date(dateISO);
+  return (
+    today.getFullYear() === date.getFullYear() &&
+    today.getMonth() === date.getMonth() &&
+    today.getDate() === date.getDate()
+  );
 }
 
 // ============================================================================
@@ -131,6 +130,7 @@ interface DaysListProps {
   days: DayBreakdown[];
   isLoading: boolean;
   totalExpenses: number;
+  monthCursor: Date;
   onSelectDay: (date: string) => void;
 }
 
@@ -138,42 +138,91 @@ function DaysList({
   days,
   isLoading,
   totalExpenses,
+  monthCursor,
   onSelectDay,
 }: DaysListProps) {
   const t = useTranslations('statistics.by_day');
+  const { sorting } = useFiltersCtx();
 
-  if (isLoading) {
-    return <DayListSkeleton />;
-  }
+  // Create a map of days with data for quick lookup
+  const daysMap = useMemo(() => {
+    const map = new Map<string, DayBreakdown>();
+    days.forEach((day) => {
+      map.set(day.date, day);
+    });
+    return map;
+  }, [days]);
 
-  if (days.length === 0) {
-    return (
-      <div className="py-12 text-center text-gray-500">
-        {t('days_list.empty')}
-      </div>
-    );
-  }
+  // Get all days in the month
+  const allDaysInMonth = useMemo(
+    () => getAllDaysInMonth(monthCursor),
+    [monthCursor]
+  );
+
+  // Merge all days with data, creating empty entries for days without data
+  const allDays = useMemo(() => {
+    const merged = allDaysInMonth.map((dateISO) => {
+      const existingDay = daysMap.get(dateISO);
+      if (existingDay) {
+        return existingDay;
+      }
+      // Create empty day breakdown for days without data (including future dates)
+      return {
+        date: dateISO,
+        expensesTotal: 0,
+        deliveriesAmountTotal: 0,
+        deliveriesCount: 0,
+        accepted: [],
+        others: [],
+        consignments: [],
+        expenses: [],
+      };
+    });
+
+    // Apply sorting
+    const sortOption = sorting[0];
+    if (sortOption) {
+      const { id: sortBy, desc } = sortOption;
+      return [...merged].sort((a, b) => {
+        let comparison = 0;
+        if (sortBy === 'date') {
+          comparison = a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+        } else if (sortBy === 'amount') {
+          comparison = a.expensesTotal - b.expensesTotal;
+        }
+        return desc ? -comparison : comparison;
+      });
+    }
+
+    // Default: sort by date descending (newest first)
+    return [...merged].sort((a, b) => (a.date < b.date ? 1 : -1));
+  }, [allDaysInMonth, daysMap, sorting]);
 
   return (
     <>
       <div>
-        {days.map((day) => (
-          <div
-            key={day.date}
-            onClick={() => onSelectDay(day.date)}
-            className="grid grid-cols-2 gap-4 py-4 border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer group"
-          >
-            <div className="text-gray-900 text-base">
-              {formatDayLabel(day.date)}
+        {allDays.map((day) => {
+          const isCurrentDay = isToday(day.date);
+          return (
+            <div
+              key={day.date}
+              onClick={() => onSelectDay(day.date)}
+              className={`grid grid-cols-2 gap-4 py-4 border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer group ${
+                isCurrentDay ? 'bg-blue-50 hover:bg-blue-100' : ''
+              }`}
+            >
+              <div className={`text-base ${isCurrentDay ? 'text-blue-700 font-semibold' : 'text-gray-900'}`}>
+                {formatDayLabel(day.date)}
+              </div>
+              <div className="text-right flex items-center justify-end gap-2">
+                <span className={`font-semibold text-base ${isCurrentDay ? 'text-blue-700' : 'text-gray-900'}`}>
+                  <Money>{day.expensesTotal}</Money>
+                </span>
+                <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+              </div>
             </div>
-            <div className="text-right flex items-center justify-end gap-2">
-              <span className="text-gray-900 font-semibold text-base">
-                <Money>{day.expensesTotal}</Money>
-              </span>
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="grid grid-cols-2 gap-4 py-4 bg-green-100 -mx-4 px-4 mt-0">
@@ -240,6 +289,7 @@ function MonthViewContainer({
           days={days}
           isLoading={isLoading}
           totalExpenses={totals.expenses}
+          monthCursor={monthCursor}
           onSelectDay={onSelectDay}
         />
       </div>

@@ -17,7 +17,10 @@ export async function removeUsers(uid: string | string[]) {
     await supabase.from('profiles').delete().eq('id', id);
     const { error: err2 } = await supabase.auth.admin.deleteUser(id);
 
-    console.log({ err2 });
+    // Ignore error if user doesn't exist in auth (e.g., cashiers/employees)
+    if (err2 && err2.code !== 'user_not_found') {
+      console.log({ err2 });
+    }
   }
 
   return true;

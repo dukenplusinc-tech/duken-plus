@@ -20,9 +20,17 @@ import { DateDisplay } from '@/components/date/date-display';
 import { Menu } from '@/components/navigation/menu';
 
 export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
-  const { showBackButton } = useBackButton();
+  const { showBackButton, backButtonUrl } = useBackButton();
 
   const router = useRouter();
+
+  const handleBackClick = () => {
+    if (backButtonUrl) {
+      router.push(backButtonUrl);
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <>
@@ -33,7 +41,7 @@ export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
             <IonButtons slot="start">
               {showBackButton ? (
                 // Back Button if `showBackButton` is true
-                <IonButton fill="clear" onClick={() => router.back()}>
+                <IonButton fill="clear" onClick={handleBackClick}>
                   <IonIcon slot="icon-only" icon={arrowBack} />
                 </IonButton>
               ) : (

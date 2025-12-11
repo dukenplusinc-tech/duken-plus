@@ -55,5 +55,29 @@ export function getMonthRange(anchor: Date) {
   };
 }
 
+export function getAllDaysInMonth(monthAnchor: Date): string[] {
+  const year = monthAnchor.getFullYear();
+  const month = monthAnchor.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  
+  return Array.from({ length: daysInMonth }, (_, i) => {
+    const day = i + 1;
+    const date = new Date(year, month, day);
+    return toISODate(date);
+  });
+}
+
+export function getPreviousDay(dateISO: string): string | null {
+  const date = new Date(dateISO);
+  date.setDate(date.getDate() - 1);
+  return toISODate(date);
+}
+
+export function getNextDay(dateISO: string): string | null {
+  const date = new Date(dateISO);
+  date.setDate(date.getDate() + 1);
+  return toISODate(date);
+}
+
 
 

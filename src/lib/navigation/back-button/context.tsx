@@ -4,6 +4,8 @@ import { createContext, FC, ReactNode, useContext, useState } from 'react';
 interface BackButtonContextType {
   showBackButton: boolean;
   setShowBackButton: (value: boolean) => void;
+  backButtonUrl: string | null;
+  setBackButtonUrl: (url: string | null) => void;
 }
 
 // Create the context with default values
@@ -25,9 +27,15 @@ export const BackButtonProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [showBackButton, setShowBackButton] = useState(false);
+  const [backButtonUrl, setBackButtonUrl] = useState<string | null>(null);
 
   return (
-    <BackButtonContext.Provider value={{ showBackButton, setShowBackButton }}>
+    <BackButtonContext.Provider value={{ 
+      showBackButton, 
+      setShowBackButton,
+      backButtonUrl,
+      setBackButtonUrl,
+    }}>
       {children}
     </BackButtonContext.Provider>
   );

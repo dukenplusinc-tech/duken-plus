@@ -304,9 +304,10 @@ export function StatsPage() {
                       <p className="text-xs text-muted-foreground">
                         {t(a.subtitle_tkey, {
                           status:
-                            a.subtitle_params?.status &&
-                            t(a.subtitle_params.status as string),
-                          date: a.subtitle_params?.date,
+                            a.subtitle_params?.status
+                              ? t(a.subtitle_params.status as string)
+                              : '',
+                          date: a.subtitle_params?.date || '',
                         })}
                       </p>
                     )}

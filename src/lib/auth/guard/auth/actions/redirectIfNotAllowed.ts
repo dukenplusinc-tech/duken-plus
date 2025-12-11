@@ -4,7 +4,7 @@ import { User } from '@/lib/entities/users/schema';
 import { createClient } from '@/lib/supabase/server';
 
 export async function redirectIfNotAllowed(allowed: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
 

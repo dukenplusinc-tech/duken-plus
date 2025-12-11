@@ -11,7 +11,7 @@ export async function createDelivery(
     'contractor_id' | 'expected_date' | 'amount_expected'
   >
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   if (!values.contractor_id) {
     throw new Error('Missing supplier contractor_id');

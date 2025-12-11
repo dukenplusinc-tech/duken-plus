@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 export default async function EditContractorPage({
   params,
 }: {
-  params: Record<'id' | 'locale', string>;
+  params: Promise<Record<'id' | 'locale', string>>;
 }) {
-  return <DebtorPageForm id={params.id} />;
+  const { id } = await params;
+  return <DebtorPageForm id={id} />;
 }

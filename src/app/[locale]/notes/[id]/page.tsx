@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 export default async function NotesPage({
   params,
 }: {
-  params: Record<'id' | 'locale', string>;
+  params: Promise<Record<'id' | 'locale', string>>;
 }) {
-  return <NoteEdit id={params.id} />;
+  const { id } = await params;
+  return <NoteEdit id={id} />;
 }

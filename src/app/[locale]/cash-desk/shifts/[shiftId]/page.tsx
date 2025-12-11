@@ -10,8 +10,9 @@ export const metadata: Metadata = {
 export default async function ShiftDetailPage({
   params,
 }: {
-  params: Record<'shiftId' | 'locale', string>;
+  params: Promise<Record<'shiftId' | 'locale', string>>;
 }) {
-  return <ShiftDetail shiftId={params.shiftId} />;
+  const { shiftId } = await params;
+  return <ShiftDetail shiftId={shiftId} />;
 }
 

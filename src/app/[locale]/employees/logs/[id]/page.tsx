@@ -12,10 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function EmployeeLogsPage({
-  params: { id },
+  params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   await redirectIfNotAllowed(RoleScope.users);
 
   const profile = await getEmployee(id);

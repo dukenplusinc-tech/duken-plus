@@ -878,7 +878,10 @@
         "pending": "Pending",
         "accepted": "Accepted",
         "due": "Overdue",
-        "canceled": "Canceled"
+        "canceled": "Canceled",
+        "rescheduled": "Rescheduled",
+        "declined": "Declined",
+        "no_action": "No action"
       }
     }
   }

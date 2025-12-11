@@ -5,7 +5,7 @@ import { getShop } from '@/lib/entities/shop/actions/get';
 import { createClient } from '@/lib/supabase/server';
 
 export async function createDebtor(payload: DebtorPayload): Promise<string> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const shop = await getShop();
 

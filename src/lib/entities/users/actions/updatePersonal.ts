@@ -7,7 +7,7 @@ export async function updatePersonal(
   id: string,
   payload: PersonalPayload
 ): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { full_name, email, language } = payload;
 

@@ -1,10 +1,7 @@
-import { createSharedPathnamesNavigation } from 'next-intl/navigation';
+import { Locale } from '@/config/languages';
+import { Link, usePathname, useRouter } from '@/i18n/routing';
 
-import { Locale, locales } from '@/config/languages';
-
-export const { Link, usePathname, useRouter } = createSharedPathnamesNavigation(
-  { locales }
-);
+export { Link, usePathname, useRouter };
 
 export const useChangeLocale = () => {
   const pathname = usePathname();

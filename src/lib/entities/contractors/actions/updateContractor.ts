@@ -7,7 +7,7 @@ export async function updateContractor(
   id: string,
   payload: ContractorPayload
 ): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from('contractors')

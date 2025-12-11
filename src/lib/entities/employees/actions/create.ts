@@ -5,7 +5,7 @@ import { getShopId } from '@/lib/entities/shop/actions/getShopId';
 import { createClient } from '@/lib/supabase/server';
 
 export async function createEmployee(values: CreateEmployee) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const response = await supabase.from('employees').insert({
     full_name: values.full_name,

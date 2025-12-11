@@ -8,7 +8,7 @@ export async function updateExpense(
   id: string,
   values: Partial<Omit<Expense, 'id' | 'shop_id' | 'created_at' | 'date'>>
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from('expenses')

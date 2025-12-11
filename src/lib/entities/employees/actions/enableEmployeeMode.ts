@@ -13,7 +13,7 @@ export async function enableEmployeeMode({
   pin,
 }: EnableEmployeeModeParams) {
   // Initialize the Supabase client using cookies from the request context.
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get the currently authenticated admin user.
   const {

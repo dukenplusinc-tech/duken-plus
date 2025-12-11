@@ -1,5 +1,6 @@
 import { DayDetailPage } from '@/lib/entities/statistics/containers/day-detail-page';
 
-export default function Page({ params }: { params: { date: string } }) {
-    return <DayDetailPage date={params.date} />;
+export default async function Page({ params }: { params: Promise<{ date: string }> }) {
+    const { date } = await params;
+    return <DayDetailPage date={date} />;
 }

@@ -15,7 +15,7 @@ export async function acceptDelivery(
     | 'reschedule_expected_date'
   >
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   let payload: Database['public']['Tables']['deliveries']['Update'] = {};
 

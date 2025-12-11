@@ -11,7 +11,7 @@ export async function removeUsers(uid: string | string[]) {
 
   const ids = Array.isArray(uid) ? uid : [uid];
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   for (const id of ids) {
     await supabase.from('profiles').delete().eq('id', id);

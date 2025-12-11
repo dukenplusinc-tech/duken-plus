@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function isValidAdminPin(pin_code: string) {
   // Initialize the Supabase client using cookies from the request context.
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get the currently authenticated admin user.
   const {

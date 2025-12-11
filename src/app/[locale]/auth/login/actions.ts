@@ -3,7 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 
 export async function login(data: { email: string; password: string }) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
@@ -21,7 +21,7 @@ export async function recoverPassword({
   email: string;
   redirectTo: string;
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,

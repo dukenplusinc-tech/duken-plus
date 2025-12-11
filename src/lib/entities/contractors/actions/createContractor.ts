@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function createContractor(
   payload: ContractorPayload
 ): Promise<string> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const shop = await getShop();
 

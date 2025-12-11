@@ -5,7 +5,7 @@ import type { Shop } from '@/lib/entities/shop/schema';
 import { createClient } from '@/lib/supabase/server';
 
 export async function getShop(): Promise<Shop> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from('shops')

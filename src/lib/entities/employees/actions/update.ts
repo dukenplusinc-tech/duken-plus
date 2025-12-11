@@ -4,7 +4,7 @@ import { CreateEmployee } from '@/lib/entities/employees/schema';
 import { createClient } from '@/lib/supabase/server';
 
 export async function updateEmployee(id: string, values: CreateEmployee) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const response = await supabase
     .from('employees')

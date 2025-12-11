@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function createExpense(
   values: Omit<Expense, 'id' | 'created_at' | 'shop_id'>
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const payload = {
     ...values,

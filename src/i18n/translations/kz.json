@@ -808,6 +808,9 @@
       "status": "Күйі",
       "amounts": "Сома (күтіл./алын.)",
       "total": "Барлығы",
+      "accepted": "Қабылданды",
+      "acceptance_rate": "Қабылдау %",
+      "consignments_open_overdue": "Консиг. ашық/кешіккен",
       "last_delivery": "Соңғы жеткізу"
     },
     "loading": "Жүктелуде…",
@@ -875,7 +878,10 @@
         "pending": "Қабылдауға",
         "accepted": "Қабылданды",
         "due": "Кешіккен",
-        "canceled": "Бас тартылды"
+        "canceled": "Бас тартылды",
+        "rescheduled": "Күннің ауыстырылуы",
+        "declined": "Бас тарту",
+        "no_action": "Әрекет жоқ"
       }
     }
   }

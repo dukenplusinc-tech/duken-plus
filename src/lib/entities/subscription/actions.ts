@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 
 export async function checkSubscription(shop_id: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Check the user's subscription status
   const { data: subscriptionData, error: subscriptionError } = await supabase

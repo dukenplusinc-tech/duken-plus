@@ -1,17 +1,11 @@
 import { type NextRequest } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
-import { defaultLocale, locales } from '@/config/languages';
+const handleI18nRouting = createMiddleware(routing);
 
-const handleI18nRouting = createMiddleware({
-  // A list of all locales that are supported
-  locales,
-  // Used when no locale matches
-  defaultLocale,
-});
-
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const response = handleI18nRouting(request);
 
   const supabase = createServerClient(

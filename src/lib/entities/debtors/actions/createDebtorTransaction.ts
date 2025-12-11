@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function createDebtorTransaction(
   payload: DebtorTransactionPayload
 ): Promise<string> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error, data } = await supabase
     .from('debtor_transactions')

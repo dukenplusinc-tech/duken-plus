@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function createCashRegisterEntry(
   payload: CashRegisterPayload
 ): Promise<string> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const shopId = await getShopId();
 
   // Query for an open shift

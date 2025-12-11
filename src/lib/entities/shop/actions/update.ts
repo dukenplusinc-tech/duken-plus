@@ -5,7 +5,7 @@ import { ShopPayload } from '@/lib/entities/shop/schema';
 import { createClient } from '@/lib/supabase/server';
 
 export async function updateShop(payload: ShopPayload): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from('shops')

@@ -10,10 +10,11 @@ export const metadata: Metadata = {
 };
 
 export default async function EmployeeEditPage({
-  params: { id },
+  params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   await redirectIfNotAllowed(RoleScope.users);
 
   return <EmployeeForm id={id} />;

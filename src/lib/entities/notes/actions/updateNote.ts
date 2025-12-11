@@ -7,7 +7,7 @@ export async function updateNote(
   id: string,
   payload: NotePayload
 ): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase.from('notes').update(payload).eq('id', id);
 

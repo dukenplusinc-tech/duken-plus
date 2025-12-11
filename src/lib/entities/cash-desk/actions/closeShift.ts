@@ -10,7 +10,7 @@ export async function closeShift(
   cashAmount: number,
   closedByName: string | null
 ): Promise<CashShift> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.rpc('close_cash_shift', {
     p_shift_id: shiftId,

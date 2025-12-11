@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import * as fromUrl from '@/lib/url/generator';
 
 export async function redirectIfGuest() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {

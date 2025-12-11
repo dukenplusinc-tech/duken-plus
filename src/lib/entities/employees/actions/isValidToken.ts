@@ -11,7 +11,7 @@ interface Params {
 
 export async function isValidToken({ session_token }: Params) {
   // Initialize the Supabase client using cookies from the request context.
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Get the currently authenticated admin user.
   const {

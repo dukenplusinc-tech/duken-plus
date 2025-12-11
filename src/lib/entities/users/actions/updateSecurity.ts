@@ -10,7 +10,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function updateSecuritySettings(payload: SecurityPayload) {
   await validateUser();
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   if (payload.pin_code) {
     const {

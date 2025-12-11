@@ -7,7 +7,7 @@ export async function updateDebtorTransaction(
   id: string,
   payload: Partial<DebtorTransactionPayload>
 ): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from('debtor_transactions')

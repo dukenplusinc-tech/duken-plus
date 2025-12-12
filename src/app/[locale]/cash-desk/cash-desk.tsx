@@ -18,6 +18,7 @@ import { openShift } from '@/lib/entities/cash-desk/actions/openShift';
 import { useAddedBy } from '@/lib/entities/debtors/hooks/useAddedBy';
 import { ShiftCountdown } from '@/lib/entities/cash-desk/containers/shift-countdown';
 import { ShiftHistoryList } from '@/lib/entities/cash-desk/containers/shift-history-list';
+import { useConfirmAction } from '@/lib/primitives/dialog/confirm/confirm';
 import { Button } from '@/components/ui/button';
 import {
   Pagination,
@@ -51,6 +52,26 @@ export default function CashRegisterPage() {
       alert(error instanceof Error ? error.message : tShifts('error_opening_shift'));
     }
   };
+
+  const confirmOpenShift = useConfirmAction({
+    title: tShifts('confirm_open_shift.title'),
+    description: tShifts('confirm_open_shift.description'),
+    acceptCaption: tShifts('confirm_open_shift.accept'),
+    cancelCaption: tShifts('confirm_open_shift.cancel'),
+    onConfirm: async () => {
+      await handleOpenShift();
+    },
+  });
+
+  const confirmCloseShift = useConfirmAction({
+    title: tShifts('confirm_close_shift.title'),
+    description: tShifts('confirm_close_shift.description'),
+    acceptCaption: tShifts('confirm_close_shift.accept'),
+    cancelCaption: tShifts('confirm_close_shift.cancel'),
+    onConfirm: async () => {
+      openCloseShiftDialog();
+    },
+  });
 
 
   const handlePageChange = (page: number) => {
@@ -89,7 +110,8 @@ export default function CashRegisterPage() {
                   <Button
                     variant="destructive"
                     className="h-16 flex-1 flex flex-col items-center justify-center gap-1 text-base font-semibold"
-                    onClick={openCloseShiftDialog}
+                    onClick={confirmCloseShift.onAction}
+                    disabled={confirmCloseShift.processing}
                   >
                     <X className="h-6 w-6" />
                     <span className="text-xs leading-tight">{tShifts('close_shift')}</span>
@@ -103,7 +125,8 @@ export default function CashRegisterPage() {
                 </div>
                 <Button
                   className="bg-green-600 hover:bg-green-700 text-white w-full"
-                  onClick={handleOpenShift}
+                  onClick={confirmOpenShift.onAction}
+                  disabled={confirmOpenShift.processing}
                 >
                   {tShifts('open_shift')}
                 </Button>

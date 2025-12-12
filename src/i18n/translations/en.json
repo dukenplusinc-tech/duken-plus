@@ -594,7 +594,19 @@
       "no_transactions": "No transactions",
       "shift_not_found": "Shift not found",
       "transactions": "Transactions",
-      "error_opening_shift": "Error opening shift"
+      "error_opening_shift": "Error opening shift",
+      "confirm_open_shift": {
+        "title": "Open shift",
+        "description": "Are you sure you want to open a new shift?",
+        "accept": "Yes, open shift",
+        "cancel": "Cancel"
+      },
+      "confirm_close_shift": {
+        "title": "Close shift",
+        "description": "Are you sure you want to close the current shift?",
+        "accept": "Yes, close shift",
+        "cancel": "Cancel"
+      }
     }
   },
   "chat": {

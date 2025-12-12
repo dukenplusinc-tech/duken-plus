@@ -594,7 +594,19 @@
       "no_transactions": "Нет транзакций",
       "shift_not_found": "Смена не найдена",
       "transactions": "Транзакции",
-      "error_opening_shift": "Ошибка при открытии смены"
+      "error_opening_shift": "Ошибка при открытии смены",
+      "confirm_open_shift": {
+        "title": "Открыть смену",
+        "description": "Вы уверены, что хотите открыть новую смену?",
+        "accept": "Да, открыть смену",
+        "cancel": "Отмена"
+      },
+      "confirm_close_shift": {
+        "title": "Закрыть смену",
+        "description": "Вы уверены, что хотите закрыть текущую смену?",
+        "accept": "Да, закрыть смену",
+        "cancel": "Отмена"
+      }
     }
   },
   "chat": {

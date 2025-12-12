@@ -34,11 +34,11 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
   });
   const { banks } = useBankNames();
 
-  const [selectedBank, setSelectedBank] = useState<string | null>(null);
+  const [selectedBank, setSelectedBank] = useState<string | null>("");
   const [showOtherInput, setShowOtherInput] = useState(false);
 
   useEffect(() => {
-    setSelectedBank(null);
+    setSelectedBank("Kaspi");
     setShowOtherInput(false);
     form.reset();
   }, [form]);

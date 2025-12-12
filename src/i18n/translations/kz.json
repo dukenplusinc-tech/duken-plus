@@ -594,7 +594,19 @@
       "no_transactions": "Транзакциялар жоқ",
       "shift_not_found": "Ауысым табылмады",
       "transactions": "Транзакциялар",
-      "error_opening_shift": "Ауысымды ашу кезінде қате"
+      "error_opening_shift": "Ауысымды ашу кезінде қате",
+      "confirm_open_shift": {
+        "title": "Ауысымды ашу",
+        "description": "Жаңа ауысымды ашқыңыз келетініне сенімдісіз бе?",
+        "accept": "Иә, ауысымды ашу",
+        "cancel": "Бас тарту"
+      },
+      "confirm_close_shift": {
+        "title": "Ауысымды жабу",
+        "description": "Ағымдағы ауысымды жапқыңыз келетініне сенімдісіз бе?",
+        "accept": "Иә, ауысымды жабу",
+        "cancel": "Бас тарту"
+      }
     }
   },
   "chat": {

@@ -52,6 +52,12 @@ export default function TransactionList({
                   <div className="text-sm text-muted-foreground">
                     {t('added_by')}:{' '}
                     <span className="font-bold">{transaction.added_by}</span>
+                    {transaction.date && (
+                      <>
+                        {' • '}
+                        {format(new Date(transaction.date), 'dd.MM.yyyy HH:mm')}
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center">

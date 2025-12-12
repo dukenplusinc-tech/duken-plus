@@ -24,7 +24,6 @@ import {
 
 import { Money } from '@/components/numbers/money';
 import { Period, useShopStats } from '@/lib/entities/statistics/hooks/useStats';
-import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useRouter } from '@/lib/i18n';
@@ -50,8 +49,6 @@ function renderMoney(value: number | null | undefined, className?: string) {
 }
 
 export function StatsPage() {
-  useActivateBackButton();
-
   const t = useTranslations('statistics');
   const tStatus = useTranslations('statistics.delivery.status');
   const router = useRouter();

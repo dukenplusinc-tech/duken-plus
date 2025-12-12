@@ -26,16 +26,6 @@ export const CompaniesTab: FC = () => {
           className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto mt-2 mb-4"
           asChild
         >
-          <Link href={fromUrl.toStatistics()}>
-            <ClipboardList size={28} className="mr-3" />
-            <span className="text-lg">{t('button_stats')}</span>
-          </Link>
-        </Button>
-
-        <Button
-          className="w-full bg-success text-success-foreground py-6 rounded-md flex items-center justify-center h-auto mt-2 mb-4"
-          asChild
-        >
           <Link href={fromUrl.toDeliveries()}>
             <NotebookPen size={28} className="mr-3" />
             <span className="text-lg">{t('button_deliveries_today')}</span>

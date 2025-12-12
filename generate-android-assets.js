@@ -6,6 +6,12 @@ const path = require('path');
 const LOGO_PATH = './resources/logo.jpg';
 const ANDROID_RES_PATH = './android/app/src/main/res';
 
+// Logo padding percentage (can be negative if logo already has padding)
+// Positive: adds padding (e.g., 10 = 10% padding on each side, logo uses 80% of canvas)
+// Zero: logo fills entire canvas
+// Negative: logo is larger than canvas (e.g., -10 = logo uses 110% of canvas, effectively cropping)
+const LOGO_PADDING_PERCENTAGE = 0;
+
 // Android icon sizes (for adaptive icons, foreground should be 108dp safe area)
 // Actual pixel sizes for different densities
 const ICON_SIZES = {
@@ -38,13 +44,14 @@ async function ensureDir(dirPath) {
 }
 
 async function generateIcon(logoBuffer, size, outputPath) {
-  // Regular icons: use 90% of size to leave 5% padding on each side
-  const iconSize = Math.floor(size * 0.8);
-  const padding = Math.floor((size - iconSize) / 2);
+  // Calculate logo size based on padding percentage
+  // If padding is negative, logo will be larger than canvas (will be cropped)
+  const logoSize = Math.floor(size * (1 - LOGO_PADDING_PERCENTAGE / 100));
+  const padding = Math.floor((size - logoSize) / 2);
 
   // Resize logo
   const logoResized = await sharp(logoBuffer)
-    .resize(iconSize, iconSize, {
+    .resize(logoSize, logoSize, {
       fit: 'contain',
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
@@ -69,14 +76,14 @@ async function generateIcon(logoBuffer, size, outputPath) {
     .png()
     .toFile(outputPath);
   console.log(
-    `✓ Generated ${outputPath} (${size}x${size} with ${iconSize}x${iconSize} logo)`
+    `✓ Generated ${outputPath} (${size}x${size} with ${logoSize}x${logoSize} logo, padding: ${LOGO_PADDING_PERCENTAGE}%)`
   );
 }
 
 async function generateRoundIcon(logoBuffer, size, outputPath) {
-  // Round icons: use 90% of size to leave 5% padding on each side
-  const iconSize = Math.floor(size * 0.9);
-  const padding = Math.floor((size - iconSize) / 2);
+  // Calculate logo size based on padding percentage
+  const logoSize = Math.floor(size * (1 - LOGO_PADDING_PERCENTAGE / 100));
+  const padding = Math.floor((size - logoSize) / 2);
 
   // Create a circular mask
   const circularMask = Buffer.from(
@@ -85,7 +92,7 @@ async function generateRoundIcon(logoBuffer, size, outputPath) {
 
   // Resize logo
   const logoResized = await sharp(logoBuffer)
-    .resize(iconSize, iconSize, {
+    .resize(logoSize, logoSize, {
       fit: 'contain',
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
@@ -114,20 +121,22 @@ async function generateRoundIcon(logoBuffer, size, outputPath) {
     .png()
     .toFile(outputPath);
   console.log(
-    `✓ Generated ${outputPath} (${size}x${size} round with ${iconSize}x${iconSize} logo)`
+    `✓ Generated ${outputPath} (${size}x${size} round with ${logoSize}x${logoSize} logo, padding: ${LOGO_PADDING_PERCENTAGE}%)`
   );
 }
 
 async function generateForegroundIcon(logoBuffer, size, outputPath) {
   // Foreground icons should have safe area (66% of size for adaptive icons)
-  // The foreground is 108dp, safe zone is 66dp, so logo should be 66% of foreground size
-  const safeSize = Math.floor(size * 0.66);
+  // The foreground is 108dp, safe zone is 66dp
+  // Apply padding percentage to the safe zone size
+  const safeZoneSize = Math.floor(size * 0.66);
+  const logoSize = Math.floor(safeZoneSize * (1 - LOGO_PADDING_PERCENTAGE / 100));
   const canvasSize = size; // Full size canvas
-  const padding = Math.floor((canvasSize - safeSize) / 2);
+  const padding = Math.floor((canvasSize - logoSize) / 2);
 
-  // Resize logo to safe size
+  // Resize logo
   const logoResized = await sharp(logoBuffer)
-    .resize(safeSize, safeSize, {
+    .resize(logoSize, logoSize, {
       fit: 'contain',
       background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
@@ -152,15 +161,15 @@ async function generateForegroundIcon(logoBuffer, size, outputPath) {
     .png()
     .toFile(outputPath);
   console.log(
-    `✓ Generated ${outputPath} (${canvasSize}x${canvasSize} with ${safeSize}x${safeSize} logo in safe zone)`
+    `✓ Generated ${outputPath} (${canvasSize}x${canvasSize} with ${logoSize}x${logoSize} logo in safe zone, padding: ${LOGO_PADDING_PERCENTAGE}%)`
   );
 }
 
 async function generateSplash(logoBuffer, width, height, outputPath) {
   // Create splash screen with logo centered
-  // Use 15% of smaller dimension (Android recommends icon fits in 192dp circle)
-  // For typical 1080x1920 screen: 192dp ≈ 288px ≈ 15% of 1920px
-  const logoSize = Math.min(width, height) * 0.15;
+  // Calculate logo size based on padding percentage relative to smaller dimension
+  const smallerDimension = Math.min(width, height);
+  const logoSize = Math.floor(smallerDimension * (1 - LOGO_PADDING_PERCENTAGE / 100));
 
   await sharp({
     create: {
@@ -184,7 +193,9 @@ async function generateSplash(logoBuffer, width, height, outputPath) {
     ])
     .png()
     .toFile(outputPath);
-  console.log(`✓ Generated ${outputPath} (${width}x${height})`);
+  console.log(
+    `✓ Generated ${outputPath} (${width}x${height} with ${logoSize}x${logoSize} logo, padding: ${LOGO_PADDING_PERCENTAGE}%)`
+  );
 }
 
 async function main() {

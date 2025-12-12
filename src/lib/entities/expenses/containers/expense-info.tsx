@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useMemo } from 'react';
+import { format, addDays } from 'date-fns';
 import { useQuery } from '@supabase-cache-helpers/postgrest-swr';
 import { useTranslations } from 'next-intl';
 
@@ -39,22 +40,36 @@ export const ExpenseInfo: FC<ExpenseInfoProps> = ({ date }) => {
 
   const deliveries = useMemo(() => deliveriesData || [], [deliveriesData]);
 
-  // ✔ Only accepted deliveries count toward total
+  // Check if the date is tomorrow
+  const isTomorrow = useMemo(() => {
+    const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd');
+    return date === tomorrow;
+  }, [date]);
+
+  // ✔ Only accepted deliveries count toward total (except for tomorrow, where pending also count)
   const acceptedDeliveries = useMemo(
     () => deliveries.filter((d) => d.status === 'accepted'),
     [deliveries]
   );
 
-  const total = useMemo(() => {
-    const expenseSum = expenses.reduce((acc, e) => acc + (e.amount || 0), 0);
+  // For tomorrow, include all deliveries (pending + accepted) in the total
+  const deliveriesForTotal = useMemo(() => {
+    return isTomorrow ? deliveries : acceptedDeliveries;
+  }, [isTomorrow, deliveries, acceptedDeliveries]);
 
-    const deliverySum = acceptedDeliveries.reduce(
+  const total = useMemo(() => {
+    const expenseSum = expenses.reduce(
+      (acc, e) => acc + Number(e.amount || 0),
+      0
+    );
+
+    const deliverySum = deliveriesForTotal.reduce(
       (acc, d) => acc + Number(d.amount_received ?? d.amount_expected ?? 0),
       0
     );
 
     return expenseSum + deliverySum;
-  }, [expenses, acceptedDeliveries]);
+  }, [expenses, deliveriesForTotal]);
 
   const hasExpenses = expenses.length > 0;
   const hasDeliveries = deliveries.length > 0;

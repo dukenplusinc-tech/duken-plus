@@ -193,12 +193,12 @@ export const DeliveriesTable: FC = () => {
           </div>
 
           <div className="text-center mt-4 mb-8">
-            <span className="block text-destructive font-semibold text-base">
+            {/* <span className="block text-destructive font-semibold text-base">
               {t('overdue.summary', { count: overdueData.length })}
             </span>
             <Money className="text-destructive text-xl font-bold">
               {overdueAmount}
-            </Money>
+            </Money> */}
           </div>
         </div>
       )}

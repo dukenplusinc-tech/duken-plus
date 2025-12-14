@@ -290,9 +290,9 @@ export function StatsPage() {
               </div>
             )}
             {!isLoading &&
-              (stats?.attention ?? []).slice(0, 6).map((a) => (
+              (stats?.attention ?? []).slice(0, 6).map((a, idx) => (
                 <div
-                  key={a.id}
+                  key={`${a.id}_${idx}`}
                   className="flex items-start justify-between border rounded-md p-2"
                 >
                   <div className="space-y-0.5">

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { FC, ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 import {
   IonIcon,
   IonTab,
@@ -16,33 +17,35 @@ import { GeneralShopSettings } from '@/lib/entities/shop/containers/general-shop
 
 interface TabItemType {
   id: string;
-  title: string;
+  titleKey: string;
   icon?: string;
   render?: ReactNode;
 }
 
-const tabs: TabItemType[] = [
-  {
-    id: 'general',
-    title: 'General',
-    icon: icons.settingsOutline,
-    render: <GeneralShopSettings />,
-  },
-  {
-    id: 'security',
-    title: 'Security',
-    icon: icons.lockClosedOutline,
-    render: <SecuritySettings />,
-  },
-  {
-    id: 'personal',
-    title: 'Personal',
-    icon: icons.personOutline,
-    render: <PersonalSettings />,
-  },
-];
-
 export const PreferencesTabLayout: FC = () => {
+  const t = useTranslations('settings');
+
+  const tabs: TabItemType[] = [
+    {
+      id: 'general',
+      titleKey: 'general.title',
+      icon: icons.settingsOutline,
+      render: <GeneralShopSettings />,
+    },
+    {
+      id: 'security',
+      titleKey: 'security.title',
+      icon: icons.lockClosedOutline,
+      render: <SecuritySettings />,
+    },
+    {
+      id: 'personal',
+      titleKey: 'personal.title',
+      icon: icons.personOutline,
+      render: <PersonalSettings />,
+    },
+  ];
+
   return (
     <IonTabs>
       {tabs.map((tab) => (
@@ -57,7 +60,7 @@ export const PreferencesTabLayout: FC = () => {
         {tabs.map((tab) => (
           <IonTabButton key={tab.id} tab={tab.id}>
             <IonIcon icon={tab.icon} />
-            {tab.title}
+            {t(tab.titleKey)}
           </IonTabButton>
         ))}
       </IonTabBar>

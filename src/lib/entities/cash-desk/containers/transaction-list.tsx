@@ -55,7 +55,7 @@ export default function TransactionList({
                     {transaction.date && (
                       <>
                         {' • '}
-                        {format(new Date(transaction.date), 'dd.MM.yyyy HH:mm')}
+                        {format(new Date(transaction.date), 'HH:mm')}
                       </>
                     )}
                   </div>

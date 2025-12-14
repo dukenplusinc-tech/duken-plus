@@ -127,7 +127,8 @@ export function useDailyStats(monthAnchor: Date) {
           breakdown.others.push(enriched);
         }
 
-        if (row.is_consignement && row.consignment_status === 'open') {
+        // Include both open and closed consignments
+        if (row.is_consignement) {
           breakdown.consignments.push(enriched);
         }
       });

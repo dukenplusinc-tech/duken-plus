@@ -1,11 +1,9 @@
 'use client';
 
-import { FC, useMemo } from 'react';
-import { format, addDays } from 'date-fns';
-import { useQuery } from '@supabase-cache-helpers/postgrest-swr';
+import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { createClient } from '@/lib/supabase/client';
+import { useExpenseInfo } from '@/lib/entities/expenses/hooks/useExpenseInfo';
 import { Money } from '@/components/numbers/money';
 
 interface ExpenseInfoProps {
@@ -16,60 +14,7 @@ export const ExpenseInfo: FC<ExpenseInfoProps> = ({ date }) => {
   const tRoot = useTranslations();
   const t = useTranslations('expenses.info');
 
-  const supabase = createClient();
-
-  const { data: expensesData = [] } = useQuery(
-    supabase
-      .from('expenses')
-      .select('*')
-      .gte('date', `${date}T00:00:00`)
-      .lt('date', `${date}T23:59:59.999`),
-    { revalidateOnFocus: false }
-  );
-
-  const expenses = useMemo(() => expensesData || [], [expensesData]);
-
-  const { data: deliveriesData = [] } = useQuery(
-    supabase
-      .from('deliveries')
-      .select('*, contractors ( title )')
-      .in('status', ['pending', 'accepted'])
-      .eq('expected_date', date),
-    { revalidateOnFocus: false }
-  );
-
-  const deliveries = useMemo(() => deliveriesData || [], [deliveriesData]);
-
-  // Check if the date is tomorrow
-  const isTomorrow = useMemo(() => {
-    const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd');
-    return date === tomorrow;
-  }, [date]);
-
-  // ✔ Only accepted deliveries count toward total (except for tomorrow, where pending also count)
-  const acceptedDeliveries = useMemo(
-    () => deliveries.filter((d) => d.status === 'accepted'),
-    [deliveries]
-  );
-
-  // For tomorrow, include all deliveries (pending + accepted) in the total
-  const deliveriesForTotal = useMemo(() => {
-    return isTomorrow ? deliveries : acceptedDeliveries;
-  }, [isTomorrow, deliveries, acceptedDeliveries]);
-
-  const total = useMemo(() => {
-    const expenseSum = expenses.reduce(
-      (acc, e) => acc + Number(e.amount || 0),
-      0
-    );
-
-    const deliverySum = deliveriesForTotal.reduce(
-      (acc, d) => acc + Number(d.amount_received ?? d.amount_expected ?? 0),
-      0
-    );
-
-    return expenseSum + deliverySum;
-  }, [expenses, deliveriesForTotal]);
+  const { expenses, deliveries, total, getDeliveryAmount } = useExpenseInfo(date);
 
   const hasExpenses = expenses.length > 0;
   const hasDeliveries = deliveries.length > 0;
@@ -108,7 +53,7 @@ export const ExpenseInfo: FC<ExpenseInfoProps> = ({ date }) => {
                     d.status === 'pending' ? 'text-destructive font-bold' : ''
                   }
                 >
-                  {d.amount_expected}
+                  {getDeliveryAmount(d)}
                 </Money>
               </li>
             ))}

@@ -15,8 +15,8 @@ import { useModalDialog } from '@/lib/primitives/modal/hooks';
 
 async function refresh() {
   await Promise.all([
-    mutate(['todayDeliveriesList', false]),
-    mutate(['todayDeliveriesList', true]),
+    mutate(['todayDeliveriesList']),
+    mutate(['overdueDeliveriesList']),
   ]);
 }
 
@@ -27,6 +27,8 @@ export function useAcceptDeliveryForm({
   id: string;
   defaultAmount: number;
 }) {
+  const t = useTranslations('delivery_accept.form');
+
   return useForm<typeof acceptDeliveryFormSchema, AcceptDeliveryFormValues>({
     defaultValues: {
       amount_received: defaultAmount,
@@ -40,6 +42,10 @@ export function useAcceptDeliveryForm({
       await acceptDelivery(id, values);
 
       await refresh();
+    },
+    successMessage: {
+      title: t('success.title'),
+      description: t('success.description'),
     },
   });
 }

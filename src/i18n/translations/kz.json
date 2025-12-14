@@ -662,7 +662,11 @@
       "label_new_expected_date": "Жаңа күтілетін жеткізу күні",
       "decline": "Бас тарту",
       "cancel": "Болдырмау",
-      "submit": "Сақтау"
+      "submit": "Қабылдау",
+      "success": {
+        "title": "✅ Жеткізу қабылданды",
+        "description": "Жеткізу сәтті қабылданды"
+      }
     }
   },
   "consignment": {

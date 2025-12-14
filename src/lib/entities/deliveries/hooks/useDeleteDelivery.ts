@@ -24,9 +24,11 @@ export function useDeleteDelivery(id?: string, nextRoute?: string) {
         throw new Error('Ошибка при удалении доставки');
       }
 
-      // Revalidate SWR list
-      await mutate(['todayDeliveriesList', false]);
-      await mutate(['todayDeliveriesList', true]);
+      // Revalidate SWR lists
+      await Promise.all([
+        mutate(['todayDeliveriesList']),
+        mutate(['overdueDeliveriesList']),
+      ]);
 
       if (nextRoute) {
         router.push(nextRoute);

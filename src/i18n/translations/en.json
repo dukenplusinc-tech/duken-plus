@@ -662,7 +662,11 @@
       "label_new_expected_date": "New expected delivery date",
       "decline": "Decline",
       "cancel": "Cancel",
-      "submit": "Save"
+      "submit": "Accept",
+      "success": {
+        "title": "✅ Delivery accepted",
+        "description": "The delivery has been successfully accepted"
+      }
     }
   },
   "consignment": {

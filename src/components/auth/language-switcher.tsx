@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useLocale } from 'next-intl';
 import { Globe } from 'lucide-react';
 
-import { languages } from '@/config/languages';
+import { languages, Locale } from '@/config/languages';
 import { useChangeLocale } from '@/lib/i18n';
 import {
   Select,
@@ -29,7 +29,7 @@ export const LanguageSwitcher: FC<LanguageSwitcherProps> = ({ className }) => {
       <Select
         value={locale}
         onValueChange={(value) => {
-          changeLocale(value as typeof locale);
+          changeLocale(value as Locale);
         }}
       >
         <SelectTrigger className="w-full sm:w-auto min-w-[140px] h-9 relative z-50">

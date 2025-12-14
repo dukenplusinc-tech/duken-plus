@@ -6,6 +6,10 @@ const path = require('path');
 const LOGO_PATH = './resources/logo.jpg';
 const ANDROID_RES_PATH = './android/app/src/main/res';
 
+// Canvas background color (RGB format)
+// Default: #054050
+const CANVAS_BACKGROUND = { r: 5, g: 64, b: 80, alpha: 1 };
+
 // Logo padding percentage (can be negative if logo already has padding)
 // Positive: adds padding (e.g., 10 = 10% padding on each side, logo uses 80% of canvas)
 // Zero: logo fills entire canvas
@@ -57,13 +61,13 @@ async function generateIcon(logoBuffer, size, outputPath) {
     })
     .toBuffer();
 
-  // Create square canvas with white background and place logo in center
+  // Create square canvas with background color and place logo in center
   await sharp({
     create: {
       width: size,
       height: size,
       channels: 4,
-      background: { r: 255, g: 255, b: 255, alpha: 1 },
+      background: CANVAS_BACKGROUND,
     },
   })
     .composite([
@@ -98,13 +102,13 @@ async function generateRoundIcon(logoBuffer, size, outputPath) {
     })
     .toBuffer();
 
-  // Create full-size canvas with white background, place logo in center, then apply circular mask
+  // Create full-size canvas with background color, place logo in center, then apply circular mask
   await sharp({
     create: {
       width: size,
       height: size,
       channels: 4,
-      background: { r: 255, g: 255, b: 255, alpha: 1 },
+      background: CANVAS_BACKGROUND,
     },
   })
     .composite([
@@ -176,7 +180,7 @@ async function generateSplash(logoBuffer, width, height, outputPath) {
       width,
       height,
       channels: 4,
-      background: { r: 255, g: 255, b: 255, alpha: 1 },
+      background: CANVAS_BACKGROUND,
     },
   })
     .composite([

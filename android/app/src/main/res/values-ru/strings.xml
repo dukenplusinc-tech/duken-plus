@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Duken Plus</string>
+    <string name="title_activity_main">Duken Plus</string>
+    <string name="package_name">app.vercel.bekbo.shop</string>
+    <string name="custom_url_scheme">app.vercel.bekbo.shop</string>
+    
+    <!-- Offline Screen Strings -->
+    <string name="offline_title">Нет подключения</string>
+    <string name="offline_message">Проверьте подключение к интернету и попробуйте снова.</string>
+    <string name="offline_refresh">Обновить</string>
+    <string name="offline_icon_description">Иконка отсутствия подключения</string>
+    <string name="offline_checking">Проверка подключения…</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Duken Plus</string>
+    <string name="title_activity_main">Duken Plus</string>
+    <string name="package_name">app.vercel.bekbo.shop</string>
+    <string name="custom_url_scheme">app.vercel.bekbo.shop</string>
+    
+    <!-- Offline Screen Strings -->
+    <string name="offline_title">Байланыс жоқ</string>
+    <string name="offline_message">Интернет байланысын тексеріп, қайталап көріңіз.</string>
+    <string name="offline_refresh">Жаңарту</string>
+    <string name="offline_icon_description">Байланыс жоқ белгісі</string>
+    <string name="offline_checking">Байланысты тексеру…</string>
+</resources>

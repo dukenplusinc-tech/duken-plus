@@ -4,4 +4,11 @@
     <string name="title_activity_main">Duken Plus</string>
     <string name="package_name">app.vercel.bekbo.shop</string>
     <string name="custom_url_scheme">app.vercel.bekbo.shop</string>
+    
+    <!-- Offline Screen Strings -->
+    <string name="offline_title">No Connection</string>
+    <string name="offline_message">Please check your internet connection and try again.</string>
+    <string name="offline_refresh">Refresh</string>
+    <string name="offline_icon_description">No connection icon</string>
+    <string name="offline_checking">Checking connection…</string>
 </resources>

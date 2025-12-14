@@ -73,10 +73,13 @@ export const LoginForm: FC = () => {
       : 'submit_continue';
 
   return (
-    <>
-      <form className="grid gap-4" onSubmit={handleSubmit}>
-        <div className="grid gap-2">
-          <Label htmlFor="email">{t('form_label_email')}</Label>
+    <div className="space-y-6">
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        {/* Email Field */}
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-sm font-medium">
+            {t('form_label_email')}
+          </Label>
           <Input
             id="email"
             type="email"
@@ -84,17 +87,23 @@ export const LoginForm: FC = () => {
             required
             placeholder={t('form_placeholder_email')}
             disabled={isLoading}
+            className="h-11 text-base sm:h-10 sm:text-sm"
+            autoComplete="email"
+            autoFocus
           />
         </div>
 
+        {/* Password Field - Only in login mode */}
         {isLoginMode && (
-          <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">{t('form_label_password')}</Label>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password" className="text-sm font-medium">
+                {t('form_label_password')}
+              </Label>
               <Button
                 type="button"
                 variant="link"
-                className="ml-auto inline-block text-sm underline"
+                className="h-auto p-0 text-xs sm:text-sm text-primary hover:text-primary/80"
                 onClick={() => {
                   setMode('password-recover');
                 }}
@@ -109,15 +118,18 @@ export const LoginForm: FC = () => {
               required
               placeholder={t('form_placeholder_password')}
               disabled={isLoading}
+              className="h-11 text-base sm:h-10 sm:text-sm"
+              autoComplete="current-password"
             />
           </div>
         )}
 
+        {/* Error Alert */}
         {error && (
-          <Alert variant="destructive" className="mt-2">
+          <Alert variant="destructive" className="mt-1">
             <TriangleAlertIcon className="h-4 w-4" />
-            <AlertTitle>{error}</AlertTitle>
-            <AlertDescription>
+            <AlertTitle className="text-sm">{error}</AlertTitle>
+            <AlertDescription className="text-xs">
               {mode === 'login'
                 ? t('alert.login.description')
                 : t('alert.recover.description')}
@@ -125,35 +137,48 @@ export const LoginForm: FC = () => {
           </Alert>
         )}
 
-        <Button type="submit" className="w-full" loading={isLoading}>
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          className="w-full h-11 text-base font-semibold sm:h-10 sm:text-sm"
+          loading={isLoading}
+          size="lg"
+        >
           {t(submitCaption)}
         </Button>
       </form>
 
-      {isLoginMode && (
-        <div className="mt-4 text-center text-sm">
-          {t('dont_have_account_label')}{' '}
-          <Link href="#" className="underline" prefetch={false}>
-            {t('signup_label')}
-          </Link>
-        </div>
-      )}
+      {/* Footer Links */}
+      <div className="space-y-3 pt-2 border-t">
+        {isLoginMode && (
+          <div className="text-center text-sm text-muted-foreground">
+            {t('dont_have_account_label')}{' '}
+            <Link
+              href="#"
+              className="font-medium text-primary hover:text-primary/80 underline-offset-4 hover:underline"
+              prefetch={false}
+            >
+              {t('signup_label')}
+            </Link>
+          </div>
+        )}
 
-      {isPassRecover && (
-        <div className="mt-4 text-center text-sm">
-          {t('recover.title')}
-          <Button
-            type="button"
-            variant="link"
-            className="ml-auto inline-block text-sm underline"
-            onClick={() => {
-              setMode('login');
-            }}
-          >
-            {t('recover.btn_caption')}
-          </Button>
-        </div>
-      )}
-    </>
+        {isPassRecover && (
+          <div className="text-center text-sm text-muted-foreground">
+            {t('recover.title')}{' '}
+            <Button
+              type="button"
+              variant="link"
+              className="h-auto p-0 font-medium text-primary hover:text-primary/80 underline-offset-4 hover:underline"
+              onClick={() => {
+                setMode('login');
+              }}
+            >
+              {t('recover.btn_caption')}
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };

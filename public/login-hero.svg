@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" fill="none">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e9ecef;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dee2e6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.15" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative circles - using percentage of viewBox for responsive positioning -->
+  <circle cx="192" cy="216" r="230" fill="url(#primaryGradient)" opacity="0.6"/>
+  <circle cx="1728" cy="270" r="288" fill="url(#accentGradient)" opacity="0.5"/>
+  <circle cx="1536" cy="864" r="230" fill="url(#primaryGradient)" opacity="0.4"/>
+  <circle cx="288" cy="756" r="154" fill="url(#accentGradient)" opacity="0.3"/>
+  <circle cx="960" cy="540" r="115" fill="url(#primaryGradient)" opacity="0.2"/>
+  
+  <!-- Shopping bag icon - positioned in center-right area -->
+  <g transform="translate(1200, 400)">
+    <path d="M200 100L150 50H50C22.3858 50 0 72.3858 0 100V350C0 377.614 22.3858 400 50 400H350C377.614 400 400 377.614 400 350V100C400 72.3858 377.614 50 350 50H250L200 100Z" fill="none" stroke="hsl(var(--primary))" stroke-width="8" opacity="0.3"/>
+    <path d="M100 150V300" stroke="hsl(var(--primary))" stroke-width="6" opacity="0.3"/>
+    <path d="M200 150V300" stroke="hsl(var(--primary))" stroke-width="6" opacity="0.3"/>
+    <path d="M300 150V300" stroke="hsl(var(--primary))" stroke-width="6" opacity="0.3"/>
+  </g>
+  
+  <!-- Cash register / POS icon - positioned in center-left area -->
+  <g transform="translate(600, 500)">
+    <rect x="0" y="0" width="400" height="300" rx="20" fill="none" stroke="hsl(var(--primary))" stroke-width="8" opacity="0.25"/>
+    <rect x="50" y="50" width="300" height="150" rx="10" fill="hsl(var(--primary))" opacity="0.1"/>
+    <rect x="50" y="220" width="80" height="50" rx="8" fill="hsl(var(--success))" opacity="0.2"/>
+    <rect x="150" y="220" width="80" height="50" rx="8" fill="hsl(var(--primary))" opacity="0.2"/>
+    <rect x="250" y="220" width="80" height="50" rx="8" fill="hsl(var(--primary))" opacity="0.2"/>
+    <circle cx="350" cy="245" r="15" fill="hsl(var(--success))" opacity="0.3"/>
+  </g>
+  
+  <!-- Chart/analytics icon - positioned in bottom-right area -->
+  <g transform="translate(1400, 600)">
+    <path d="M0 200L80 150L160 180L240 100L320 120L400 80" stroke="hsl(var(--primary))" stroke-width="12" fill="none" opacity="0.25" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="0" cy="200" r="8" fill="hsl(var(--primary))" opacity="0.3"/>
+    <circle cx="80" cy="150" r="8" fill="hsl(var(--primary))" opacity="0.3"/>
+    <circle cx="160" cy="180" r="8" fill="hsl(var(--primary))" opacity="0.3"/>
+    <circle cx="240" cy="100" r="8" fill="hsl(var(--primary))" opacity="0.3"/>
+    <circle cx="320" cy="120" r="8" fill="hsl(var(--primary))" opacity="0.3"/>
+    <circle cx="400" cy="80" r="8" fill="hsl(var(--primary))" opacity="0.3"/>
+  </g>
+  
+  <!-- Receipt icon - positioned in bottom-left area -->
+  <g transform="translate(300, 600)">
+    <rect x="0" y="0" width="250" height="350" rx="8" fill="none" stroke="hsl(var(--primary))" stroke-width="6" opacity="0.2"/>
+    <line x1="20" y1="50" x2="230" y2="50" stroke="hsl(var(--primary))" stroke-width="4" opacity="0.2"/>
+    <line x1="20" y1="100" x2="200" y2="100" stroke="hsl(var(--primary))" stroke-width="3" opacity="0.15"/>
+    <line x1="20" y1="150" x2="180" y2="150" stroke="hsl(var(--primary))" stroke-width="3" opacity="0.15"/>
+    <line x1="20" y1="200" x2="230" y2="200" stroke="hsl(var(--primary))" stroke-width="4" opacity="0.2"/>
+    <line x1="20" y1="250" x2="150" y2="250" stroke="hsl(var(--primary))" stroke-width="3" opacity="0.15"/>
+    <line x1="20" y1="300" x2="200" y2="300" stroke="hsl(var(--primary))" stroke-width="3" opacity="0.15"/>
+  </g>
+  
+  <!-- Grid pattern overlay -->
+  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="hsl(var(--muted))" stroke-width="1" opacity="0.1"/>
+  </pattern>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+</svg>

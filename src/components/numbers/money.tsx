@@ -47,7 +47,7 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
     }
 
     const numAmount = typeof children === 'number' ? children : parseFloat(String(children));
-    if (isNaN(numAmount)) {
+    if (isNaN(numAmount) || numAmount <= 0) {
       return;
     }
 

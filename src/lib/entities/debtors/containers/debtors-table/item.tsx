@@ -31,7 +31,7 @@ export const DebtorItem: FC<DebtorItemProps> = ({ debtor }) => {
     <IonItem
       key={debtor.id}
       color={color}
-      onClick={() => handleAddTransactionRecord()}
+      onClick={() => handleAddTransactionRecord(debtor.balance)}
     >
       <IonLabel>
         <span className="text-black">{debtor.full_name || '---'}</span>

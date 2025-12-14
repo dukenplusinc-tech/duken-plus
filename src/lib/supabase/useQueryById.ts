@@ -38,7 +38,13 @@ export function useQueryById<T extends unknown>(
   );
 
   return useMemo(() => {
-    const result = schema && data ? schema.parse(data) : data;
+    let result = data;
+    
+    if (schema && data) {
+      const parseResult = schema.safeParse(data);
+      // If validation fails, ignore the error and return the original data
+      result = parseResult.success ? parseResult.data : data;
+    }
 
     return {
       count,

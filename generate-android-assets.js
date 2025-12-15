@@ -3,7 +3,7 @@ const { mkdir, writeFile } = require('fs/promises');
 const { existsSync } = require('fs');
 const path = require('path');
 
-const LOGO_PATH = './resources/logo.jpg';
+const LOGO_PATH = './resources/logo.png';
 const ANDROID_RES_PATH = './android/app/src/main/res';
 
 // Canvas background color (RGB format)

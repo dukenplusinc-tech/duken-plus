@@ -55,7 +55,10 @@ export const EntityImageBtn: React.FC<EntityImageBtnProps> = ({
     }
 
     return (
-      <span className="inline-block">
+      <span 
+        className="inline-block cursor-pointer hover:opacity-80 transition-opacity"
+        onClick={() => imageViewer.openViewer(imageUrl)}
+      >
         <Image width={100} height={100} src={imageUrl} alt="signature" />
       </span>
     );

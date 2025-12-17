@@ -8,6 +8,7 @@ import {
 import { X } from 'lucide-react';
 
 import { InternalImageViewerProvider, useImageViewer } from './context';
+import { DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 const ImageViewer: React.FC = () => {
   const { isOpen, imageUrl, closeViewer } = useImageViewer();
@@ -21,6 +22,10 @@ const ImageViewer: React.FC = () => {
         <div id="image-viewer-container" className="fixed inset-0 z-[1100]">
           <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50" />
           <DialogContent className="fixed inset-0 flex items-center justify-center">
+            <DialogTitle className="sr-only">Image Preview</DialogTitle>
+            <DialogDescription className="sr-only">
+              Full screen image viewer. Press escape or click the close button to exit.
+            </DialogDescription>
             <div className="relative w-auto max-w-4xl">
               <button
                 className="absolute top-2 right-2 bg-primary text-white p-2 rounded-xl hover:bg-primary/80"

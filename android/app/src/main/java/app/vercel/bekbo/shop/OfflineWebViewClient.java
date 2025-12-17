@@ -10,11 +10,9 @@ import android.webkit.WebViewClient;
 
 public class OfflineWebViewClient extends WebViewClient {
     private final MainActivity activity;
-    private final String serverUrl;
-    
-    public OfflineWebViewClient(MainActivity activity, String serverUrl) {
+
+    public OfflineWebViewClient(MainActivity activity) {
         this.activity = activity;
-        this.serverUrl = serverUrl;
     }
     
     @Override

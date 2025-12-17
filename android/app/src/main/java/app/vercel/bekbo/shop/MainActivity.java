@@ -255,7 +255,7 @@ public class MainActivity extends BridgeActivity {
     private void setupWebViewClient() {
         webView = getBridge().getWebView();
         if (webView != null) {
-            webView.setWebViewClient(new OfflineWebViewClient(this, serverUrl));
+            webView.setWebViewClient(new OfflineWebViewClient(this));
         }
     }
     

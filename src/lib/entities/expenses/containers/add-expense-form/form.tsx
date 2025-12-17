@@ -40,6 +40,7 @@ export const ExpenseForm: FC<ExpenseFormProps> = ({ id }) => {
             customValueMessage={(val) =>
               `${t('label_type_search_add')}: \"${val}\"`
             }
+            cancelButtonText={t('cancel')}
           />
         </IonItem>
 

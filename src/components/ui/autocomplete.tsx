@@ -57,6 +57,7 @@ interface AutocompleteProps {
     option: string | AutocompleteOption,
     isSelected: boolean
   ) => React.ReactNode;
+  cancelButtonText?: string;
 }
 
 const defaultCustomValueMessage: AutocompleteProps['customValueMessage'] = (
@@ -89,6 +90,7 @@ export function Autocomplete({
   customValueMessage: propsCustomValueMessage,
   filterFn,
   renderOption,
+  cancelButtonText = 'Cancel',
 }: AutocompleteProps) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -274,7 +276,7 @@ export function Autocomplete({
                     className="w-full h-12"
                     onClick={() => setOpen(false)}
                   >
-                    Cancel
+                    {cancelButtonText}
                   </Button>
                 </div>
               </div>

@@ -21,6 +21,7 @@ export const BankSelect: FC<BankSelectProps> = ({
 }) => {
   const { banks } = useBankNames();
   const t = useTranslations('cash_desk.form');
+  const tDialog = useTranslations('dialog');
 
   const handleSetBank = (bankName: string) => () => onChange(bankName);
 
@@ -48,6 +49,7 @@ export const BankSelect: FC<BankSelectProps> = ({
         emptyMessage={t('form_label_bank_empty')}
         allowCustomValue
         customValueMessage={(val) => `${t('form_label_bank_use')} \"${val}\"`}
+        cancelButtonText={tDialog('cancel')}
       />
     </IonItem>
   );

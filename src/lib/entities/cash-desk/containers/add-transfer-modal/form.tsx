@@ -27,6 +27,7 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
 }) => {
   const t = useTranslations('cash_desk.form');
   const tModal = useTranslations('cash_desk.shifts.add_transfer_modal');
+  const tDialog = useTranslations('dialog');
   const dialog = useModalDialog();
   const { refresh: refreshShift } = useCurrentShift();
   const { form, isProcessing, handleSubmit } = useAddCashRegisterEntry({
@@ -162,6 +163,7 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
               emptyMessage={t('form_label_bank_empty')}
               allowCustomValue
               customValueMessage={(val) => `${t('form_label_bank_use')} "${val}"`}
+              cancelButtonText={tDialog('cancel')}
             />
           </div>
         )}

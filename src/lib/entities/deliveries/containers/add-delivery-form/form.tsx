@@ -39,6 +39,7 @@ export const AddDeliveryForm: FC = () => {
             placeholder={t('label_type_placeholder')}
             searchPlaceholder={t('label_type_search_placeholder')}
             emptyMessage={t('label_type_search_empty')}
+            cancelButtonText={t('cancel')}
           />
         </IonItem>
 

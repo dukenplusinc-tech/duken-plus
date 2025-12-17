@@ -58,14 +58,16 @@ export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
           {t('captions_by')} {transaction?.added_by}
         </div>
       )}
-      <DropdownButton
-        button={
-          <IonButton fill="clear">
-            <IonIcon slot="icon-only" icon={ellipsisVertical} />
-          </IonButton>
-        }
-        options={options}
-      />
+      {options.length > 0 && (
+        <DropdownButton
+          button={
+            <IonButton fill="clear">
+              <IonIcon slot="icon-only" icon={ellipsisVertical} />
+            </IonButton>
+          }
+          options={options}
+        />
+      )}
     </IonItem>
   );
 };

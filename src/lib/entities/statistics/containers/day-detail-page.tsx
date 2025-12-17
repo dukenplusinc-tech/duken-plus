@@ -1,33 +1,34 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
-import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
-import { useDailyStats } from '@/lib/entities/statistics/hooks/useDailyStats';
 import { FiltersProvider } from '@/lib/composite/filters/provider';
-import { startOfMonth, getAllDaysInMonth } from '@/lib/entities/statistics/utils/date';
-import { toStatisticsDay, toStatisticsDays } from '@/lib/url/generator';
+import { AcceptedCompaniesSection } from '@/lib/entities/statistics/components/accepted-companies-section';
+import { ConsignmentsSection } from '@/lib/entities/statistics/components/consignments-section';
 import { DayHeader } from '@/lib/entities/statistics/components/day-header';
 import { DayNavigation } from '@/lib/entities/statistics/components/day-navigation';
 import { DaySection } from '@/lib/entities/statistics/components/day-section';
-import { AcceptedCompaniesSection } from '@/lib/entities/statistics/components/accepted-companies-section';
 import { ExpensesSection } from '@/lib/entities/statistics/components/expenses-section';
-import { ConsignmentsSection } from '@/lib/entities/statistics/components/consignments-section';
 import { NotAcceptedSection } from '@/lib/entities/statistics/components/not-accepted-section';
+import { useDailyStats } from '@/lib/entities/statistics/hooks/useDailyStats';
 import type { DayBreakdown } from '@/lib/entities/statistics/types';
+import {
+  getAllDaysInMonth,
+  startOfMonth,
+} from '@/lib/entities/statistics/utils/date';
+import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
+import { toStatisticsDay, toStatisticsDays } from '@/lib/url/generator';
 
 export function DayDetailPage({ date }: { date: string }) {
   const t = useTranslations('statistics.by_day');
   const router = useRouter();
 
-  const backUrl = useMemo(() => toStatisticsDays(), []);
-
-  useActivateBackButton(backUrl);
+  useActivateBackButton(toStatisticsDays());
 
   const monthCursor = useMemo(() => startOfMonth(new Date(date)), [date]);
-  const { days: daysWithData, isLoading } = useDailyStats(monthCursor);
+  const { days: daysWithData } = useDailyStats(monthCursor);
 
   // Get all days in the month
   const allDaysInMonth = useMemo(
@@ -110,7 +111,10 @@ export function DayDetailPage({ date }: { date: string }) {
           </DaySection>
 
           <DaySection title={t('sections.consignments')}>
-            <ConsignmentsSection consignments={selectedDay.consignments} selectedDate={selectedDay.date} />
+            <ConsignmentsSection
+              consignments={selectedDay.consignments}
+              selectedDate={selectedDay.date}
+            />
           </DaySection>
 
           <DaySection title={t('sections.notAccepted')}>

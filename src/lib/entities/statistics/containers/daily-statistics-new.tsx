@@ -5,16 +5,21 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { FiltersProvider } from '@/lib/composite/filters/provider';
 import { useFiltersCtx } from '@/lib/composite/filters/context';
+import { FiltersProvider } from '@/lib/composite/filters/provider';
 import { SortButton } from '@/lib/composite/filters/ui/sort-button';
 import { useShop } from '@/lib/entities/shop/hooks/useShop';
 import { useDailyStats } from '@/lib/entities/statistics/hooks/useDailyStats';
 import type { DayBreakdown } from '@/lib/entities/statistics/types';
+import {
+  formatDayLabel,
+  getAllDaysInMonth,
+  startOfMonth,
+} from '@/lib/entities/statistics/utils/date';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
+import * as fromUrl from '@/lib/url/generator';
 import { PageHeader } from '@/components/ui/page/header';
 import { Money } from '@/components/numbers/money';
-import { startOfMonth, getAllDaysInMonth, formatDayLabel } from '@/lib/entities/statistics/utils/date';
 
 // ============================================================================
 // Utility Functions
@@ -31,28 +36,6 @@ function isToday(dateISO: string): boolean {
     today.getFullYear() === date.getFullYear() &&
     today.getMonth() === date.getMonth() &&
     today.getDate() === date.getDate()
-  );
-}
-
-// ============================================================================
-// Skeleton Components
-// ============================================================================
-
-function DayListSkeleton() {
-  return (
-    <div className="space-y-0">
-      {Array.from({ length: 7 }).map((_, i) => (
-        <div
-          key={i}
-          className="flex items-center justify-between px-4 py-3 border-b border-gray-200 animate-pulse"
-        >
-          <div className="flex-1">
-            <div className="h-4 bg-gray-200 rounded w-32 mb-1" />
-          </div>
-          <div className="h-4 bg-gray-200 rounded w-24" />
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -130,13 +113,15 @@ function MonthNavigation({
 function calculateRealPaidTotal(day: DayBreakdown): number {
   const expenses = day.expensesTotal;
   const acceptedDeliveries = day.accepted.reduce(
-    (sum, delivery) => sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
+    (sum, delivery) =>
+      sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
     0
   );
   const paidConsignments = day.consignments
     .filter((delivery) => delivery.consignment_status === 'closed')
     .reduce(
-      (sum, delivery) => sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
+      (sum, delivery) =>
+        sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
       0
     );
   return expenses + acceptedDeliveries + paidConsignments;
@@ -147,11 +132,13 @@ function calculatePredictedTotal(day: DayBreakdown): number {
   const unpaidConsignments = day.consignments
     .filter((delivery) => delivery.consignment_status !== 'closed')
     .reduce(
-      (sum, delivery) => sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
+      (sum, delivery) =>
+        sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
       0
     );
   const notAcceptedDeliveries = day.others.reduce(
-    (sum, delivery) => sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
+    (sum, delivery) =>
+      sum + (delivery.amount_received ?? delivery.amount_expected ?? 0),
     0
   );
   return unpaidConsignments + notAcceptedDeliveries;
@@ -170,13 +157,7 @@ interface DaysListProps {
   onSelectDay: (date: string) => void;
 }
 
-function DaysList({
-  days,
-  isLoading,
-  totalExpenses,
-  monthCursor,
-  onSelectDay,
-}: DaysListProps) {
+function DaysList({ days, monthCursor, onSelectDay }: DaysListProps) {
   const t = useTranslations('statistics.by_day');
   const { sorting } = useFiltersCtx();
 
@@ -256,12 +237,16 @@ function DaysList({
                 isCurrentDay ? 'bg-blue-50 hover:bg-blue-100' : ''
               }`}
             >
-              <div className={`text-base ${isCurrentDay ? 'text-blue-700 font-semibold' : 'text-gray-900'}`}>
+              <div
+                className={`text-base ${isCurrentDay ? 'text-blue-700 font-semibold' : 'text-gray-900'}`}
+              >
                 {formatDayLabel(day.date)}
               </div>
               <div className="text-right flex items-center justify-end gap-2">
                 <div className="flex flex-col items-end gap-0.5">
-                  <span className={`font-semibold text-base ${isCurrentDay ? 'text-blue-700' : 'text-gray-900'}`}>
+                  <span
+                    className={`font-semibold text-base ${isCurrentDay ? 'text-blue-700' : 'text-gray-900'}`}
+                  >
                     <Money>{calculateRealPaidTotal(day)}</Money>
                   </span>
                   {calculatePredictedTotal(day) > 0 && (
@@ -391,7 +376,8 @@ function useMonthNavigation(shop: any) {
 // ============================================================================
 
 export function DailyStatsPageNew() {
-  useActivateBackButton();
+  useActivateBackButton(fromUrl.toStatistics());
+
   const { data: shop } = useShop();
   const router = useRouter();
 
@@ -404,7 +390,7 @@ export function DailyStatsPageNew() {
   } = useMonthNavigation(shop);
 
   const handleSelectDay = (date: string) => {
-    router.push(`/statistics/days/${date}`);
+    router.push(fromUrl.toStatisticsDay(date));
   };
 
   return (

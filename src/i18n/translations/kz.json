@@ -299,7 +299,26 @@
       "welcome_message": "Қош келдіңіз",
       "select_profile_caption": "Жалғастыру үшін профиліңізді таңдаңыз",
       "enter_pin_for_caption": "{name} үшін PIN-кодты енгізіңіз",
-      "select_profile_label": "Профильді таңдаңыз"
+      "select_profile_label": "Профильді таңдаңыз",
+      "errors": {
+        "title": "Кіру қатесі",
+        "incomplete_pin": "Толық PIN-кодты енгізіңіз",
+        "wrong_pin": "Қате PIN-код. Қайталап көріңіз",
+        "unauthorized": "Авторизацияланбаған. Қайта кіріңіз",
+        "employee_not_found": "Қызметкер табылмады",
+        "failed_to_enable": "Қызметкер режимін іске қосу сәтсіз аяқталды",
+        "generic": "Қате орын алды. Қайталап көріңіз"
+      }
+    },
+    "exit": {
+      "errors": {
+        "title": "Қызметкер режимінен шығу сәтсіз аяқталды",
+        "incomplete_pin": "Толық PIN-кодты енгізіңіз",
+        "wrong_pin": "Қате PIN-код. Қайталап көріңіз",
+        "user_not_found": "Пайдаланушы табылмады",
+        "profile_not_found": "Профиль табылмады",
+        "generic": "Қате орын алды. Қайталап көріңіз"
+      }
     }
   },
   "employee_logs": {

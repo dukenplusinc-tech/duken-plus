@@ -299,7 +299,26 @@
       "welcome_message": "Welcome Back",
       "select_profile_caption": "Please select your profile to continue",
       "enter_pin_for_caption": "Enter PIN for {name}",
-      "select_profile_label": "Select your profile"
+      "select_profile_label": "Select your profile",
+      "errors": {
+        "title": "Failed to login",
+        "incomplete_pin": "Please enter a complete PIN",
+        "wrong_pin": "Wrong PIN code. Please try again",
+        "unauthorized": "Unauthorized. Please log in again",
+        "employee_not_found": "Employee not found",
+        "failed_to_enable": "Failed to enable employee mode",
+        "generic": "An error occurred. Please try again"
+      }
+    },
+    "exit": {
+      "errors": {
+        "title": "Failed to exit employee mode",
+        "incomplete_pin": "Please enter a complete PIN",
+        "wrong_pin": "Wrong PIN code. Please try again",
+        "user_not_found": "User not found",
+        "profile_not_found": "Profile not found",
+        "generic": "An error occurred. Please try again"
+      }
     }
   },
   "employee_logs": {

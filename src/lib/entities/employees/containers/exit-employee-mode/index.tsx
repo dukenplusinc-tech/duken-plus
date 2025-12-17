@@ -2,6 +2,7 @@
 
 import { FC, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { isValidAdminPin } from '@/lib/entities/employees/actions/isValidAdminPin';
 import { PinSection } from '@/lib/entities/employees/containers/employee-mode/PinSection';
@@ -13,6 +14,7 @@ import { toast } from '@/components/ui/use-toast';
 export const ExitEmployeeMode: FC<EmployeeModeProps> = ({ onSuccess }) => {
   const router = useRouter();
   const ctx = useEmployeeCtx();
+  const t = useTranslations('employees.exit');
 
   const [pin, setPin] = useState<string[]>(Array(4).fill(''));
   const [isLoading, setIsLoading] = useState(false);
@@ -38,10 +40,40 @@ export const ExitEmployeeMode: FC<EmployeeModeProps> = ({ onSuccess }) => {
     });
   };
 
+  const getErrorMessage = (error: unknown): string => {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    // Handle specific error messages from the server action
+    if (errorMessage.includes('Wrong PIN')) {
+      return t('errors.wrong_pin');
+    }
+    if (errorMessage.includes('Failed to find current user')) {
+      return t('errors.user_not_found');
+    }
+    if (errorMessage.includes('Failed to find profile')) {
+      return t('errors.profile_not_found');
+    }
+    
+    // Handle Next.js production errors (they contain "Server Components render" or "digest")
+    if (
+      errorMessage.includes('Server Components render') ||
+      errorMessage.includes('digest') ||
+      errorMessage.includes('production builds')
+    ) {
+      return t('errors.generic');
+    }
+    
+    // For other errors, try to show a user-friendly message or fallback to generic
+    return t('errors.generic');
+  };
+
   const handleSubmit = async () => {
     // Basic client-side PIN validation.
     if (pin.some((digit) => digit === '')) {
-      alert('Please enter a complete PIN');
+      toast({
+        variant: 'destructive',
+        title: t('errors.incomplete_pin'),
+      });
       return;
     }
 
@@ -51,7 +83,6 @@ export const ExitEmployeeMode: FC<EmployeeModeProps> = ({ onSuccess }) => {
       const isValid = await isValidAdminPin(pin.join(''));
 
       if (!isValid) {
-        // noinspection ExceptionCaughtLocallyJS
         throw new Error('Wrong PIN');
       }
 
@@ -63,10 +94,11 @@ export const ExitEmployeeMode: FC<EmployeeModeProps> = ({ onSuccess }) => {
 
       router.push(fromUrl.toHome());
     } catch (error) {
+      const errorMessage = getErrorMessage(error);
       toast({
         variant: 'destructive',
-        title: 'Failed to login',
-        description: `${(error as Error)?.message}`,
+        title: t('errors.title'),
+        description: errorMessage,
       });
     } finally {
       setIsLoading(false);

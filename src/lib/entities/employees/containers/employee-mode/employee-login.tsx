@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, PropsWithChildren, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { enableEmployeeMode } from '@/lib/entities/employees/actions/enableEmployeeMode';
 import { useEmployeeCtx } from '@/lib/entities/employees/context';
@@ -16,6 +17,7 @@ export const EmployeeModeLogin: FC<PropsWithChildren<EmployeeModeProps>> = ({
   onSuccess,
 }) => {
   const sessionManager = useEmployeeCtx();
+  const t = useTranslations('employees.login');
 
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>('');
   const [pin, setPin] = useState<string[]>(Array(4).fill(''));
@@ -35,10 +37,43 @@ export const EmployeeModeLogin: FC<PropsWithChildren<EmployeeModeProps>> = ({
     setSelectedEmployeeId('');
   };
 
+  const getErrorMessage = (error: unknown): string => {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    // Handle specific error messages from the server action
+    if (errorMessage.includes('Wrong PIN code')) {
+      return t('errors.wrong_pin');
+    }
+    if (errorMessage.includes('Unauthorized')) {
+      return t('errors.unauthorized');
+    }
+    if (errorMessage.includes('Failed to find employee')) {
+      return t('errors.employee_not_found');
+    }
+    if (errorMessage.includes('Failed to enable employee mode')) {
+      return t('errors.failed_to_enable');
+    }
+    
+    // Handle Next.js production errors (they contain "Server Components render" or "digest")
+    if (
+      errorMessage.includes('Server Components render') ||
+      errorMessage.includes('digest') ||
+      errorMessage.includes('production builds')
+    ) {
+      return t('errors.generic');
+    }
+    
+    // For other errors, try to show a user-friendly message or fallback to generic
+    return t('errors.generic');
+  };
+
   const handleSubmit = async () => {
     // Basic client-side PIN validation.
     if (pin.some((digit) => digit === '')) {
-      alert('Please enter a complete PIN');
+      toast({
+        variant: 'destructive',
+        title: t('errors.incomplete_pin'),
+      });
       return;
     }
     setIsLoading(true);
@@ -49,7 +84,6 @@ export const EmployeeModeLogin: FC<PropsWithChildren<EmployeeModeProps>> = ({
       });
 
       if (!session) {
-        // noinspection ExceptionCaughtLocallyJS
         throw new Error('Failed to enable employee mode');
       }
 
@@ -62,10 +96,11 @@ export const EmployeeModeLogin: FC<PropsWithChildren<EmployeeModeProps>> = ({
         onSuccess();
       }
     } catch (error) {
+      const errorMessage = getErrorMessage(error);
       toast({
         variant: 'destructive',
-        title: 'Failed to login',
-        description: `${(error as Error)?.message}`,
+        title: t('errors.title'),
+        description: errorMessage,
       });
     } finally {
       setIsLoading(false);

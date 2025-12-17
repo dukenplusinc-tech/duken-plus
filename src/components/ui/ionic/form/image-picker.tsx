@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
   IonButton,
@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 
 import { ImagePreview } from '@/lib/composite/files/image-preview';
 import { UploadEntities } from '@/lib/composite/uploads/types';
+import { Progress } from '@/components/ui/progress';
 
 export interface ImagePickerProps {
   entity: UploadEntities;
@@ -22,6 +23,7 @@ export interface ImagePickerProps {
   label?: string;
   onFileSelected?: (file: File) => void;
   onCameraCaptured?: (file: string) => void;
+  uploadProgress?: number | null;
 }
 
 export type FileSelectedHandler = ImagePickerProps['onFileSelected'];
@@ -33,10 +35,37 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   label,
   onFileSelected,
   onCameraCaptured,
+  uploadProgress,
 }) => {
   const t = useTranslations('upload.images');
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [uploadReached100, setUploadReached100] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Clear local preview only after upload actually completes (reaches 100%)
+  // We track when upload reaches 100% and then clear after progress is reset
+  useEffect(() => {
+    // Track when upload reaches 100% (completed)
+    if (uploadProgress && uploadProgress >= 100) {
+      setUploadReached100(true);
+    }
+
+    // Only clear preview if upload reached 100% AND progress is now cleared
+    // This ensures we don't clear during compression (when progress might be null temporarily)
+    if (uploadReached100 && (uploadProgress === null || uploadProgress === 0)) {
+      // Upload completed, clear local preview after a short delay
+      // to ensure server image is ready and SWR cache is invalidated
+      const timeoutId = setTimeout(() => {
+        setImagePreview(null);
+        setUploadReached100(false);
+        // Force ImagePreview to refresh by changing the key
+        setRefreshKey((prev) => prev + 1);
+      }, 600);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [uploadProgress, uploadReached100]);
 
   // Handle camera input
   const takePicture = useCallback(async () => {
@@ -115,9 +144,21 @@ export const ImagePicker: FC<ImagePickerProps> = ({
         )}
 
         {!imagePreview && entity && id && (
-          <ImagePreview entity={entity} id={id} />
+          <ImagePreview key={`${entity}-${id}-${refreshKey}`} entity={entity} id={id} />
         )}
       </div>
+
+      {/* Upload progress bar */}
+      {uploadProgress !== null &&
+        uploadProgress !== undefined &&
+        uploadProgress > 0 && (
+          <div className="w-full mt-2">
+            <Progress value={uploadProgress} className="w-full" />
+            <IonText className="text-xs text-gray-500 mt-1 block text-right">
+              {Math.round(uploadProgress)}%
+            </IonText>
+          </div>
+        )}
     </IonItem>
   );
 };

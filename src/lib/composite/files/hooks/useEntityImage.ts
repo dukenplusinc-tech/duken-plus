@@ -52,6 +52,7 @@ export const useEntityImage = ({ entity, id }: UseEntityImageOptions) => {
     data: imageUrl,
     error,
     isValidating,
+    isLoading,
   } = useSWR(
     id ? `${entity}-${id}` : null, // Key for SWR
     fetchFileReference,
@@ -62,5 +63,8 @@ export const useEntityImage = ({ entity, id }: UseEntityImageOptions) => {
     }
   );
 
-  return { imageUrl, loading: isValidating, isValidating, error };
+  // Loading is true when initially fetching (no data yet) or when revalidating
+  const loading = isLoading || (isValidating && !imageUrl);
+
+  return { imageUrl, loading, isValidating, error };
 };

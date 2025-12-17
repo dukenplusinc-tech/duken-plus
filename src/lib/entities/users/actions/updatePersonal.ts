@@ -9,11 +9,11 @@ export async function updatePersonal(
 ): Promise<void> {
   const supabase = await createClient();
 
-  const { full_name, email, language } = payload;
+  const { full_name, email, phone, language } = payload;
 
   const { error } = await supabase
     .from('profiles')
-    .update({ full_name, language })
+    .update({ full_name, language, phone })
     .eq('id', id);
 
   if (error) {
@@ -22,7 +22,6 @@ export async function updatePersonal(
 
   const { error: userError } = await supabase.auth.updateUser({
     email,
-    // phone: payload.phone || '',
   });
 
   if (userError) {

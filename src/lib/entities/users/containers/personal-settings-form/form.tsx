@@ -16,6 +16,7 @@ import {
 import { useTranslations } from 'next-intl';
 
 import { languages } from '@/config/languages';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { useSignOut } from '@/lib/entities/users/hooks/useSignOut';
 import { useUser } from '@/lib/entities/users/hooks/useUser';
 
@@ -89,19 +90,15 @@ export const PersonalSettingsForm: FC = () => {
           )}
 
           {/* Phone Field */}
-          <IonItem>
-            <IonLabel position="stacked">{t('form_label_phone')}</IonLabel>
-            <IonInput
-              placeholder={t('form_placeholder_phone')}
-              value={form.watch('phone')}
-              onIonInput={(e) => form.setValue('phone', e.detail.value!)}
-            />
-          </IonItem>
-          {form.formState.errors.phone && (
-            <IonLabel color="danger">
-              {form.formState.errors.phone.message}
-            </IonLabel>
-          )}
+          <PhoneInput
+            label={t('form_label_phone')}
+            placeholder={t('form_placeholder_phone')}
+            value={form.watch('phone')}
+            onChange={(value) => form.setValue('phone', value)}
+            disabled={isProcessing}
+            error={form.formState.errors.phone?.message}
+            required={false}
+          />
 
           {/* Language Select Field */}
           <IonItem>

@@ -35,6 +35,23 @@ export function useDebtorForm(id?: string) {
   return useForm<typeof debtorPayloadSchema, DebtorPayload>({
     defaultValues,
     fetcher,
+    setDefaultValues: (key: string, value: any, setValue: (key: string, value: any) => void) => {
+      // Convert numeric fields to numbers
+      if (key === 'balance' || key === 'max_credit_amount') {
+        const numValue =
+          value === null || value === undefined || value === ''
+            ? 0
+            : typeof value === 'string'
+              ? parseFloat(value) || 0
+              : typeof value === 'number'
+                ? value
+                : 0;
+        setValue(key, numValue);
+      } else {
+        // For other fields, preserve the value (including null/undefined)
+        setValue(key, value === null || value === undefined ? '' : value);
+      }
+    },
     request: async (values) => {
       let uploadID = id;
 

@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 import { ImageUploader } from '@/lib/composite/uploads/image-uploader';
 import { SignatureUploader } from '@/lib/composite/uploads/signature-uploader';
 import { UploadEntities } from '@/lib/composite/uploads/types';
+import { PhoneInput } from '@/components/ui/phone-input';
 
 import { useDebtorForm } from './hooks';
 
@@ -31,7 +32,10 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('full_name')}
             disabled={isProcessing}
-            onIonInput={(e) => form.setValue('full_name', e.detail.value!)}
+            onIonInput={(e) => {
+              form.setValue('full_name', e.detail.value!, { shouldValidate: true });
+            }}
+            onIonBlur={() => form.trigger('full_name')}
             placeholder={t('form_label_full_name')}
           />
         </IonItem>
@@ -46,7 +50,11 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('iin')}
             disabled={isProcessing}
-            onIonInput={(e) => form.setValue('iin', e.detail.value!)}
+            maxlength={12}
+            onIonInput={(e) => {
+              form.setValue('iin', e.detail.value!, { shouldValidate: true });
+            }}
+            onIonBlur={() => form.trigger('iin')}
             placeholder={t('form_label_iin')}
           />
         </IonItem>
@@ -56,27 +64,28 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           </IonLabel>
         )}
 
-        <IonItem>
-          <IonLabel position="stacked">{t('form_label_phone')}</IonLabel>
-          <IonInput
-            value={form.watch('phone')}
-            disabled={isProcessing}
-            onIonInput={(e) => form.setValue('phone', e.detail.value!)}
-            placeholder={t('form_label_phone')}
-          />
-        </IonItem>
-        {form.formState.errors.phone && (
-          <IonLabel color="danger">
-            {form.formState.errors.phone.message}
-          </IonLabel>
-        )}
+        <PhoneInput
+          label={t('form_label_phone')}
+          placeholder={t('form_label_phone')}
+          value={form.watch('phone')}
+          onChange={(value) => {
+            form.setValue('phone', value || '', { shouldValidate: true });
+          }}
+          onBlur={() => form.trigger('phone')}
+          disabled={isProcessing}
+          error={form.formState.errors.phone?.message}
+          required={true}
+        />
 
         <IonItem>
           <IonLabel position="stacked">{t('form_label_address')}</IonLabel>
           <IonInput
             value={form.watch('address')}
             disabled={isProcessing}
-            onIonInput={(e) => form.setValue('address', e.detail.value!)}
+            onIonInput={(e) => {
+              form.setValue('address', e.detail.value!, { shouldValidate: true });
+            }}
+            onIonBlur={() => form.trigger('address')}
             placeholder={t('form_label_address')}
           />
         </IonItem>
@@ -93,9 +102,12 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
             step="100"
             value={form.watch('max_credit_amount')}
             disabled={isProcessing}
-            onIonInput={(e) =>
-              form.setValue('max_credit_amount', parseInt(e.detail.value!, 10))
-            }
+            onIonInput={(e) => {
+              form.setValue('max_credit_amount', parseInt(e.detail.value!, 10), {
+                shouldValidate: true,
+              });
+            }}
+            onIonBlur={() => form.trigger('max_credit_amount')}
             placeholder={t('form_label_max_amount')}
           />
         </IonItem>
@@ -110,7 +122,10 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('work_place')}
             disabled={isProcessing}
-            onIonInput={(e) => form.setValue('work_place', e.detail.value!)}
+            onIonInput={(e) => {
+              form.setValue('work_place', e.detail.value!, { shouldValidate: true });
+            }}
+            onIonBlur={() => form.trigger('work_place')}
             placeholder={t('form_label_work_place')}
           />
         </IonItem>
@@ -143,9 +158,12 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonTextarea
             value={form.watch('additional_info')}
             disabled={isProcessing}
-            onIonInput={(e) =>
-              form.setValue('additional_info', e.detail.value!)
-            }
+            onIonInput={(e) => {
+              form.setValue('additional_info', e.detail.value!, {
+                shouldValidate: true,
+              });
+            }}
+            onIonBlur={() => form.trigger('additional_info')}
             placeholder={t('form_label_note_placeholder')}
           />
         </IonItem>

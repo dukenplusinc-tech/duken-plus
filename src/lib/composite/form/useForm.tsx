@@ -14,7 +14,7 @@ import { toast } from '@/components/ui/use-toast';
 interface FormOptions<T, R> {
   schema: T;
   defaultValues: R;
-  setDefaultValues?: (key: string, value: any) => void;
+  setDefaultValues?: (key: string, value: any, setValue: (key: string, value: any) => void) => void;
   request: (values: R) => Promise<any>;
   fetcher?: QueryByIdResult<R>;
   successMessage?: {
@@ -63,6 +63,7 @@ export function useForm<S extends z.ZodTypeAny, R>({
       errorMap: createZodErrorMap(translateFn),
     }),
     defaultValues: defaultValues as never,
+    mode: 'onTouched', // Validate on blur and show errors
   });
 
   const { setValue, formState } = form;
@@ -125,11 +126,30 @@ export function useForm<S extends z.ZodTypeAny, R>({
 
   const setDefaultValuesFn = useMemo(() => {
     if (setDefaultValues) {
-      return setDefaultValues;
+      return (key: string, value: any) => {
+        setDefaultValues(key, value, (k: string, v: any) => {
+          (setValue as any)(k, v);
+        });
+      };
     }
 
     return (key: string, value: any) => {
-      setValue(key as never, value);
+      // Convert numeric fields to numbers if they come as strings
+      if (key === 'balance' || key === 'max_credit_amount') {
+        const numValue =
+          value === null || value === undefined || value === ''
+            ? 0
+            : typeof value === 'string'
+              ? parseFloat(value) || 0
+              : typeof value === 'number'
+                ? value
+                : 0;
+        (setValue as any)(key, numValue);
+      } else {
+        // For other fields, use the value or empty string for falsy values (except 0)
+        const finalValue = value === null || value === undefined ? '' : value;
+        (setValue as any)(key, finalValue);
+      }
     };
   }, [setDefaultValues, setValue]);
 
@@ -145,7 +165,8 @@ export function useForm<S extends z.ZodTypeAny, R>({
         );
 
         keys.forEach((key) => {
-          setDefaultValuesFn(key, (data as any)[key] || '');
+          const rawValue = (data as any)[key];
+          setDefaultValuesFn(key, rawValue);
         });
 
         // prevent next time form fill in

@@ -51,10 +51,26 @@ export const debtorPayloadSchema = z
     params: { i18nKey: 'zod.custom.debtor_iin_invalid' },
   })
   .refine(
-    (data) =>
-      /^(\+?7|8)?[\s\-]?\(?7\d{2}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/.test(
-        data.phone
-      ),
+    (data) => {
+      const phone = data.phone.trim();
+      
+      // Must not be empty or just +7
+      if (!phone || phone === '+7' || phone === '+') {
+        return false;
+      }
+
+      // If starts with +7, validate as Kazakhstan mobile: +7 (7XX) XXX-XX-XX
+      if (phone.startsWith('+7')) {
+        const cleanPhone = phone.replace(/[^\d+]/g, '');
+        // Must be +7 followed by 10 digits, and first digit after +7 should be 7
+        return /^\+7\d{10}$/.test(cleanPhone) && cleanPhone[2] === '7';
+      }
+
+      // For landline numbers (not starting with +7), just check it has some digits
+      // Allow at least 6 digits for landline numbers
+      const digitsOnly = phone.replace(/\D/g, '');
+      return digitsOnly.length >= 6;
+    },
     {
       path: ['phone'],
       params: { i18nKey: 'zod.custom.debtor_phone_invalid' },

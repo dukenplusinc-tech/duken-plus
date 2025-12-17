@@ -274,8 +274,11 @@ export function StatsPage() {
               {t('attention.title')}
             </p>
             <span className="text-xs text-muted-foreground">
-              {isLoading ? '' : (stats?.attention.length ?? 0)}{' '}
-              {t('attention.items_suffix')}
+              {isLoading
+                ? ''
+                : t('attention.items_suffix', {
+                    count: stats?.attention.length ?? 0,
+                  })}
             </span>
           </div>
           <div className="mt-3 space-y-2">

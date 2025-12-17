@@ -374,11 +374,11 @@
       "show_all": "Барлығын көрсету"
     },
     "header": {
-      "firms_total": "ЖАЛПЫ СОММАСЫ БОЙЫНША КОМПАНИЯЛАР"
+      "firms_total": "{count} {count, plural, one {КОМПАНИЯ} other {КОМПАНИЯЛАР}} жалпы сомасы бойынша"
     },
     "footer": {
       "remaining": "Қалғаны",
-      "firms_remaining": "ЖАЛПЫ СОММАСЫ БОЙЫНША КОМПАНИЯЛАР"
+      "firms_remaining": "{count} {count, plural, one {компания} other {компаниялар}} жалпы сомасы бойынша"
     },
     "table": {
       "name": "Атауы",
@@ -391,10 +391,10 @@
       "declined": "Бас тарту"
     },
     "overdue": {
-      "header": "{count} кешіктірілген өтінім",
-      "summary": "Кешіктірілген өтінімдер бойынша {count} компания қарыз",
+      "header": "{count} {count, plural, one {кешіктірілген өтінім} other {кешіктірілген өтінімдер}}",
+      "summary": "Кешіктірілген өтінімдер бойынша {count} {count, plural, one {компания қарыз} other {компаниялар қарыз}}",
       "planned_for": "Қабылдануы тиіс күн:",
-      "days": "{count} күн кешікті",
+      "days": "{count} {count, plural, one {күн кешікті} other {күн кешікті}}",
       "table": {
         "name": "Атауы",
         "amount": "Сомасы",
@@ -727,7 +727,7 @@
       }
     },
     "actions": {
-      "add_firm": "Фирма қосу",
+      "add_firm": "Өтінім қосу",
       "add_expense": "Шығын қосу",
       "calendar": "Күнтізбе"
     },
@@ -799,7 +799,7 @@
     },
     "attention": {
       "title": "Назар аудару қажет",
-      "items_suffix": "элемент",
+      "items_suffix": "{count} {count, plural, one {элемент} other {элементтер}}",
       "empty": "Барлығы жақсы. Шұғыл тапсырма жоқ.",
       "delivery_due_today": {
         "title": "Бүгінгі жеткізу",

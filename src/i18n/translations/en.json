@@ -374,11 +374,11 @@
       "show_all": "Show all"
     },
     "header": {
-      "firms_total": "COMPANIES totaling"
+      "firms_total": "{count} {count, plural, one {COMPANY} other {COMPANIES}} totaling"
     },
     "footer": {
       "remaining": "Remaining",
-      "firms_remaining": "COMPANIES totaling"
+      "firms_remaining": "{count} {count, plural, one {company} other {companies}} totaling"
     },
     "table": {
       "name": "Name",
@@ -391,10 +391,10 @@
       "declined": "Declined"
     },
     "overdue": {
-      "header": "{count} overdue requests",
-      "summary": "{count} companies owe overdue deliveries",
+      "header": "{count} {count, plural, one {overdue request} other {overdue requests}}",
+      "summary": "{count} {count, plural, one {company owes} other {companies owe}} overdue deliveries",
       "planned_for": "Was scheduled for:",
-      "days": "{count} days overdue",
+      "days": "{count} {count, plural, one {day overdue} other {days overdue}}",
       "table": {
         "name": "Name",
         "amount": "Amount",
@@ -727,7 +727,7 @@
       }
     },
     "actions": {
-      "add_firm": "Add Company",
+      "add_firm": "Add Request",
       "add_expense": "Add Expense",
       "calendar": "Calendar"
     },
@@ -799,7 +799,7 @@
     },
     "attention": {
       "title": "Requires attention",
-      "items_suffix": "items",
+      "items_suffix": "{count} {count, plural, one {item} other {items}}",
       "empty": "All good. No urgent tasks.",
       "delivery_due_today": {
         "title": "Delivery due today",

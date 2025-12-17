@@ -4,8 +4,8 @@ import { FC, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { DeliveryActions } from '@/lib/entities/deliveries/containers/deliveries-table/actions';
-import { useTodayDeliveriesList } from '@/lib/entities/deliveries/hooks/useTodayDeliveriesList';
 import { useOverdueDeliveriesList } from '@/lib/entities/deliveries/hooks/useOverdueDeliveriesList';
+import { useTodayDeliveriesList } from '@/lib/entities/deliveries/hooks/useTodayDeliveriesList';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { cn } from '@/lib/utils';
 import { PageHeader, PageSubHeader } from '@/components/ui/page/header';
@@ -15,7 +15,11 @@ import { Money } from '@/components/numbers/money';
 
 const calculateDaysOverdue = (dateString: string) => {
   const today = new Date();
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const todayStart = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
   const expectedDate = new Date(dateString);
   const diffMs = todayStart.getTime() - expectedDate.getTime();
   return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
@@ -26,11 +30,7 @@ export const DeliveriesTable: FC = () => {
 
   useActivateBackButton();
 
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useTodayDeliveriesList();
+  const { data = [], isLoading, error } = useTodayDeliveriesList();
 
   const {
     data: overdueData = [],
@@ -67,7 +67,7 @@ export const DeliveriesTable: FC = () => {
       <PageSubHeader className="mb-4">
         <>
           <span className="block mb-2">
-            <span>{data.length}</span> {t('header.firms_total')}
+            {t('header.firms_total', { count: data.length })}
           </span>
           <Money>{totalAmount}</Money>
         </>
@@ -141,8 +141,8 @@ export const DeliveriesTable: FC = () => {
       {remainingCount > 0 && (
         <div className="mt-4 pb-4 text-l text-center">
           <span className="block mb-2">
-            {t('footer.remaining')} <span>{remainingCount}</span>{' '}
-            {t('footer.firms_remaining')}
+            {t('footer.remaining')}{' '}
+            {t('footer.firms_remaining', { count: remainingCount })}
           </span>
           <Money>{remainingAmount}</Money>
         </div>
@@ -178,7 +178,7 @@ export const DeliveriesTable: FC = () => {
                       </span>
                     </span>
                     <span className="inline-flex mt-2 px-2 py-1 text-xs text-[10px] font-semibold bg-destructive text-white rounded-full whitespace-nowrap">
-                      {t('overdue.days', { count: daysOverdue })}
+                      {t('overdue.days', { count: daysOverdue + 1 })}
                     </span>
                   </div>
 

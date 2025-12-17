@@ -374,11 +374,11 @@
       "show_all": "Показать все"
     },
     "header": {
-      "firms_total": "ФИРМ на сумму"
+      "firms_total": "{count} {count, plural, one {ФИРМА} few {ФИРМЫ} many {ФИРМ} other {ФИРМ}} на сумму"
     },
     "footer": {
       "remaining": "Осталось",
-      "firms_remaining": "ФИРМ на сумму"
+      "firms_remaining": "{count} {count, plural, one {фирма} few {фирмы} many {фирм} other {фирм}} на сумму"
     },
     "table": {
       "name": "Название",
@@ -391,10 +391,10 @@
       "declined": "Отказ"
     },
     "overdue": {
-      "header": "{count} просроченных заявок",
-      "summary": "{count} компаний должны по просроченным заявкам",
+      "header": "{count} {count, plural, one {просроченная заявка} few {просроченные заявки} many {просроченных заявок} other {просроченных заявок}}",
+      "summary": "{count} {count, plural, one {компания должна} few {компании должны} many {компаний должны} other {компаний должны}} по просроченным заявкам",
       "planned_for": "Должны были принять:",
-      "days": "{count} дней просрочки",
+      "days": "{count} {count, plural, one {день просрочки} few {дня просрочки} many {дней просрочки} other {дней просрочки}}",
       "table": {
         "name": "Название",
         "amount": "Сумма",
@@ -727,7 +727,7 @@
       }
     },
     "actions": {
-      "add_firm": "Добавить фирму",
+      "add_firm": "Добавить заявку",
       "add_expense": "Добавить расход",
       "calendar": "Календарь"
     },
@@ -799,7 +799,7 @@
     },
     "attention": {
       "title": "Требует внимания",
-      "items_suffix": "элементов",
+      "items_suffix": "{count} {count, plural, one {элемент} few {элемента} many {элементов} other {элементов}}",
       "empty": "Всё хорошо. Срочных задач нет.",
       "delivery_due_today": {
         "title": "Поставка к приёмке сегодня",

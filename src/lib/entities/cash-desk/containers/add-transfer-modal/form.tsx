@@ -3,21 +3,22 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Autocomplete } from '@/components/ui/autocomplete';
-import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
 import {
   DebtorAddCashRegisterEntryParams,
   useAddCashRegisterEntry,
 } from '@/lib/entities/cash-desk/containers/add-cash-register-entry/hooks';
-import { useCurrentShift } from '@/lib/entities/cash-desk/hooks/useCurrentShift';
 import { useBankNames } from '@/lib/entities/cash-desk/hooks/useBankNames';
+import { useCurrentShift } from '@/lib/entities/cash-desk/hooks/useCurrentShift';
+import { CashRegisterType } from '@/lib/entities/cash-desk/schema';
 import { useModalDialog } from '@/lib/primitives/modal/hooks';
+import { Autocomplete } from '@/components/ui/autocomplete';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
-export interface AddTransferModalProps extends DebtorAddCashRegisterEntryParams {
+export interface AddTransferModalProps
+  extends DebtorAddCashRegisterEntryParams {
   onSuccess?: () => void;
 }
 
@@ -35,11 +36,11 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
   });
   const { banks } = useBankNames();
 
-  const [selectedBank, setSelectedBank] = useState<string | null>("");
+  const [selectedBank, setSelectedBank] = useState<string | null>('');
   const [showOtherInput, setShowOtherInput] = useState(false);
 
   useEffect(() => {
-    setSelectedBank("Kaspi");
+    setSelectedBank('Kaspi');
     setShowOtherInput(false);
     form.reset();
   }, [form]);
@@ -70,9 +71,10 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
   );
 
   const getBankButtonClass = (bankName: string) => {
-    const baseClass = 'flex items-center justify-center gap-2 px-3 py-2.5 rounded-md text-white font-medium transition-colors text-sm';
+    const baseClass =
+      'flex items-center justify-center gap-2 px-3 py-2.5 rounded-md text-white font-medium transition-colors text-sm';
     const isSelected = selectedBank === bankName;
-    
+
     if (bankName === 'Kaspi') {
       return `${baseClass} ${isSelected ? 'bg-red-600 hover:bg-red-700' : 'bg-red-500 hover:bg-red-600'}`;
     }
@@ -122,7 +124,9 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
             }}
             className={`${getBankButtonClass('Kaspi')} flex-1`}
           >
-            <div className={`w-3 h-3 rounded-full ${selectedBank === 'Kaspi' ? 'bg-white' : 'border-2 border-white'}`}></div>
+            <div
+              className={`w-3 h-3 rounded-full ${selectedBank === 'Kaspi' ? 'bg-white' : 'border-2 border-white'}`}
+            ></div>
             Kaspi
           </button>
           <button
@@ -133,18 +137,23 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
             }}
             className={`${getBankButtonClass('Halyk')} flex-1`}
           >
-            <div className={`w-3 h-3 rounded-full ${selectedBank === 'Halyk' ? 'bg-white' : 'border-2 border-white'}`}></div>
+            <div
+              className={`w-3 h-3 rounded-full ${selectedBank === 'Halyk' ? 'bg-white' : 'border-2 border-white'}`}
+            ></div>
             Halyk
           </button>
           <button
             type="button"
             onClick={() => {
-              setSelectedBank('Другое');
+              setSelectedBank('');
+              form.setValue('bank_name', '');
               setShowOtherInput(true);
             }}
             className={`${getBankButtonClass('Другое')} flex-1`}
           >
-            <div className={`w-3 h-3 rounded-full ${selectedBank === 'Другое' ? 'bg-white' : 'border-2 border-white'}`}></div>
+            <div
+              className={`w-3 h-3 rounded-full ${showOtherInput ? 'bg-white' : 'border-2 border-white'}`}
+            ></div>
             Другое
           </button>
         </div>
@@ -162,7 +171,9 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
               searchPlaceholder={t('form_label_bank_search_placeholder')}
               emptyMessage={t('form_label_bank_empty')}
               allowCustomValue
-              customValueMessage={(val) => `${t('form_label_bank_use')} "${val}"`}
+              customValueMessage={(val) =>
+                `${t('form_label_bank_use')} "${val}"`
+              }
               cancelButtonText={tDialog('cancel')}
             />
           </div>

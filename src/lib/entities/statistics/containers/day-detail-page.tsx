@@ -17,6 +17,7 @@ import type { DayBreakdown } from '@/lib/entities/statistics/types';
 import {
   getAllDaysInMonth,
   startOfMonth,
+  toISODate,
 } from '@/lib/entities/statistics/utils/date';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import { toStatisticsDay, toStatisticsDays } from '@/lib/url/generator';
@@ -30,11 +31,14 @@ export function DayDetailPage({ date }: { date: string }) {
   const monthCursor = useMemo(() => startOfMonth(new Date(date)), [date]);
   const { days: daysWithData } = useDailyStats(monthCursor);
 
-  // Get all days in the month
-  const allDaysInMonth = useMemo(
-    () => getAllDaysInMonth(monthCursor),
-    [monthCursor]
-  );
+  // Get all days in the month, but filter out future dates
+  const allDaysInMonth = useMemo(() => {
+    const allDays = getAllDaysInMonth(monthCursor);
+    const todayISO = toISODate(new Date());
+    
+    // Filter out future dates
+    return allDays.filter((dateISO) => dateISO <= todayISO);
+  }, [monthCursor]);
 
   // Create a map of days with data for quick lookup
   const daysMap = useMemo(() => {

@@ -15,6 +15,7 @@ import {
   formatDayLabel,
   getAllDaysInMonth,
   startOfMonth,
+  toISODate,
 } from '@/lib/entities/statistics/utils/date';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import * as fromUrl from '@/lib/url/generator';
@@ -170,11 +171,14 @@ function DaysList({ days, monthCursor, onSelectDay }: DaysListProps) {
     return map;
   }, [days]);
 
-  // Get all days in the month
-  const allDaysInMonth = useMemo(
-    () => getAllDaysInMonth(monthCursor),
-    [monthCursor]
-  );
+  // Get all days in the month, but filter out future dates
+  const allDaysInMonth = useMemo(() => {
+    const allDays = getAllDaysInMonth(monthCursor);
+    const todayISO = toISODate(new Date());
+    
+    // Filter out future dates
+    return allDays.filter((dateISO) => dateISO <= todayISO);
+  }, [monthCursor]);
 
   // Merge all days with data, creating empty entries for days without data
   const allDays = useMemo(() => {

@@ -111,7 +111,7 @@ export const TransactionForm: FC<TransactionFormProps> = (props) => {
               <div className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold bg-green-50 text-green-700 border border-green-200">
                 <Plus className="h-6 w-6 mr-2" aria-hidden="true" />
                 <span className="tabular-nums">
-                  <Money emptyLabel="0">{willBePlus}</Money>
+                  <Money emptyLabel="0" fullAmount={true}>{willBePlus}</Money>
                 </span>
               </div>
             </div>
@@ -120,7 +120,7 @@ export const TransactionForm: FC<TransactionFormProps> = (props) => {
               <div className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold bg-red-50 text-red-700 border border-red-200">
                 <Minus className="h-6 w-6 mr-2" aria-hidden="true" />
                 <span className="tabular-nums">
-                  <Money emptyLabel="0">{willBeMinus}</Money>
+                  <Money emptyLabel="0" fullAmount={true}>{willBeMinus}</Money>
                 </span>
               </div>
             </div>

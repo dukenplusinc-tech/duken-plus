@@ -9,6 +9,7 @@ interface MoneyProps {
   children: number | null | undefined;
   className?: string;
   emptyLabel?: string;
+  fullAmount?: boolean; // If true, shows full amount without K/M abbreviations
 }
 
 const formatMoney = (amount: number): string => {
@@ -37,7 +38,7 @@ const formatFullAmount = (amount: number): string => {
   }).format(amount);
 };
 
-export function Money({ children, emptyLabel, className }: MoneyProps) {
+export function Money({ children, emptyLabel, className, fullAmount = false }: MoneyProps) {
   const { toast } = useToast();
   const t = useTranslations('money');
 
@@ -67,6 +68,8 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
     return <span>{emptyLabel || '---'}</span>;
   }
 
+  const displayAmount = fullAmount ? formatFullAmount(numAmount) : formatMoney(numAmount);
+
   return (
     <button
       onClick={handleClick}
@@ -75,7 +78,7 @@ export function Money({ children, emptyLabel, className }: MoneyProps) {
         'font-semibold text-left transition-all duration-200 hover:scale-105 active:scale-95'
       )}
     >
-      {formatMoney(numAmount)} ₸
+      {displayAmount} ₸
     </button>
   );
 }

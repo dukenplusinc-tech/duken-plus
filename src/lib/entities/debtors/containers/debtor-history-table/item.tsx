@@ -15,6 +15,36 @@ interface DebtorTransactionItemProps {
   transaction: DebtorTransaction;
 }
 
+interface LocalDateTimeDisplayProps {
+  utcDateString: string | null | undefined;
+}
+
+const LocalDateTimeDisplay: FC<LocalDateTimeDisplayProps> = ({
+  utcDateString,
+}) => {
+  if (!utcDateString) return null;
+
+  // Treat the date string as UTC (append 'Z' if not already present to indicate UTC)
+  // Format: '2025-12-20T13:13:01.607648' -> '2025-12-20T13:13:01.607648Z'
+  const utcDateStringWithZ = utcDateString.endsWith('Z')
+    ? utcDateString
+    : `${utcDateString}Z`;
+  
+  // Parse as UTC and convert to local timezone for display
+  const date = new Date(utcDateStringWithZ);
+
+  return (
+    <>
+      <div>
+        {date.toLocaleDateString()}
+      </div>
+      <div>
+        {date.toLocaleTimeString()}
+      </div>
+    </>
+  );
+};
+
 export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
   transaction,
 }) => {
@@ -38,12 +68,7 @@ export const DebtorTransactionItem: FC<DebtorTransactionItemProps> = ({
           {sign}
           {amount.toFixed(2)}
         </div>
-        <div>
-          {transaction_date && new Date(transaction_date).toLocaleDateString()}
-        </div>
-        <div>
-          {transaction_date && new Date(transaction_date).toLocaleTimeString()}
-        </div>
+        <LocalDateTimeDisplay utcDateString={transaction_date} />
       </div>
       <IonLabel>
         <div className="text-black">

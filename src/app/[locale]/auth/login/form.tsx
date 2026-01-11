@@ -129,8 +129,8 @@ export const LoginForm: FC = () => {
         {error && (
           <Alert variant="destructive" className="mt-1">
             <TriangleAlertIcon className="h-4 w-4" />
-            <AlertTitle className="text-sm">{error}</AlertTitle>
-            <AlertDescription className="text-xs">
+            <AlertTitle className="text-sm break-words">{error}</AlertTitle>
+            <AlertDescription className="text-xs break-words">
               {mode === 'login'
                 ? t('alert.login.description')
                 : t('alert.recover.description')}

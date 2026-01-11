@@ -108,8 +108,8 @@ export const SetPasswordForm: FC = () => {
       {error && (
         <Alert variant="destructive">
           <TriangleAlertIcon className="h-4 w-4" />
-          <AlertTitle>{error}</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
+          <AlertTitle className="break-words">{error}</AlertTitle>
+          <AlertDescription className="break-words">{error}</AlertDescription>
         </Alert>
       )}
       <Button type="submit" className="w-full" disabled={isLoading}>

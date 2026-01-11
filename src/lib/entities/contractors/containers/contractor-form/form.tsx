@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl';
 
 import { ImageUploader } from '@/lib/composite/uploads/image-uploader';
 import { UploadEntities } from '@/lib/composite/uploads/types';
+import { PhoneInput } from '@/components/ui/phone-input';
 
 import { useContractorForm } from './hooks';
 
@@ -60,25 +61,20 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
         )}
 
         {/* Supervisor Phone Field */}
-        <IonItem>
-          <IonLabel position="stacked">
-            {t('form_label_supervisor_phone')}
-          </IonLabel>
-          <IonInput
-            value={form.watch('supervisor_phone')}
-            disabled={isProcessing}
-            autocapitalize="off"
-            onIonInput={(e) =>
-              form.setValue('supervisor_phone', e.detail.value!)
-            }
-            placeholder={t('form_label_supervisor_phone')}
-          />
-        </IonItem>
-        {form.formState.errors.supervisor_phone && (
-          <IonLabel color="danger">
-            {form.formState.errors.supervisor_phone.message}
-          </IonLabel>
-        )}
+        <PhoneInput
+          label={t('form_label_supervisor_phone')}
+          placeholder={t('form_label_supervisor_phone')}
+          value={form.watch('supervisor_phone')}
+          onChange={(value) => {
+            form.setValue('supervisor_phone', value || '', {
+              shouldValidate: true,
+            });
+          }}
+          onBlur={() => form.trigger('supervisor_phone')}
+          disabled={isProcessing}
+          error={form.formState.errors.supervisor_phone?.message}
+          required={false}
+        />
 
         {/* Sales Representative Field */}
         <IonItem>
@@ -102,25 +98,20 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
         )}
 
         {/* Sales Representative Phone Field */}
-        <IonItem>
-          <IonLabel position="stacked">
-            {t('form_label_sales_representative_phone')}
-          </IonLabel>
-          <IonInput
-            value={form.watch('sales_representative_phone')}
-            disabled={isProcessing}
-            autocapitalize="off"
-            onIonInput={(e) =>
-              form.setValue('sales_representative_phone', e.detail.value!)
-            }
-            placeholder={t('form_label_sales_representative_phone')}
-          />
-        </IonItem>
-        {form.formState.errors.sales_representative_phone && (
-          <IonLabel color="danger">
-            {form.formState.errors.sales_representative_phone.message}
-          </IonLabel>
-        )}
+        <PhoneInput
+          label={t('form_label_sales_representative_phone')}
+          placeholder={t('form_label_sales_representative_phone')}
+          value={form.watch('sales_representative_phone')}
+          onChange={(value) => {
+            form.setValue('sales_representative_phone', value || '', {
+              shouldValidate: true,
+            });
+          }}
+          onBlur={() => form.trigger('sales_representative_phone')}
+          disabled={isProcessing}
+          error={form.formState.errors.sales_representative_phone?.message}
+          required={false}
+        />
 
         {/* Address Field */}
         <IonItem>

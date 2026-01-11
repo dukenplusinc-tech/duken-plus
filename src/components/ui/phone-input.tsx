@@ -92,10 +92,10 @@ export const PhoneInput: FC<PhoneInputProps> = ({
     if (value) {
       setDisplayValue(formatPhoneNumber(value));
     } else {
-      // Default to +7 for required fields, empty for optional
-      setDisplayValue(required ? KZ_PHONE_PREFIX : '');
+      // Default to +7 for all fields (both required and optional)
+      setDisplayValue(KZ_PHONE_PREFIX);
     }
-  }, [value, required]);
+  }, [value]);
 
   const handleInput = (inputValue: string) => {
     // Allow user to delete +7 completely for landline numbers
@@ -124,11 +124,10 @@ export const PhoneInput: FC<PhoneInputProps> = ({
   };
 
   const handleFocus = () => {
-    // If empty, set to +7 for required fields
-    if (!value || value === '') {
-      if (required) {
-        setDisplayValue(KZ_PHONE_PREFIX);
-      }
+    // If empty, set to +7 for all fields (both required and optional)
+    if (!value || value === '' || value === null) {
+      setDisplayValue(KZ_PHONE_PREFIX);
+      onChange(KZ_PHONE_PREFIX);
     }
   };
 

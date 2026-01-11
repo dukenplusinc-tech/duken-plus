@@ -158,6 +158,7 @@ export function CloseShiftDialogForm({
       <Button
         type="submit"
         disabled={isLoading}
+        loading={isLoading}
         className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-6 rounded-md text-lg"
       >
         {t('submit')}

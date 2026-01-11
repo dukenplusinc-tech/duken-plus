@@ -41,8 +41,10 @@ export default function CashRegisterPage() {
   const [sortAscending, setSortAscending] = useState(false);
   const { data: historyData, isLoading: isLoadingHistory, refresh: refreshHistory } = useShiftHistory(currentPage, 30, dateRange);
   const addedBy = useAddedBy();
+  const [isOpeningShift, setIsOpeningShift] = useState(false);
 
   const handleOpenShift = async () => {
+    setIsOpeningShift(true);
     try {
       await openShift(addedBy);
       refreshShift();
@@ -50,6 +52,8 @@ export default function CashRegisterPage() {
     } catch (error) {
       console.error('Failed to open shift:', error);
       alert(error instanceof Error ? error.message : tShifts('error_opening_shift'));
+    } finally {
+      setIsOpeningShift(false);
     }
   };
 
@@ -112,6 +116,7 @@ export default function CashRegisterPage() {
                     className="h-16 flex-1 flex flex-col items-center justify-center gap-1 text-base font-semibold"
                     onClick={confirmCloseShift.onAction}
                     disabled={confirmCloseShift.processing}
+                    loading={confirmCloseShift.processing}
                   >
                     <X className="h-6 w-6" />
                     <span className="text-xs leading-tight">{tShifts('close_shift')}</span>
@@ -126,7 +131,8 @@ export default function CashRegisterPage() {
                 <Button
                   className="bg-green-600 hover:bg-green-700 text-white w-full"
                   onClick={confirmOpenShift.onAction}
-                  disabled={confirmOpenShift.processing}
+                  disabled={confirmOpenShift.processing || isOpeningShift}
+                  loading={isOpeningShift || confirmOpenShift.processing}
                 >
                   {tShifts('open_shift')}
                 </Button>

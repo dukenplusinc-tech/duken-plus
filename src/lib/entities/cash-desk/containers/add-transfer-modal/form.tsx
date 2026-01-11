@@ -202,6 +202,7 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
       <Button
         type="submit"
         disabled={isProcessing}
+        loading={isProcessing}
         className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-md text-base"
       >
         {t('save_caption')}

@@ -682,6 +682,8 @@
       "decline": "Бас тарту",
       "cancel": "Болдырмау",
       "submit": "Қабылдау",
+      "submit_consignment": "Консигнацияға",
+      "submit_reschedule": "Күнді өзгерту",
       "success": {
         "title": "✅ Жеткізу қабылданды",
         "description": "Жеткізу сәтті қабылданды"

@@ -682,6 +682,8 @@
       "decline": "Отклонить",
       "cancel": "Отмена",
       "submit": "Принять",
+      "submit_consignment": "В консигнацию",
+      "submit_reschedule": "Перенести",
       "success": {
         "title": "✅ Доставка принята",
         "description": "Доставка была успешно принята"

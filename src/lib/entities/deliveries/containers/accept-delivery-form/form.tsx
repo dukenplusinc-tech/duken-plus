@@ -40,6 +40,19 @@ export const AcceptDeliveryForm: FC<{
 
   const isProcessing = isFormProcessing || declineDelivery.processing;
 
+  const isConsignment = form.watch('is_consignement');
+  const isReschedule = form.watch('reschedule');
+
+  const getSubmitButtonText = () => {
+    if (isConsignment) {
+      return t('submit_consignment');
+    }
+    if (isReschedule) {
+      return t('submit_reschedule');
+    }
+    return t('submit');
+  };
+
   return (
     <IonList>
       <form onSubmit={handleSubmit}>
@@ -148,7 +161,7 @@ export const AcceptDeliveryForm: FC<{
             </Button>
 
             <Button type="submit" loading={isProcessing}>
-              {t('submit')}
+              {getSubmitButtonText()}
             </Button>
           </div>
         </div>

@@ -682,6 +682,8 @@
       "decline": "Decline",
       "cancel": "Cancel",
       "submit": "Accept",
+      "submit_consignment": "To consignment",
+      "submit_reschedule": "Reschedule",
       "success": {
         "title": "✅ Delivery accepted",
         "description": "The delivery has been successfully accepted"

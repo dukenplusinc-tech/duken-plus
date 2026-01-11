@@ -28,14 +28,14 @@ export const UserActionLogItem: FC<{ item: UserActionLog }> = ({ item }) => {
   return (
     <IonItem lines="full">
       <IonLabel>
-        <p className="truncate text-sm text-muted">
-          Entity ID: {item.entity_id}
-        </p>
-
         {/* Action & Entity Badges */}
         <div className="flex items-center gap-2">
-          <Badge className="mr-2">{item.action}</Badge>
-          <Badge variant="outline">{item.entity}</Badge>
+          <Badge className="mr-2">
+            {t(`actions.${item.action}` as any) || item.action}
+          </Badge>
+          <Badge variant="outline">
+            {t(`entities.${item.entity}` as any) || item.entity}
+          </Badge>
         </div>
 
         {isDebtorTransaction && details && (
@@ -50,7 +50,7 @@ export const UserActionLogItem: FC<{ item: UserActionLog }> = ({ item }) => {
                     : 'text-green-600' // Green for purchase (positive)
                 }`}
               >
-                {formattedAmount} $
+                {formattedAmount} ₸
               </span>
             </p>
 
@@ -58,7 +58,7 @@ export const UserActionLogItem: FC<{ item: UserActionLog }> = ({ item }) => {
               <p>
                 <strong>{t('debtor_name_caption')}:</strong>{' '}
                 <Link
-                  href={fromUrl.toDebtorEdit(details.debtor_id)}
+                  href={fromUrl.toDebtorHistory(details.debtor_id)}
                   className="text-blue-600 underline"
                 >
                   {details.debtor_name}
@@ -70,7 +70,7 @@ export const UserActionLogItem: FC<{ item: UserActionLog }> = ({ item }) => {
             {details.balance_at_transaction !== undefined && (
               <p className="font-medium">
                 <strong>{t('debtor_balance_caption')}:</strong>{' '}
-                {details.balance_at_transaction} $
+                {details.balance_at_transaction} ₸
               </p>
             )}
 

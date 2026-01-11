@@ -479,8 +479,20 @@
     "captions_by": "by: "
   },
   "user_action_logs": {
+    "entity_id_caption": "Record ID",
     "debtor_name_caption": "Debtor",
-    "debtor_balance_caption": "Balance at transaction"
+    "debtor_balance_caption": "Debtor Balance",
+    "actions": {
+      "INSERT": "Added",
+      "UPDATE": "Changed",
+      "DELETE": "Deleted"
+    },
+    "entities": {
+      "debtors": "Debtor",
+      "debtor_transactions": "Transaction",
+      "employees": "Employee",
+      "profiles": "Profile"
+    }
   },
   "upload": {
     "images": {

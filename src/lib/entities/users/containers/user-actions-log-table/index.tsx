@@ -52,8 +52,11 @@ export const UserActionsLog: FC<{
         </div>
       ) : (
         <IonList>
-          {data.map((item) => (
-            <UserActionLogItem key={item.id} item={item} />
+          {data.map((item, index) => (
+            <UserActionLogItem
+              key={`${item.id}-${item.timestamp}-${item.entity_id}-${index}`}
+              item={item}
+            />
           ))}
         </IonList>
       )}

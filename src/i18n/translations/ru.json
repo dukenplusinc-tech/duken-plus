@@ -479,8 +479,20 @@
     "captions_by": "от: "
   },
   "user_action_logs": {
+    "entity_id_caption": "ID записи",
     "debtor_name_caption": "Должник",
-    "debtor_balance_caption": "Баланс на момент транзакции"
+    "debtor_balance_caption": "Баланс должника",
+    "actions": {
+      "INSERT": "Добавлено",
+      "UPDATE": "Изменено",
+      "DELETE": "Удалено"
+    },
+    "entities": {
+      "debtors": "Должник",
+      "debtor_transactions": "Транзакция",
+      "employees": "Сотрудник",
+      "profiles": "Профиль"
+    }
   },
   "upload": {
     "images": {

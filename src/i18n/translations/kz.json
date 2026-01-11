@@ -479,8 +479,20 @@
     "captions_by": "авторы: "
   },
   "user_action_logs": {
+    "entity_id_caption": "Жазба ID",
     "debtor_name_caption": "Берешек",
-    "debtor_balance_caption": "Транзакция кезіндегі баланс"
+    "debtor_balance_caption": "Берешек балансы",
+    "actions": {
+      "INSERT": "Қосылды",
+      "UPDATE": "Өзгертілді",
+      "DELETE": "Жойылды"
+    },
+    "entities": {
+      "debtors": "Берешек",
+      "debtor_transactions": "Транзакция",
+      "employees": "Қызметкер",
+      "profiles": "Профиль"
+    }
   },
   "upload": {
     "images": {

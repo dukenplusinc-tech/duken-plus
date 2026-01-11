@@ -31,10 +31,10 @@ export default function DayView({ currentDate }: DayViewProps) {
         };
       }
       // delivery
-      let color = 'bg-green-200';
+      let color = 'bg-orange-200'; // pending (waiting for acceptance)
       if (ev.status === 'due') color = 'bg-red-200';
       else if (ev.isConsignment) color = 'bg-yellow-200';
-      else if (ev.status === 'accepted') color = 'bg-orange-200';
+      else if (ev.status === 'accepted') color = 'bg-green-200';
 
       // Optional localization map: add keys calendar.status.pending/accepted/due/canceled
       const statusText = safe('status.' + ev.status) ?? ev.status;

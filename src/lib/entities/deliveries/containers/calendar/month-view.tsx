@@ -90,13 +90,13 @@ export default function MonthView({
               )}
               {info?.pending && (
                 <div
-                  className="w-2 h-2 rounded-full bg-green-500"
+                  className="w-2 h-2 rounded-full bg-orange-500"
                   title={safe('status.pending')}
                 />
               )}
               {info?.accepted && (
                 <div
-                  className="w-2 h-2 rounded-full bg-orange-500"
+                  className="w-2 h-2 rounded-full bg-green-500"
                   title={safe('status.accepted')}
                 />
               )}
@@ -155,11 +155,11 @@ export default function MonthView({
                   <span className="text-sm">{safe('status.due')}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" />
+                  <div className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0" />
                   <span className="text-sm">{safe('status.pending')}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0" />
+                  <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" />
                   <span className="text-sm">{safe('status.accepted')}</span>
                 </div>
                 <div className="flex items-center gap-2">

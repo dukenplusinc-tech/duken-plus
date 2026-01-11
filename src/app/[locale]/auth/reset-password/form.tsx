@@ -11,9 +11,12 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { translateAuthError } from '@/lib/auth/utils/translate-auth-error';
+import { useTranslations as useAuthTranslations } from 'next-intl';
 
 export const ResetPasswordForm: FC = () => {
   const t = useTranslations('reset_pass');
+  const tAuth = useAuthTranslations('auth');
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -39,7 +42,7 @@ export const ResetPasswordForm: FC = () => {
     setIsLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(translateAuthError(error.message, (key) => tAuth(key)));
     } else {
       router.replace(fromUrl.toHome());
     }

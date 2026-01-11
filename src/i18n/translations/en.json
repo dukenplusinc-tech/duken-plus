@@ -187,6 +187,16 @@
     "recover": {
       "title": "Remembered password?",
       "btn_caption": "Try to log in"
+    },
+    "errors": {
+      "invalid_credentials": "Invalid password or email. Please try again.",
+      "email_not_confirmed": "Email not confirmed. Please check your inbox and confirm your account.",
+      "user_not_found": "User not found.",
+      "email_rate_limit": "Too many requests. Please wait a moment and try again.",
+      "password_too_weak": "Password is too weak. Please use a stronger password.",
+      "invalid_token": "Invalid or expired token.",
+      "session_expired": "Session expired. Please log in again.",
+      "generic": "An error occurred. Please try again."
     }
   },
   "invited": {

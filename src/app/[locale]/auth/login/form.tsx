@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 
 import { login, recoverPassword } from './actions';
+import { translateAuthError } from '@/lib/auth/utils/translate-auth-error';
 
 export const LoginForm: FC = () => {
   const t = useTranslations('auth');
@@ -49,7 +50,7 @@ export const LoginForm: FC = () => {
     setIsLoading(false);
 
     if (response.error) {
-      setError(response.error);
+      setError(translateAuthError(response.error, (key) => t(key)));
     } else {
       if (mode === 'login') {
         router.replace(fromUrl.toInit());

@@ -37,6 +37,15 @@ export function ShiftHistoryList({
   };
 
   const getTotalAmount = (shift: ShiftHistoryItem) => {
+    if (shift.status === 'closed' || shift.status === 'auto_closed') {
+      // Use closing amounts for closed shifts
+      const cash = shift.closing_cash || 0;
+      const banks = shift.closing_banks && typeof shift.closing_banks === 'object'
+        ? Object.values(shift.closing_banks as Record<string, number>).reduce((sum, val) => sum + val, 0)
+        : 0;
+      return cash + banks;
+    }
+    // Use current totals for open shifts
     const cash = shift.cash_total || 0;
     const bank = shift.bank_total || 0;
     return cash + bank;

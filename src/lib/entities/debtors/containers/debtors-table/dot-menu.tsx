@@ -14,12 +14,14 @@ import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import * as fromUrl from '@/lib/url/generator';
 import { InfoRow } from '@/components/ui/content/dialog';
 import type { DropDownButtonOption } from '@/components/ui/ionic/dropdown';
+import { useEmployeeMode } from '@/lib/entities/employees/context';
 
 export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
   const t = useTranslations();
   const router = useRouter();
   const shopId = useShopID();
   const canEdit = shopId === debtor.shop_id;
+  const { isEmployee } = useEmployeeMode();
 
   const dialog = useModalDialog();
 
@@ -175,11 +177,15 @@ export function useDebtorDotMenu(debtor: Debtor): DropDownButtonOption[] {
             },
           ] as DropDownButtonOption[])
         : []),
-      {
-        label: t('datatable.actions.delete_cation'),
-        onClick: handleRemove.onDelete,
-        disabled: handleRemove.processing,
-      },
+      ...(!isEmployee
+        ? [
+            {
+              label: t('datatable.actions.delete_cation'),
+              onClick: handleRemove.onDelete,
+              disabled: handleRemove.processing,
+            },
+          ]
+        : []),
     ],
     [
       t,

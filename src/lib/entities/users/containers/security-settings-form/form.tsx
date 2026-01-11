@@ -27,11 +27,18 @@ export const SecuritySettingsForm: FC = () => {
             {t('security.form_label_pin_code')}
           </IonLabel>
           <IonInput
+            type="tel"
+            inputmode="numeric"
+            pattern="[0-9]*"
             maxlength={4}
             placeholder={t('security.form_placeholder_pin_code')}
             value={form.watch('pin_code')}
             autocapitalize="off"
-            onIonInput={(e) => form.setValue('pin_code', e.detail.value!)}
+            onIonInput={(e) => {
+              // Filter to only allow digits and limit to 4 characters
+              const value = e.detail.value?.replace(/[^0-9]/g, '').slice(0, 4) || '';
+              form.setValue('pin_code', value);
+            }}
           />
         </IonItem>
         {form.formState.errors.pin_code && (

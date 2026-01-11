@@ -47,10 +47,18 @@ export const EmployeeForm: FC<{ id?: string | null }> = ({ id = null }) => {
         <IonItem>
           <IonLabel position="stacked">{t('form_label_pin_code')}</IonLabel>
           <IonInput
+            type="tel"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength={4}
             placeholder={t('form_placeholder_pin_code')}
             value={form.watch('pin_code')}
             autocapitalize="off"
-            onIonInput={(e) => form.setValue('pin_code', e.detail.value!)}
+            onIonInput={(e) => {
+              // Filter to only allow digits and limit to 4 characters
+              const value = e.detail.value?.replace(/[^0-9]/g, '').slice(0, 4) || '';
+              form.setValue('pin_code', value);
+            }}
           />
 
           {form.formState.errors.pin_code && (

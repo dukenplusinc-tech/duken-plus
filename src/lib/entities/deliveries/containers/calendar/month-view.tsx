@@ -143,6 +143,35 @@ export default function MonthView({
             </div>
 
             <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
+
+            {/* Legend */}
+            <div className="mt-6 pt-4 border-t">
+              <h4 className="text-sm font-semibold text-muted-foreground mb-3">
+                {t('legend_title')}
+              </h4>
+              <div className="grid grid-cols-1 gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0" />
+                  <span className="text-sm">{safe('status.due')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" />
+                  <span className="text-sm">{safe('status.pending')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0" />
+                  <span className="text-sm">{safe('status.accepted')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-yellow-500 flex-shrink-0" />
+                  <span className="text-sm">{t('consignment')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-blue-600 flex-shrink-0" />
+                  <span className="text-sm">{t('expense')}</span>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

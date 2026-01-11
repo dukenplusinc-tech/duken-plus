@@ -774,7 +774,8 @@
     ],
     "consignment": "Consignment",
     "expense": "Expenses",
-    "total_label": "Total amount"
+    "total_label": "Total amount",
+    "legend_title": "Legend"
   },
   "statistics": {
     "title": "Store statistics",

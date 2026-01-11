@@ -774,7 +774,8 @@
     ],
     "consignment": "Консигнация",
     "expense": "Расходы",
-    "total_label": "Итого"
+    "total_label": "Итого",
+    "legend_title": "Обозначения"
   },
   "statistics": {
     "title": "Статистика магазина",

@@ -774,7 +774,8 @@
     ],
     "consignment": "Консигнация",
     "expense": "Шығындар",
-    "total_label": "Жалпы сома"
+    "total_label": "Жалпы сома",
+    "legend_title": "Белгілер"
   },
   "statistics": {
     "title": "Дүкен статистикасы",

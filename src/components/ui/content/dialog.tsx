@@ -1,5 +1,7 @@
-import { FC, ReactNode, useCallback } from 'react';
+import { FC, ReactNode } from 'react';
 import { Phone } from 'lucide-react';
+
+import { usePhoneCall } from '@/lib/hooks/use-phone-call';
 
 interface InfoRowProps {
   label: string | ReactNode;
@@ -8,33 +10,10 @@ interface InfoRowProps {
   phone?: boolean;
 }
 
-function normalizeTel(input: string) {
-  // keep leading +, strip everything else non-digit
-  const trimmed = input.trim();
-  const hasPlus = trimmed.startsWith('+');
-  const digits = trimmed.replace(/[^\d]/g, '');
-  return hasPlus ? `+${digits}` : digits;
-}
-
 export const InfoRow: FC<InfoRowProps> = ({ label, value, phone }) => {
   const isString = typeof value === 'string';
-  const normalizedPhone = isString ? normalizeTel(value as string) : '';
-  const telHref = isString ? `tel:${normalizedPhone}` : undefined;
-
-  const handlePhoneClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
-      e.preventDefault();
-      if (normalizedPhone) {
-        // Create a temporary anchor element and click it for better Android WebView compatibility
-        const link = document.createElement('a');
-        link.href = `tel:${normalizedPhone}`;
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    },
-    [normalizedPhone]
+  const { telHref, handlePhoneClick } = usePhoneCall(
+    phone && isString ? (value as string) : undefined
   );
 
   return (
@@ -43,7 +22,7 @@ export const InfoRow: FC<InfoRowProps> = ({ label, value, phone }) => {
         {label}:
       </span>
 
-      {phone && isString ? (
+      {phone && isString && telHref ? (
         <span className="w-1/2 text-gray-900 text-lg">
           <a
             href={telHref}

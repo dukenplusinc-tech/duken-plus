@@ -7,6 +7,7 @@ import { SubscriptionInfo } from '@/lib/entities/subscription/hooks/useSubscript
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { PhoneLink } from '@/components/ui/phone-link';
 
 interface SubscriptionInfoProps {
   subscription: SubscriptionInfo;
@@ -100,13 +101,14 @@ export function SubscriptionDisplayInfo({
                 {t('manual_payment_label')}:
               </p>
               <div className="flex items-center justify-center gap-2 mb-2">
-                <PhoneIcon className="h-5 w-5" />
-                <Link
-                  href={`tel:${phoneNumber}`}
+                <PhoneLink
+                  phoneNumber={phoneNumber}
                   className="font-medium hover:underline"
+                  showIcon={false}
                 >
+                  <PhoneIcon className="h-5 w-5 inline-block mr-2" />
                   {phoneNumber}
-                </Link>
+                </PhoneLink>
               </div>
               <div className="text-center">
                 <Link

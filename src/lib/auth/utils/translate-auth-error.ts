@@ -13,17 +13,17 @@ export function translateAuthError(
     message.includes('invalid_credentials') ||
     message.includes('email not confirmed')
   ) {
-    return t('auth.errors.invalid_credentials');
+    return t('errors.invalid_credentials');
   }
 
   // Email not confirmed
   if (message.includes('email not confirmed')) {
-    return t('auth.errors.email_not_confirmed');
+    return t('errors.email_not_confirmed');
   }
 
   // User not found
   if (message.includes('user not found') || message.includes('user_not_found')) {
-    return t('auth.errors.user_not_found');
+    return t('errors.user_not_found');
   }
 
   // Email rate limit
@@ -31,7 +31,7 @@ export function translateAuthError(
     message.includes('email rate limit') ||
     message.includes('rate_limit_exceeded')
   ) {
-    return t('auth.errors.email_rate_limit');
+    return t('errors.email_rate_limit');
   }
 
   // Password too weak
@@ -39,7 +39,7 @@ export function translateAuthError(
     message.includes('password') &&
     (message.includes('weak') || message.includes('too short'))
   ) {
-    return t('auth.errors.password_too_weak');
+    return t('errors.password_too_weak');
   }
 
   // Token expired or invalid
@@ -47,14 +47,14 @@ export function translateAuthError(
     message.includes('token') &&
     (message.includes('expired') || message.includes('invalid'))
   ) {
-    return t('auth.errors.invalid_token');
+    return t('errors.invalid_token');
   }
 
   // Session expired
   if (message.includes('session') && message.includes('expired')) {
-    return t('auth.errors.session_expired');
+    return t('errors.session_expired');
   }
 
   // Generic error fallback
-  return t('auth.errors.generic');
+  return t('errors.generic');
 }

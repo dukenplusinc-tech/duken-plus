@@ -31,6 +31,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('title')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('title', e.detail.value!)}
             placeholder={t('form_label_title')}
           />
@@ -47,6 +48,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('supervisor')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('supervisor', e.detail.value!)}
             placeholder={t('form_label_supervisor')}
           />
@@ -65,6 +67,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('supervisor_phone')}
             disabled={isProcessing}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('supervisor_phone', e.detail.value!)
             }
@@ -85,6 +88,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('sales_representative')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) =>
               form.setValue('sales_representative', e.detail.value!)
             }
@@ -105,6 +109,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('sales_representative_phone')}
             disabled={isProcessing}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('sales_representative_phone', e.detail.value!)
             }
@@ -125,6 +130,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('address')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('address', e.detail.value!)}
             placeholder={t('form_label_sales_address')}
           />
@@ -148,6 +154,7 @@ export const ContractorForm: FC<{ id?: string }> = ({ id }) => {
           <IonTextarea
             value={form.watch('note')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('note', e.detail.value!)}
             placeholder={t('form_label_note_placeholder')}
           />

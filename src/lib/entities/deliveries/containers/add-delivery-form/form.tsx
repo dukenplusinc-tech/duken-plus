@@ -49,6 +49,7 @@ export const AddDeliveryForm: FC = () => {
             type="number"
             min={0}
             value={form.watch('amount_expected')}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('amount_expected', parseFloat(e.detail.value!))
             }

@@ -31,6 +31,7 @@ export const UpdateShopForm: FC = () => {
           <IonInput
             placeholder={t('general.form_placeholder_name')}
             value={form.watch('title')}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('title', e.detail.value!)}
           />
         </IonItem>
@@ -89,6 +90,7 @@ export const UpdateShopForm: FC = () => {
           <IonInput
             placeholder={t('general.form_placeholder_address')}
             value={form.watch('address')}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('address', e.detail.value!)}
           />
         </IonItem>

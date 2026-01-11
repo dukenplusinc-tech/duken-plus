@@ -32,6 +32,7 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('full_name')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => {
               form.setValue('full_name', e.detail.value!, { shouldValidate: true });
             }}
@@ -51,6 +52,7 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
             value={form.watch('iin')}
             disabled={isProcessing}
             maxlength={12}
+            autocapitalize="off"
             onIonInput={(e) => {
               form.setValue('iin', e.detail.value!, { shouldValidate: true });
             }}
@@ -82,6 +84,7 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('address')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => {
               form.setValue('address', e.detail.value!, { shouldValidate: true });
             }}
@@ -102,6 +105,7 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
             step="100"
             value={form.watch('max_credit_amount')}
             disabled={isProcessing}
+            autocapitalize="off"
             onIonInput={(e) => {
               form.setValue('max_credit_amount', parseInt(e.detail.value!, 10), {
                 shouldValidate: true,
@@ -122,6 +126,7 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('work_place')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => {
               form.setValue('work_place', e.detail.value!, { shouldValidate: true });
             }}
@@ -158,6 +163,7 @@ export const DebtorForm: FC<{ id?: string }> = ({ id }) => {
           <IonTextarea
             value={form.watch('additional_info')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => {
               form.setValue('additional_info', e.detail.value!, {
                 shouldValidate: true,

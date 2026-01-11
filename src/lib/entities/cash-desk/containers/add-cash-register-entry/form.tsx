@@ -56,6 +56,7 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
             step="1"
             value={form.watch('amount')}
             disabled={isProcessing}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('amount', parseInt(e.detail.value!, 10))
             }
@@ -75,6 +76,7 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
               <IonInput
                 value={form.watch('from')}
                 disabled={isProcessing}
+                autocapitalize="sentences"
                 onIonInput={(e) => form.setValue('from', e.detail.value!)}
                 placeholder={t('form_label_from')}
               />

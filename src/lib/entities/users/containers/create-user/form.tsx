@@ -30,6 +30,7 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             placeholder={t('form_placeholder_email')}
             value={form.watch('email')}
+            autocapitalize="off"
             onIonInput={(e) => form.setValue('email', e.detail.value!)}
           />
         </IonItem>
@@ -48,6 +49,7 @@ export const UserForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             placeholder={t('form_placeholder_full_name')}
             value={form.watch('full_name')}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('full_name', e.detail.value!)}
           />
         </IonItem>

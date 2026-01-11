@@ -30,6 +30,7 @@ export const SecuritySettingsForm: FC = () => {
             maxlength={4}
             placeholder={t('security.form_placeholder_pin_code')}
             value={form.watch('pin_code')}
+            autocapitalize="off"
             onIonInput={(e) => form.setValue('pin_code', e.detail.value!)}
           />
         </IonItem>
@@ -48,6 +49,7 @@ export const SecuritySettingsForm: FC = () => {
             type="password"
             placeholder={t('security.form_placeholder_password')}
             value={form.watch('password')}
+            autocapitalize="off"
             onIonInput={(e) => form.setValue('password', e.detail.value!)}
           />
         </IonItem>
@@ -66,6 +68,7 @@ export const SecuritySettingsForm: FC = () => {
             type="password"
             placeholder={t('security.form_placeholder_password_confirm')}
             value={form.watch('password_confirm')}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('password_confirm', e.detail.value!)
             }

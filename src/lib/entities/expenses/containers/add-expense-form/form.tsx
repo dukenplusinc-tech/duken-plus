@@ -49,6 +49,7 @@ export const ExpenseForm: FC<ExpenseFormProps> = ({ id }) => {
           <IonInput
             type="number"
             value={form.watch('amount')}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('amount', parseFloat(e.detail.value!))
             }

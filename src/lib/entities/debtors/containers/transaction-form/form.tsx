@@ -91,6 +91,7 @@ export const TransactionForm: FC<TransactionFormProps> = (props) => {
             pattern="\d*"
             value={sanitized}
             disabled={isProcessing}
+            autocapitalize="off"
             onIonInput={(e) => onAmountInput(e.detail.value)}
             placeholder={t('form_label_amount')}
           />
@@ -132,6 +133,7 @@ export const TransactionForm: FC<TransactionFormProps> = (props) => {
           <IonInput
             value={form.watch('description') ?? ''}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) =>
               form.setValue('description', e.detail.value ?? '')
             }

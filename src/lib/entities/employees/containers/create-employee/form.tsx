@@ -29,6 +29,7 @@ export const EmployeeForm: FC<{ id?: string | null }> = ({ id = null }) => {
           <IonInput
             placeholder={t('form_placeholder_full_name')}
             value={form.watch('full_name')}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('full_name', e.detail.value!)}
           />
 
@@ -48,6 +49,7 @@ export const EmployeeForm: FC<{ id?: string | null }> = ({ id = null }) => {
           <IonInput
             placeholder={t('form_placeholder_pin_code')}
             value={form.watch('pin_code')}
+            autocapitalize="off"
             onIonInput={(e) => form.setValue('pin_code', e.detail.value!)}
           />
 

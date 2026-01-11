@@ -140,6 +140,7 @@ export const PhoneInput: FC<PhoneInputProps> = ({
           type="tel"
           value={displayValue || ''}
           disabled={disabled}
+          autocapitalize="off"
           onIonInput={(e) => handleInput(e.detail.value!)}
           onIonBlur={onBlur}
           onFocus={handleFocus}

@@ -66,6 +66,7 @@ export const AcceptDeliveryForm: FC<{
           <IonInput
             type="number"
             value={form.watch('amount_received')}
+            autocapitalize="off"
             onIonInput={(e) =>
               form.setValue('amount_received', parseFloat(e.detail.value!))
             }

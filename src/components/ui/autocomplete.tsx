@@ -308,6 +308,7 @@ export function Autocomplete({
               onFocus={() => setOpen(true)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
+              autoCapitalize="sentences"
               className={cn(
                 'w-full h-12 rounded-md border border-gray-300 bg-white px-3 pr-8',
                 'outline-none focus-visible:ring-2 focus-visible:ring-primary/30',

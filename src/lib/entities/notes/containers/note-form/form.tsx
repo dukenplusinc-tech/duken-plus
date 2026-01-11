@@ -27,6 +27,7 @@ export const NoteForm: FC<{ id?: string }> = ({ id }) => {
           <IonInput
             value={form.watch('title')}
             disabled={isProcessing}
+            autocapitalize="sentences"
             onIonInput={(e) => form.setValue('title', e.detail.value!)} // Update form state
             placeholder={t('placeholder_title')}
           />
@@ -47,6 +48,7 @@ export const NoteForm: FC<{ id?: string }> = ({ id }) => {
             rows={15}
             autoGrow
             disabled={isProcessing}
+            autocapitalize="sentences"
           />
         </IonItem>
         {form.formState.errors.content && (

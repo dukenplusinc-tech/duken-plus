@@ -435,6 +435,7 @@
       "page": {
         "title": "Debtors Blacklist",
         "search_placeholder": "Search by ID number or Full Name",
+        "empty_text": "No debtors in this region",
         "sorting": {
           "by_date": "By Date",
           "by_name": "By A-Z"

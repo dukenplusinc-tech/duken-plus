@@ -47,7 +47,7 @@ export const BlacklistView: FC = () => {
         {error && <ErrorScreen error={error} />}
 
         {!isLoading && data.length === 0 && (
-          <EmptyScreen>{t('empty_text')}</EmptyScreen>
+          <EmptyScreen>{t('black_list.page.empty_text')}</EmptyScreen>
         )}
 
         {/* Responsive grid: 1 col on phones, 2 on small tablets, 3+ on larger */}

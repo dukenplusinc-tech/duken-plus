@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useCallback } from 'react';
 import { Phone } from 'lucide-react';
 
 interface InfoRowProps {
@@ -18,7 +18,24 @@ function normalizeTel(input: string) {
 
 export const InfoRow: FC<InfoRowProps> = ({ label, value, phone }) => {
   const isString = typeof value === 'string';
-  const telHref = isString ? `tel:${normalizeTel(value as string)}` : undefined;
+  const normalizedPhone = isString ? normalizeTel(value as string) : '';
+  const telHref = isString ? `tel:${normalizedPhone}` : undefined;
+
+  const handlePhoneClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      if (normalizedPhone) {
+        // Create a temporary anchor element and click it for better Android WebView compatibility
+        const link = document.createElement('a');
+        link.href = `tel:${normalizedPhone}`;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    },
+    [normalizedPhone]
+  );
 
   return (
     <div className="flex justify-between items-start py-2">
@@ -30,7 +47,8 @@ export const InfoRow: FC<InfoRowProps> = ({ label, value, phone }) => {
         <span className="w-1/2 text-gray-900 text-lg">
           <a
             href={telHref}
-            className="flex justify-end items-center gap-2 font-bold"
+            onClick={handlePhoneClick}
+            className="flex justify-end items-center gap-2 font-bold cursor-pointer"
             aria-label={`Call ${value}`}
           >
             <Phone className="h-5 w-5 shrink-0" aria-hidden="true" />

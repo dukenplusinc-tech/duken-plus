@@ -207,6 +207,11 @@
   resolved "https://registry.npmjs.org/@capacitor/android/-/android-6.2.1.tgz"
   integrity sha512-8gd4CIiQO5LAIlPIfd5mCuodBRxMMdZZEdj8qG8m+dQ1sQ2xyemVpzHmRK8qSCHorsBUCg3D62j2cp6bEBAkdw==
 
+"@capacitor/app-launcher@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/app-launcher/-/app-launcher-8.0.0.tgz#d83300ab5ca870d06419011a1ea0218a5ad76c49"
+  integrity sha512-sHPE1fkRfyxisDDMHKdSXNHT147q+7+6gSVQi7KCCZ2B9Ibl3/QlFVzWDp0z0OuCHVz97jjoML9jqd5ELg94+g==
+
 "@capacitor/camera@^6.0.2":
   version "6.1.2"
   resolved "https://registry.npmjs.org/@capacitor/camera/-/camera-6.1.2.tgz"

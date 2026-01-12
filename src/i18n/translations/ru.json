@@ -458,7 +458,15 @@
       "remove_from_blacklist_title": "Удалить из черного списка?",
       "remove_from_blacklist_description": "Вы уверены, что хотите удалить этого клиента из черного списка?",
       "remove_from_blacklist_confirm_caption": "Удалить",
-      "remove_from_blacklist_cancel_caption": "Отмена"
+      "remove_from_blacklist_cancel_caption": "Отмена",
+      "name_variations": {
+        "title": "Варианты имен",
+        "shop_label": "Магазин",
+        "indicator": "Найдено несколько имен",
+        "badge": "Варианты",
+        "error": "Ошибка загрузки вариантов имен",
+        "empty": "Должники не найдены"
+      }
     },
     "dot_menu": {
       "view_info_caption": "Просмотр информации о должнике",

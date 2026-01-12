@@ -1,23 +1,40 @@
-import { FileWarning, LoaderCircle as Spinner, User } from 'lucide-react';
+import { FileWarning, LoaderCircle as Spinner, User, AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useEntityImage } from '@/lib/composite/files/hooks/useEntityImage';
 import { UploadEntities } from '@/lib/composite/uploads/types';
 import type { Debtor } from '@/lib/entities/debtors/schema';
+import { useModalDialog } from '@/lib/primitives/modal/hooks';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { NameVariationsModal } from './name-variations-modal';
 
 interface DebtorCardProps {
   debtor: Debtor;
+  hasMultipleNames?: boolean;
   className?: string;
 }
 
-export function DebtorCard({ debtor, className }: DebtorCardProps) {
+export function DebtorCard({ debtor, hasMultipleNames = false, className }: DebtorCardProps) {
+  const t = useTranslations('debtors');
   const { id, iin, full_name } = debtor;
+  const modal = useModalDialog();
 
   const { imageUrl, loading } = useEntityImage({
     id,
     entity: UploadEntities.DebtorPhoto,
   });
+
+  const handleClick = () => {
+    if (hasMultipleNames) {
+      modal.launch({
+        title: t('black_list.name_variations.title', { defaultValue: 'Name Variations' }),
+        render: <NameVariationsModal iin={iin} />,
+        footer: false,
+      });
+    }
+  };
 
   const Inner = (
     <div
@@ -28,8 +45,10 @@ export function DebtorCard({ debtor, className }: DebtorCardProps) {
         // visuals
         'bg-card shadow-sm ring-1 ring-muted',
         'hover:shadow-md hover:ring-primary/30 transition-all',
+        hasMultipleNames && 'cursor-pointer',
         className
       )}
+      onClick={handleClick}
     >
       {/* Photo */}
       <div className="relative w-full">
@@ -56,8 +75,19 @@ export function DebtorCard({ debtor, className }: DebtorCardProps) {
           )}
         </div>
 
-        <div className="absolute right-2 top-2 rounded-full bg-background/80 p-1.5 ring-1 ring-muted">
-          <FileWarning className="h-4 w-4 text-muted-foreground" />
+        <div className="absolute right-2 top-2 flex items-center gap-1.5">
+          {hasMultipleNames && (
+            <Badge
+              variant="secondary"
+              className="bg-amber-100 dark:bg-amber-900/30 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700"
+              title={t('black_list.name_variations.indicator', {
+                defaultValue: 'Multiple names found',
+              })}
+            >
+              <AlertCircle className="h-3 w-3 mr-1" />
+              {t('black_list.name_variations.badge', { defaultValue: 'Variations' })}
+            </Badge>
+          )}
         </div>
       </div>
 

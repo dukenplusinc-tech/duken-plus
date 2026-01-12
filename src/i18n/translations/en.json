@@ -458,7 +458,15 @@
       "remove_from_blacklist_title": "Remove from blacklist?",
       "remove_from_blacklist_description": "Are you sure you want to remove this client to the blacklist?",
       "remove_from_blacklist_confirm_caption": "Remove",
-      "remove_from_blacklist_cancel_caption": "Cancel"
+      "remove_from_blacklist_cancel_caption": "Cancel",
+      "name_variations": {
+        "title": "Name Variations",
+        "shop_label": "Shop",
+        "indicator": "Multiple names found",
+        "badge": "Variations",
+        "error": "Error loading name variations",
+        "empty": "No debtors found"
+      }
     },
     "dot_menu": {
       "view_info_caption": "View debtors info",

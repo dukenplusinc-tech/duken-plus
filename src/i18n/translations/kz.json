@@ -458,7 +458,15 @@
       "remove_from_blacklist_title": "Қара тізімнен жою?",
       "remove_from_blacklist_description": "Бұл клиентті қара тізімнен алып тастағыңыз келетініне сенімдісіз бе?",
       "remove_from_blacklist_confirm_caption": "Жою",
-      "remove_from_blacklist_cancel_caption": "Бас тарту"
+      "remove_from_blacklist_cancel_caption": "Бас тарту",
+      "name_variations": {
+        "title": "Атау нұсқалары",
+        "shop_label": "Дүкен",
+        "indicator": "Бірнеше атау табылды",
+        "badge": "Нұсқалар",
+        "error": "Атау нұсқаларын жүктеу қатесі",
+        "empty": "Берешектер табылмады"
+      }
     },
     "dot_menu": {
       "view_info_caption": "Берешек туралы ақпаратты қарау",

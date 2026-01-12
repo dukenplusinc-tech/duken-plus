@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { DebtorCard } from '@/lib/entities/debtors/containers/blacklist-view/debtor-card';
 import { useBlackListedDebtors } from '@/lib/entities/debtors/hooks/useDebtors';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
@@ -14,7 +15,8 @@ import { ErrorScreen } from '@/components/ui/page/screen/error';
 export const BlacklistView: FC = () => {
   const t = useTranslations('debtors');
 
-  const { data, error, isLoading } = useBlackListedDebtors();
+  const { data, error, isLoading, refresh } = useBlackListedDebtors();
+  usePageRefresh(refresh);
 
   const sortByOptions = useMemo(
     () => [

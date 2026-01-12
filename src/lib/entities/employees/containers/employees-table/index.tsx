@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 
 import { EmployeeItem } from '@/lib/entities/employees/containers/employees-table/employee-item';
 import { useEmployees } from '@/lib/entities/employees/hooks/useEmployees';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -15,7 +16,8 @@ import { EmptyScreen } from '@/components/ui/page/screen/empty';
 export const EmployeesTable: FC = () => {
   const t = useTranslations('employees');
 
-  const { data, isLoading, sentinelRef } = useEmployees();
+  const { data, isLoading, sentinelRef, refresh } = useEmployees();
+  usePageRefresh(refresh);
 
   return (
     <div className="flex flex-col h-full">

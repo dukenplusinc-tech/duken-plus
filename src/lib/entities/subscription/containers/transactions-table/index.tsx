@@ -10,6 +10,7 @@ import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { SubscriptionPaymentItem } from '@/lib/entities/subscription/containers/transactions-table/transaction-item';
 import { useSubscriptionPayments } from '@/lib/entities/subscription/hooks/useSubscriptionPayments';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -20,7 +21,8 @@ export const TransactionsTable: FC = () => {
 
   const t = useTranslations('subscription.transactions');
 
-  const { data, error, isLoading, sentinelRef } = useSubscriptionPayments();
+  const { data, error, isLoading, sentinelRef, refresh } = useSubscriptionPayments();
+  usePageRefresh(refresh);
 
   const sortByOptions = useMemo(
     () => [

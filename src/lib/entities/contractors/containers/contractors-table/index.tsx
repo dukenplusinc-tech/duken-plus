@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { ContractorItem } from '@/lib/entities/contractors/containers/contractors-table/item';
 import { useContractors } from '@/lib/entities/contractors/hooks/useContractors';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -17,7 +18,8 @@ import { ErrorScreen } from '@/components/ui/page/screen/error';
 export const ContractorsTable: FC = () => {
   const t = useTranslations('contractors');
 
-  const { data, error, isLoading, sentinelRef } = useContractors();
+  const { data, error, isLoading, sentinelRef, refresh } = useContractors();
+  usePageRefresh(refresh);
 
   const sortByOptions = useMemo(
     () => [

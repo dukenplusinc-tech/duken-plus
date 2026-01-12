@@ -5,12 +5,19 @@ import { useTranslations } from 'next-intl';
 
 import { CompaniesTab } from '@/lib/entities/home/containers/tabs/companies-tab';
 import { DebtorTab } from '@/lib/entities/home/containers/tabs/debtor-tab';
+import { useRefreshHomeData } from '@/lib/entities/home/hooks/useRefreshHomeData';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 
 export const HomeScreen: FC = () => {
   const t = useTranslations('home.tabs');
   const [activeTab, setActiveTab] = useState<'companies' | 'debtors'>(
     'companies'
   );
+
+  const refreshHomeData = useRefreshHomeData();
+  usePageRefresh(async () => {
+    await refreshHomeData();
+  });
 
   return (
     <>

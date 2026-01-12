@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { useUserActionLogs } from '@/lib/entities/users/hooks/useUserActionLogs';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 
@@ -21,10 +22,11 @@ export const UserActionsLog: FC<{
 
   const t = useTranslations('user_logs');
 
-  const { data, sentinelRef, isLoading } = useUserActionLogs({
+  const { data, sentinelRef, isLoading, refresh } = useUserActionLogs({
     user_id,
     employee_id,
   });
+  usePageRefresh(refresh);
 
   const sortByOptions = useMemo(
     () => [

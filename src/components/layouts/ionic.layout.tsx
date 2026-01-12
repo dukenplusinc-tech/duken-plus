@@ -10,17 +10,22 @@ import {
   IonIcon,
   IonMenuButton,
   IonPage,
+  IonRefresher,
+  IonRefresherContent,
   IonTitle,
   IonToolbar,
+  RefresherEventDetail,
 } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 
 import { useBackButton } from '@/lib/navigation/back-button/context';
+import { useRefreshContext } from '@/lib/providers/refresh-context';
 import { DateDisplay } from '@/components/date/date-display';
 import { Menu } from '@/components/navigation/menu';
 
 export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
   const { showBackButton, backButtonUrl } = useBackButton();
+  const { refresh } = useRefreshContext();
 
   const router = useRouter();
 
@@ -29,6 +34,14 @@ export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
       router.push(backButtonUrl);
     } else {
       router.back();
+    }
+  };
+
+  const handleRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
+    try {
+      await refresh();
+    } finally {
+      event.detail.complete();
     }
   };
 
@@ -57,7 +70,12 @@ export const IonicLayout: FC<PropsWithChildren> = ({ children }) => {
           </IonToolbar>
         </IonHeader>
 
-        <IonContent className="ion-padding">{children}</IonContent>
+        <IonContent className="ion-padding">
+          <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+            <IonRefresherContent />
+          </IonRefresher>
+          {children}
+        </IonContent>
       </IonPage>
     </>
   );

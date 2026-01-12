@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 
 import { NoteItem } from '@/lib/entities/notes/containers/notes-table/item';
 import { useNotes } from '@/lib/entities/notes/hooks/useNotes';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -15,7 +16,8 @@ import { EmptyScreen } from '@/components/ui/page/screen/empty';
 export const NotesTable: FC = () => {
   const t = useTranslations('notes');
 
-  const { data, isLoading } = useNotes();
+  const { data, isLoading, refresh } = useNotes();
+  usePageRefresh(refresh);
 
   return (
     <div className="flex flex-col h-full">

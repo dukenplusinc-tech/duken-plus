@@ -10,6 +10,7 @@ import { SearchBar } from '@/lib/composite/filters/ui/search-bar';
 import { DebtorTransactionItem } from '@/lib/entities/debtors/containers/debtor-history-table/item';
 import { useDebtorTransactions } from '@/lib/entities/debtors/hooks/useDebtorTransactions';
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -20,7 +21,8 @@ export const DebtorHistoryTable: FC = () => {
 
   const t = useTranslations('debtor_transactions');
 
-  const { data, error, isLoading, sentinelRef } = useDebtorTransactions();
+  const { data, error, isLoading, sentinelRef, refresh } = useDebtorTransactions();
+  usePageRefresh(refresh);
 
   const sortByOptions = useMemo(
     () => [

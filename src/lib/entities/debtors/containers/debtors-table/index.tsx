@@ -12,6 +12,7 @@ import { DebtorItem } from '@/lib/entities/debtors/containers/debtors-table/item
 import { OverdueWarning } from '@/lib/entities/debtors/containers/overdue-warning';
 import { TotalAmounts } from '@/lib/entities/debtors/containers/total-amounts';
 import { useDebtors } from '@/lib/entities/debtors/hooks/useDebtors';
+import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
@@ -20,7 +21,8 @@ import { ErrorScreen } from '@/components/ui/page/screen/error';
 export const DebtorsTable: FC = () => {
   const t = useTranslations('debtors');
 
-  const { data, error, isLoading, sentinelRef } = useDebtors();
+  const { data, error, isLoading, sentinelRef, refresh } = useDebtors();
+  usePageRefresh(refresh);
 
   const sortByOptions = useMemo(
     () => [

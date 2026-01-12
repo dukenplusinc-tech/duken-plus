@@ -79,7 +79,7 @@ export const BlacklistView: FC = () => {
       </PageHeader>
 
       {/* Filters (sticky on mobile for easy access) */}
-      <div className="sticky top-0 z-10 bg-background/90 backdrop-blur px-3 sm:px-4 py-2 border-b">
+      <div className="sticky top-[-15px] z-10 bg-background/90 backdrop-blur px-3 sm:px-4 py-3 border-b">
         <SearchBar
           shop
           searchByField="full_name"

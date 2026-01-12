@@ -15,12 +15,12 @@ export async function closeShift(
   const { data, error } = await supabase.rpc('close_cash_shift', {
     p_shift_id: shiftId,
     p_cash_amount: cashAmount,
-    p_closed_by_name: closedByName,
+    p_closed_by_name: closedByName ?? undefined,
     p_comment: {},
   } as {
     p_shift_id: string;
     p_cash_amount: number;
-    p_closed_by_name?: string | null;
+    p_closed_by_name?: string | undefined;
     p_comment?: Json;
   });
 

@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "12.2.3 (519615d)"
+  }
   public: {
     Tables: {
       cash_register: {
@@ -113,34 +118,6 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "cash_shifts_closed_by_fkey"
-            columns: ["closed_by"]
-            isOneToOne: false
-            referencedRelation: "extended_profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "cash_shifts_closed_by_fkey"
-            columns: ["closed_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "cash_shifts_opened_by_fkey"
-            columns: ["opened_by"]
-            isOneToOne: false
-            referencedRelation: "extended_profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "cash_shifts_opened_by_fkey"
-            columns: ["opened_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "cash_shifts_shop_id_fkey"
             columns: ["shop_id"]
@@ -394,7 +371,15 @@ export type Database = {
           updated_at?: string | null
           work_place?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "debtors_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       deliveries: {
         Row: {
@@ -666,6 +651,7 @@ export type Database = {
           full_name: string | null
           id: string
           language: string | null
+          phone: string | null
           pin_code: string | null
           role_id: number | null
           shop_id: string | null
@@ -677,6 +663,7 @@ export type Database = {
           full_name?: string | null
           id: string
           language?: string | null
+          phone?: string | null
           pin_code?: string | null
           role_id?: number | null
           shop_id?: string | null
@@ -688,6 +675,7 @@ export type Database = {
           full_name?: string | null
           id?: string
           language?: string | null
+          phone?: string | null
           pin_code?: string | null
           role_id?: number | null
           shop_id?: string | null
@@ -763,6 +751,7 @@ export type Database = {
           address: string
           city: string
           code: number
+          created_at: string
           id: string
           title: string
         }
@@ -770,6 +759,7 @@ export type Database = {
           address?: string
           city?: string
           code?: number
+          created_at?: string
           id?: string
           title: string
         }
@@ -777,6 +767,7 @@ export type Database = {
           address?: string
           city?: string
           code?: number
+          created_at?: string
           id?: string
           title?: string
         }
@@ -920,7 +911,15 @@ export type Database = {
           total_negative_balance: number | null
           total_positive_balance: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "debtors_shop_id_fkey"
+            columns: ["shop_id"]
+            isOneToOne: false
+            referencedRelation: "shops"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       extended_profiles: {
         Row: {
@@ -973,21 +972,23 @@ export type Database = {
           shop_id: string
           type: Database["public"]["Enums"]["transaction_type"]
         }
+        SetofOptions: {
+          from: "*"
+          to: "cash_register"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
-      attach_entry_to_shift: {
-        Args: { entry_id: string }
-        Returns: undefined
-      }
-      auto_close_cash_shifts: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      clean_old_logs: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      attach_entry_to_shift: { Args: { entry_id: string }; Returns: undefined }
+      auto_close_cash_shifts: { Args: never; Returns: undefined }
+      clean_old_logs: { Args: never; Returns: undefined }
       close_cash_shift: {
-        Args: { p_cash_amount: number; p_comment?: Json; p_shift_id: string }
+        Args: {
+          p_cash_amount: number
+          p_closed_by_name?: string
+          p_comment?: Json
+          p_shift_id: string
+        }
         Returns: {
           closed_at: string | null
           closed_by: string | null
@@ -1004,19 +1005,41 @@ export type Database = {
           status: Database["public"]["Enums"]["cash_shift_status"]
           updated_at: string
         }
+        SetofOptions: {
+          from: "*"
+          to: "cash_shifts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
-      current_shop_id: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      current_shop_id: { Args: never; Returns: string }
       distinct_expense_types: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           type: string
         }[]
       }
+      get_debtors_by_iin: {
+        Args: { p_iin: string }
+        Returns: {
+          additional_info: string
+          address: string
+          balance: number
+          blacklist: boolean
+          created_at: string
+          full_name: string
+          id: string
+          iin: string
+          max_credit_amount: number
+          phone: string
+          shop_id: string
+          shop_title: string
+          updated_at: string
+          work_place: string
+        }[]
+      }
       get_or_create_open_shift: {
-        Args: Record<PropertyKey, never>
+        Args: { p_opened_by_name?: string }
         Returns: {
           closed_at: string | null
           closed_by: string | null
@@ -1033,11 +1056,21 @@ export type Database = {
           status: Database["public"]["Enums"]["cash_shift_status"]
           updated_at: string
         }
+        SetofOptions: {
+          from: "*"
+          to: "cash_shifts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
-      mark_overdue_deliveries: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
+      get_user_auth_data: {
+        Args: { user_id: string }
+        Returns: {
+          email: string
+          phone: string
+        }[]
       }
+      mark_overdue_deliveries: { Args: never; Returns: undefined }
       recalculate_is_overdue: {
         Args: { p_debtor_id: string }
         Returns: undefined
@@ -1193,4 +1226,3 @@ export const Constants = {
     },
   },
 } as const
-

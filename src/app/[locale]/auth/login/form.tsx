@@ -4,7 +4,7 @@ import { FC, FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { TriangleAlertIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 import * as fromUrl from '@/lib/url/generator';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -18,6 +18,7 @@ import { translateAuthError } from '@/lib/auth/utils/translate-auth-error';
 
 export const LoginForm: FC = () => {
   const t = useTranslations('auth');
+  const locale = useLocale();
 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +45,7 @@ export const LoginForm: FC = () => {
       response = await recoverPassword({
         email,
         redirectTo: fromUrl.fullUrl(fromUrl.toResetPassword()),
+        locale: locale,
       });
     }
 
@@ -155,7 +157,7 @@ export const LoginForm: FC = () => {
           <div className="text-center text-sm text-muted-foreground">
             {t('dont_have_account_label')}{' '}
             <Link
-              href="#"
+              href={fromUrl.toRegister()}
               className="font-medium text-primary hover:text-primary/80 underline-offset-4 hover:underline"
               prefetch={false}
             >

@@ -220,6 +220,62 @@
     "submit": "Сбросить пароль",
     "error_wrong_password": "Пароли не совпадают"
   },
+  "register": {
+    "title": "Создать аккаунт",
+    "subtitle": "Начните работу с управлением магазином",
+    "step_indicator": "Шаг {current} из {total}",
+    "account": {
+      "title": "Информация об аккаунте",
+      "form_label_email": "Эл. почта",
+      "form_placeholder_email": "your@email.com",
+      "form_label_password": "Пароль",
+      "form_placeholder_password": "Мин. 8 символов",
+      "form_label_password_confirm": "Подтвердите пароль",
+      "form_placeholder_password_confirm": "Введите пароль еще раз",
+      "form_label_full_name": "Полное имя",
+      "form_placeholder_full_name": "Иван Иванов",
+      "form_label_phone": "Номер телефона (необязательно)",
+      "form_placeholder_phone": "+7 (___) ___-__-__",
+      "password_strength": {
+        "weak": "Слабый пароль",
+        "medium": "Средний пароль",
+        "strong": "Сильный пароль"
+      }
+    },
+    "shop": {
+      "title": "Данные магазина",
+      "form_label_shop_name": "Название магазина",
+      "form_placeholder_shop_name": "Мой магазин",
+      "form_label_city": "Город",
+      "form_placeholder_city": "Выберите город",
+      "form_label_address": "Адрес",
+      "form_placeholder_address": "ул. Примерная, д. 123"
+    },
+    "verify": {
+      "title": "Проверьте почту",
+      "description": "Мы отправили ссылку для подтверждения на {email}",
+      "instructions": "Нажмите на ссылку в письме, чтобы подтвердить аккаунт и завершить регистрацию.",
+      "resend_label": "Не получили письмо?",
+      "resend_button": "Отправить письмо повторно",
+      "resend_success": "Письмо отправлено!",
+      "back_to_login": "Вернуться к входу"
+    },
+    "buttons": {
+      "next": "Далее",
+      "back": "Назад",
+      "register": "Создать аккаунт"
+    },
+    "errors": {
+      "email_exists": "Этот email уже зарегистрирован",
+      "passwords_dont_match": "Пароли не совпадают",
+      "weak_password": "Пароль должен содержать минимум 8 символов",
+      "invalid_email": "Неверный адрес электронной почты",
+      "required_field": "Это поле обязательно",
+      "registration_failed": "Ошибка регистрации. Попробуйте снова."
+    },
+    "already_have_account": "Уже есть аккаунт?",
+    "login_link": "Войти"
+  },
   "settings": {
     "title": "Настройки",
     "general": {

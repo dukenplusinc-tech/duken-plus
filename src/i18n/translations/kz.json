@@ -220,6 +220,62 @@
     "submit": "Құпия сөзді қалпына келтіру",
     "error_wrong_password": "Құпия сөздер сәйкес келмейді"
   },
+  "register": {
+    "title": "Аккаунт құру",
+    "subtitle": "Дүкенді басқарумен жұмыс бастаңыз",
+    "step_indicator": "{current}/{total} қадам",
+    "account": {
+      "title": "Аккаунт ақпараты",
+      "form_label_email": "Эл. пошта",
+      "form_placeholder_email": "your@email.com",
+      "form_label_password": "Құпия сөз",
+      "form_placeholder_password": "Кемінде 8 таңба",
+      "form_label_password_confirm": "Құпия сөзді растау",
+      "form_placeholder_password_confirm": "Құпия сөзді қайта енгізіңіз",
+      "form_label_full_name": "Толық аты",
+      "form_placeholder_full_name": "Асан Асанов",
+      "form_label_phone": "Телефон нөмірі (міндетті емес)",
+      "form_placeholder_phone": "+7 (___) ___-__-__",
+      "password_strength": {
+        "weak": "Әлсіз құпия сөз",
+        "medium": "Орташа құпия сөз",
+        "strong": "Күшті құпия сөз"
+      }
+    },
+    "shop": {
+      "title": "Дүкен деректері",
+      "form_label_shop_name": "Дүкен атауы",
+      "form_placeholder_shop_name": "Менің дүкенім",
+      "form_label_city": "Қала",
+      "form_placeholder_city": "Қалаңызды таңдаңыз",
+      "form_label_address": "Мекен-жай",
+      "form_placeholder_address": "Мысал көшесі, 123"
+    },
+    "verify": {
+      "title": "Эл. поштаңызды тексеріңіз",
+      "description": "Біз {email} мекенжайына растау сілтемесін жібердік",
+      "instructions": "Аккаунтыңызды растау және тіркеуді аяқтау үшін электрондық поштадағы сілтемені басыңыз.",
+      "resend_label": "Хат алмадыңыз ба?",
+      "resend_button": "Растау хатын қайта жіберу",
+      "resend_success": "Растау хаты жіберілді!",
+      "back_to_login": "Кіруге оралу"
+    },
+    "buttons": {
+      "next": "Келесі",
+      "back": "Артқа",
+      "register": "Аккаунт құру"
+    },
+    "errors": {
+      "email_exists": "Бұл эл. пошта бұрыннан тіркелген",
+      "passwords_dont_match": "Құпия сөздер сәйкес келмейді",
+      "weak_password": "Құпия сөз кемінде 8 таңбадан тұруы керек",
+      "invalid_email": "Жарамсыз эл. пошта мекенжайы",
+      "required_field": "Бұл өріс міндетті",
+      "registration_failed": "Тіркеу сәтсіз аяқталды. Қайталап көріңіз."
+    },
+    "already_have_account": "Аккаунтыңыз бар ма?",
+    "login_link": "Кіру"
+  },
   "settings": {
     "title": "Параметрлер",
     "general": {

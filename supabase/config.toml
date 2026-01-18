@@ -59,6 +59,31 @@ double_confirm_changes = true
 # If enabled, users need to confirm their email address before signing in.
 enable_confirmations = false
 
+# Email templates
+[auth.email.template.confirmation]
+subject = "{{ if eq (index .Data \"language\") \"en\" }}Confirm your email address{{ else if eq (index .Data \"language\") \"kz\" }}Email мекенжайыңызды растаңыз{{ else }}Подтвердите ваш email адрес{{ end }}"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.magic_link]
+subject = "{{ if eq (index .Data \"language\") \"en\" }}Your sign-in link{{ else if eq (index .Data \"language\") \"kz\" }}Кіру сілтемеңіз{{ else }}Ваша ссылка для входа{{ end }}"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.recovery]
+subject = "{{ if eq (index .Data \"language\") \"en\" }}Reset your password{{ else if eq (index .Data \"language\") \"kz\" }}Құпия сөзді қалпына келтіру{{ else }}Сброс пароля{{ end }}"
+content_path = "./supabase/templates/password_reset.html"
+
+[auth.email.template.email_change]
+subject = "{{ if eq (index .Data \"language\") \"en\" }}Confirm your new email address{{ else if eq (index .Data \"language\") \"kz\" }}Жаңа email мекенжайыңызды растаңыз{{ else }}Подтвердите ваш новый email адрес{{ end }}"
+content_path = "./supabase/templates/email_change.html"
+
+[auth.email.template.invite]
+subject = "{{ if eq (index .Data \"language\") \"en\" }}You've been invited{{ else if eq (index .Data \"language\") \"kz\" }}Сіз шақырылдыңыз{{ else }}Вас пригласили{{ end }}"
+content_path = "./supabase/templates/invite.html"
+
+[auth.email.template.reauthentication]
+subject = "{{ if eq (index .Data \"language\") \"en\" }}Confirm your identity{{ else if eq (index .Data \"language\") \"kz\" }}Жеке басыңызды растаңыз{{ else }}Подтвердите вашу личность{{ end }}"
+content_path = "./supabase/templates/reauthentication.html"
+
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
 # `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin`, `notion`, `twitch`,
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.

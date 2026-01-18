@@ -1,0 +1,170 @@
+{
+  "en": {
+    "confirmation": {
+      "subject": "Confirm your email address",
+      "title": "Confirm Your Email",
+      "greeting": "Hello!",
+      "message": "Thank you for signing up. Please confirm your email address by clicking the button below.",
+      "button": "Confirm Email",
+      "alternative": "Or copy and paste this link into your browser:",
+      "footer": "If you didn't create an account, you can safely ignore this email."
+    },
+    "magic_link": {
+      "subject": "Your sign-in link",
+      "title": "Sign In",
+      "greeting": "Hello!",
+      "message": "Click the button below to sign in to your account.",
+      "button": "Sign In",
+      "alternative": "Or copy and paste this link into your browser:",
+      "footer": "This link will expire in 1 hour. If you didn't request this, you can safely ignore this email."
+    },
+    "password_reset": {
+      "subject": "Reset your password",
+      "title": "Reset Your Password",
+      "greeting": "Hello!",
+      "message": "We received a request to reset your password. Click the button below to create a new password.",
+      "button": "Reset Password",
+      "alternative": "Or copy and paste this link into your browser:",
+      "footer": "If you didn't request a password reset, you can safely ignore this email. This link will expire in 1 hour."
+    },
+    "email_change": {
+      "subject": "Confirm your new email address",
+      "title": "Confirm New Email",
+      "greeting": "Hello!",
+      "message": "You requested to change your email address. Please confirm your new email by clicking the button below.",
+      "button": "Confirm New Email",
+      "alternative": "Or copy and paste this link into your browser:",
+      "footer": "If you didn't request this change, please contact support immediately."
+    },
+    "invite": {
+      "subject": "You've been invited",
+      "title": "You've Been Invited",
+      "greeting": "Hello!",
+      "message": "You've been invited to join. Click the button below to accept the invitation and set up your account.",
+      "button": "Accept Invitation",
+      "alternative": "Or copy and paste this link into your browser:",
+      "footer": "This invitation will expire in 7 days."
+    },
+    "reauthentication": {
+      "subject": "Confirm your identity",
+      "title": "Confirm Your Identity",
+      "greeting": "Hello!",
+      "message": "For security purposes, please confirm your identity by clicking the button below.",
+      "button": "Confirm Identity",
+      "alternative": "Or copy and paste this link into your browser:",
+      "footer": "This link will expire in 1 hour."
+    }
+  },
+  "ru": {
+    "confirmation": {
+      "subject": "Подтвердите ваш email адрес",
+      "title": "Подтвердите Email",
+      "greeting": "Здравствуйте!",
+      "message": "Спасибо за регистрацию. Пожалуйста, подтвердите ваш email адрес, нажав на кнопку ниже.",
+      "button": "Подтвердить Email",
+      "alternative": "Или скопируйте и вставьте эту ссылку в браузер:",
+      "footer": "Если вы не создавали аккаунт, вы можете проигнорировать это письмо."
+    },
+    "magic_link": {
+      "subject": "Ваша ссылка для входа",
+      "title": "Войти",
+      "greeting": "Здравствуйте!",
+      "message": "Нажмите на кнопку ниже, чтобы войти в ваш аккаунт.",
+      "button": "Войти",
+      "alternative": "Или скопируйте и вставьте эту ссылку в браузер:",
+      "footer": "Эта ссылка действительна в течение 1 часа. Если вы не запрашивали это, вы можете проигнорировать это письмо."
+    },
+    "password_reset": {
+      "subject": "Сброс пароля",
+      "title": "Сбросить Пароль",
+      "greeting": "Здравствуйте!",
+      "message": "Мы получили запрос на сброс вашего пароля. Нажмите на кнопку ниже, чтобы создать новый пароль.",
+      "button": "Сбросить Пароль",
+      "alternative": "Или скопируйте и вставьте эту ссылку в браузер:",
+      "footer": "Если вы не запрашивали сброс пароля, вы можете проигнорировать это письмо. Эта ссылка действительна в течение 1 часа."
+    },
+    "email_change": {
+      "subject": "Подтвердите ваш новый email адрес",
+      "title": "Подтвердить Новый Email",
+      "greeting": "Здравствуйте!",
+      "message": "Вы запросили изменение email адреса. Пожалуйста, подтвердите ваш новый email, нажав на кнопку ниже.",
+      "button": "Подтвердить Новый Email",
+      "alternative": "Или скопируйте и вставьте эту ссылку в браузер:",
+      "footer": "Если вы не запрашивали это изменение, пожалуйста, немедленно свяжитесь с поддержкой."
+    },
+    "invite": {
+      "subject": "Вас пригласили",
+      "title": "Вас Пригласили",
+      "greeting": "Здравствуйте!",
+      "message": "Вас пригласили присоединиться. Нажмите на кнопку ниже, чтобы принять приглашение и настроить ваш аккаунт.",
+      "button": "Принять Приглашение",
+      "alternative": "Или скопируйте и вставьте эту ссылку в браузер:",
+      "footer": "Это приглашение действительно в течение 7 дней."
+    },
+    "reauthentication": {
+      "subject": "Подтвердите вашу личность",
+      "title": "Подтвердить Личность",
+      "greeting": "Здравствуйте!",
+      "message": "В целях безопасности, пожалуйста, подтвердите вашу личность, нажав на кнопку ниже.",
+      "button": "Подтвердить Личность",
+      "alternative": "Или скопируйте и вставьте эту ссылку в браузер:",
+      "footer": "Эта ссылка действительна в течение 1 часа."
+    }
+  },
+  "kz": {
+    "confirmation": {
+      "subject": "Email мекенжайыңызды растаңыз",
+      "title": "Email Растау",
+      "greeting": "Сәлеметсіз бе!",
+      "message": "Тіркелгеніңізге рахмет. Төмендегі батырманы басу арқылы email мекенжайыңызды растаңыз.",
+      "button": "Email Растау",
+      "alternative": "Немесе осы сілтемені көшіріп, браузерге қойыңыз:",
+      "footer": "Егер сіз аккаунт құрмаған болсаңыз, бұл хатты елемеуге болады."
+    },
+    "magic_link": {
+      "subject": "Кіру сілтемеңіз",
+      "title": "Кіру",
+      "greeting": "Сәлеметсіз бе!",
+      "message": "Аккаунтыңызға кіру үшін төмендегі батырманы басыңыз.",
+      "button": "Кіру",
+      "alternative": "Немесе осы сілтемені көшіріп, браузерге қойыңыз:",
+      "footer": "Бұл сілтеме 1 сағат бойы жарамды. Егер сіз бұны сұрамаған болсаңыз, бұл хатты елемеуге болады."
+    },
+    "password_reset": {
+      "subject": "Құпия сөзді қалпына келтіру",
+      "title": "Құпия Сөзді Қалпына Келтіру",
+      "greeting": "Сәлеметсіз бе!",
+      "message": "Біз құпия сөзіңізді қалпына келтіру сұрауын алдық. Жаңа құпия сөз құру үшін төмендегі батырманы басыңыз.",
+      "button": "Құпия Сөзді Қалпына Келтіру",
+      "alternative": "Немесе осы сілтемені көшіріп, браузерге қойыңыз:",
+      "footer": "Егер сіз құпия сөзді қалпына келтіруді сұрамаған болсаңыз, бұл хатты елемеуге болады. Бұл сілтеме 1 сағат бойы жарамды."
+    },
+    "email_change": {
+      "subject": "Жаңа email мекенжайыңызды растаңыз",
+      "title": "Жаңа Email Растау",
+      "greeting": "Сәлеметсіз бе!",
+      "message": "Сіз email мекенжайыңызды өзгертуді сұрадыңыз. Төмендегі батырманы басу арқылы жаңа email мекенжайыңызды растаңыз.",
+      "button": "Жаңа Email Растау",
+      "alternative": "Немесе осы сілтемені көшіріп, браузерге қойыңыз:",
+      "footer": "Егер сіз бұл өзгерісті сұрамаған болсаңыз, дереу қолдау қызметіне хабарласыңыз."
+    },
+    "invite": {
+      "subject": "Сіз шақырылдыңыз",
+      "title": "Сіз Шақырылдыңыз",
+      "greeting": "Сәлеметсіз бе!",
+      "message": "Сіз қосылуға шақырылдыңыз. Шақыруды қабылдау және аккаунтыңызды баптау үшін төмендегі батырманы басыңыз.",
+      "button": "Шақыруды Қабылдау",
+      "alternative": "Немесе осы сілтемені көшіріп, браузерге қойыңыз:",
+      "footer": "Бұл шақыру 7 күн бойы жарамды."
+    },
+    "reauthentication": {
+      "subject": "Жеке басыңызды растаңыз",
+      "title": "Жеке Басыңызды Растау",
+      "greeting": "Сәлеметсіз бе!",
+      "message": "Қауіпсіздік мақсатында, төмендегі батырманы басу арқылы жеке басыңызды растаңыз.",
+      "button": "Жеке Басыңызды Растау",
+      "alternative": "Немесе осы сілтемені көшіріп, браузерге қойыңыз:",
+      "footer": "Бұл сілтеме 1 сағат бойы жарамды."
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 import { useForm } from '@/lib/composite/form/useForm';
 import { inviteUser } from '@/lib/entities/users/actions/inviteUser';
@@ -9,6 +9,7 @@ import * as fromUrl from '@/lib/url/generator';
 export function useUserForm(id?: string) {
   const router = useRouter();
   const t = useTranslations('validation.success');
+  const locale = useLocale();
 
   return useForm<typeof inviteUserSchema, InviteUser>({
     defaultValues: {
@@ -20,7 +21,7 @@ export function useUserForm(id?: string) {
       if (id) {
         // todo: update user info
       } else {
-        await inviteUser(values, fromUrl.fullUrl(fromUrl.toInvited()));
+        await inviteUser(values, fromUrl.fullUrl(fromUrl.toInvited()), locale);
 
         router.push(fromUrl.toUsers());
       }

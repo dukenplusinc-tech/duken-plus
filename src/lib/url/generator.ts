@@ -144,8 +144,22 @@ export function toSignIn(): string {
   return '/auth/login';
 }
 
-export function fullUrl(path: string): string {
-  const u = new URL(path, window.location.origin);
+export function toRegister(): string {
+  return '/auth/register';
+}
 
+export function fullUrl(path: string): string {
+  // Check if we're on the server or client
+  if (typeof window === 'undefined') {
+    // Server-side: use environment variable or default
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000';
+    return new URL(path, baseUrl).href;
+  }
+  // Client-side: use window.location.origin
+  const u = new URL(path, window.location.origin);
   return u.href;
 }

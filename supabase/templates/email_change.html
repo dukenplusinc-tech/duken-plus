@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if eq (index .Data "language") "en" }}Confirm your new email address{{ else if eq (index .Data "language") "kz" }}Жаңа email мекенжайыңызды растаңыз{{ else }}Подтвердите ваш новый email адрес{{ end }}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f5f5f5;">
+    <tr>
+      <td style="padding: 40px 20px;">
+        <table role="presentation" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <!-- Header -->
+          <tr>
+            <td style="padding: 40px 40px 30px; text-align: center; border-bottom: 2px solid #02404f;">
+              <h1 style="margin: 0; font-size: 24px; font-weight: 600; color: #02404f;">
+                {{ if eq (index .Data "language") "en" }}Confirm New Email
+                {{ else if eq (index .Data "language") "kz" }}Жаңа Email Растау
+                {{ else }}Подтвердить Новый Email{{ end }}
+              </h1>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #333333;">
+                {{ if eq (index .Data "language") "en" }}Hello!
+                {{ else if eq (index .Data "language") "kz" }}Сәлеметсіз бе!
+                {{ else }}Здравствуйте!{{ end }}
+              </p>
+              <p style="margin: 0 0 30px; font-size: 16px; line-height: 1.6; color: #333333;">
+                {{ if eq (index .Data "language") "en" }}You requested to change your email address. Please confirm your new email by clicking the button below.
+                {{ else if eq (index .Data "language") "kz" }}Сіз email мекенжайыңызды өзгертуді сұрадыңыз. Төмендегі батырманы басу арқылы жаңа email мекенжайыңызды растаңыз.
+                {{ else }}Вы запросили изменение email адреса. Пожалуйста, подтвердите ваш новый email, нажав на кнопку ниже.{{ end }}
+              </p>
+              
+              <!-- Button -->
+              <table role="presentation" style="width: 100%; margin: 30px 0;">
+                <tr>
+                  <td style="text-align: center;">
+                    <a href="{{ .ConfirmationURL }}" style="display: inline-block; padding: 14px 32px; background-color: #02404f; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 500; text-align: center;">
+                      {{ if eq (index .Data "language") "en" }}Confirm New Email
+                      {{ else if eq (index .Data "language") "kz" }}Жаңа Email Растау
+                      {{ else }}Подтвердить Новый Email{{ end }}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Alternative Link -->
+              <p style="margin: 30px 0 10px; font-size: 14px; line-height: 1.6; color: #666666;">
+                {{ if eq (index .Data "language") "en" }}Or copy and paste this link into your browser:
+                {{ else if eq (index .Data "language") "kz" }}Немесе осы сілтемені көшіріп, браузерге қойыңыз:
+                {{ else }}Или скопируйте и вставьте эту ссылку в браузер:{{ end }}
+              </p>
+              <p style="margin: 0 0 30px; font-size: 14px; line-height: 1.6; color: #02404f; word-break: break-all;">
+                <a href="{{ .ConfirmationURL }}" style="color: #02404f; text-decoration: underline;">{{ .ConfirmationURL }}</a>
+              </p>
+              
+              <!-- Footer Message -->
+              <p style="margin: 30px 0 0; font-size: 14px; line-height: 1.6; color: #666666;">
+                {{ if eq (index .Data "language") "en" }}If you didn't request this change, please contact support immediately.
+                {{ else if eq (index .Data "language") "kz" }}Егер сіз бұл өзгерісті сұрамаған болсаңыз, дереу қолдау қызметіне хабарласыңыз.
+                {{ else }}Если вы не запрашивали это изменение, пожалуйста, немедленно свяжитесь с поддержкой.{{ end }}
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #e5e5e5; background-color: #fafafa;">
+              <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #999999;">© 2026 BP Shop. All rights reserved.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

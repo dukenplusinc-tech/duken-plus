@@ -17,14 +17,22 @@ export async function login(data: { email: string; password: string }) {
 export async function recoverPassword({
   email,
   redirectTo,
+  locale,
 }: {
   email: string;
   redirectTo: string;
+  locale?: string;
 }) {
   const supabase = await createClient();
 
+  // Use provided locale or default to Russian
+  const userLanguage = locale || 'ru';
+
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,
+    data: {
+      language: userLanguage,
+    },
   });
 
   if (error) {

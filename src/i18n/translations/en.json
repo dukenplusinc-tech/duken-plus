@@ -220,6 +220,62 @@
     "submit": "Reset Password",
     "error_wrong_password": "Passwords do not match"
   },
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Get started with your shop management",
+    "step_indicator": "Step {current} of {total}",
+    "account": {
+      "title": "Account Information",
+      "form_label_email": "Email",
+      "form_placeholder_email": "your@email.com",
+      "form_label_password": "Password",
+      "form_placeholder_password": "Min 8 characters",
+      "form_label_password_confirm": "Confirm Password",
+      "form_placeholder_password_confirm": "Re-enter password",
+      "form_label_full_name": "Full Name",
+      "form_placeholder_full_name": "John Doe",
+      "form_label_phone": "Phone Number (optional)",
+      "form_placeholder_phone": "+7 (___) ___-__-__",
+      "password_strength": {
+        "weak": "Weak password",
+        "medium": "Medium password",
+        "strong": "Strong password"
+      }
+    },
+    "shop": {
+      "title": "Shop Details",
+      "form_label_shop_name": "Shop Name",
+      "form_placeholder_shop_name": "My Shop",
+      "form_label_city": "City",
+      "form_placeholder_city": "Select your city",
+      "form_label_address": "Address",
+      "form_placeholder_address": "123 Main Street"
+    },
+    "verify": {
+      "title": "Check Your Email",
+      "description": "We sent a verification link to {email}",
+      "instructions": "Click the link in the email to verify your account and complete registration.",
+      "resend_label": "Didn't receive the email?",
+      "resend_button": "Resend verification email",
+      "resend_success": "Verification email sent!",
+      "back_to_login": "Back to login"
+    },
+    "buttons": {
+      "next": "Next",
+      "back": "Back",
+      "register": "Create Account"
+    },
+    "errors": {
+      "email_exists": "This email is already registered",
+      "passwords_dont_match": "Passwords don't match",
+      "weak_password": "Password must be at least 8 characters",
+      "invalid_email": "Invalid email address",
+      "required_field": "This field is required",
+      "registration_failed": "Registration failed. Please try again."
+    },
+    "already_have_account": "Already have an account?",
+    "login_link": "Log in"
+  },
   "settings": {
     "title": "Settings",
     "general": {

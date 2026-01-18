@@ -30,9 +30,6 @@ export async function recoverPassword({
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,
-    data: {
-      language: userLanguage,
-    },
   });
 
   if (error) {

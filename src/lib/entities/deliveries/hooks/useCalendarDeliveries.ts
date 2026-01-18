@@ -26,13 +26,14 @@ export function useCalendarDeliveries(date: Date) {
     supabase
       .from('deliveries')
       .select(
-        'id, expected_date, status, is_consignement, amount_expected, contractor_id, contractors ( title ), created_at'
+        'id, expected_date, accepted_date, status, is_consignement, amount_expected, amount_received, contractor_id, contractors ( title ), created_at'
       )
       .or(
-        'status.eq.pending,status.eq.accepted,status.eq.due,is_consignement.eq.true'
+        `status.eq.pending,status.eq.accepted,status.eq.due,is_consignement.eq.true`
       )
-      .gte('expected_date', startDate)
-      .lte('expected_date', endDate)
+      .or(
+        `and(expected_date.gte.${startDate},expected_date.lte.${endDate}),and(status.eq.accepted,accepted_date.gte.${startDate},accepted_date.lte.${endDate})`
+      )
       .order('created_at', { ascending: true }),
     {
       revalidateOnFocus: false,

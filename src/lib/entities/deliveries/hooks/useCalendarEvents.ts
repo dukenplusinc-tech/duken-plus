@@ -12,6 +12,7 @@ import {
   CalendarExpense,
   useCalendarExpenses,
 } from '@/lib/entities/expenses/hooks/useCalendarExpenses';
+import { getAccountingDate } from '@/lib/entities/deliveries/utils/date';
 
 export type CalendarEvent =
   | {
@@ -59,7 +60,10 @@ export function useCalendarEvents(currentDate: Date) {
         (d as any).is_consignement || (d as any).is_consignment
       ),
       amount: (d.amount_received as any) ?? (d.amount_expected as any),
-      date: toYDM(d.expected_date),
+      date: (() => {
+        const accountingDate = getAccountingDate(d);
+        return accountingDate ? toYDM(accountingDate) : toYDM(d.expected_date);
+      })(),
       createdAt: (d.created_at as any)?.toString() ?? '',
     }));
 

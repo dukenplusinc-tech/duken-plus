@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import useSWR, { mutate } from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
+import { getAccountingDate } from '@/lib/entities/deliveries/utils/date';
 
 // --- total including expenses + deliveries ---
 const fetchTotal = async (date: string) => {
@@ -20,15 +21,21 @@ const fetchTotal = async (date: string) => {
       .from('deliveries')
       .select('*, contractors ( title )')
       .in('status', ['pending', 'accepted'])
-      .eq('expected_date', date),
+      .or(`expected_date.eq.${date},and(status.eq.accepted,accepted_date.eq.${date})`),
   ]);
 
   const expenses = expensesRes.data || [];
   const deliveries = deliveriesRes.data || [];
 
+  // Filter deliveries by accounting date (use accepted_date for overdue accepted)
+  const filteredDeliveries = deliveries.filter((d) => {
+    const accountingDate = getAccountingDate(d);
+    return accountingDate === date;
+  });
+
   const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
-  const totalDeliveries = deliveries.reduce(
+  const totalDeliveries = filteredDeliveries.reduce(
     (sum, d) => sum + Number(d.amount_received ?? d.amount_expected ?? 0),
     0
   );
@@ -50,17 +57,23 @@ const fetchAcceptedOnlySum = async (date: string) => {
 
     supabase
       .from('deliveries')
-      .select('amount_expected, amount_received, status')
+      .select('amount_expected, amount_received, status, expected_date, accepted_date')
       .eq('status', 'accepted')
-      .eq('expected_date', date),
+      .or(`expected_date.eq.${date},accepted_date.eq.${date}`),
   ]);
 
   const expenses = expensesRes.data || [];
   const deliveries = deliveriesRes.data || [];
 
+  // Filter deliveries by accounting date (use accepted_date for overdue accepted)
+  const filteredDeliveries = deliveries.filter((d) => {
+    const accountingDate = getAccountingDate(d);
+    return accountingDate === date;
+  });
+
   const totalExpenses = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
-  const totalDeliveries = deliveries.reduce(
+  const totalDeliveries = filteredDeliveries.reduce(
     (sum, d) => sum + Number(d.amount_received ?? d.amount_expected ?? 0),
     0
   );

@@ -2,6 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { useQuery } from '@supabase-cache-helpers/postgrest-swr';
 
 import { createClient } from '@/lib/supabase/client';
+import { getAccountingDate } from '@/lib/entities/deliveries/utils/date';
 
 /**
  * Hook to calculate expense info total that matches what's displayed in ExpenseInfo component.
@@ -24,12 +25,20 @@ export const useExpenseInfo = (date: string) => {
       .from('deliveries')
       .select('*, contractors ( title )')
       .in('status', ['pending', 'accepted'])
-      .eq('expected_date', date),
+      .or(`expected_date.eq.${date},and(status.eq.accepted,accepted_date.eq.${date})`),
     { revalidateOnFocus: false }
   );
 
   const expenses = useMemo(() => expensesData || [], [expensesData]);
-  const deliveries = useMemo(() => deliveriesData || [], [deliveriesData]);
+  
+  // Filter deliveries by accounting date (use accepted_date for overdue accepted)
+  const deliveries = useMemo(() => {
+    if (!deliveriesData) return [];
+    return deliveriesData.filter((d) => {
+      const accountingDate = getAccountingDate(d);
+      return accountingDate === date;
+    });
+  }, [deliveriesData, date]);
 
   // Helper to get the display amount for a delivery
   // If amount_received exists and differs from amount_expected, use amount_received

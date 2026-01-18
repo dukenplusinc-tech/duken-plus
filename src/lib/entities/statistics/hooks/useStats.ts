@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { createClient } from '@/lib/supabase/client';
+import { getAccountingDate } from '@/lib/entities/deliveries/utils/date';
 
 export type Period = 'day' | 'week' | 'month' | 'year';
 export type DeliveryStatus = 'pending' | 'accepted' | 'due' | 'canceled';
@@ -163,13 +164,15 @@ export function useShopStats(period: Period) {
       setError(null);
 
       // ---------- Deliveries ----------
+      // Get deliveries where expected_date is in range OR accepted_date is in range (for overdue accepted)
       const { data: deliveries, error: dErr } = await supabase
         .from('deliveries')
         .select(
           'id,contractor_id,status,is_consignement,consignment_status,consignment_due_date,expected_date,accepted_date,amount_expected,amount_received'
         )
-        .gte('expected_date', from)
-        .lt('expected_date', toExclusive)
+        .or(
+          `and(expected_date.gte.${from},expected_date.lt.${toExclusive}),and(status.eq.accepted,accepted_date.gte.${from},accepted_date.lt.${toExclusive})`
+        )
         .order('expected_date', { ascending: true });
 
       if (dErr) {
@@ -200,7 +203,7 @@ export function useShopStats(period: Period) {
       const overdueList: OverdueDelivery[] = [];
 
       rows.forEach((r) => {
-        const day = r.expected_date?.slice(0, 10);
+        const day = getAccountingDate(r);
         if (!day) return;
 
         // trend count

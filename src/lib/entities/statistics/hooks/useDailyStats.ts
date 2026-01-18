@@ -14,6 +14,7 @@ import type {
   ContractorRow,
 } from '@/lib/entities/statistics/types';
 import { getMonthRange, toISODate } from '@/lib/entities/statistics/utils/date';
+import { getAccountingDate } from '@/lib/entities/deliveries/utils/date';
 
 export { type DailyDelivery, type DailyExpense, type DayBreakdown } from '../types';
 
@@ -41,13 +42,15 @@ export function useDailyStats(monthAnchor: Date) {
       setLoading(true);
       setError(null);
 
+      // Get deliveries where expected_date is in range OR accepted_date is in range (for overdue accepted)
       const { data: deliveriesRows, error: deliveriesError } = await supabase
         .from('deliveries')
         .select(
           'id,contractor_id,status,is_consignement,consignment_status,consignment_due_date,expected_date,accepted_date,amount_expected,amount_received'
         )
-        .gte('expected_date', from)
-        .lt('expected_date', toExclusive)
+        .or(
+          `and(expected_date.gte.${from},expected_date.lt.${toExclusive}),and(status.eq.accepted,accepted_date.gte.${from},accepted_date.lt.${toExclusive})`
+        )
         .order('expected_date', { ascending: false });
 
       if (deliveriesError) {
@@ -106,7 +109,7 @@ export function useDailyStats(monthAnchor: Date) {
       let monthDeliveriesAmount = 0;
 
       deliveryRows.forEach((row) => {
-        const day = row.expected_date?.slice(0, 10);
+        const day = getAccountingDate(row);
         if (!day) return;
 
         const breakdown = ensureDay(day);

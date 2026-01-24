@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Duken Plus</string>
     <string name="title_activity_main">Duken Plus</string>
-    <string name="package_name">app.vercel.bekbo.shop</string>
-    <string name="custom_url_scheme">app.vercel.bekbo.shop</string>
+    <string name="package_name">kz.dukenplus.app</string>
+    <string name="custom_url_scheme">kz.dukenplus.app</string>
     
     <!-- Offline Screen Strings -->
     <string name="offline_title">Нет подключения</string>

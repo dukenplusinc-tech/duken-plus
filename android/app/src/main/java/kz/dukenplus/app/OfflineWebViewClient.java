@@ -1,4 +1,4 @@
-package app.vercel.bekbo.shop;
+package kz.dukenplus.app;
 
 import android.graphics.Bitmap;
 import android.net.http.SslError;

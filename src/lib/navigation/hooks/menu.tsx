@@ -84,7 +84,6 @@ const sideMenuBottom: MenuItem[] = [
     title: 'label_settings',
     href: fromUrl.toSettings(),
     icon: icons.settingsOutline,
-    scope: RoleScope.store,
   },
 ];
 

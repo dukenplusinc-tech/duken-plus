@@ -26,12 +26,14 @@ export async function recoverPassword({
   // Use provided locale or default to Russian
   const userLanguage = locale || 'ru';
 
-  // Send OTP for password recovery
+  // Use signInWithOtp for password recovery
+  // The magic_link template will check for type="recovery" in data and show OTP token
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
       data: {
         language: userLanguage,
+        type: 'recovery', // Indicate this is for password recovery
       },
       shouldCreateUser: false,
     },

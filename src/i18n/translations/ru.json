@@ -213,13 +213,19 @@
   },
   "reset_pass": {
     "title": "Сброс пароля",
-    "subtitle": "Введите новый пароль",
+    "subtitle": "Введите код и новый пароль",
+    "form_label_otp": "Введите 8-значный код",
+    "form_placeholder_otp": "00000000",
+    "otp_description": "Введите 8-значный код, отправленный на вашу электронную почту",
+    "verify_otp": "Подтвердить код",
     "form_label_password": "Новый пароль",
     "form_placeholder_password": "Введите новый пароль",
     "form_label_password_confirm": "Повторите пароль",
     "form_placeholder_password_confirm": "Введите новый пароль еще раз",
     "submit": "Сбросить пароль",
-    "error_wrong_password": "Пароли не совпадают"
+    "error_wrong_password": "Пароли не совпадают",
+    "error_invalid_otp": "Пожалуйста, введите действительный 8-значный код",
+    "back_to_login": "Вернуться к входу"
   },
   "register": {
     "title": "Создать аккаунт",

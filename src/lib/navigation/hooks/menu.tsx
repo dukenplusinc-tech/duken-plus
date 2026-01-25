@@ -5,6 +5,7 @@ import * as icons from 'ionicons/icons';
 
 import { RoleScope } from '@/lib/entities/roles/types';
 import { useUserRole } from '@/lib/entities/users/hooks/useUserRole';
+import { useEmployeeMode } from '@/lib/entities/employees/context';
 import * as fromUrl from '@/lib/url/generator';
 
 export interface MenuItem {
@@ -12,6 +13,7 @@ export interface MenuItem {
   href: string;
   icon?: string;
   scope?: RoleScope;
+  hideForEmployees?: boolean;
 }
 
 const sideMenu: MenuItem[] = [
@@ -84,25 +86,33 @@ const sideMenuBottom: MenuItem[] = [
     title: 'label_settings',
     href: fromUrl.toSettings(),
     icon: icons.settingsOutline,
+    hideForEmployees: true,
   },
 ];
 
 export function useFilterByScope(list: MenuItem[]) {
   const role = useUserRole();
+  const employeeMode = useEmployeeMode();
 
   return useMemo(() => {
     if (!role) {
       return [];
     }
 
-    return list.filter(({ scope }) => {
+    return list.filter(({ scope, hideForEmployees }) => {
+      // Hide items marked for employees
+      if (hideForEmployees && employeeMode.isEmployee) {
+        return false;
+      }
+
+      // Filter by scope if specified
       if (!scope) {
         return true;
       }
 
       return role.scope.includes(scope as string);
     });
-  }, [list, role]);
+  }, [list, role, employeeMode.isEmployee]);
 }
 
 const headerMenu = [...sideMenu, ...sideMenuBottom];

@@ -213,13 +213,19 @@
   },
   "reset_pass": {
     "title": "Reset Password",
-    "subtitle": "Enter your new password",
+    "subtitle": "Enter code and new password",
+    "form_label_otp": "Enter 8-digit code",
+    "form_placeholder_otp": "00000000",
+    "otp_description": "Enter the 8-digit code sent to your email",
+    "verify_otp": "Verify Code",
     "form_label_password": "New Password",
     "form_placeholder_password": "Your new password",
     "form_label_password_confirm": "Repeat password",
     "form_placeholder_password_confirm": "Your password again",
     "submit": "Reset Password",
-    "error_wrong_password": "Passwords do not match"
+    "error_wrong_password": "Passwords do not match",
+    "error_invalid_otp": "Please enter a valid 8-digit code",
+    "back_to_login": "Back to login"
   },
   "register": {
     "title": "Create Account",

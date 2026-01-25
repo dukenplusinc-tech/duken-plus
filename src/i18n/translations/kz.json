@@ -213,13 +213,19 @@
   },
   "reset_pass": {
     "title": "Құпия сөзді қалпына келтіру",
-    "subtitle": "Жаңа құпия сөзді енгізіңіз",
+    "subtitle": "Кодты және жаңа құпия сөзді енгізіңіз",
+    "form_label_otp": "8 таңбалы кодты енгізіңіз",
+    "form_placeholder_otp": "00000000",
+    "otp_description": "Электрондық поштаңызға жіберілген 8 таңбалы кодты енгізіңіз",
+    "verify_otp": "Кодты растау",
     "form_label_password": "Жаңа құпия сөз",
     "form_placeholder_password": "Жаңа құпия сөзіңізді енгізіңіз",
     "form_label_password_confirm": "Құпия сөзді қайталау",
     "form_placeholder_password_confirm": "Құпия сөзіңізді қайта енгізіңіз",
     "submit": "Құпия сөзді қалпына келтіру",
-    "error_wrong_password": "Құпия сөздер сәйкес келмейді"
+    "error_wrong_password": "Құпия сөздер сәйкес келмейді",
+    "error_invalid_otp": "Жарамды 8 таңбалы кодты енгізіңіз",
+    "back_to_login": "Кіруге оралу"
   },
   "register": {
     "title": "Аккаунт құру",

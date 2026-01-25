@@ -11,6 +11,7 @@ DECLARE
   v_shop_name text;
   v_city text;
   v_address text;
+  v_language text;
 BEGIN
   -- Extract metadata
   v_full_name := new.raw_user_meta_data->>'full_name';
@@ -18,10 +19,11 @@ BEGIN
   v_shop_name := new.raw_user_meta_data->>'shop_name';
   v_city := new.raw_user_meta_data->>'city';
   v_address := new.raw_user_meta_data->>'address';
+  v_language := COALESCE(new.raw_user_meta_data->>'language', 'ru');
 
   -- Create profile
-  insert into public.profiles (id, full_name, avatar_url, phone)
-  values (new.id, v_full_name, new.raw_user_meta_data->>'avatar_url', v_phone);
+  insert into public.profiles (id, full_name, avatar_url, phone, language)
+  values (new.id, v_full_name, new.raw_user_meta_data->>'avatar_url', v_phone, v_language);
 
   -- If shop metadata exists, create shop and link profile
   IF v_shop_name IS NOT NULL AND v_shop_name != '' THEN

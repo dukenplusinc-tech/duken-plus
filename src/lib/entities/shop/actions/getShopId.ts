@@ -13,7 +13,7 @@ export async function getShopId(): Promise<string> {
     throw new Error('Cannot get User ID');
   }
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('shop_id')
     .eq('id', user?.id!)

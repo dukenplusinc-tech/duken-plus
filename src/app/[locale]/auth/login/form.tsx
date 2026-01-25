@@ -1,8 +1,8 @@
 'use client';
 
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { TriangleAlertIcon } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 
@@ -19,12 +19,22 @@ import { translateAuthError } from '@/lib/auth/utils/translate-auth-error';
 export const LoginForm: FC = () => {
   const t = useTranslations('auth');
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'login' | 'password-recover'>('login');
 
-  const router = useRouter();
+  // Check for error query parameter on mount
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+    if (errorParam === 'profile_not_found') {
+      setError(t('errors.profile_not_found') || 'Profile not found. Please contact support.');
+      // Clean up URL
+      router.replace(fromUrl.toSignIn());
+    }
+  }, [searchParams, router, t]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +54,6 @@ export const LoginForm: FC = () => {
       const email = formData.get('email') as string;
       response = await recoverPassword({
         email,
-        redirectTo: fromUrl.fullUrl(fromUrl.toResetPassword()),
         locale: locale,
       });
     }
@@ -57,11 +66,9 @@ export const LoginForm: FC = () => {
       if (mode === 'login') {
         router.replace(fromUrl.toInit());
       } else {
-        setMode('login');
-        toast({
-          title: t('toast.recover.title'),
-          description: t('toast.recover.description'),
-        });
+        // Redirect to reset password page with email
+        const email = (document.querySelector('input[name="email"]') as HTMLInputElement)?.value;
+        router.push(`${fromUrl.toResetPassword()}?email=${encodeURIComponent(email)}`);
       }
     }
   };

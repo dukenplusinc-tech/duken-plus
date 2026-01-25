@@ -53,6 +53,13 @@ export const ShopStep: FC<ShopStepProps> = ({ data, onChange, errors }) => {
     return map;
   }, [cities]);
 
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    // Scroll input into view when focused, with some offset for mobile keyboards
+    setTimeout(() => {
+      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  };
+
   return (
     <div className="space-y-5">
       {/* Shop Name Field */}
@@ -68,6 +75,7 @@ export const ShopStep: FC<ShopStepProps> = ({ data, onChange, errors }) => {
           placeholder={t('form_placeholder_shop_name')}
           value={data.shopName}
           onChange={(e) => onChange({ shopName: e.target.value })}
+          onFocus={handleInputFocus}
           className="h-11 text-base sm:h-10 sm:text-sm"
           autoComplete="organization"
           autoCapitalize="words"
@@ -141,6 +149,7 @@ export const ShopStep: FC<ShopStepProps> = ({ data, onChange, errors }) => {
           placeholder={t('form_placeholder_address')}
           value={data.address}
           onChange={(e) => onChange({ address: e.target.value })}
+          onFocus={handleInputFocus}
           className="h-11 text-base sm:h-10 sm:text-sm"
           autoComplete="street-address"
           autoCapitalize="words"

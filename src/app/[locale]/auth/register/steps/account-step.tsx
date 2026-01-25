@@ -38,6 +38,13 @@ export const AccountStep: FC<AccountStepProps> = ({ data, onChange, errors }) =>
 
   const passwordStrength = data.password ? getPasswordStrength(data.password) : null;
 
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    // Scroll input into view when focused, with some offset for mobile keyboards
+    setTimeout(() => {
+      e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  };
+
   return (
     <div className="space-y-5">
       {/* Email Field */}
@@ -53,6 +60,7 @@ export const AccountStep: FC<AccountStepProps> = ({ data, onChange, errors }) =>
           placeholder={t('form_placeholder_email')}
           value={data.email}
           onChange={(e) => onChange({ email: e.target.value })}
+          onFocus={handleInputFocus}
           className="h-11 text-base sm:h-10 sm:text-sm"
           autoComplete="email"
           autoFocus
@@ -76,6 +84,7 @@ export const AccountStep: FC<AccountStepProps> = ({ data, onChange, errors }) =>
             placeholder={t('form_placeholder_password')}
             value={data.password}
             onChange={(e) => onChange({ password: e.target.value })}
+            onFocus={handleInputFocus}
             className="h-11 text-base sm:h-10 sm:text-sm pr-10"
             autoComplete="new-password"
           />
@@ -118,6 +127,7 @@ export const AccountStep: FC<AccountStepProps> = ({ data, onChange, errors }) =>
             placeholder={t('form_placeholder_password_confirm')}
             value={data.passwordConfirm}
             onChange={(e) => onChange({ passwordConfirm: e.target.value })}
+            onFocus={handleInputFocus}
             className="h-11 text-base sm:h-10 sm:text-sm pr-10"
             autoComplete="new-password"
           />
@@ -154,6 +164,7 @@ export const AccountStep: FC<AccountStepProps> = ({ data, onChange, errors }) =>
           placeholder={t('form_placeholder_full_name')}
           value={data.fullName}
           onChange={(e) => onChange({ fullName: e.target.value })}
+          onFocus={handleInputFocus}
           className="h-11 text-base sm:h-10 sm:text-sm"
           autoComplete="name"
           autoCapitalize="words"

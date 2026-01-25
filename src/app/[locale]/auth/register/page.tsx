@@ -16,16 +16,16 @@ export default async function RegisterPage({
   const t = await getTranslations('register');
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-background via-background to-muted/20 lg:grid lg:grid-cols-2 relative">
+    <div className="min-h-screen w-full bg-gradient-to-br from-background via-background to-muted/20 lg:grid lg:grid-cols-2 relative overflow-hidden">
       {/* Main Content - Mobile First */}
-      <div className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative">
+      <div className="flex min-h-screen flex-col items-center justify-start lg:justify-center p-4 sm:p-6 lg:p-8 relative overflow-y-auto">
         {/* Language Switcher - Top Right */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
           <LanguageSwitcher />
         </div>
 
         {/* Registration Card */}
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md space-y-6 my-auto lg:my-0 py-8 lg:py-0">
           <Card className="border-0 shadow-lg sm:shadow-xl">
             <CardHeader className="space-y-3 text-center pb-4">
               <div className="space-y-2">

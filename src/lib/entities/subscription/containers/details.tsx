@@ -33,6 +33,10 @@ export function SubscriptionDisplayInfo({
         </div>
 
         <div className="space-y-1">
+          <p className="text-center text-gray-500">{t('tariff_label')}</p>
+        </div>
+
+        <div className="space-y-1">
           <p className="text-center text-gray-500">{t('id_label')}:</p>
           <p className="text-center text-xl font-bold">{shop.code}</p>
         </div>

@@ -24,7 +24,7 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
 
   const dialog = useModalDialog();
 
-  const { form, isProcessing, handleSubmit } = useAddCashRegisterEntry(props);
+  const { form, isProcessing, handleSubmit, isAddedByReady } = useAddCashRegisterEntry(props);
 
   const input = useRef<HTMLIonInputElement>(null);
 
@@ -118,7 +118,7 @@ export const AddCashRegisterEntry: FC<DebtorAddCashRegisterEntryParams> = (
 
           <div className="flex flex-1 justify-end">
             <Button
-              disabled={isProcessing}
+              disabled={isProcessing || !isAddedByReady}
               type="submit"
               variant="success"
               className="flex-1"

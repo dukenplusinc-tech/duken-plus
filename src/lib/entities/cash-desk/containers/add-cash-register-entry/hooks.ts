@@ -37,7 +37,7 @@ export function useAddCashRegisterEntry({
 
   const added_by = useAddedBy();
 
-  return useForm<typeof schema, CashRegisterPayload>({
+  const formState = useForm<typeof schema, CashRegisterPayload>({
     defaultValues,
     request: async (values) => {
       values.added_by = added_by;
@@ -51,4 +51,6 @@ export function useAddCashRegisterEntry({
       description: t('cash_entry_added_description'),
     },
   });
+
+  return { ...formState, isAddedByReady: !!added_by };
 }

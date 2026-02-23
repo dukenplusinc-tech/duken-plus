@@ -24,7 +24,12 @@ export function useAddTransferModal() {
   }, [refreshShift, refreshStats]);
 
   return useCallback(
-    (props?: Omit<AddTransferModalProps, 'onSuccess'>) => {
+    (props?: AddTransferModalProps) => {
+      const externalOnSuccess = props?.onSuccess;
+      const chainedOnSuccess = async () => {
+        await handleSuccess();
+        externalOnSuccess?.();
+      };
       dialog.launch({
         dialog: true,
         autoClose: false,
@@ -33,8 +38,8 @@ export function useAddTransferModal() {
         render: (
           <AddTransferModalForm
             type={CashRegisterType.BANK_TRANSFER}
-            onSuccess={handleSuccess}
             {...props}
+            onSuccess={chainedOnSuccess}
           />
         ),
       });

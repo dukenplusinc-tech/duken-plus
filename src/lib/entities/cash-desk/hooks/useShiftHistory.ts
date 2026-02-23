@@ -250,7 +250,7 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
     ? `${formatLocalDate(dateRange.from)}-${dateRange.to ? formatLocalDate(dateRange.to) : ''}` 
     : 'no-date';
 
-  const { data, error, isLoading, mutate } = useSWR(
+  const { data, error, isLoading, isValidating, mutate } = useSWR(
     `shift-history-${page}-${limit}-${dateKey}`,
     fetcher,
     {
@@ -263,8 +263,9 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
       data,
       error,
       isLoading,
+      isRefreshing: isValidating && !isLoading,
       refresh: () => mutate(),
     };
-  }, [data, error, isLoading, mutate]);
+  }, [data, error, isLoading, isValidating, mutate]);
 };
 

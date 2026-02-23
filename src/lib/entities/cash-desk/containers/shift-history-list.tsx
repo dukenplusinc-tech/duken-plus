@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -23,11 +23,13 @@ interface ShiftHistoryItem extends CashShiftDashboard {
 interface ShiftHistoryListProps {
   shifts: ShiftHistoryItem[];
   onShiftClick?: (shift: ShiftHistoryItem) => void;
+  isLoading?: boolean;
 }
 
 export function ShiftHistoryList({
   shifts,
   onShiftClick,
+  isLoading,
 }: ShiftHistoryListProps) {
   const t = useTranslations('cash_desk.shifts');
 
@@ -105,8 +107,9 @@ export function ShiftHistoryList({
                   </div>
                 </div>
                 <div className="mt-2">
-                  <div className="font-medium">
+                  <div className="font-medium flex items-center gap-1.5">
                     <Money>{getTotalAmount(shift)}</Money>
+                    {isLoading && <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">
                     {t('bank_transfer')}: {getBankAmount(shift).toLocaleString()},{' '}

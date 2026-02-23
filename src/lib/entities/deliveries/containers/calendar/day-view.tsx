@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useCalendarEvents } from '@/lib/entities/deliveries/hooks/useCalendarEvents';
 import { useSafeTranslations } from '@/lib/hooks/use-safe-translations';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Money } from '@/components/numbers/money';
 
 interface DayViewProps {
@@ -16,7 +17,7 @@ export default function DayView({ currentDate }: DayViewProps) {
   const t = useTranslations('calendar');
   const { safe } = useSafeTranslations('statistics.delivery');
 
-  const { eventsForDay } = useCalendarEvents(currentDate);
+  const { eventsForDay, isLoading } = useCalendarEvents(currentDate);
 
   // Color logic per event kind / status
   const items = useMemo(() => {
@@ -73,7 +74,13 @@ export default function DayView({ currentDate }: DayViewProps) {
       </div>
 
       <div className="space-y-2">
-        {items.length === 0 ? (
+        {isLoading ? (
+          <>
+            <Skeleton className="h-16 w-full rounded-md" />
+            <Skeleton className="h-16 w-full rounded-md" />
+            <Skeleton className="h-16 w-full rounded-md" />
+          </>
+        ) : items.length === 0 ? (
           <p className="text-muted-foreground text-center">{t('empty_text')}</p>
         ) : (
           items.map((ev) => (
@@ -102,10 +109,14 @@ export default function DayView({ currentDate }: DayViewProps) {
         )}
       </div>
 
-      <div className="mt-8 rounded-md border bg-muted/40 p-3 flex items-center justify-between text-sm font-medium">
-        <span>{t('total_label')}</span>
-        <Money>{totalAmount}</Money>
-      </div>
+      {isLoading ? (
+        <Skeleton className="mt-8 h-11 w-full rounded-md" />
+      ) : (
+        <div className="mt-8 rounded-md border bg-muted/40 p-3 flex items-center justify-between text-sm font-medium">
+          <span>{t('total_label')}</span>
+          <Money>{totalAmount}</Money>
+        </div>
+      )}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { ymdLocal } from '@/lib/entities/deliveries/containers/calendar/time-uti
 import { useCalendarEvents } from '@/lib/entities/deliveries/hooks/useCalendarEvents';
 import { useSafeTranslations } from '@/lib/hooks/use-safe-translations';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface MonthViewProps {
   currentDate: Date;
@@ -23,7 +24,7 @@ export default function MonthView({
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  const { flagsByDay } = useCalendarEvents(currentDate);
+  const { flagsByDay, isLoading } = useCalendarEvents(currentDate);
 
   const monthNames = t.raw('months') as string[];
   const dayNames = t.raw('day_names') as string[];
@@ -142,7 +143,18 @@ export default function MonthView({
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
+            <div className="relative">
+              <div className="grid grid-cols-7 gap-1">{renderCalendar()}</div>
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center rounded-md bg-background/60 backdrop-blur-[1px]">
+                  <div className="flex gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-primary animate-bounce [animation-delay:0ms]" />
+                    <span className="h-2 w-2 rounded-full bg-primary animate-bounce [animation-delay:150ms]" />
+                    <span className="h-2 w-2 rounded-full bg-primary animate-bounce [animation-delay:300ms]" />
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Legend */}
             <div className="mt-6 pt-4 border-t">

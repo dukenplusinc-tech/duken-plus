@@ -66,7 +66,9 @@ export default function TransactionList({
                       {transaction.bank_name}
                     </Badge>
                   )}
-                  <Money className="font-bold mr-2">{transaction.amount}</Money>
+                  <Money fullAmount className="font-bold mr-2">
+                    {transaction.amount}
+                  </Money>
                 </div>
               </div>
             ))}

@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
 
+import { getServerTime } from '@/lib/entities/cash-desk/actions/getServerTime';
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/types';
 
@@ -16,12 +17,19 @@ interface CurrentShiftData extends CashShiftDashboard {
   status: 'open' | 'closed' | 'auto_closed';
   opened_by?: string | null;
   closed_by?: string | null;
+  clockOffset: number;
 }
 
 export const useCurrentShift = () => {
   const supabase = createClient();
 
   const fetcher = async () => {
+    // Measure clock offset against the server
+    const before = Date.now();
+    const serverTime = await getServerTime();
+    const after = Date.now();
+    const clockOffset = serverTime - Math.round((before + after) / 2);
+
     // Get current open shift from dashboard view
     const { data: dashboard, error: dashboardError } = await supabase
       .from('cash_shift_dashboard')
@@ -53,11 +61,12 @@ export const useCurrentShift = () => {
     return {
       ...dashboard,
       ...shift,
+      clockOffset,
     } as CurrentShiftData;
   };
 
   const { data, error, isLoading, mutate } = useSWR('current-shift', fetcher, {
-    refreshInterval: 1000, // Refresh every second for countdown
+    refreshInterval: 30000, // 30 seconds — closes_at is static; countdown updates locally
     revalidateOnFocus: true,
   });
 
@@ -70,9 +79,3 @@ export const useCurrentShift = () => {
     };
   }, [data, error, isLoading, mutate]);
 };
-
-
-
-
-
-

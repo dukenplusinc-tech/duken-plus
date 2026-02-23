@@ -5,15 +5,16 @@ import { useTranslations } from 'next-intl';
 
 interface ShiftCountdownProps {
   closesAt: string;
+  clockOffset?: number;
 }
 
-export function ShiftCountdown({ closesAt }: ShiftCountdownProps) {
+export function ShiftCountdown({ closesAt, clockOffset = 0 }: ShiftCountdownProps) {
   const t = useTranslations('cash_desk.shifts');
   const [timeRemaining, setTimeRemaining] = useState<string>('');
 
   useEffect(() => {
     const updateCountdown = () => {
-      const now = new Date().getTime();
+      const now = Date.now() + clockOffset;
       const closeTime = new Date(closesAt).getTime();
       const difference = closeTime - now;
 
@@ -32,7 +33,7 @@ export function ShiftCountdown({ closesAt }: ShiftCountdownProps) {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, [closesAt]);
+  }, [closesAt, clockOffset]);
 
   return (
     <span className="text-sm text-muted-foreground">
@@ -40,9 +41,3 @@ export function ShiftCountdown({ closesAt }: ShiftCountdownProps) {
     </span>
   );
 }
-
-
-
-
-
-

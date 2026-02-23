@@ -113,7 +113,7 @@ export default function CashRegisterPage() {
                       number: currentShift.shift_number,
                     })}
                   </div>
-                  <ShiftCountdown closesAt={currentShift.closes_at} />
+                  <ShiftCountdown closesAt={currentShift.closes_at} clockOffset={currentShift.clockOffset} />
                 </div>
                 <div className="flex gap-2 mb-2">
                   <Button

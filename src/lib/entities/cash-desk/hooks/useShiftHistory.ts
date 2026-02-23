@@ -6,6 +6,7 @@ import type { DateRange } from 'react-day-picker';
 
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/types';
+import { todayInTZ, toDateStringTZ, startOfDayTZ, endOfDayTZ } from '@/lib/utils/tz';
 
 type CashShiftDashboard = Database['public']['Views']['cash_shift_dashboard']['Row'];
 
@@ -21,25 +22,6 @@ interface ShiftHistoryItem extends CashShiftDashboard {
 export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?: DateRange) => {
   const supabase = createClient();
 
-  // Helper to format date in local timezone as YYYY-MM-DD
-  const formatLocalDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  // Helper to get start of day in local timezone as UTC ISO string
-  const getStartOfDayUTC = (date: Date): string => {
-    const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-    return localDate.toISOString();
-  };
-
-  // Helper to get end of day in local timezone as UTC ISO string
-  const getEndOfDayUTC = (date: Date): string => {
-    const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
-    return localDate.toISOString();
-  };
 
   const fetcher = async () => {
     const offset = (page - 1) * limit;
@@ -47,11 +29,11 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
     // Check if the selected date range includes today
     let isTodayInRange = false;
     if (dateRange?.from) {
-      const today = formatLocalDate(new Date());
-      const startDate = formatLocalDate(dateRange.from);
-      const endDateOnly = dateRange.to 
-        ? formatLocalDate(dateRange.to)
-        : formatLocalDate(dateRange.from);
+      const today = todayInTZ();
+      const startDate = toDateStringTZ(dateRange.from);
+      const endDateOnly = dateRange.to
+        ? toDateStringTZ(dateRange.to)
+        : toDateStringTZ(dateRange.from);
       isTodayInRange = startDate <= today && today <= endDateOnly;
     }
 
@@ -62,10 +44,10 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
       // If today is in range, we need to include:
       // 1. All open shifts (regardless of opened_at date)
       // 2. Shifts opened in the date range (including closed ones)
-      const startDate = getStartOfDayUTC(dateRange.from);
-      const endDate = dateRange.to 
-        ? getEndOfDayUTC(dateRange.to)
-        : getEndOfDayUTC(dateRange.from);
+      const startDate = startOfDayTZ(dateRange.from);
+      const endDate = dateRange.to
+        ? endOfDayTZ(dateRange.to)
+        : endOfDayTZ(dateRange.from);
 
       // Get all open shifts
       const { data: openShifts, error: openError } = await supabase
@@ -143,10 +125,10 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
       count = shiftMap.size;
     } else if (dateRange?.from) {
       // If today is not in range, just filter by opened_at
-      const startDate = getStartOfDayUTC(dateRange.from);
-      const endDate = dateRange.to 
-        ? getEndOfDayUTC(dateRange.to)
-        : getEndOfDayUTC(dateRange.from);
+      const startDate = startOfDayTZ(dateRange.from);
+      const endDate = dateRange.to
+        ? endOfDayTZ(dateRange.to)
+        : endOfDayTZ(dateRange.from);
 
       const { data: dateShifts, error: dateError, count: dateCount } = await supabase
         .from('cash_shift_dashboard')
@@ -246,8 +228,8 @@ export const useShiftHistory = (page: number = 1, limit: number = 30, dateRange?
     };
   };
 
-  const dateKey = dateRange?.from 
-    ? `${formatLocalDate(dateRange.from)}-${dateRange.to ? formatLocalDate(dateRange.to) : ''}` 
+  const dateKey = dateRange?.from
+    ? `${toDateStringTZ(dateRange.from)}-${dateRange.to ? toDateStringTZ(dateRange.to) : ''}`
     : 'no-date';
 
   const { data, error, isLoading, isValidating, mutate } = useSWR(

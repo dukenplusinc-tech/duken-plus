@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { formatTZ } from '@/lib/utils/tz';
 import { useTranslations } from 'next-intl';
 
 import type { CashRegister as Transaction } from '@/lib/entities/cash-desk/schema';
@@ -19,7 +19,7 @@ export default function TransactionList({
 
   transactions.forEach((transaction) => {
     const date = transaction.date
-      ? format(new Date(transaction.date), 'dd.MM.yyyy')
+      ? formatTZ(transaction.date, 'dd.MM.yyyy')
       : '---';
 
     if (!groupedTransactions[date]) {
@@ -55,7 +55,7 @@ export default function TransactionList({
                     {transaction.date && (
                       <>
                         {' • '}
-                        {format(new Date(transaction.date), 'HH:mm')}
+                        {formatTZ(transaction.date, 'HH:mm')}
                       </>
                     )}
                   </div>

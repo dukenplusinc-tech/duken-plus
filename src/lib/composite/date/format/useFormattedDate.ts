@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { Locale as DateFnsLocale, enUS, ru } from 'date-fns/locale';
 import { useLocale } from 'next-intl';
 
 import { Locale } from '@/config/languages';
+import { formatTZ } from '@/lib/utils/tz';
 
 const localeMap: Record<Locale, DateFnsLocale> = {
   en: enUS,
@@ -22,7 +23,7 @@ export const useFormattedDate = (
   useEffect(() => {
     if (datetime) {
       const date = parseISO(datetime);
-      const formatted = format(date, dateFormat, { locale });
+      const formatted = formatTZ(date, dateFormat, { locale });
       setFormattedDate(formatted);
     }
   }, [datetime, dateFormat, locale]);

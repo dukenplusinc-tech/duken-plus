@@ -2,6 +2,7 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-swr';
 
 import { createClient } from '@/lib/supabase/client';
 import { Database } from '@/lib/supabase/types';
+import { toDateStringTZ } from '@/lib/utils/tz';
 
 const supabase = createClient();
 
@@ -18,8 +19,8 @@ export function useCalendarDeliveries(date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth(); // 0-based
 
-  const startDate = new Date(year, month, 1).toISOString().slice(0, 10);
-  const endDate = new Date(year, month + 1, 0).toISOString().slice(0, 10);
+  const startDate = toDateStringTZ(new Date(year, month, 1));
+  const endDate = toDateStringTZ(new Date(year, month + 1, 0));
 
   return useQuery<DeliveryWithContractor[]>(
     // @ts-ignore

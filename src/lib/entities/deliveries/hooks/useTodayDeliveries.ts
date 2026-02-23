@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { format } from 'date-fns';
 import useSWR, { mutate } from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
+import { todayInTZ } from '@/lib/utils/tz';
 
 const fetchDeliveryStats = async () => {
   const supabase = createClient();
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = todayInTZ();
 
   // Get deliveries with status = pending OR accepted, from today onwards
   const { data, error } = await supabase

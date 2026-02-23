@@ -9,6 +9,7 @@ import {
   TransactionType,
 } from '@/lib/entities/debtors/schema';
 import { cn } from '@/lib/utils';
+import { formatTZ } from '@/lib/utils/tz';
 import { DropdownButton } from '@/components/ui/ionic/dropdown';
 
 interface DebtorTransactionItemProps {
@@ -24,23 +25,12 @@ const LocalDateTimeDisplay: FC<LocalDateTimeDisplayProps> = ({
 }) => {
   if (!utcDateString) return null;
 
-  // Treat the date string as UTC (append 'Z' if not already present to indicate UTC)
-  // Format: '2025-12-20T13:13:01.607648' -> '2025-12-20T13:13:01.607648Z'
-  const utcDateStringWithZ = utcDateString.endsWith('Z')
-    ? utcDateString
-    : `${utcDateString}Z`;
-  
-  // Parse as UTC and convert to local timezone for display
-  const date = new Date(utcDateStringWithZ);
+  const normalized = utcDateString.endsWith('Z') ? utcDateString : `${utcDateString}Z`;
 
   return (
     <>
-      <div>
-        {date.toLocaleDateString()}
-      </div>
-      <div>
-        {date.toLocaleTimeString()}
-      </div>
+      <div>{formatTZ(normalized, 'dd.MM.yyyy')}</div>
+      <div>{formatTZ(normalized, 'HH:mm:ss')}</div>
     </>
   );
 };

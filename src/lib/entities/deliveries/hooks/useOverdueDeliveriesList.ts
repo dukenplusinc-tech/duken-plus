@@ -2,10 +2,11 @@ import useSWR from 'swr';
 
 import { createClient } from '@/lib/supabase/client';
 import type { DeliveryItem } from '@/lib/entities/deliveries/hooks/useTodayDeliveriesList';
+import { todayInTZ } from '@/lib/utils/tz';
 
 export const useOverdueDeliveriesList = () => {
   const supabase = createClient();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayInTZ();
 
   return useSWR(['overdueDeliveriesList'], async () => {
     const query = supabase

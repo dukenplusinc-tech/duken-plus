@@ -2,8 +2,8 @@
 
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { formatTZ } from '@/lib/utils/tz';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Money } from '@/components/numbers/money';
@@ -35,7 +35,7 @@ export function ShiftHistoryList({
 
   const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
-    return format(date, 'dd.MM.yyyy в HH:mm', { locale: ru });
+    return formatTZ(date, 'dd.MM.yyyy в HH:mm', { locale: ru });
   };
 
   const getTotalAmount = (shift: ShiftHistoryItem) => {

@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
+import { toDateStringTZ } from '@/lib/utils/tz';
 
 export function toSupabaseDateString(date: Date): string {
-  return format(date, 'yyyy-MM-dd');
+  return toDateStringTZ(date);
 }

@@ -25,6 +25,8 @@ export const AddDeliveryForm: FC = () => {
 
   const handleClose = useCallback(() => dialog.close(), [dialog]);
 
+  const canSubmit = Boolean(form.watch('contractor_id'));
+
   return (
     <IonList>
       <form onSubmit={handleSubmit}>
@@ -75,7 +77,7 @@ export const AddDeliveryForm: FC = () => {
           <Button variant="link" onClick={handleClose}>
             {t('cancel')}
           </Button>
-          <Button type="submit" loading={isProcessing}>
+          <Button type="submit" disabled={!canSubmit} loading={isProcessing}>
             {t('submit')}
           </Button>
         </div>

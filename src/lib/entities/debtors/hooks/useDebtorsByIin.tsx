@@ -39,7 +39,7 @@ export const useDebtorsByIin = (iin: string | null | undefined) => {
     return data || [];
   };
 
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, isValidating } = useSWR(
     iin ? `debtors-by-iin-${iin}` : null,
     fetcher,
     {
@@ -56,7 +56,7 @@ export const useDebtorsByIin = (iin: string | null | undefined) => {
   return {
     data: data || [],
     error,
-    isLoading,
+    isLoading: isLoading || isValidating,
     refresh,
   };
 };

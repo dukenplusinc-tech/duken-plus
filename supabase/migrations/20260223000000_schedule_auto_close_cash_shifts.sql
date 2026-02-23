@@ -6,7 +6,7 @@ begin
   ) then
     perform cron.schedule(
       'auto-close-cash-shifts',
-      '*/15 * * * *',
+      '0 * * * *',
       'select public.auto_close_cash_shifts();'
     );
   end if;

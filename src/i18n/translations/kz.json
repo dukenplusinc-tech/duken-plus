@@ -80,6 +80,7 @@
       "default": "Жарамсыз мән",
       "password_mismatch": "Құпия сөздер сәйкес келмейді",
       "consignment_date_required": "Консигнация күні міндетті",
+      "reschedule_date_required": "Жаңа жеткізу күні міндетті",
       "debtor_full_name_required": "Толық аты-жөні міндетті",
       "debtor_iin_invalid": "ЖСН дәл рөлде 12 сандан тұруы керек",
       "debtor_phone_invalid": "Жарамсыз телефон нөмірі",

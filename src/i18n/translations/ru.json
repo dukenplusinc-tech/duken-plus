@@ -80,6 +80,7 @@
       "default": "Неверное значение",
       "password_mismatch": "Пароли не совпадают",
       "consignment_date_required": "Дата консигнации обязательна",
+      "reschedule_date_required": "Новая дата доставки обязательна",
       "debtor_full_name_required": "Полное имя обязательно",
       "debtor_iin_invalid": "ИИН должен состоять ровно из 12 цифр",
       "debtor_phone_invalid": "Неверный номер телефона",

@@ -8,21 +8,22 @@ export const deliveryFormSchema = z.object({
 
 export type DeliveryFormValues = z.infer<typeof deliveryFormSchema>;
 
-export const acceptDeliveryFormSchema = z.object({
-  amount_received: z.coerce.number().min(0.01),
-  is_consignement: z.boolean().default(false),
-  consignment_due_date: z.string().optional().nullable(),
+export const acceptDeliveryFormSchema = z
+  .object({
+    amount_received: z.coerce.number().min(0.01),
+    is_consignement: z.boolean().default(false),
+    consignment_due_date: z.string().optional().nullable(),
 
-  reschedule: z.boolean().default(false),
-  reschedule_expected_date: z.string().optional().nullable(),
-});
-
-acceptDeliveryFormSchema.refine(
-  (val) => !val.is_consignement || !!val.consignment_due_date,
-  {
+    reschedule: z.boolean().default(false),
+    reschedule_expected_date: z.string().optional().nullable(),
+  })
+  .refine((val) => !val.is_consignement || !!val.consignment_due_date, {
     path: ['consignment_due_date'],
     params: { i18nKey: 'zod.custom.consignment_date_required' },
-  }
-);
+  })
+  .refine((val) => !val.reschedule || !!val.reschedule_expected_date, {
+    path: ['reschedule_expected_date'],
+    params: { i18nKey: 'zod.custom.reschedule_date_required' },
+  });
 
 export type AcceptDeliveryFormValues = z.infer<typeof acceptDeliveryFormSchema>;

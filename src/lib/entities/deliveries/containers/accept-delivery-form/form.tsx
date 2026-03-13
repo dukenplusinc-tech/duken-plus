@@ -102,12 +102,18 @@ export const AcceptDeliveryForm: FC<{
                 onIonChange={(e) =>
                   form.setValue(
                     'consignment_due_date',
-                    e.detail.value! as string
+                    e.detail.value! as string,
+                    { shouldValidate: true }
                   )
                 }
                 disabled={isProcessing}
               />
             </div>
+            {form.formState.errors.consignment_due_date && (
+              <small className="text-destructive mb-2">
+                {form.formState.errors.consignment_due_date.message}
+              </small>
+            )}
           </IonItem>
         )}
 
@@ -136,12 +142,18 @@ export const AcceptDeliveryForm: FC<{
                 onIonChange={(e) =>
                   form.setValue(
                     'reschedule_expected_date',
-                    e.detail.value! as string
+                    e.detail.value! as string,
+                    { shouldValidate: true }
                   )
                 }
                 disabled={isProcessing}
               />
             </div>
+            {form.formState.errors.reschedule_expected_date && (
+              <small className="text-destructive mb-2">
+                {form.formState.errors.reschedule_expected_date.message}
+              </small>
+            )}
           </IonItem>
         )}
 

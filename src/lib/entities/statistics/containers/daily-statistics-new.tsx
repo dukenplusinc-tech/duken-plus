@@ -20,6 +20,7 @@ import {
 import { useActivateBackButton } from '@/lib/navigation/back-button/hooks';
 import * as fromUrl from '@/lib/url/generator';
 import { PageHeader } from '@/components/ui/page/header';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Money } from '@/components/numbers/money';
 
 // ============================================================================
@@ -158,7 +159,7 @@ interface DaysListProps {
   onSelectDay: (date: string) => void;
 }
 
-function DaysList({ days, monthCursor, onSelectDay }: DaysListProps) {
+function DaysList({ days, isLoading, monthCursor, onSelectDay }: DaysListProps) {
   const t = useTranslations('statistics.by_day');
   const { sorting } = useFiltersCtx();
 
@@ -227,6 +228,25 @@ function DaysList({ days, monthCursor, onSelectDay }: DaysListProps) {
   const monthPredictedTotal = useMemo(() => {
     return allDays.reduce((sum, day) => sum + calculatePredictedTotal(day), 0);
   }, [allDays]);
+
+  if (isLoading) {
+    return (
+      <>
+        <div>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={i} className="grid grid-cols-2 gap-4 py-4 border-b border-gray-200">
+              <Skeleton className="h-5 w-28 rounded" />
+              <Skeleton className="h-5 w-20 ml-auto rounded" />
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-4 py-4 bg-green-100 -mx-4 px-4 mt-0">
+          <Skeleton className="h-6 w-20 rounded" />
+          <Skeleton className="h-6 w-24 ml-auto rounded" />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

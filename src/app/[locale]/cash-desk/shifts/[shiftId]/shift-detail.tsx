@@ -5,6 +5,7 @@ import { ru } from 'date-fns/locale';
 import { formatTZ } from '@/lib/utils/tz';
 
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Money } from '@/components/numbers/money';
 import TransactionList from '@/lib/entities/cash-desk/containers/transaction-list';
 import { useShiftTransactions } from '@/lib/entities/cash-desk/hooks/useShiftTransactions';
@@ -116,7 +117,13 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
   if (isLoadingShift) {
     return (
       <main className="flex min-h-screen flex-col p-2">
-        <div className="text-center">{t('loading')}</div>
+        <Skeleton className="h-48 w-full rounded-md mb-4" />
+        <Skeleton className="h-7 w-40 rounded mb-3" />
+        <div className="space-y-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-14 w-full rounded-md" />
+          ))}
+        </div>
       </main>
     );
   }
@@ -196,7 +203,11 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
         <div className="mb-4">
           <h2 className="text-lg font-semibold mb-2">{t('transactions')}</h2>
           {isLoadingTransactions ? (
-            <div className="text-center py-4">{t('loading_transactions')}</div>
+            <div className="space-y-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-14 w-full rounded-md" />
+              ))}
+            </div>
           ) : transactions && transactions.length > 0 ? (
             <TransactionList transactions={transactions} />
           ) : (

@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
+import { Skeleton } from '@/components/ui/skeleton';
 import { FormatDate } from '@/components/date/format-date';
 import { Money } from '@/components/numbers/money';
 
@@ -30,6 +31,23 @@ export const ConsignmentTable: FC = () => {
 
       {error && <ErrorScreen error={error} />}
       {isEmpty && <EmptyScreen>{t('empty_text')}</EmptyScreen>}
+
+      {isLoading && (
+        <div className="space-y-0">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="border-b px-4 py-3 flex justify-between items-center">
+              <div className="space-y-2">
+                <Skeleton className="h-5 w-36 rounded" />
+                <Skeleton className="h-4 w-24 rounded" />
+              </div>
+              <div className="space-y-2 items-end flex flex-col">
+                <Skeleton className="h-6 w-24 rounded" />
+                <Skeleton className="h-8 w-28 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {!isLoading &&
         data.map((delivery) => (

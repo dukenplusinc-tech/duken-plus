@@ -12,6 +12,7 @@ import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const BlacklistView: FC = () => {
   const t = useTranslations('debtors');
@@ -98,19 +99,21 @@ export const BlacklistView: FC = () => {
         )}
 
         {/* Responsive grid: 1 col on phones, 2 on small tablets, 3+ on larger */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {deduplicatedData.map((debtor) => (
-            <DebtorCard
-              key={debtor.id}
-              debtor={debtor}
-              hasMultipleNames={hasMultipleNames.has(debtor.iin)}
-            />
-          ))}
-        </div>
-
-        {isLoading && (
-          <div className="flex justify-center p-8">
-            <IonSpinner name="dots" />
+        {isLoading && deduplicatedData.length === 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <Skeleton key={i} className="h-32 w-full rounded-md" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {deduplicatedData.map((debtor) => (
+              <DebtorCard
+                key={debtor.id}
+                debtor={debtor}
+                hasMultipleNames={hasMultipleNames.has(debtor.iin)}
+              />
+            ))}
           </div>
         )}
       </div>

@@ -19,6 +19,7 @@ import { useAddedBy } from '@/lib/entities/debtors/hooks/useAddedBy';
 import { useConfirmAction } from '@/lib/primitives/dialog/confirm/confirm';
 import { toShiftDetail } from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Pagination,
   PaginationContent,
@@ -103,6 +104,15 @@ export default function CashRegisterPage() {
     <main className="flex min-h-screen flex-col">
       <div className="p-2">
         {/* Current Shift Status */}
+        {isLoadingShift && (
+          <div className="mb-4 space-y-2">
+            <Skeleton className="h-8 w-48 rounded-md" />
+            <div className="flex gap-2">
+              <Skeleton className="h-16 flex-[2] rounded-md" />
+              <Skeleton className="h-16 flex-1 rounded-md" />
+            </div>
+          </div>
+        )}
         {!isLoadingShift && (
           <div className="mb-4">
             {isShiftOpen ? (
@@ -184,8 +194,10 @@ export default function CashRegisterPage() {
 
           <div className="mb-4">
             {isLoadingHistory ? (
-              <div className="text-center py-4">
-                {tShifts('loading_history')}
+              <div className="space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-24 w-full rounded-md" />
+                ))}
               </div>
             ) : historyData?.shifts && historyData.shifts.length > 0 ? (
               <>

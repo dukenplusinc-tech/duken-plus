@@ -15,6 +15,7 @@ import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const TransactionsTable: FC = () => {
   useActivateBackButton();
@@ -59,16 +60,24 @@ export const TransactionsTable: FC = () => {
         <EmptyScreen>{t('empty_text')}</EmptyScreen>
       )}
 
-      <IonList>
-        {data.map((payment, index) => (
-          <SubscriptionPaymentItem
-            key={`${index}_${payment.id}`}
-            payment={payment}
-          />
-        ))}
-      </IonList>
+      {isLoading && data.length === 0 ? (
+        <div className="space-y-2 mt-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-16 w-full rounded-md" />
+          ))}
+        </div>
+      ) : (
+        <IonList>
+          {data.map((payment, index) => (
+            <SubscriptionPaymentItem
+              key={`${index}_${payment.id}`}
+              payment={payment}
+            />
+          ))}
+        </IonList>
+      )}
 
-      {isLoading && (
+      {isLoading && data.length > 0 && (
         <div className="flex justify-center p-8">
           <IonSpinner name="dots" />
         </div>

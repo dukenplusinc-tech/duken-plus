@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useTodayDeliveries } from '@/lib/entities/deliveries/hooks/useTodayDeliveries';
 import { useExpenseInfoDialog } from '@/lib/entities/expenses/hooks/useExpenseInfoDialog';
 import { useTotalExpenses } from '@/lib/entities/expenses/hooks/useTotalExpenses';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Money } from '@/components/numbers/money';
 
 export const ExpenseSummary: FC = () => {
@@ -39,9 +40,10 @@ export default function CompanyTab() {
   const renderSummary = () => {
     if (loading) {
       return (
-        <div className="bg-primary p-4 mb-2">
-          <Loader className="h-4 w-4 animate-spin mx-auto" />
-        </div>
+        <>
+          <Skeleton className="h-24 w-full rounded-none mb-2" />
+          <Skeleton className="h-12 w-full rounded-none mb-2" />
+        </>
       );
     }
 

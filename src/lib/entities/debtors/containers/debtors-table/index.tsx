@@ -17,6 +17,7 @@ import * as fromUrl from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const DebtorsTable: FC = () => {
   const t = useTranslations('debtors');
@@ -85,13 +86,21 @@ export const DebtorsTable: FC = () => {
         <EmptyScreen>{t(emptyMessage)}</EmptyScreen>
       )}
 
-      <IonList>
-        {data.map((item, index) => (
-          <DebtorItem key={`${index}_${item.id}`} debtor={item} />
-        ))}
-      </IonList>
+      {isLoading && data.length === 0 ? (
+        <div className="space-y-2 mt-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-16 w-full rounded-md" />
+          ))}
+        </div>
+      ) : (
+        <IonList>
+          {data.map((item, index) => (
+            <DebtorItem key={`${index}_${item.id}`} debtor={item} />
+          ))}
+        </IonList>
+      )}
 
-      {isLoading && (
+      {isLoading && data.length > 0 && (
         <div className="flex justify-center p-8">
           <IonSpinner name="dots" />
         </div>

@@ -12,6 +12,7 @@ import { usePageRefresh } from '@/lib/hooks/usePageRefresh';
 import * as fromUrl from '@/lib/url/generator';
 import { PageHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const NotesTable: FC = () => {
   const t = useTranslations('notes');
@@ -43,8 +44,10 @@ export const NotesTable: FC = () => {
       )}
 
       {isLoading ? (
-        <div className="flex justify-center p-8">
-          <IonSpinner name="dots" />
+        <div className="space-y-2 mt-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-14 w-full rounded-md" />
+          ))}
         </div>
       ) : (
         <IonList>

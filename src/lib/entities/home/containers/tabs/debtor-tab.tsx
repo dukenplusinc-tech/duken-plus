@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useDebtorStats } from '@/lib/entities/debtors/hooks/useDebtorStats';
 import { toDebtors } from '@/lib/url/generator';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Money } from '@/components/numbers/money';
 
 export const DebtorTab: FC = () => {
@@ -23,6 +24,18 @@ export const DebtorTab: FC = () => {
     </div>
   );
 
+  if (isLoading) {
+    return (
+      <>
+        <div className="mt-2">
+          <Skeleton className="h-24 w-full rounded-none mb-2" />
+          <Skeleton className="h-12 w-full rounded-none mb-2" />
+          <Skeleton className="h-12 w-full rounded-none" />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="mt-2 text-white">
@@ -31,11 +44,7 @@ export const DebtorTab: FC = () => {
           <div className="flex justify-center items-center">
             <div className="flex-1 text-lg">{t('title')}</div>
             <div className="flex-1 text-3xl font-bold">
-              {isLoading ? (
-                <Loader className="h-4 w-4 animate-spin" />
-              ) : (
-                (data?.total_debtors ?? 0)
-              )}
+              {data?.total_debtors ?? 0}
             </div>
           </div>
         </div>

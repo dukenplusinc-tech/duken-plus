@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { PageHeader, PageSubHeader } from '@/components/ui/page/header';
 import { EmptyScreen } from '@/components/ui/page/screen/empty';
 import { ErrorScreen } from '@/components/ui/page/screen/error';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Money } from '@/components/numbers/money';
 
 const calculateDaysOverdue = (dateString: string) => {
@@ -76,6 +77,23 @@ export const DeliveriesTable: FC = () => {
       {error && <ErrorScreen error={error} />}
       {isEmpty && <EmptyScreen>{t('empty_text')}</EmptyScreen>}
       {overdueError && <ErrorScreen error={overdueError} />}
+
+      {isLoading && data.length === 0 && (
+        <div className="bg-white mt-4">
+          <div className="grid grid-cols-3 border-b font-bold bg-muted text-muted-foreground">
+            <div className="p-4 border-r">{t('table.name')}</div>
+            <div className="p-4 border-r">{t('table.amount')}</div>
+            <div className="p-4">{t('table.actions')}</div>
+          </div>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="grid grid-cols-3 border-b">
+              <div className="p-4 border-r"><Skeleton className="h-5 w-full rounded" /></div>
+              <div className="p-4 border-r"><Skeleton className="h-5 w-20 rounded" /></div>
+              <div className="p-4"><Skeleton className="h-8 w-16 rounded" /></div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {!isEmpty && (
         <div className="bg-white mt-4">

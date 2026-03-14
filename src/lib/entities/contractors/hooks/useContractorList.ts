@@ -24,12 +24,12 @@ export const useContractorList = () => {
     );
   };
 
-  const { data, error, isLoading } = useSWR('expense-types', fetcher, {
+  const { data, error, isLoading } = useSWR('contractors', fetcher, {
     revalidateOnFocus: false,
   });
 
   const refresh = useCallback(async () => {
-    return mutate('expense-types');
+    return mutate('contractors');
   }, []);
 
   return {

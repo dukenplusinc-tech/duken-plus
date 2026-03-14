@@ -53,10 +53,17 @@ export const AddDeliveryForm: FC = () => {
             value={form.watch('amount_expected')}
             autocapitalize="off"
             onIonInput={(e) =>
-              form.setValue('amount_expected', parseFloat(e.detail.value!))
+              form.setValue('amount_expected', parseFloat(e.detail.value!), {
+                shouldValidate: true,
+              })
             }
             disabled={isProcessing}
           />
+          {form.formState.errors.amount_expected && (
+            <p className="text-sm text-destructive mt-1 mb-2">
+              {form.formState.errors.amount_expected.message}
+            </p>
+          )}
         </IonItem>
 
         <IonItem className="no-ripple">

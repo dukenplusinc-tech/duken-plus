@@ -38,7 +38,7 @@ const formatFullAmount = (amount: number): string => {
   }).format(amount);
 };
 
-export function Money({ children, emptyLabel, className, fullAmount = false }: MoneyProps) {
+export function Money({ children, emptyLabel, className, fullAmount = true }: MoneyProps) {
   const { toast } = useToast();
   const t = useTranslations('money');
 

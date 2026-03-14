@@ -33,10 +33,14 @@ export enum CashRegisterType {
   BANK_TRANSFER = 'bank_transfer',
 }
 
-export const cashRegisterPayloadSchema = cashRegisterSchema.omit({
-  id: true,
-  shop_id: true,
-  date: true,
-});
+export const cashRegisterPayloadSchema = cashRegisterSchema
+  .omit({
+    id: true,
+    shop_id: true,
+    date: true,
+  })
+  .extend({
+    amount: z.number().positive(),
+  });
 
 export type CashRegisterPayload = z.infer<typeof cashRegisterPayloadSchema>;

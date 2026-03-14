@@ -29,6 +29,7 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
   const t = useTranslations('cash_desk.form');
   const tModal = useTranslations('cash_desk.shifts.add_transfer_modal');
   const tDialog = useTranslations('dialog');
+  const tZod = useTranslations('zod');
   const dialog = useModalDialog();
   const { refresh: refreshShift } = useCurrentShift();
   const { form, isProcessing, handleSubmit } = useAddCashRegisterEntry({
@@ -56,6 +57,12 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
   const onSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
+      if (showOtherInput && !form.getValues('bank_name')) {
+        form.setError('bank_name', { message: tZod('invalid_type.required') });
+        return;
+      }
+      const isValid = await form.trigger();
+      if (!isValid) return;
       try {
         await handleSubmit(e);
         await refreshShift();
@@ -67,7 +74,7 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
         // Error handling is done in the hook
       }
     },
-    [handleSubmit, dialog, refreshShift, onSuccess]
+    [handleSubmit, dialog, refreshShift, onSuccess, showOtherInput, form, tZod]
   );
 
   const getBankButtonClass = (bankName: string) => {
@@ -98,14 +105,13 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
           value={form.watch('amount') || ''}
           disabled={isProcessing}
           onChange={(e) =>
-            form.setValue('amount', parseFloat(e.target.value) || 0)
+            form.setValue('amount', parseFloat(e.target.value) || 0, { shouldValidate: true })
           }
           placeholder={t('form_label_amount')}
           className="w-full"
-          required
         />
         {form.formState.errors.amount && (
-          <p className="text-sm text-destructive mt-1">
+          <p className="text-sm text-destructive mt-1 mb-2">
             {form.formState.errors.amount.message}
           </p>
         )}
@@ -179,7 +185,7 @@ export const AddTransferModalForm: FC<AddTransferModalProps> = ({
           </div>
         )}
         {form.formState.errors.bank_name && (
-          <p className="text-sm text-destructive mt-1">
+          <p className="text-sm text-destructive mt-1 mb-2">
             {form.formState.errors.bank_name.message}
           </p>
         )}

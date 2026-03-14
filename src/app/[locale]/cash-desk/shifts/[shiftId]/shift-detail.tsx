@@ -22,7 +22,7 @@ interface ShiftDetailProps {
 export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
   useActivateBackButton();
   const t = useTranslations('cash_desk.shifts');
-  const { data: transactions, isLoading: isLoadingTransactions } =
+  const { data: transactions, isLoading: isLoadingTransactions, sentinelRef } =
     useShiftTransactions(shiftId);
 
   const { data: shiftData, isLoading: isLoadingShift } = useQuery<
@@ -209,7 +209,10 @@ export default function ShiftDetail({ shiftId }: ShiftDetailProps) {
               ))}
             </div>
           ) : transactions && transactions.length > 0 ? (
-            <TransactionList transactions={transactions} />
+            <>
+              <TransactionList transactions={transactions} />
+              <div ref={sentinelRef} />
+            </>
           ) : (
             <div className="text-center py-8 text-muted-foreground">
               {t('no_transactions')}
